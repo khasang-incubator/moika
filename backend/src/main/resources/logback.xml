@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>windows-1251</charset>
+            <pattern>%d{HH:mm:ss.SSS} [%thread]  %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${user.home}/database.log</file>
+        <append>false</append>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{HH:mm:ss.SSS} [%thread]  %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--<logger name="com.base22" level="TRACE"/>-->
+    <logger name="jdbc" level="OFF" />
+    <logger name="jdbc.sqlonly" level="INFO" additivity="false">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+<!--
+    <root level="ERROR">
+        <appender-ref ref="FILE" />   &lt;!&ndash; Every log will apear on file &ndash;&gt;
+    </root>
+-->
+
+    <root level="trace">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
