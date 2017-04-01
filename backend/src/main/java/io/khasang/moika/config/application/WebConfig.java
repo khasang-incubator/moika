@@ -33,6 +33,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     }
 
+
+/**
+ * DRS 2017-04-02 блокируем кастомный view-resolver, будет использоваться дефолтный
     @Bean
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -42,6 +45,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         viewResolver.setContentType("text/html; charset=utf-8");
         return viewResolver;
     }
+*/
 
     @Bean
     public AddMenuPathAnnotationBeanPostProcessor addMenuPathAnnotationBeanPostProcessor(){
@@ -61,7 +65,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/views/images/");
         registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/views/resources/");
         //DRS таким образом мы разрешим сайту отображать статичный контент, такой как HTML-страницы
-        registry.addResourceHandler("/angular/**").addResourceLocations("/WEB-INF/angular/");
+        registry.addResourceHandler("/**").addResourceLocations("/ng2/");
     }
 
 

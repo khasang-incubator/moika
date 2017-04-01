@@ -45,6 +45,12 @@ public class AppController {
     }
 
     @GetMapping("/")
+    public String ng2(){
+        return "index.html";
+    }
+
+
+    @GetMapping("/off")
     @AddMenuPath(name = "hello")
     public String hello(Model model) {
         User user = getCurrentUser();
