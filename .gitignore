@@ -36,3 +36,4 @@
 # System Files
 .DS_Store
 Thumbs.db
+frontend/node/

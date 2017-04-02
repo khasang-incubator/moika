@@ -7,7 +7,7 @@
 <body>
 <h3>Ввод/редактирование работы услуги</h3>
 
-<form:form method="POST" action="/work/add/" modelAttribute="work">
+<form:form method="POST" action="/work/add/">
     <table>
         <tr>
             <td><form:label path="name">наименование</form:label></td>
