@@ -10,35 +10,45 @@ import io.khasang.moika.entity.OrdermDetail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {AppConfig.class, WebConfig.class, HibernateConfig.class})
 public class OrdermDetailDaoImplTest {
+    @Qualifier("ordermDetailDaoImpl")
     @Autowired
     OrdermDetailDao ordermDetailDao;
+    @Qualifier("ordermDaoImpl")
     @Autowired
     OrdermDao ordermDao;
 
     @Test
     public void commonOrdersDetail() throws Exception {
-        Orderm orderm =new Orderm("1");
-        OrdermDetail ordermDetail;
+        OrdermDetail detail, temp, temp1;
 
-        ordermDetail = new OrdermDetail( new BigDecimal("1"), new BigDecimal("1000"));
-        orderm.addOrdermDetail(ordermDetail);
-        ordermDetailDao.create(ordermDetail);
-        ordermDetail = new OrdermDetail( new BigDecimal("2"), new BigDecimal("2000"));
-        orderm.addOrdermDetail(ordermDetail);
-        ordermDetailDao.create(ordermDetail);
+        Orderm orderm = new Orderm("1");
         ordermDao.create(orderm);
 
-//        List<OrdermDetail> l = ordermDetailDao.getOrdermDetailForOrderm(id);
-    }
 
+        detail = new OrdermDetail(new BigDecimal(1), new BigDecimal(1000));
+        temp1 = ordermDetailDao.create(orderm, detail);
+        detail = new OrdermDetail(new BigDecimal(2), new BigDecimal(2000));
+        temp = ordermDetailDao.create(orderm, detail);
+        detail = new OrdermDetail(new BigDecimal(3), new BigDecimal(3000));
+        ordermDetailDao.create(orderm, detail);
+        List<OrdermDetail> list1 = ordermDetailDao.getOrdermDetailForOrderm(orderm);
+        ordermDetailDao.delete(orderm, temp);
+        list1 = ordermDetailDao.getOrdermDetailForOrderm(orderm);
+        detail = ordermDetailDao.get(temp1.getId());
+        detail.setSumOfWork(new BigDecimal(777));
+        ordermDetailDao.update(detail);
+
+    }
 }
