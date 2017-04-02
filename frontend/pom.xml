@@ -11,9 +11,8 @@
   </parent>
   <packaging>jar</packaging>
 
-  <groupId>moika</groupId>
   <artifactId>frontend</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>${parent.version}</version>
 
   <build>
     <plugins>
