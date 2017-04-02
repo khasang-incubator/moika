@@ -1,8 +1,6 @@
 package io.khasang.moika.config_for_test_purposes;
 
 import io.khasang.moika.config.AppConfig;
-
-import io.khasang.moika.service.impl.RostislavDataAccessServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.*;
@@ -11,10 +9,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
-
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 /**
  * @author Rostislav Dublin
@@ -33,10 +27,8 @@ import javax.validation.ValidatorFactory;
         },
         excludeFilters = {
                 @ComponentScan.Filter(type = FilterType.REGEX, pattern = "io.khasang.moika.config.application.*"),
-                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = {
-                        RostislavDataAccessServiceImpl.class,
-                       // AKovalevDataAccessServiceImpl.class,
-                        AppConfig.class})
+                /*@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = {
+                        AppConfig.class})*/
         })
 //@EnableCaching
 @PropertySource(value = {"classpath:util.properties", "classpath:auth.properties"})
@@ -75,7 +67,7 @@ public class TestAppConfig {
      *
      * @return validator
      */
-    @Bean(name="validator")
+    @Bean(name = "validator")
     @Primary
     public javax.validation.Validator localValidatorFactoryBean() {
         LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();

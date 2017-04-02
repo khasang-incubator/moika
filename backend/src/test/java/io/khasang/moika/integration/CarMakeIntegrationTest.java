@@ -1,4 +1,4 @@
-package io.khasang.Car;
+package io.khasang.moika.integration;
 
 import io.khasang.moika.entity.CarMake;
 import org.junit.Assert;
