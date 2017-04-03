@@ -2,7 +2,7 @@ package io.khasang.moika.controller;
 
 import io.khasang.moika.controller.params.AddToExistsingSaleInputs;
 import io.khasang.moika.controller.params.SetSaleStatusInputs;
-import io.khasang.moika.dao.ClientDao;
+//import io.khasang.moika.dao.ClientDao;
 import io.khasang.moika.dao.ProductDao;
 import io.khasang.moika.dao.ProductSaleDao;
 import io.khasang.moika.dao.SaleDao;
@@ -26,8 +26,8 @@ public class SalesController {
     private ProductSaleDao productSaleDao;
     @Autowired
     private ProductDao productDao;
-    @Autowired
-    private ClientDao clientDao;
+    /*@Autowired
+    private ClientDao clientDao;*/
 
     @RequestMapping(value = "/shop/sale/new", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
@@ -77,10 +77,10 @@ public class SalesController {
         sale.setStatus("CREATED");
         sale.setPrice(productCount * product.getPrice());
 
-        if (clientId != null) {
+        /*if (clientId != null) {
             Client client = clientDao.getClientById(clientId);
             sale.setClient(client);
-        }
+        }*/
         saleDao.addSale(sale);
 
         ProductSale productSale = new ProductSale();
