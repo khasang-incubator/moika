@@ -1,6 +1,8 @@
 package io.khasang.moika.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -81,8 +83,8 @@ public class Orders extends ABaseMoikaEntity {
 
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(value = FetchMode.SELECT)
     private List<OrdersDetail> ordersDetails = new ArrayList<>();
-
 
     public Long getId() {
         return id;

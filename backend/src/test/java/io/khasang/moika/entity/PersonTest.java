@@ -18,10 +18,8 @@ public class PersonTest {
     }
     @Test
     public void setGetName() throws Exception {
-        person.setName("Вальтер Скот");
-        assertEquals("Вальтер Скот", person.getName());
-        person.setName(null);
-        assertEquals(null, person.getName());
+        person.setFullName("Вальтер Скот");
+        assertEquals("Вальтер Скот", person.getFullName());
     }
     @Test
     public void setGetBirthDate() throws Exception {
@@ -30,11 +28,13 @@ public class PersonTest {
         System.out.println(date);
         assertEquals(date, person.getBirthDate());
     }
+
     @Test
     public void setGetPhones() throws Exception {
         Phone phone = new Phone("0123456789");
         person.getPhones().add(phone);
         System.out.println(person.getPhones().get(0).getNumber());
+        assertEquals("0123456789", person.getPhones().get(0).getNumber());
     }
 
 }
