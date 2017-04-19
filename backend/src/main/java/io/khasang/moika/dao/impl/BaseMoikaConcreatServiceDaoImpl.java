@@ -22,7 +22,7 @@ import java.util.List;
 @Transactional
 public abstract class BaseMoikaConcreatServiceDaoImpl<T extends ABaseMoikaServiceAdditionalInfo> extends MoikaDaoCrudImpl<T> implements BaseMoikaConcreatServiceDao<T> {
 
-    public List<T> getConcreatServiceById(int idService) {
+    public List<T> getConcreatServiceById(Long idService) {
         final Session session = sessionFactory.getCurrentSession();
         Class entityClass = getDaoType();
         Criteria criteria = session.createCriteria(entityClass);

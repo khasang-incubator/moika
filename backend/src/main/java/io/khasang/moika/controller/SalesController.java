@@ -2,18 +2,19 @@ package io.khasang.moika.controller;
 
 import io.khasang.moika.controller.params.AddToExistsingSaleInputs;
 import io.khasang.moika.controller.params.SetSaleStatusInputs;
-//import io.khasang.moika.dao.ClientDao;
 import io.khasang.moika.dao.ProductDao;
 import io.khasang.moika.dao.ProductSaleDao;
 import io.khasang.moika.dao.SaleDao;
-import io.khasang.moika.entity.Client;
 import io.khasang.moika.entity.Product;
 import io.khasang.moika.entity.ProductSale;
 import io.khasang.moika.entity.Sale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
 import java.util.Map;
@@ -26,8 +27,7 @@ public class SalesController {
     private ProductSaleDao productSaleDao;
     @Autowired
     private ProductDao productDao;
-    /*@Autowired
-    private ClientDao clientDao;*/
+
 
     @RequestMapping(value = "/shop/sale/new", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
@@ -77,10 +77,10 @@ public class SalesController {
         sale.setStatus("CREATED");
         sale.setPrice(productCount * product.getPrice());
 
-        /*if (clientId != null) {
-            Client client = clientDao.getClientById(clientId);
-            sale.setClient(client);
-        }*/
+        if (clientId != null) {
+          //  Client client = clientDao.getClientById(clientId);
+          //  sale.setClient(client);
+        }
         saleDao.addSale(sale);
 
         ProductSale productSale = new ProductSale();

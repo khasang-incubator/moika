@@ -33,6 +33,10 @@ public class WashFacility  extends ABaseMoikaEntity  {
     @JsonManagedReference
     private List<WashBox> washBoxes = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
+    @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
+    @JsonManagedReference
+    private List<Orders> orders = new ArrayList<>();
 
     public WashFacility() {
     }
@@ -97,6 +101,11 @@ public class WashFacility  extends ABaseMoikaEntity  {
     public void setWashBoxes(List<WashBox> washBowes) {
         this.washBoxes = washBowes;
     }
+
+    public List<Orders> getOrders() {
+        return orders;
+    }
+
 
     @Override
     public boolean equals(Object o) {

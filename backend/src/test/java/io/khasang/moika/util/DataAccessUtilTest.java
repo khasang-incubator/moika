@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Тесты для библиотеки утилит для работы с данными
@@ -39,12 +38,12 @@ public class DataAccessUtilTest extends Assert{
         TypedQuery<User> userQuery =
                 dataAccessUtil.getQueryOfEntityWithComplexEqualCondition(
                         User.class,
-                        Collections.singletonMap(User_.lastName.getName(), "Дублин"));
+                        Collections.singletonMap(User_.login.getName(), "root"));
 
-        List<User> usersFound = userQuery.getResultList();
+        List<User> userFound = userQuery.getResultList();
 
-        assertTrue(usersFound.size() > 0);
-        assertEquals("Дублин", usersFound.get(0).getLastName());
+        assertTrue(userFound.size() > 0);
+        assertEquals("root", userFound.get(0).getLogin());
     }
 
 }

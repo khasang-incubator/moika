@@ -28,7 +28,7 @@ public class MoikaServiceAddInfoDaoFabrica {
         this.sessionFactory = sessionFactory;
     }
 
-    public List<IBaseMoikaServiceAddInfo> getListOfServiceAddInfo(int idService, String codeTypeService){
+    public List<IBaseMoikaServiceAddInfo> getListOfServiceAddInfo(long idService, String codeTypeService){
        return getMoikaConcreatServiceDao(codeTypeService).getConcreatServiceById(idService);
     }
 

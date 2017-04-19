@@ -33,7 +33,7 @@ public abstract class AMoikaConcreatServiceDataAccessServiceImpl<T extends ABase
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public List<T> getConcreatServiceById(int id) throws MoikaDaoException {
+    public List<T> getConcreatServiceById(long id) throws MoikaDaoException {
         return baseMoikaConcreatServiceDao.getConcreatServiceById(id);
     }
 

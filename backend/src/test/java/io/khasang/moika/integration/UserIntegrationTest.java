@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
@@ -52,8 +51,8 @@ public class UserIntegrationTest extends Assert {
         LOGGER.debug("1. Создание пользователя");
         LOGGER.debug("1.1. Предварительная валидация  - ПРОВАЛ (не задан телефон)");
         user.setLogin(login);
-        user.setFirstName("Тест");
-        user.setEmail(login + "@mail.ru");
+        user.getPerson().setFirstName("Тест");
+        user.getPerson().setEmail(login + "@mail.ru");
         user.setPassword("123456Qw");
 
         resultMap = restTemplate.postForObject(baseUrl + "/users", httpEntity1, Map.class);
@@ -62,7 +61,7 @@ public class UserIntegrationTest extends Assert {
 
 
         LOGGER.debug("1.2. Предварительная валидация  - УСПЕХ");
-        user.setPhone("1234567890");
+        user.getPerson().addPhone("1234567890");
         resultMap = restTemplate.postForObject(baseUrl + "/users/validation", httpEntity1, Map.class);
         assertTrue(resultMap.containsKey("success"));
 
@@ -112,8 +111,8 @@ public class UserIntegrationTest extends Assert {
         LOGGER.debug("3.3. Получаем изменённого пользователя из БД и проверяем Отчетство и Фамилию");
         createdUser = restTemplate.getForObject(baseUrl + "/users/{id}", User.class, createdUserId);
         assertTrue(createdUser != null);
-        assertEquals(createdUser.getMiddleName(), newMiddleName);
-        assertEquals(createdUser.getLastName(), newLastName);
+        assertEquals(createdUser.getPerson().getMiddleName(), newMiddleName);
+        assertEquals(createdUser.getPerson().getLastName(), newLastName);
 
         LOGGER.debug("4. Удаление пользователя");
         LOGGER.debug("4.1. Производим удаление");

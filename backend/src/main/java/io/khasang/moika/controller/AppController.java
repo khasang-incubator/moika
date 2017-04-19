@@ -14,10 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.DefaultCsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -68,7 +66,7 @@ public class AppController {
             model.addAttribute("isAuth", false);
         } else {
             model.addAttribute("isAuth", true);
-            model.addAttribute("userFirstName", user.getFirstName());
+            model.addAttribute("userFirstName", user.getPerson().getFullName());
         }
         return "index";
     }
