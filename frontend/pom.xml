@@ -16,16 +16,22 @@
 
   <build>
     <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.6</version>
+      </plugin>
+
       <plugin>
         <groupId>com.github.eirslett</groupId>
         <artifactId>frontend-maven-plugin</artifactId>
         <version>1.4</version>
-
-        <configuration>
-          <nodeVersion>v6.10.1</nodeVersion>
-          <npmVersion>3.10.10</npmVersion>
-          <!--<workingDirectory>src/main/frontend</workingDirectory>-->
-        </configuration>
 
         <executions>
           <execution>
@@ -33,13 +39,23 @@
             <goals>
               <goal>install-node-and-npm</goal>
             </goals>
+            <configuration>
+              <nodeVersion>v6.3.1</nodeVersion>
+              <npmVersion>3.9.5</npmVersion>
+              <workingDirectory>/frontend</workingDirectory>
+            </configuration>
           </execution>
+
           <execution>
             <id>npm install</id>
             <goals>
               <goal>npm</goal>
             </goals>
+            <configuration>
+              <arguments>install</arguments>
+            </configuration>
           </execution>
+
           <execution>
             <id>npm run build</id>
             <goals>
@@ -49,24 +65,43 @@
               <arguments>run build</arguments>
             </configuration>
           </execution>
+
         </executions>
       </plugin>
-<!--
+
       <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.6</version>
-        <configuration>
-          <warSourceDirectory>dist</warSourceDirectory>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.0.2</version>
+        <executions>
+          <execution>
+            <id>default-copy-resources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/META-INF/resources/ng2</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>/dist</directory>
+                  <!-- <targetPath>META-INF/resources/ng2</targetPath>-->
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
--->
+      <!--
+       <plugin>
+         <artifactId>maven-war-plugin</artifactId>
+         <version>2.6</version>
+         <configuration>
+           <warSourceDirectory>dist</warSourceDirectory>
+           <failOnMissingWebXml>false</failOnMissingWebXml>
+       </plugin>
+      -->
     </plugins>
-    <resources>
-      <resource>
-        <directory>dist</directory>
-        <targetPath>META-INF/resources/ng2</targetPath>
-      </resource>
-    </resources>
   </build>
 </project>
