@@ -16,4 +16,5 @@ public class PolishServiceDaoImpl extends BaseMoikaConcreatServiceDaoImpl<Polish
     public PolishServiceDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
 }

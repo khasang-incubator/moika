@@ -3,10 +3,8 @@ package io.khasang.moika.service.impl;
 import io.khasang.moika.config.AppConfig;
 import io.khasang.moika.config.HibernateConfig;
 import io.khasang.moika.config.application.WebConfig;
-import io.khasang.moika.entity.Orderm;
-import io.khasang.moika.entity.OrdermDetail;
-import io.khasang.moika.service.OrdermAccessService;
-import io.khasang.moika.service.OrdermDetailAccessService;
+import io.khasang.moika.service.OrdersAccessService;
+import io.khasang.moika.service.OrdersDetailAccessService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +20,13 @@ import java.util.List;
 @ContextConfiguration(classes = {AppConfig.class, WebConfig.class, HibernateConfig.class})
 public class OrdermDetailAccessServiceImplTest {
     @Autowired
-    OrdermAccessService ordermAccessService;
+    OrdersAccessService ordermAccessService;
     @Autowired
-    OrdermDetailAccessService ordermDetailAccessService;
+    OrdersDetailAccessService ordermDetailAccessService;
 
     @Test
     public void commonOrderm() throws Exception {
-        Orderm orderm = new Orderm("1");
+    /*    Orderm orderm = new Orderm("1");
         ordermAccessService.create(orderm);
         OrdermDetail detail, temp, temp1;
         detail = new OrdermDetail(new BigDecimal(1), new BigDecimal(1000));
@@ -42,7 +40,7 @@ public class OrdermDetailAccessServiceImplTest {
         list1 = ordermDetailAccessService.getOrdermDetailForOrderm(orderm);
         detail = ordermDetailAccessService.get(temp1.getId());
         detail.setSumOfWork(new BigDecimal(777));
-        ordermDetailAccessService.update(detail);
+        ordermDetailAccessService.update(detail); */
     }
 
 }

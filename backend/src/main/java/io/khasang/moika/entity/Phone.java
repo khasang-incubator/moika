@@ -1,17 +1,26 @@
 package io.khasang.moika.entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
-@Entity
-public class Phone {
+import javax.validation.constraints.Pattern;
+
+import static io.khasang.moika.util.DataValidationPatterns.PHONE_NUMBER_PATTERN;
+
+@Entity(name="phones")
+public class Phone extends ABaseMoikaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_phone")
     private Long id;
+    @Column(name="phone_number")
+    @NotBlank
+    @Pattern(regexp = PHONE_NUMBER_PATTERN, message = "{phone.not_10digits.message}")
     private String number;
     @ManyToOne
-    @JoinColumn(name = "person_id", foreignKey = @ForeignKey(name = "PERSON_ID_FK"))
+    @JoinColumn(name = "id_person", foreignKey = @ForeignKey(name = "fk_person_phone"))
     private Person person;
-    @OneToOne(mappedBy = "phone", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private PhoneDetails details;
+
 
     public Phone() {
     }
@@ -22,28 +31,47 @@ public class Phone {
     public Long getId() {
         return id;
     }
+
     public String getNumber() {
         return number;
     }
+
     public Person getPerson() {
         return person;
     }
+
     public void setPerson(Person person) {
         this.person = person;
     }
 
-    public PhoneDetails getDetails() {
-        return details;
-    }
-    public void addDetails(PhoneDetails details) {
-        details.setPhone( this );
-        this.details = details;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public void removeDetails() {
-        if ( details != null ) {
-            details.setPhone( null );
-            this.details = null;
-        }
+    @Override
+    public String toString() {
+        return "Phone{" +
+                "id=" + id +
+                ", number='" + number + '\'' +'}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Phone)) return false;
+
+        Phone uphone = (Phone) o;
+
+        if (getId() != null ? !getId().equals(uphone.getId()) : uphone.getId() != null) return false;
+        if (getNumber() != null ? !getNumber().equals(uphone.getNumber()) : uphone.getNumber() != null) return false;
+        return getPerson() != null ? getPerson().equals(uphone.getPerson()) : uphone.getPerson() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getNumber() != null ? getNumber().hashCode() : 0);
+        result = 31 * result + (getPerson() != null ? getPerson().hashCode() : 0);
+        return result;
     }
 }

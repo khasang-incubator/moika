@@ -1,9 +1,7 @@
 package io.khasang.moika.config;
 
-import io.khasang.moika.service.PskvorTestDaoService;
-import io.khasang.moika.service.ServiceDataAccessService;
+
 import io.khasang.moika.service.WashServiceDataAccessService;
-import io.khasang.moika.service.impl.PskvorTestDaoServiceImpl;
 import io.khasang.moika.service.impl.WashServiceDataAccessServiceImpl;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,9 +69,6 @@ public class HibernateConfig {
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
-
-    @Bean
-    public PskvorTestDaoService pskvorTestDaoService() { return new PskvorTestDaoServiceImpl();}
 
     @Bean
     public WashServiceDataAccessService washServiceDataAccessService() { return new WashServiceDataAccessServiceImpl();}

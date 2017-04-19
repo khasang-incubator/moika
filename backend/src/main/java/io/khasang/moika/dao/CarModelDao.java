@@ -1,7 +1,6 @@
 package io.khasang.moika.dao;
 
 import io.khasang.moika.entity.CarModel;
-import io.khasang.moika.entity.Cats;
 
 import java.util.List;
 

@@ -47,17 +47,17 @@ public class UserEmailUniqueValidator implements ConstraintValidator<UserEmailUn
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
     public boolean isValid(User user, ConstraintValidatorContext constraintContext) {
-        if (user == null || StringUtils.isEmpty(user.getEmail())) {
+        if (user == null || StringUtils.isEmpty(user.getPerson().getEmail())) {
             return true;
         }
 
-        boolean isValid = !userService.isEmailUsed(user.getEmail(), user);
+        boolean isValid = !userService.isEmailUsed(user.getPerson().getEmail(), user);
 
         if (!isValid) {
             constraintContext.disableDefaultConstraintViolation();
             constraintContext
                     .buildConstraintViolationWithTemplate(UserEmailUnique.MESSAGE)
-                    .addPropertyNode(User_.email.getName()).addConstraintViolation();
+                    .addPropertyNode(User_.person.getName()).addConstraintViolation();
         }
         return isValid;
     }

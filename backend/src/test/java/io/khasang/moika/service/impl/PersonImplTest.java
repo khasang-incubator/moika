@@ -3,9 +3,9 @@ package io.khasang.moika.service.impl;
 
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.MoikaDaoException;
-import io.khasang.moika.dao.UpersonDao;
-import io.khasang.moika.entity.Uperson;
-import io.khasang.moika.entity.Uphone;
+import io.khasang.moika.dao.PersonDao;
+import io.khasang.moika.entity.Person;
+import io.khasang.moika.entity.Phone;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,11 +22,11 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
-public class UpersonImplTest {
+public class PersonImplTest {
 
 
     @Autowired
-    UpersonDao personDao;
+    PersonDao personDao;
 
 /*
     @Test
@@ -62,23 +62,21 @@ public class UpersonImplTest {
 */
     @Test
     @Transactional
-    public void testAddUperson() {
+    public void testAddPerson() {
         final String personName = "Сидоров Иван Петрович";
-        Uperson person = new Uperson(); // подготовили класс для тестирования
-
-        person.setName(personName);
+        Person person = new Person(personName); // подготовили класс для тестирования
         person.setBirthDate(Date.valueOf("1998-05-15"));
 
-        List<Uphone> phoneList = new ArrayList<>();
+        List<Phone> phoneList = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
-            Uphone phone = new Uphone();
+            Phone phone = new Phone();
             phone.setNumber("962-555-55-55"+i);
             phoneList.add(phone);
         }
 
         person.setPhones(phoneList);
 
-        Uperson resPerson = new Uperson();
+        Person resPerson = new Person();
         try {
             resPerson = personDao.create(person);
         } catch (MoikaDaoException e) {
@@ -86,17 +84,17 @@ public class UpersonImplTest {
         }
         Assert.assertNotNull("Facility  list is null", resPerson);
         boolean isTel = false;
-            if (resPerson.getName().equalsIgnoreCase("Сидоров Иван Петрович")) {
+            if (resPerson.getFullName().equalsIgnoreCase("Сидоров Иван Петрович")) {
                 Assert.assertEquals("tel list not ", 4, resPerson.getPhones().size());
-                List<Uphone>  resPhoneList = resPerson.getPhones();
-                for (Uphone phone : resPhoneList) {
+                List<Phone>  resPhoneList = resPerson.getPhones();
+                for (Phone phone : resPhoneList) {
                     if (phone.getNumber().equalsIgnoreCase("962-555-55-551")) {
                         isTel= true;
                         break;
                     }
                 }
         }
-        Assert.assertTrue("Person does not exist"+personName, resPerson.getName().equalsIgnoreCase(personName));
+        Assert.assertTrue("Person does not exist"+personName, resPerson.getFullName().equalsIgnoreCase(personName));
         Assert.assertTrue("Phone  list not contain number", isTel);
     }
 }
