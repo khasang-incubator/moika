@@ -38,3 +38,5 @@
 Thumbs.db
 frontend/node/
 /target/
+/DB/
+/lib/
