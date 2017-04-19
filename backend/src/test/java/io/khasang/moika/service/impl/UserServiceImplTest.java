@@ -1,6 +1,8 @@
 package io.khasang.moika.service.impl;
 
 import io.khasang.moika.config_for_test_purposes.TestAppConfig;
+import io.khasang.moika.entity.Person;
+import io.khasang.moika.entity.Phone;
 import io.khasang.moika.entity.User;
 import io.khasang.moika.service.UserService;
 import org.hibernate.SessionFactory;
@@ -18,14 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.FlushModeType;
 import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
 import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import javax.validation.groups.Default;
 import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -49,10 +45,12 @@ public class UserServiceImplTest {
     @Test
     public void performUserCRUD() throws Exception {
         String login = "admin";
-        String phone = "9272170718";
+        String phoneNum = "9272170718";
         String email = "abcd@mail.ru";
 
         User user;
+        Person person;
+        Phone phone = new Phone(phoneNum);
 
         //Delete if exists
         user = userService.findByLogin(login);
@@ -64,12 +62,15 @@ public class UserServiceImplTest {
 
         //Create
         user = new User();
+        person = new Person();
+
         user.setLogin(login);
-        user.setFirstName("Петруха");
-        user.setLastName("Кулебякин");
-        user.setEmail(email);
+        person.setFirstName("Петруха");
+        person.setLastName("Кулебякин");
+        person.setEmail(email);
         user.setPassword("admin");
-        user.setPhone(phone);
+        person.addPhone(phone);
+        user.setPerson(person);
         userService.createUser(user);
         LOGGER.debug("New User created");
 
@@ -85,7 +86,7 @@ public class UserServiceImplTest {
 
         //Update
         String middleName = "Контрабасович";
-        user.setMiddleName(middleName);
+        user.getPerson().setMiddleName(middleName);
         userService.updateUser(user);
         LOGGER.debug("User updated by new middleName");
 
@@ -95,7 +96,7 @@ public class UserServiceImplTest {
         Assert.assertNotNull(user.getId());
         Assert.assertEquals(user.getId(), id);
 
-        Assert.assertEquals(user.getMiddleName(), middleName);
+        Assert.assertEquals(user.getPerson().getMiddleName(), middleName);
         LOGGER.debug("MiddleName checked after update");
 
 //        //Delete
@@ -138,12 +139,15 @@ public class UserServiceImplTest {
 */
         //Create
         User nextUser = new User();
+        Person nextPerson = new Person();
+        Phone nextPhone = new Phone("0987654321");
+
         nextUser.setLogin("nextUser");
-        nextUser.setFirstName("Петруха");
-        nextUser.setLastName("Кулебякин");
-        nextUser.setEmail(email);
+        nextPerson.setFirstName("Петруха");
+        nextPerson.setLastName("Кулебякин");
+        nextPerson.setEmail(email);
         nextUser.setPassword("admin");
-        nextUser.setPhone("0987654321");
+        nextPerson.addPhone(nextPhone);
 
         FlushModeType initialFlushModeType = sessionFactory.getCurrentSession().getFlushMode();
         System.out.println("Stated FlushModeType before a entity save  operation: "+ initialFlushModeType);

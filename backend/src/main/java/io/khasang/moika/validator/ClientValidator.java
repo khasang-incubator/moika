@@ -28,13 +28,13 @@ public class ClientValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Client client = (Client) target;
-        if (StringUtils.isEmpty(client.getFirstName())) {
+        if (StringUtils.isEmpty(client.getPerson().getFullName())) {
             errors.rejectValue("name", "name_empty");
         }
-        if (!client.getPhone().matches("^\\d{9}+")) {
+        if (!client.getPerson().getPhones().get(0).getNumber().matches("^\\d{9}+")) {
             errors.rejectValue("phone", "phone_invalid");
         }
-        if (!client.getLastname().matches("^[A-Za-z]*|^[А-Яа-я]*")) {
+        if (!client.getPerson().getLastName().matches("^[A-Za-z]*|^[А-Яа-я]*")) {
             errors.rejectValue("lastname", "lastname_invalid");
         }
 

@@ -1,25 +1,17 @@
 package io.khasang.moika.entity;
 
 import io.khasang.moika.validator.common.NotNullLength;
-import io.khasang.moika.validator.user.UserEmailUnique;
 import io.khasang.moika.validator.user.UserLoginUnique;
 import org.hibernate.annotations.NaturalId;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import static io.khasang.moika.util.DataValidationPatterns.PHONE_NUMBER_PATTERN;
-
 @Entity
 @UserLoginUnique
-@UserEmailUnique
 @Table(name = "users")
 public class User extends ABaseMoikaEntity implements Serializable {
 
@@ -37,35 +29,20 @@ public class User extends ABaseMoikaEntity implements Serializable {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id_user"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id_role"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"})
+    @JoinTable(name = "r_user_roles",
+            joinColumns = @JoinColumn(name = "id_user", referencedColumnName = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id_role"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id_user", "id_role"})
     )
     private Set<Role> roles = new HashSet<>();
+
+    @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
+    @JoinColumn(name="id_person")
+    protected Person person ;
 
     private boolean enabled;
 
 
-    @NotNullLength(min = 1, max = 32)
-    @Column(nullable = false)
-    private String firstName;
-
-    private String middleName;
-
-    private String lastName;
-
-    private Date birthday;
-
-
-    @NotBlank
-    @Pattern(regexp = PHONE_NUMBER_PATTERN, message = "{phone.not_10digits.message}")
-    private String phone;
-
-    @NotBlank
-    @Email
-    @Column(nullable = false, unique = true)
-    private String email;
 
     public User() {
     }
@@ -111,53 +88,15 @@ public class User extends ABaseMoikaEntity implements Serializable {
         this.enabled = enabled;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = trim(firstName);
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public String getMiddleName() {
-        return middleName;
-    }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = trim(middleName);
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = trim(lastName);
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = trim(phone);
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = trim(email);
-    }
 
     @Override
     public String toString() {
@@ -166,12 +105,8 @@ public class User extends ABaseMoikaEntity implements Serializable {
                 ", login='" + login + '\'' +
                 ", roles=" + roles +
                 ", enabled=" + enabled +
-                ", firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthday=" + birthday +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
+                ", " + person.toString() + '\'' +
+                ", email='" + person.getEmail() + '\'' +
                 '}';
     }
 }

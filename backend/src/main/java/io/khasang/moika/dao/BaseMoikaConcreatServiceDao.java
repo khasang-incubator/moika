@@ -10,5 +10,5 @@ import java.util.List;
  *
  */
 public interface BaseMoikaConcreatServiceDao<T extends ABaseMoikaServiceAdditionalInfo> extends IMoikaDaoCrud<T> {
-     List<T> getConcreatServiceById(int idService);
+     List<T> getConcreatServiceById(Long idService);
 }

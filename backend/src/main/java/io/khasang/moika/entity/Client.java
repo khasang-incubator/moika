@@ -10,19 +10,18 @@ public class Client extends ABaseMoikaEntity  {
     @Column(name = "id_client", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "first_name")
-    private String firstName;
-    @Column(name = "middle_name")
-    private String middleName;
-    @Column(name = "last_name")
-    private String lastname;
-    @Column(name = "tel")
-    private String phone;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
+    @JoinColumn(name="id_person")
+    protected Person person;
+
     @Column(name = "status", nullable = false)
     private Short status;
+
     @Column(name = "date_reg")
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar dateReg;
+
     @Column(name = "date_Last_Wash")
     @Temporal(TemporalType.DATE)
     private Date dateLastWash;
@@ -37,18 +36,15 @@ public class Client extends ABaseMoikaEntity  {
     public Client() {
     }
 
-    public Client(String firstName, String middleName, String lastname, String phone) {
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastname = lastname;
-        this.phone = phone;
+    public Client(Person person) {
+        this.person = person;
     }
 
     public Client(String firstName, String middleName, String lastname, String phone, List<Car> cars) {
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastname = lastname;
-        this.phone = phone;
+        this.person.setFirstName(firstName);
+        this.person.setMiddleName(middleName);
+        this.person.setLastName(lastname);
+        this.person.addPhone(phone);
         this.cars = cars;
     }
 
@@ -56,36 +52,12 @@ public class Client extends ABaseMoikaEntity  {
         return id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String tel) {
-        this.phone = phone;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public int getStatus() {
@@ -127,15 +99,15 @@ public class Client extends ABaseMoikaEntity  {
 
     @Override
     public String toString() {
+        StringBuffer telStr = new StringBuffer();
+        person.getPhones().forEach((Phone p)-> telStr.append(p.getNumber() + ",\n" ));
         return "Client{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", tel='" + phone + '\'' +
-                ", dateReg=" + dateReg +
-                ", status=" + status +
-                ", dateLastWash=" + dateLastWash +
+                ", Full Name='" + person.getFullName() + '\n' +
+                ", tel='" + telStr.toString() +
+                ", dateReg=" + dateReg +  '\n' +
+                ", status=" + status +  '\n' +
+                ", dateLastWash=" + dateLastWash + '\n' +
                 '}';
     }
 
