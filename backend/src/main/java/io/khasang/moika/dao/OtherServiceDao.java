@@ -6,6 +6,6 @@ import io.khasang.moika.entity.OtherService;
  * @author Skvortsov Pavel
  *
  */
-public interface OtherServiceDao extends BaseMoikaConcreatServiceDao<OtherService> {
+public interface OtherServiceDao extends MoikaServiceDao<OtherService> {
 
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -21,10 +22,6 @@ public class WorkAccessServiceImpl implements WorkAccessService {
     WorkDao workDao;
 
     public WorkAccessServiceImpl() {
-    }
-    @Override
-    public Work getWork(String name) {
-        return workDao.getWork(name);
     }
 
     @Override
@@ -65,5 +62,30 @@ public class WorkAccessServiceImpl implements WorkAccessService {
     @Override
     public Session getCurrentSession() {
         return workDao.getCurrentSession();
+    }
+
+    @Override
+    public List<Work> getWorksByIdOrder(long idOrder) {
+        return workDao.getWorksByIdOrder(idOrder);
+    }
+
+    @Override
+    public Work getWorkInBox(long idWashBox) {
+        return workDao.getWorkInBox(idWashBox);
+    }
+
+    @Override
+    public Work getWorkInBox(long idWashBox, Date workDateAndTime) {
+        return workDao.getWorkInBox( idWashBox,  workDateAndTime);
+    }
+
+    @Override
+    public List<Work> getWorksInFacility(int idFclt) {
+        return workDao.getWorksInFacility( idFclt);
+    }
+
+    @Override
+    public List<Work> getWorksInFacility(int idFclt, Date workDateAndTime) {
+        return workDao.getWorksInFacility( idFclt,  workDateAndTime);
     }
 }

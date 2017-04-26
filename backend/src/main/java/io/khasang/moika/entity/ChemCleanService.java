@@ -4,41 +4,26 @@ import javax.persistence.*;
 
 
 @Entity(name= "chem_clean_services")
-@IdClass(ChemCleanServicePk.class)
-public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
-    @Id
-    @Column(name = "id_service")
-    private int id;
+@DiscriminatorValue(value = "CHEM_CLEAN")
+public class ChemCleanService extends MoikaService  {
 
-    public int getIdService() {
-        return id;
-    }
-
-    public void setIdService(int id) {
-        this.id = id;
-    }
-
-
-    @Id
     @Column(name = "id_dirt_type")
     private int idDirtType;
     @ManyToOne
     @JoinColumn(name = "id_dirt_type", foreignKey = @ForeignKey(name = "fk_dirt_type"), insertable=false, updatable=false )
     private DirtType dirtTypeEntity;
 
-    @Id
-    @Column(name = "id_material")
+    @Column(name = "id_salon_material")
     private int idMaterial;
     @ManyToOne
-    @JoinColumn(name = "id_material", foreignKey = @ForeignKey(name = "fk_salon_materials"), insertable=false, updatable=false )
+    @JoinColumn(name = "id_salon_material", foreignKey = @ForeignKey(name = "fk_salon_materials"), insertable=false, updatable=false )
     private SalonMaterial salonMaterial;
 
-
-    public ChemCleanService(){
-      //  setAdditionalServiceInfo(salonMaterial.getTypeName() + " " +dirtTypeEntity.getTypeName());
+    public ChemCleanService() {
+        super("CHEM_LEAN");
     }
 
-    public int getidDirtType() {
+    public int getIdDirtType() {
         return idDirtType;
     }
 
@@ -74,14 +59,4 @@ public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
         this.dirtTypeEntity = dirtTypeEntity;
     }
 
-    @Override
-    public String getAdditionalServiceInfo() {
-        if (salonMaterial != null ) {
-            AdditionalServiceInfo = salonMaterial.getTypeName();
-        }
-        if (dirtTypeEntity != null ) {
-            AdditionalServiceInfo = " "+dirtTypeEntity.getTypeName();
-        }
-        return AdditionalServiceInfo;
-    }
 }

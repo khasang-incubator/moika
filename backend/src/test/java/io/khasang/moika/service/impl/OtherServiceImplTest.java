@@ -3,9 +3,8 @@ package io.khasang.moika.service.impl;
 
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.MoikaDaoException;
-import io.khasang.moika.entity.IBaseMoikaServiceAddInfo;
-import io.khasang.moika.entity.MoikaService;
-import io.khasang.moika.service.MoikaServiceDataAccessService;
+import io.khasang.moika.entity.OtherService;
+import io.khasang.moika.service.OtherServiceDataAccessService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,15 +23,15 @@ import java.util.List;
 public class OtherServiceImplTest {
 
     @Autowired
-    MoikaServiceDataAccessService moikaService;
+    OtherServiceDataAccessService otherServiceDAS;
 
 
     @Test
     @Transactional
     public void testCleanServiceList() {
-        List<MoikaService> serviceList = null;
+        List<OtherService> serviceList = null;
         try {
-            serviceList = moikaService.getServicesByType(6);
+            serviceList = otherServiceDAS.getServicesByType("OTHER");
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
@@ -41,15 +40,12 @@ public class OtherServiceImplTest {
         boolean isCode = false;
         BigDecimal cost = null;
         int dur = 0;
-        for (MoikaService item : serviceList) {
-            if (item.getTypeCode().equalsIgnoreCase("OTHER")) {
+        for (OtherService item : serviceList) {
+            if (item.getServiceTypeCode().equalsIgnoreCase("OTHER")) {
                 isCode = true;
-                List<IBaseMoikaServiceAddInfo> addInfo = item.getServiceAddInfo();
-                for (IBaseMoikaServiceAddInfo serviceInfo : addInfo) {
-                    cost = serviceInfo.getServiceCost();
-                    dur = serviceInfo.getServiceDuration();
-                    break;
-                }
+                cost = item.getServiceCost();
+                dur = item.getServiceDuration();
+                break;
             }
         }
         Assert.assertTrue("Service types list not contain name \"Прочее\"", isCode);

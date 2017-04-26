@@ -10,8 +10,6 @@ import org.springframework.validation.Validator;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
@@ -65,7 +63,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/views/images/");
         registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/views/resources/");
         //DRS таким образом мы разрешим сайту отображать статичный контент, такой как HTML-страницы
-        registry.addResourceHandler("/**").addResourceLocations("/ng2/");
+        registry.addResourceHandler("/**").addResourceLocations("/ng");
     }
 
 

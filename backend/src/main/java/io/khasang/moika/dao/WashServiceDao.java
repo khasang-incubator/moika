@@ -7,8 +7,8 @@ import io.khasang.moika.entity.WashService;
  * @author Skvortsov Pavel
  *
  */
-public interface WashServiceDao  extends BaseMoikaConcreatServiceDao<WashService> {
+public interface WashServiceDao extends MoikaServiceDao<WashService> {
 
-    WashService getWashServiceByIdAndType(long idService, int idCarType);
-    WashService getWashServiceByIdAndType(long idService, String carTypeCode);
+    WashService getWashServiceByIdAndCarType(long idService, int idCarType);
+    WashService getWashServiceByIdAndCarType(long idService, String carTypeCode);
 }

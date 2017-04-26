@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity(name = "complex_services")
-public class ComplexService extends ABaseMoikaServiceAdditionalInfo {
+public class ComplexService extends MoikaService {
 
     @Id
     @Column(name = "id_service")
@@ -23,6 +23,7 @@ public class ComplexService extends ABaseMoikaServiceAdditionalInfo {
     private String addInfo;
 
     public ComplexService() {
+        super("COMPLEX");
     }
 
     public String getAddInfo() {

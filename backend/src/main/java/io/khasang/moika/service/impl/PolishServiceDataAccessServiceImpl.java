@@ -1,6 +1,5 @@
 package io.khasang.moika.service.impl;
 
-import io.khasang.moika.dao.BaseMoikaConcreatServiceDao;
 import io.khasang.moika.dao.PolishServiceDao;
 import io.khasang.moika.entity.PolishService;
 import io.khasang.moika.service.PolishServiceDataAccessService;
@@ -11,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service(value = "polishServiceDataAccessService")
 @Transactional
-public class PolishServiceDataAccessServiceImpl extends AMoikaConcreatServiceDataAccessServiceImpl<PolishService> implements PolishServiceDataAccessService {
+public class PolishServiceDataAccessServiceImpl extends MoikaServiceDataAccessServiceImpl<PolishService> implements PolishServiceDataAccessService {
     @Autowired
     PolishServiceDao polishServiceDao;
 
@@ -19,9 +18,9 @@ public class PolishServiceDataAccessServiceImpl extends AMoikaConcreatServiceDat
     }
 
     @Autowired
-    public PolishServiceDataAccessServiceImpl(@Qualifier("polishServiceDao") BaseMoikaConcreatServiceDao<PolishService> baseMoikaServiceDao) {
-        super(baseMoikaServiceDao);
-        this.polishServiceDao = (PolishServiceDao) baseMoikaServiceDao;
+    public PolishServiceDataAccessServiceImpl(@Qualifier("polishServiceDao") PolishServiceDao polishService) {
+        super(polishService);
+        this.polishServiceDao =  polishService;
     }
 
 }

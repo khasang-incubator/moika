@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Pauls
  */
-@RequestMapping(value = "/washFacility")
+@RequestMapping(value = "/api/washFacility")
 @Controller
 public class PsWashFacilityController {
 
@@ -32,13 +32,13 @@ public class PsWashFacilityController {
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    //@ResponseBody
+    @ResponseBody
     public Object getWashFacilityList(Model model) {
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
         List<WashFacility> washFacilityList = pskvorWashFacilityDaoService.getAllWashFacilities();
-        model.addAttribute("fcltlist", washFacilityList);
-        model.addAttribute("nrows", washFacilityList.size() + " rows affected");
-        return "ps-dao-carwashfacilities"; //washFacilityList;
+       // model.addAttribute("fcltlist", washFacilityList);
+       // model.addAttribute("nrows", washFacilityList.size() + " rows affected");
+        return washFacilityList; //"ps-dao-carwashfacilities";
     }
 
     /**
@@ -93,13 +93,14 @@ public class PsWashFacilityController {
      * @return
      */
     @RequestMapping(value = "/OnNet/{idNet}", method = RequestMethod.GET)
-    public String getWashFacilityesOnNet(@PathVariable(value = "idNet") String idNet, Model model) {
+    @ResponseBody
+    public List<WashFacility> getWashFacilityesOnNet(@PathVariable(value = "idNet") String idNet, Model model) {
         List<WashFacility> washFacilityList = pskvorWashFacilityDaoService.getWashFacilitiesOnNet(Integer.valueOf(idNet));
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
         if (washFacilityList != null) {
             model.addAttribute("fcltlist", washFacilityList);
         } else {model.addAttribute("nrows", "There are no: facilities on net Id: "+idNet);}
-        return "ps-dao-carwashfacilities";
+        return  washFacilityList; //"ps-dao-carwashfacilities";
     }
 
     /**

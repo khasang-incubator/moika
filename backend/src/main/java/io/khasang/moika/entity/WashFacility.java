@@ -1,5 +1,6 @@
 package io.khasang.moika.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -35,7 +36,7 @@ public class WashFacility  extends ABaseMoikaEntity  {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
-    @JsonManagedReference
+    @JsonBackReference
     private List<Orders> orders = new ArrayList<>();
 
     public WashFacility() {

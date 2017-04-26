@@ -62,7 +62,7 @@ public class OrdersDaoImplTest {
         orders.setWashFacility(washFacility);
 
         detail = new OrdersDetail();
-        MoikaService moikaService = moikaServiceDao.get(1L);
+        MoikaService moikaService = (MoikaService)moikaServiceDao.get(1L);
       //  moikaService.getServiceAddInfo()getServiceAddInfo().getServiceCost();
         detail.setWashservice(moikaService);
         detail.setServiceCost(new BigDecimal("500.00"));

@@ -4,6 +4,7 @@ import io.khasang.moika.dao.MoikaDaoException;
 import io.khasang.moika.entity.*;
 import io.khasang.moika.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,16 +21,22 @@ import java.util.List;
 @Controller
 @RequestMapping("/MoikaService/service")
 public class PsServicesController {
+    @Qualifier("moikaServiceDataAccessService")
     @Autowired
     MoikaServiceDataAccessService allService;
+    @Qualifier("washServiceDataAccessService")
     @Autowired
     WashServiceDataAccessService washService;
+    @Qualifier("polishServiceDataAccessService")
     @Autowired
     PolishServiceDataAccessService polishService;
+    @Qualifier("otherServiceDataAccessService")
     @Autowired
     OtherServiceDataAccessService otherService;
+    @Qualifier("cleanServiceDataAccessService")
     @Autowired
     CleanServiceDataAccessService cleanService;
+    @Qualifier("chemCleanServiceDataAccessService")
     @Autowired
     ChemCleanServiceDataAccessService chemCleanService;
     @Autowired
@@ -94,52 +101,16 @@ public class PsServicesController {
     }
 
     /**
-     *  Услуги конкретного вида услуг c подробностями во вложенных entity
+     *  Услуги конкретного вида услуг c подробностями в
      * @param model
      * @return
      */
-    @RequestMapping(value = "/concreatServiceList/{code}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/serviceList/{code}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object getWashServiceList(@PathVariable(value = "code") String code, Model model) {
-        List<? extends IBaseMoikaServiceAddInfo> servicesList = new ArrayList<>();
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        switch ( code ) {
-            case "WASH":
-                servicesList = washService.getAllConcreatServices();
-                break;
-            case "CLEAN":
-                servicesList = cleanService.getAllConcreatServices();
-                break;
-            case "CHEM_CLEAN":
-                servicesList = chemCleanService.getAllConcreatServices();
-                break;
-            case "POLISH":
-                servicesList = polishService.getAllConcreatServices();
-                break;
-            case "COMPLEX":
-                //servicesList = washService.getAllConcreatServices();
-                break;
-            case "OTHER":
-                servicesList = otherService.getAllConcreatServices();
-                break;
-        }
-        model.addAttribute("servicelist", servicesList);
-        model.addAttribute("nrows", servicesList.size() + " rows affected");
-        return servicesList; //"ps-dao-wash-services";
-    }
-
-    /**
-     * Услуги конкретного вида услуг с ценой и длительностью подробностями в виде строки
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/serviceListByCode/{code}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public Object getWashServiceListByService(@PathVariable(value = "code") String code, Model model) {
+    public Object getWashServiceList(@PathVariable(value = "code") String typeCode, Model model) {
         List<MoikaService> servicesList = new ArrayList<>();
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
         try {
-            servicesList = allService.getServicesByType(code);
+            servicesList = allService.getServicesByType(typeCode);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }
@@ -147,6 +118,7 @@ public class PsServicesController {
         model.addAttribute("nrows", servicesList.size() + " rows affected");
         return servicesList; //"ps-dao-wash-services";
     }
+
 
     /**
      * Услуги конкретного вида услуг с ценой и длительностью подробностями в виде строки

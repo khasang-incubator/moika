@@ -1,6 +1,5 @@
 package io.khasang.moika.service.impl;
 
-import io.khasang.moika.dao.BaseMoikaConcreatServiceDao;
 import io.khasang.moika.dao.CleanServiceDao;
 import io.khasang.moika.entity.CleanService;
 import io.khasang.moika.service.CleanServiceDataAccessService;
@@ -11,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service(value = "cleanServiceDataAccessService")
 @Transactional
-public class CleanServiceDataAccessServiceImpl extends AMoikaConcreatServiceDataAccessServiceImpl<CleanService> implements CleanServiceDataAccessService {
+public class CleanServiceDataAccessServiceImpl extends MoikaServiceDataAccessServiceImpl<CleanService> implements CleanServiceDataAccessService {
     @Autowired
     CleanServiceDao cleanServiceDao;
 
@@ -19,9 +18,9 @@ public class CleanServiceDataAccessServiceImpl extends AMoikaConcreatServiceData
     }
 
     @Autowired
-    public CleanServiceDataAccessServiceImpl(@Qualifier("cleanServiceDao") BaseMoikaConcreatServiceDao<CleanService> baseMoikaConcreatServiceDao) {
-        super(baseMoikaConcreatServiceDao);
-        this.cleanServiceDao = (CleanServiceDao) baseMoikaConcreatServiceDao;
+    public CleanServiceDataAccessServiceImpl(@Qualifier("cleanServiceDao") CleanServiceDao cleanServiceDao) {
+        super(cleanServiceDao);
+        this.cleanServiceDao = cleanServiceDao;
     }
  
 }

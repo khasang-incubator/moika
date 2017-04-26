@@ -1,8 +1,6 @@
 package io.khasang.moika.config;
 
 
-import io.khasang.moika.service.WashServiceDataAccessService;
-import io.khasang.moika.service.impl.WashServiceDataAccessServiceImpl;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -70,7 +68,5 @@ public class HibernateConfig {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
-    @Bean
-    public WashServiceDataAccessService washServiceDataAccessService() { return new WashServiceDataAccessServiceImpl();}
 
 }

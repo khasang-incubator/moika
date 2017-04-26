@@ -13,8 +13,9 @@ import java.util.List;
 @Entity(name = "orders")
 public class Orders extends ABaseMoikaEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_order")
+   // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_order", columnDefinition = "bigserial")
+    @GeneratedValue(strategy = GenerationType.AUTO) //не IDENTITY, а тот что в таблицах
     private Long id;
 
     @Column(name = "id_fclt")

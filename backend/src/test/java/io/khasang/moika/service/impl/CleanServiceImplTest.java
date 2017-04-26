@@ -4,9 +4,7 @@ package io.khasang.moika.service.impl;
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.MoikaDaoException;
 import io.khasang.moika.entity.CleanService;
-import io.khasang.moika.entity.IBaseMoikaServiceAddInfo;
-import io.khasang.moika.entity.MoikaService;
-import io.khasang.moika.service.MoikaServiceDataAccessService;
+import io.khasang.moika.service.CleanServiceDataAccessService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,15 +23,15 @@ import java.util.List;
 public class CleanServiceImplTest {
 
     @Autowired
-    MoikaServiceDataAccessService moikaService;
+    CleanServiceDataAccessService cleanServiceDAS;
 
 
     @Test
     @Transactional
     public void testCleanServiceList() {
-        List<MoikaService> serviceList = null;
+        List<CleanService> serviceList = null;
         try {
-            serviceList = moikaService.getServicesByType(2);
+            serviceList = cleanServiceDAS.getServicesByType("CLEAN");
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
@@ -42,16 +40,13 @@ public class CleanServiceImplTest {
         boolean isCode = false;
         BigDecimal cost = null;
         int dur = 0;
-        for (MoikaService item : serviceList) {
+        for (CleanService item : serviceList) {
             if (item.getServiceName().equalsIgnoreCase("Чиска салона")) {
                 isCode = true;
-                List<IBaseMoikaServiceAddInfo> addInfo = item.getServiceAddInfo();
-                for (IBaseMoikaServiceAddInfo serviceInfo : addInfo) {
-                    if (((CleanService) serviceInfo).getDirtTypeEntity().getTypeCode().equals("NORM")) {
-                        cost = serviceInfo.getServiceCost();
-                        dur = serviceInfo.getServiceDuration();
-                        break;
-                    }
+                if (item.getDirtTypeEntity().getTypeCode().equals("NORM")) {
+                    cost = item.getServiceCost();
+                    dur = item.getServiceDuration();
+                    break;
                 }
             }
         }

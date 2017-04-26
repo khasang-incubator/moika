@@ -13,9 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 
-@Service(value = "moikaServiceDataAccessServiceImpl")
+@Service(value = "moikaServiceDataAccessService")
 @Transactional
-public  class MoikaServiceDataAccessServiceImpl implements MoikaServiceDataAccessService {
+public  class MoikaServiceDataAccessServiceImpl<T extends MoikaService> implements MoikaServiceDataAccessService<T> {
     @Autowired
     MoikaServiceDao moikaServiceDao;
 
@@ -27,56 +27,53 @@ public  class MoikaServiceDataAccessServiceImpl implements MoikaServiceDataAcces
     public MoikaServiceDataAccessServiceImpl() {
     }
 
+
     @Override
-    public MoikaService addService(MoikaService service) throws MoikaDaoException {
-        return moikaServiceDao.create(service);
+    public T addService(T service) throws MoikaDaoException {
+        return (T)moikaServiceDao.create(service);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public MoikaService getServiceById(int id) throws MoikaDaoException {
-        return moikaServiceDao.get(id);
+    public T getServiceById(int id) throws MoikaDaoException {
+        return (T)moikaServiceDao.get(id);
     }
 
     @Override
-    public void updateService(MoikaService service) throws MoikaDaoException {
+    public void updateService(T service) throws MoikaDaoException {
         moikaServiceDao.update(service);
     }
 
     @Override
-    public MoikaService deleteService(MoikaService service)  throws MoikaDaoException {
+    public T deleteService(T service)  throws MoikaDaoException {
         moikaServiceDao.delete(service);
         return service;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public List<MoikaService> getAllServices() throws MoikaDaoException {
+    public List<T> getAllServices() throws MoikaDaoException {
         return moikaServiceDao.getAll();
     }
 
 
     @Override
-    public List<MoikaService> getAllervicesByStatus(int idStatus) throws MoikaDaoException {
+    public List<T> getAllervicesByStatus(int idStatus) throws MoikaDaoException {
             return moikaServiceDao.getServicesByStatus(idStatus);
     }
 
     @Override
-    public List<MoikaService> getAllervicesByStatus(String status) throws MoikaDaoException {
+    public List<T> getAllervicesByStatus(String status) throws MoikaDaoException {
         return moikaServiceDao.getServicesByStatus(status);
     }
+
     @Override
-    public List<MoikaService> getServicesByType(int idType) throws MoikaDaoException {
-        return moikaServiceDao.getServicesByType(idType);
+    public List<T> getServicesByType(String typeCode) throws MoikaDaoException {
+        return moikaServiceDao.getServicesByType(typeCode);
     }
 
     @Override
-    public List<MoikaService> getServicesByType(String code) throws MoikaDaoException {
-        return moikaServiceDao.getServicesByType(code);
-    }
-
-    @Override
-    public List<MoikaService> getActualServices() throws MoikaDaoException {
+    public List<T> getActualServices() throws MoikaDaoException {
         return moikaServiceDao.getActualServices();
     }
 

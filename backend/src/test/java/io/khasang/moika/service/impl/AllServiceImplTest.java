@@ -3,7 +3,6 @@ package io.khasang.moika.service.impl;
 
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.MoikaDaoException;
-import io.khasang.moika.entity.IBaseMoikaServiceAddInfo;
 import io.khasang.moika.entity.MoikaService;
 import io.khasang.moika.entity.WashService;
 import io.khasang.moika.service.MoikaServiceDataAccessService;
@@ -11,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -24,8 +24,9 @@ import java.util.List;
 @ContextConfiguration(classes = {WebConfig.class})
 public class AllServiceImplTest {
 
+    @Qualifier("moikaServiceDataAccessService")
     @Autowired
-    MoikaServiceDataAccessService moikaService;
+    MoikaServiceDataAccessService moikaServiceDAS;
 
 
     @Test
@@ -33,7 +34,7 @@ public class AllServiceImplTest {
     public void testAllServiceList() {
         List<MoikaService> serviceList = null;
         try {
-            serviceList = moikaService.getAllServices();
+            serviceList = moikaServiceDAS.getAllServices();
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
@@ -45,12 +46,9 @@ public class AllServiceImplTest {
         for (MoikaService item : serviceList) {
             if (item.getServiceName().equalsIgnoreCase("Ручная мойка машины")) {
                 isWashCode = true;
-                List<IBaseMoikaServiceAddInfo> addInfo = item.getServiceAddInfo();
-                for (IBaseMoikaServiceAddInfo serviceInfo : addInfo) {
-                    if (((WashService)serviceInfo).getCarTypeEntity().getTypeCode().equals("CAR")) {
-                       cost = serviceInfo.getServiceCost();
-                       dur = serviceInfo.getServiceDuration();
-                    }
+                if (((WashService) item).getCarTypeEntity().getTypeCode().equals("CAR")) {
+                    cost = item.getServiceCost();
+                    dur = item.getServiceDuration();
                 }
             }
         }

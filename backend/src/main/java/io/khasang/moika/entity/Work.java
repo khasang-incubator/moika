@@ -1,71 +1,167 @@
 package io.khasang.moika.entity;
 
-import org.hibernate.annotations.NaturalId;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.sql.Timestamp;
 
-@Entity
+@Entity(name = "works")
 public class Work extends ABaseMoikaEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(length = 80, unique = true,nullable = false)
-    @NaturalId(mutable = true)
-    private String name;
-    @Column(length = 15, scale =2, unique = true,nullable = false)
-    private BigDecimal price;
-/*
-время в минутах для проведения работ в боксе
-*/
-    private int timeInBox;
+    @Column(name = "id_work", columnDefinition = "bigserial")
+    @GeneratedValue(strategy = GenerationType.AUTO) //не IDENTITY, а тот что в таблицах
+    protected Long idWork;
 
-    public Work() {
+    @Column(name = "id_order", insertable=false, updatable=false)
+    protected Long idOrder;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_order" )
+    @JsonBackReference
+    protected  Orders order;
+
+    @Column(name = "id_box", insertable=false, updatable=false)
+    protected Long idBox;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_box" )
+    @JsonBackReference
+    protected  WashBox washBox;
+
+    @Column(name = "id_manager", insertable=false, updatable=false)
+    protected Long idManager;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_manager" )
+    @JsonBackReference
+    protected  User manager;
+
+    @Column(name = "id_worker", insertable=false, updatable=false)
+    protected Long idWorker;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_worker" )
+    @JsonBackReference
+    protected  User worker;
+
+    @Column(name = "time_start")
+    protected Timestamp timeStart;
+
+    @Column(name = "time_plan_finish")
+    protected Timestamp timePlanFinish;
+
+    @Column(name = "time_finish")
+    protected Timestamp timeFinish;
+
+    @Column(name = "add_info")
+    protected String addInfo;
+
+    public Long getIdWork() {
+        return idWork;
     }
 
-    public Work(String name, BigDecimal price, int timeInBox) {
-        this.name = name;
-        this.price = price;
-        this.timeInBox = timeInBox;
+    public void setIdWork(Long idWork) {
+        this.idWork = idWork;
     }
 
-    public Long getId() {
-        return id;
+    public Long getidOrder() {
+        return idOrder;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setidOrder(Long idOrder) {
+        this.idOrder = idOrder;
     }
 
-    public String getName() {
-        return name;
+
+    public Long getidBox() {
+        return idBox;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setidBox(Long idBox) {
+        this.idBox = idBox;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public Long getidManager() {
+        return idManager;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setidManager(Long idManager) {
+        this.idManager = idManager;
     }
 
-    public int getTimeInBox() {
-        return timeInBox;
+    public java.sql.Timestamp gettimeStart() {
+        return timeStart;
     }
 
-    public void setTimeInBox(int timeInBox) {
-        this.timeInBox = timeInBox;
+    public void settimeStart(java.sql.Timestamp timeStart) {
+        this.timeStart = timeStart;
+    }
+
+    public java.sql.Timestamp gettimePlanFinish() {
+        return timePlanFinish;
+    }
+
+    public void settimePlanFinish(java.sql.Timestamp timePlanFinish) {
+        this.timePlanFinish = timePlanFinish;
+    }
+
+    public java.sql.Timestamp gettimeFinish() {
+        return timeFinish;
+    }
+
+    public void settimeFinish(java.sql.Timestamp timeFinish) {
+        this.timeFinish = timeFinish;
+    }
+
+    public Long getidWorker() {
+        return idWorker;
+    }
+
+    public void setidWorker(Long idWorker) {
+        this.idWorker = idWorker;
+    }
+
+    public String getaddInfo() {
+        return addInfo;
+    }
+
+    public void setaddInfo(String addInfo) {
+        this.addInfo = addInfo;
     }
 
     @Override
-    public String toString(){
-        System.out.format("id = %d name= %s price = %f timeInBox =%d",
-                id,name,price,timeInBox);
-        return null;
+    public String toString() {
+        return "Work{" +
+                "idWork=" + idWork +
+                ", idOrder=" + idOrder +
+                ", idBox=" + idBox +
+                ", idManager=" + idManager +
+                ", idWorker=" + idWorker +
+                ", timeStart=" + timeStart +
+                ", timePlanFinish=" + timePlanFinish +
+                ", timeFinish=" + timeFinish +
+                ", addInfo='" + addInfo + '\'' +
+                '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Work work = (Work) o;
+
+        if (!getIdWork().equals(work.getIdWork())) return false;
+        if (!idOrder.equals(work.idOrder)) return false;
+        if (!idBox.equals(work.idBox)) return false;
+        if (!idWorker.equals(work.idWorker)) return false;
+        if (!timeStart.equals(work.timeStart)) return false;
+        return timePlanFinish != null ? timePlanFinish.equals(work.timePlanFinish) : work.timePlanFinish == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getIdWork().hashCode();
+        result = 31 * result + idOrder.hashCode();
+        result = 31 * result + idBox.hashCode();
+        result = 31 * result + idWorker.hashCode();
+        result = 31 * result + timeStart.hashCode();
+        return result;
+    }
 }

@@ -1,5 +1,7 @@
 package io.khasang.moika.entity;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 
 /**
@@ -15,6 +17,7 @@ public abstract class ABaseMoikaTypeReference extends ABaseMoikaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
     @Column(name = "type_code", unique = true, nullable = false)
+    @NaturalId
     protected String code;
     @Column(name = "type_name")
     protected String name;

@@ -1,0 +1,14 @@
+<h2>Моечные боксы</h2>
+<ul class="washBoxList">
+  <li *ngFor="let box of washBoxList"
+      [class.selected]="box === selectedBox"
+      (click)="onSelect(box)">
+    <span class="badge">{{box.id}}</span> {{box.name}}
+  </li>
+</ul>
+<div *ngIf="selectedBox">
+  <h2>
+    {{selectedBox.name | uppercase}} выбран
+  </h2>
+</div>
+
