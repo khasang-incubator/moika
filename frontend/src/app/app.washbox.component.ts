@@ -5,14 +5,14 @@ import {WashBox} from './washbox';
 @Component({
   selector: 'washbox-list',
   templateUrl: './app.washbox.component.html',
-  styleUrls: ['../css/bootstrap.min.css']
+  styleUrls: ['./app.washbox.component.css']
 })
 export class WashBoxComponent implements OnInit {
   washBoxList: Array<WashBox> = [];
   selectedBox: WashBox;
   washBoxService: WashBoxService;
 
-  public WashBoxComponent(washBoxService: WashBoxService) {
+  constructor(washBoxService: WashBoxService) {
     this.washBoxService = washBoxService;
   }
 

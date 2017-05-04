@@ -1,0 +1,13 @@
+<h2>Мойки</h2>
+<ul class="washFacilityList">
+  <li *ngFor="let washFclt of washFacilityList"
+      [class.selected]="washFclt === selectedFclt"
+      (click)="onSelect(washFclt)">
+    <span class="badge">{{washFclt.idFclt}}</span> {{washFclt.name}}
+  </li>
+</ul>
+<div *ngIf="selectedFclt">
+  <h2>
+   Мойка {{selectedFclt.name | uppercase}} выбрана
+  </h2>
+</div>

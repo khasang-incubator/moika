@@ -4,17 +4,23 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import {WashBoxComponent} from "./app.washbox.component";
+import {WashBoxService} from "./app.washbox.service";
+import { WashFacilityComponent } from './wash-facility.component';
+import {WashFacilityService} from "./wash-facility.service";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    WashBoxComponent,
+    WashFacilityComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [WashBoxService, WashFacilityService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

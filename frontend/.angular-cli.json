@@ -21,6 +21,12 @@
       "styles": [
         "styles.css"
       ],
+      "fonts": [
+        "fonts"
+      ],
+      "images": [
+        "images"
+      ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
       "environments": {

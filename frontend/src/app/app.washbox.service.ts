@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, Headers, HttpModule } from '@angular/http';
+import {Http, Response, Headers } from '@angular/http';
 import {WashBox} from './washbox';
 import 'rxjs/add/operator/toPromise';
+//import {WashBoxList} from "./mock-wash-box";
 
 @Injectable()
 export class WashBoxService {
 
-  private baseUrl: string = 'http://localhost:8080/api/washBox/';
+  private baseUrl: string = 'http://localhost:8080/api/washBox';
 
   constructor(private http: Http) {
   }
@@ -16,14 +17,20 @@ export class WashBoxService {
        .toPromise()
        .then(response => response.json().data as WashBox)
        .catch(this.handleError);
+         console.log(washBox.toString());
+      // let washBox = this.getAll()
+      //   .then(list => list.find(washBox => washBox.id === id));
+
     return washBox;
   }
 
   getAll(): Promise<WashBox[]> {
-   let  washBoxArr = this.http.get(`${this.baseUrl}/WashBox/list`, {headers: this.getHeaders()})
+    let  washBoxArr = this.http.get('http://localhost:8080/api/washBox/list', {headers: this.getHeaders()})
      .toPromise()
      .then(response => response.json().data as WashBox[])
      .catch(this.handleError);
+      console.log(washBoxArr.toString());
+    //let washBoxArr =  Promise.resolve(WashBoxList);
    return washBoxArr;
   }
 
@@ -36,6 +43,8 @@ export class WashBoxService {
     let headers = new Headers();
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'application/json');
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Access-Control-Allow-Credentials', 'true');
     return headers;
   }
 
