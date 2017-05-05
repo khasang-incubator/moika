@@ -18,7 +18,7 @@ export class WashFacilityComponent implements OnInit {
   }
 
   getAll(): void {
-    this.washFacilityService.getAll().subscribe(washFacilityList => this.washFacilityList = washFacilityList);
+    this.washFacilityService.getAll().then(washFacilityList => this.washFacilityList = washFacilityList).catch(this.handleError);
   }
 
   ngOnInit(): void {
@@ -27,6 +27,11 @@ export class WashFacilityComponent implements OnInit {
 
   onSelect(washFacility: WashFacility): void {
     this.selectedFclt = washFacility;
+  }
+
+  private handleError(error: any): Promise<any> {
+    console.error('Не могу получить список моек. Error code: %s, URL: %s ', error.status, error.url); // for demo purposes only
+    return Promise.reject(error.message || error);
   }
 
 }

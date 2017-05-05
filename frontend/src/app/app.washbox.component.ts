@@ -17,7 +17,7 @@ export class WashBoxComponent implements OnInit {
   }
 
   getAll(): void {
-    this.washBoxService.getAll().then(washBoxList => this.washBoxList = washBoxList);
+    this.washBoxService.getAll().then(washBoxList => this.washBoxList = washBoxList).catch(this.handleError);
   }
 
   ngOnInit(): void {
@@ -28,4 +28,8 @@ export class WashBoxComponent implements OnInit {
     this.selectedBox = washBox;
   }
 
+  private handleError(error: any): Promise<any> {
+    console.error('Не могу получить список боксов. Error code: %s, URL: %s ', error.status, error.url); // for demo purposes only
+    return Promise.reject(error.message || error);
+  }
 }

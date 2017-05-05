@@ -3,7 +3,7 @@
   <li *ngFor="let washFclt of washFacilityList"
       [class.selected]="washFclt === selectedFclt"
       (click)="onSelect(washFclt)">
-    <span class="badge">{{washFclt.idFclt}}</span> {{washFclt.name}}
+    <span class="badge">{{washFclt.id}}</span> {{washFclt.name}}
   </li>
 </ul>
 <div *ngIf="selectedFclt">

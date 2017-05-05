@@ -1,5 +1,5 @@
 export class WashFacility {
-  idFclt: number;
+  id: number;
   idNet: number;
   name: string = '';
   description: string  = '';

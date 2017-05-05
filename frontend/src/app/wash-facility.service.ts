@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {WashFacility} from './wash-facility';
 import {Http, Headers, Response} from '@angular/http';
-//import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/toPromise';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-//import {WashFacilityList} from "./mock-wash-facility";
+// import {WashFacilityList} from "./mock-wash-facility";
 
 @Injectable()
 export class WashFacilityService {
@@ -38,18 +38,20 @@ export class WashFacilityService {
    }
    */
 
-  getAll(): Observable<WashFacility[]> {
-    let washFcltArr = this.http.get(`${this.baseUrl}/list`, {headers: this.getHeaders()})
-      .map(this.mapFacilities);
+  getAll(): Promise<WashFacility[]> {
+    const washFcltArr = this.http.get(`${this.baseUrl}/list`, {headers: this.getHeaders()})
+      .map((res: Response) => res.json()).toPromise();
+           // .map(this.mapFacilities);
     return washFcltArr;
   }
 
   mapFacilities(response: Response): WashFacility[] {
+    console.log(response.json().toString());
     return response.json().map(this.toWashFacility);
   }
 
   toWashFacility(r: any): WashFacility {
-    let z: WashFacility  = r;
+    let z: WashFacility = r.resolve();
     return z;
   }
 
@@ -60,7 +62,7 @@ export class WashFacilityService {
   }
 
   private getHeaders() {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'application/json');
     headers.append('Access-Control-Allow-Origin', '*');
