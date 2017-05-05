@@ -21,6 +21,7 @@ import java.util.List;
  * @author Pauls
  */
 @Controller
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "/api/washBox")
 public class PsWashBoxController {
 

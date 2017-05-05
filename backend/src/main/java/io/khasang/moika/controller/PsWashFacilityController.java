@@ -19,8 +19,10 @@ import java.util.List;
 /**
  * @author Pauls
  */
-@RequestMapping(value = "/api/washFacility")
+
 @Controller
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping(value = "/api/washFacility")
 public class PsWashFacilityController {
 
     @Autowired

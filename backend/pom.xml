@@ -26,7 +26,7 @@
 		<dependency>
 			<groupId>moika</groupId>
 			<artifactId>frontend</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${project.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 

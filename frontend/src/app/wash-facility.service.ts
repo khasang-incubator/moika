@@ -41,18 +41,16 @@ export class WashFacilityService {
   getAll(): Observable<WashFacility[]> {
     let washFcltArr = this.http.get(`${this.baseUrl}/list`, {headers: this.getHeaders()})
       .map(this.mapFacilities);
-    console.log(washFcltArr[0].toString());
     return washFcltArr;
   }
-
-  function
 
   mapFacilities(response: Response): WashFacility[] {
     return response.json().map(this.toWashFacility);
   }
 
   toWashFacility(r: any): WashFacility {
-    return r;
+    let z: WashFacility  = r;
+    return z;
   }
 
 

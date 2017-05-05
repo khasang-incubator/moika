@@ -15,21 +15,21 @@ export class WashBoxService {
   get(id: number): Promise<WashBox> {
      let washBox = this.http.get(`${this.baseUrl}/${id}`, {headers: this.getHeaders()})
        .toPromise()
-       .then(response => response.json().data as WashBox)
+       .then(response => response.json().data as WashBox )
        .catch(this.handleError);
-         console.log(washBox.toString());
+      //   console.log(washBox.then(prWashBox => console.info(prWashBox.id + ' '+prWashBox.boxName)));
       // let washBox = this.getAll()
       //   .then(list => list.find(washBox => washBox.id === id));
-
     return washBox;
   }
 
   getAll(): Promise<WashBox[]> {
-    let  washBoxArr = this.http.get('http://localhost:8080/api/washBox/list', {headers: this.getHeaders()})
+    let  washBoxArr;
+    washBoxArr = this.http.get(this.baseUrl+'/list', {headers: this.getHeaders()})
      .toPromise()
      .then(response => response.json().data as WashBox[])
      .catch(this.handleError);
-      console.log(washBoxArr.toString());
+      console.log("Getting recs: "+ washBoxArr.length );
     //let washBoxArr =  Promise.resolve(WashBoxList);
    return washBoxArr;
   }
