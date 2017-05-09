@@ -6,7 +6,7 @@ export class Person extends BaseMoikaEntity {
   private _firstName: string;
   private _middleName: string = '';
   private _lastName: string;
-  private _birthdate: Date;
+  private _birthDate: Date;
   private _phones: Phone[];
   private _email: string = '';
 
@@ -38,12 +38,12 @@ export class Person extends BaseMoikaEntity {
     this._lastName = value;
   }
 
-  get birthdate(): Date {
-    return this._birthdate;
+  get birthDate(): Date {
+    return this._birthDate;
   }
 
-  set birthdate(value: Date) {
-    this._birthdate = value;
+  set birthDate(value: Date) {
+    this._birthDate = value;
   }
 
   get email(): string {

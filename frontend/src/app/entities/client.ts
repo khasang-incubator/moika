@@ -5,17 +5,13 @@ import {SomeStatus} from "./some-status";
 
 export class Client extends BaseMoikaEntity {
   private _idClient: number;
+  private _idPerson: number;
+  private _person: Person;
   private _idStatus: number;
   private _status: SomeStatus;
   private _dateReg: Date;
   private _dateLastWash: Date;
-  private _idPerson: number;
-  private _person: Person;
 
-  constructor( values: Object = {} )  {
-    super();
-    Object.assign( this, values );
-  }
 
   get idClient(): number {
     return this._idClient;

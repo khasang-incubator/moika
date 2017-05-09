@@ -14,6 +14,7 @@ import { ClientComponent } from './components/client/client.component';
 import { ClientListComponent } from './components/client/client-list.component';
 import {CrudService} from "./services/crud.service";
 import {BsDropdownModule} from "ngx-bootstrap";
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {BsDropdownModule} from "ngx-bootstrap";
     WashBoxComponent,
     WashFacilityComponent,
     ClientComponent,
-    ClientListComponent
+    ClientListComponent,
+    NavbarComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),
