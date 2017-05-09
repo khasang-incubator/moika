@@ -1,5 +1,6 @@
 package io.khasang.moika.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -17,8 +18,10 @@ public class Phone extends ABaseMoikaEntity {
     @NotBlank
     @Pattern(regexp = PHONE_NUMBER_PATTERN, message = "{phone.not_10digits.message}")
     private String number;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_person", foreignKey = @ForeignKey(name = "fk_person_phone"))
+    @JsonBackReference
     private Person person;
 
 

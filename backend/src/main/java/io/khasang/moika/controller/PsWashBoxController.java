@@ -3,7 +3,7 @@ package io.khasang.moika.controller;
 import io.khasang.moika.entity.BoxStatus;
 import io.khasang.moika.entity.BoxType;
 import io.khasang.moika.entity.WashBox;
-import io.khasang.moika.service.PskvorWashBoxDaoService;
+import io.khasang.moika.service.PskvorWashBoxDataAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +25,7 @@ import java.util.List;
 public class PsWashBoxController {
 
     @Autowired
-    PskvorWashBoxDaoService pskvorWashBoxDaoService;
+    PskvorWashBoxDataAccessService pskvorWashBoxDataAccessService;
 
     /**
      * Вывод информации о всех боксах
@@ -37,7 +37,7 @@ public class PsWashBoxController {
     @ResponseBody
     public Object getWashBoxList(Model model) {
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        List<WashBox> washBoxList = pskvorWashBoxDaoService.getAllWashBoxes();
+        List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getAllWashBoxes();
         model.addAttribute("boxlist", washBoxList);
         model.addAttribute("nrows", washBoxList.size() + " rows affected");
         return washBoxList;
@@ -54,7 +54,7 @@ public class PsWashBoxController {
     @ResponseBody
     public Object addWashBox(@RequestBody WashBox washBox, Model model) {
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        pskvorWashBoxDaoService.addWashBox(washBox);
+        pskvorWashBoxDataAccessService.addWashBox(washBox);
         List<WashBox> washBoxList = new ArrayList<>();
         washBoxList.add(washBox);
         model.addAttribute("boxlist", washBoxList);
@@ -71,7 +71,7 @@ public class PsWashBoxController {
     @RequestMapping(value = "/washBox/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object updateWashBox(@RequestBody WashBox washBox) {
-        pskvorWashBoxDaoService.updateWashBox(washBox);
+        pskvorWashBoxDataAccessService.updateWashBox(washBox);
         return washBox;
     }
 
@@ -85,7 +85,7 @@ public class PsWashBoxController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public WashBox getWashBox(@PathVariable(value = "id") String inputId, Model model) {
-        WashBox washBox = pskvorWashBoxDaoService.getWashBoxByID(Integer.valueOf(inputId));
+        WashBox washBox = pskvorWashBoxDataAccessService.getWashBoxById(Integer.valueOf(inputId));
         return washBox;
     }
 
@@ -102,7 +102,7 @@ public class PsWashBoxController {
     @ResponseBody
     public WashBox getWashBoxesOnFacility(@PathVariable(value = "idFacility") String idFclt, @PathVariable(value = "boxName") String boxName,
                                          HttpServletResponse response, Model model) {
-        WashBox washBox = pskvorWashBoxDaoService.getWashBox(Integer.valueOf(idFclt), boxName);
+        WashBox washBox = pskvorWashBoxDataAccessService.getWashBoxByName(Integer.valueOf(idFclt), boxName);
         return washBox;
     }
 
@@ -116,10 +116,10 @@ public class PsWashBoxController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String deleteWashBox(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
-        WashBox washBox = pskvorWashBoxDaoService.getWashBoxByID(Integer.valueOf(inputId));
+        WashBox washBox = pskvorWashBoxDataAccessService.getWashBoxById(Integer.valueOf(inputId));
         if (washBox != null) {
             int id = washBox.getId();
-            pskvorWashBoxDaoService.deleteWashBox(washBox);
+            pskvorWashBoxDataAccessService.deleteWashBox(washBox);
             return String.valueOf(response.SC_OK);
         } else {return String.valueOf(response.SC_NOT_FOUND);}
     }
@@ -134,7 +134,7 @@ public class PsWashBoxController {
     @RequestMapping(value = "/ByType/{type}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public  List<WashBox> getWashBoxListbyType(@PathVariable(value = "type") String typeId, Model model) {
-        List<WashBox> washBoxList = pskvorWashBoxDaoService.getWashBoxesByType(Integer.valueOf(typeId));
+        List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByType(Integer.valueOf(typeId));
         return washBoxList;
     }
 
@@ -148,7 +148,7 @@ public class PsWashBoxController {
     @RequestMapping(value = "/ByStatus/{status}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public List<WashBox> getWashBoxListbyStatus(@PathVariable(value = "status") String status, Model model) {
-        List<WashBox> washBoxList = pskvorWashBoxDaoService.getWashBoxesByStatus(Integer.valueOf(status));
+        List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByStatus(Integer.valueOf(status));
         return washBoxList;
     }
 
@@ -162,7 +162,7 @@ public class PsWashBoxController {
     @RequestMapping(value = "/boxStatus/list/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public List<BoxStatus> getBoxStatusList(@RequestBody BoxStatus boxStatus, Model model) {
-        return pskvorWashBoxDaoService.getWashBoxesStatuses();//"ps-dao-carwashfacilities";
+        return pskvorWashBoxDataAccessService.getWashBoxesStatuses();//"ps-dao-carwashfacilities";
     }
 
     /**
@@ -174,7 +174,7 @@ public class PsWashBoxController {
     @RequestMapping(value = "/boxType/list/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public List<BoxType> getBoxTypesList(@RequestBody BoxType boxtypel) {
-        return pskvorWashBoxDaoService.getWashBoxesTypes();//"ps-dao-carwashfacilities";
+        return pskvorWashBoxDataAccessService.getWashBoxesTypes();//"ps-dao-carwashfacilities";
     }
 
     /**
@@ -186,7 +186,7 @@ public class PsWashBoxController {
     @RequestMapping(value = "/boxStatus/{code}/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public BoxStatus getBoxStatusByCode(@PathVariable(value = "code") String code) {
-        return pskvorWashBoxDaoService.getWashBoxesStatusByCode(code);//"ps-dao-carwashfacilities";
+        return pskvorWashBoxDataAccessService.getWashBoxesStatusByCode(code);//"ps-dao-carwashfacilities";
     }
 
     /**
@@ -198,7 +198,7 @@ public class PsWashBoxController {
     @RequestMapping(value = "/boxType/{code}/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public BoxType getBoxTypesList(@PathVariable(value = "code") String code) {
-        return pskvorWashBoxDaoService.getWashBoxesTypeByCode(code);//"ps-dao-carwashfacilities";
+        return pskvorWashBoxDataAccessService.getWashBoxesTypeByCode(code);//"ps-dao-carwashfacilities";
     }
 
 

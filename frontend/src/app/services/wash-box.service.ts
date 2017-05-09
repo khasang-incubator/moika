@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Response, Headers } from '@angular/http';
-import {WashBox} from './washbox';
+import {WashBox} from '../entities/wash-box';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 //import {WashBoxList} from "./mock-wash-box";
@@ -18,16 +18,15 @@ export class WashBoxService {
        .toPromise()
        .then(response => response.json().data as WashBox )
        .catch(this.handleError);
-      //   console.log(washBox.then(prWashBox => console.info(prWashBox.id + ' '+prWashBox.boxName)));
       // let washBox = this.getAll()
-      //   .then(list => list.find(washBox => washBox.id === id));
+      //   .then(list => list.find(washBox => washBox.id === id)); //getting from mock-wash-facility
     return washBox;
   }
 
   getAll(): Promise<WashBox[]> {
-    let  washBoxArr = this.http.get(`${this.baseUrl}/list`, {headers: this.getHeaders()})
+    const  washBoxArr = this.http.get(`${this.baseUrl}/list`, {headers: this.getHeaders()})
       .map((res: Response) => res.json()).toPromise();
-    // let washBoxArr =  Promise.resolve(WashBoxList);
+    // let washBoxArr =  Promise.resolve(WashBoxList); //getting from mock-wash-facility
    return washBoxArr;
   }
 

@@ -1,5 +1,8 @@
 package io.khasang.moika.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -7,16 +10,24 @@ import java.util.*;
 public class Client extends ABaseMoikaEntity  {
 
     @Id
-    @Column(name = "id_client", columnDefinition = "serial")
+    @Column(name = "id_client", columnDefinition = "bigserial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
+    @Column(name = "id_person", insertable=false, updatable=false)
+    private int idPerson;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = false)
     @JoinColumn(name="id_person")
+    @JsonManagedReference
     protected Person person;
 
-    @Column(name = "status", nullable = false)
-    private Short status;
+    @Column(name = "id_status", nullable = false , insertable=false, updatable=false)
+    private Short idStatus;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "id_status")//, insertable=false, updatable=false )
+    private ClientStatus status;
 
     @Column(name = "date_reg")
     @Temporal(TemporalType.TIMESTAMP)
@@ -26,11 +37,12 @@ public class Client extends ABaseMoikaEntity  {
     @Temporal(TemporalType.DATE)
     private Date dateLastWash;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinTable(name = "r_client_car", joinColumns = {
             @JoinColumn(name = "id_client", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "id_car",
                     nullable = false, updatable = false) })
+    @JsonIgnore
     private List<Car> cars = new ArrayList<>();
 
     public Client() {
@@ -52,6 +64,26 @@ public class Client extends ABaseMoikaEntity  {
         return id;
     }
 
+    public int getIdPerson() {
+        return idPerson;
+    }
+
+    public void setIdPerson(int idPerson) {
+        this.idPerson = idPerson;
+    }
+
+    public Short getIdStatus() {
+        return idStatus;
+    }
+
+    public void setIdStatus(Short idStatus) {
+        this.idStatus = idStatus;
+    }
+
+    public void setDateReg(Calendar dateReg) {
+        this.dateReg = dateReg;
+    }
+
     public Person getPerson() {
         return person;
     }
@@ -60,11 +92,11 @@ public class Client extends ABaseMoikaEntity  {
         this.person = person;
     }
 
-    public int getStatus() {
+    public ClientStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Short status) {
+    public void setStatus(ClientStatus status) {
         this.status = status;
     }
 
@@ -106,7 +138,7 @@ public class Client extends ABaseMoikaEntity  {
                 ", Full Name='" + person.getFullName() + '\n' +
                 ", tel='" + telStr.toString() +
                 ", dateReg=" + dateReg +  '\n' +
-                ", status=" + status +  '\n' +
+                ", status=" + status.code +  '\n' +
                 ", dateLastWash=" + dateLastWash + '\n' +
                 '}';
     }

@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {WashBoxService} from './app.washbox.service';
-import {WashBox} from './washbox';
+import {WashBoxService} from '../services/wash-box.service';
+import {WashBox} from '../entities/wash-box';
 
 @Component({
   selector: 'washbox-list',
-  templateUrl: './app.washbox.component.html',
-  styleUrls: ['./app.washbox.component.css']
+  templateUrl: './wash-box.component.html',
+  styleUrls: ['./wash-box.component.css']
 })
 export class WashBoxComponent implements OnInit {
   washBoxList: Array<WashBox> = [];

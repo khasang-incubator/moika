@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {WashFacility} from './wash-facility';
-import {WashFacilityService} from "./wash-facility.service";
+import {WashFacility} from '../entities/wash-facility';
+import {WashFacilityService} from "../services/wash-facility.service";
 
 @Component({
   selector: 'wash-facilities',
   templateUrl: './wash-facility.component.html',
   styleUrls: ['./wash-facility.component.css']
 })
+
 export class WashFacilityComponent implements OnInit {
 
   washFacilityList: Array<WashFacility> = [];

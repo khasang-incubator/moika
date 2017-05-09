@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {WashFacility} from './wash-facility';
+import {WashFacility} from '../entities/wash-facility';
 import {Http, Headers, Response} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
-import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 // import {WashFacilityList} from "./mock-wash-facility";
 

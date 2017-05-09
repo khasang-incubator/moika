@@ -98,10 +98,12 @@ public class UserIntegrationTest extends Assert {
         assertTrue(resultMap.get("errors").toString().contains("email"));
 
         LOGGER.debug("3.2. Выставление Отчетства и Фамилии - УСПЕХ");
+        String newFirstName = "Тест";
         String newMiddleName = "Тестович";
         String newLastName = "Тестов";
 
         values.clear();
+        values.put("firstName", newFirstName);
         values.put("middleName", newMiddleName);
         values.put("lastName", newLastName);
 
@@ -111,6 +113,7 @@ public class UserIntegrationTest extends Assert {
         LOGGER.debug("3.3. Получаем изменённого пользователя из БД и проверяем Отчетство и Фамилию");
         createdUser = restTemplate.getForObject(baseUrl + "/users/{id}", User.class, createdUserId);
         assertTrue(createdUser != null);
+        assertEquals(createdUser.getPerson().getFirstName(), newFirstName);
         assertEquals(createdUser.getPerson().getMiddleName(), newMiddleName);
         assertEquals(createdUser.getPerson().getLastName(), newLastName);
 

@@ -1,6 +1,7 @@
-import {WashBox} from './washbox';
+import {WashBox} from './wash-box';
 
-export let WashBoxList: WashBox[] = [
+export let WashBoxList: WashBox[];
+ /* = [
       {id:	29,
         idFacility:	8,
         boxName:	"Бокс № 1",
@@ -14,3 +15,4 @@ export let WashBoxList: WashBox[] = [
         idType:	 2,
         idStatus:	1}
     ];
+*/

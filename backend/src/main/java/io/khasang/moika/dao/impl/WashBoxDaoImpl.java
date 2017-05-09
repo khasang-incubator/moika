@@ -4,11 +4,8 @@ package io.khasang.moika.dao.impl;
 import io.khasang.moika.dao.WashBoxDao;
 import io.khasang.moika.entity.WashBox;
 import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +17,7 @@ public class WashBoxDaoImpl extends MoikaDaoCrudImpl<WashBox> implements WashBox
 
 
     @Override
-    public WashBox getWashBox(int idFacility, String name) {
+    public WashBox getWashBoxByName(int idFacility, String name) {
         Criteria criteria = sessionFactory.
                 getCurrentSession().
                 createCriteria(WashBox.class);
@@ -51,11 +48,8 @@ public class WashBoxDaoImpl extends MoikaDaoCrudImpl<WashBox> implements WashBox
 
     @Override
     public List<WashBox> getWashBoxesByStatus(int boxStatus) {
-     //   Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from wash_box where status = ?;")
-      //          .create(WashBox.class);
         Query query  = sessionFactory.getCurrentSession().createQuery("from wash_boxes where box_status = ?");
         query.setParameter(0, boxStatus);
-     //   query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return query.list();
     }
 

@@ -8,16 +8,16 @@ import io.khasang.moika.dao.WashBoxDao;
 import io.khasang.moika.entity.BoxStatus;
 import io.khasang.moika.entity.BoxType;
 import io.khasang.moika.entity.WashBox;
-import io.khasang.moika.service.PskvorWashBoxDaoService;
+import io.khasang.moika.service.PskvorWashBoxDataAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Component("PskvorWashBoxDaoServiceImpl")
+@Component("pskvorWashBoxDaoServiceImpl")
 @Transactional
-public class PskvorWashBoxDaoServiceImpl implements PskvorWashBoxDaoService {
+public class PskvorWashBoxDataAccessServiceImpl implements PskvorWashBoxDataAccessService {
     @Autowired
     private WashBoxDao washBoxDao;
     @Autowired
@@ -25,7 +25,7 @@ public class PskvorWashBoxDaoServiceImpl implements PskvorWashBoxDaoService {
     @Autowired
     private BoxTypeDao boxTypeDao;
 
-    public PskvorWashBoxDaoServiceImpl() {
+    public PskvorWashBoxDataAccessServiceImpl() {
     }
 
     @Override
@@ -56,7 +56,7 @@ public class PskvorWashBoxDaoServiceImpl implements PskvorWashBoxDaoService {
     }
 
     @Override
-    public WashBox getWashBoxByID(int id) {
+    public WashBox getWashBoxById(int id) {
         try {
             return washBoxDao.get(id);
         } catch (MoikaDaoException e) {
@@ -66,9 +66,9 @@ public class PskvorWashBoxDaoServiceImpl implements PskvorWashBoxDaoService {
     }
 
     @Override
-    public WashBox getWashBox(int idFclt, String name) {
+    public WashBox getWashBoxByName(int idFclt, String name) {
         try {
-            return washBoxDao.getWashBox(idFclt, name);
+            return washBoxDao.getWashBoxByName(idFclt, name);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
             return null;

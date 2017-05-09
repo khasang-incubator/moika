@@ -1,5 +1,7 @@
 package io.khasang.moika.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -10,8 +12,8 @@ import java.util.List;
 @Entity(name = "persons")
 public class Person extends ABaseMoikaEntity {
     @Id
+    @Column(name = "id_person", columnDefinition = "bigserial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_person")
     protected Long id;
     @Column(name = "first_name")
     private String firstName;
@@ -22,7 +24,9 @@ public class Person extends ABaseMoikaEntity {
     @Temporal(TemporalType.DATE)
     protected Date birthDate;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_person", referencedColumnName = "id_person")
+    @JsonManagedReference
     protected List<Phone> phones = new ArrayList<>();
 
     @Email
@@ -49,8 +53,12 @@ public class Person extends ABaseMoikaEntity {
         this.firstName = firstName;
     }
 
+    public String getFirstName() {
+        return this.firstName;
+    }
+
     public String getMiddleName() {
-        return middleName;
+        return this.middleName;
     }
 
     public void setMiddleName(String middleName) {
@@ -58,13 +66,14 @@ public class Person extends ABaseMoikaEntity {
     }
 
     public String getLastName() {
-        return lastName;
+        return this.lastName;
     }
 
     public void setLastName(String lastname) {
         this.lastName = lastname;
     }
 
+    @JsonIgnore
     public String getFullName() {
         return firstName + " "+ middleName + " "+lastName;
     }

@@ -2,6 +2,8 @@ package io.khasang.moika.dao;
 
 import io.khasang.moika.entity.Client;
 
+import java.util.List;
+
 /**
  * Интерфейс DAO для клиентов
  * @author Skvortsov Pavel
@@ -9,4 +11,7 @@ import io.khasang.moika.entity.Client;
  */
 public interface ClientDao extends IMoikaDaoCrud<Client> {
 
+    List<Client> getClientsByStatus(int idStatus);
+    List<Client> getClientsByStatus(String statusCode);
+    List<Client> getClientsOnFacility(int idFclt);
 }

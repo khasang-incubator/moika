@@ -6,16 +6,16 @@ import io.khasang.moika.entity.WashBox;
 
 import java.util.List;
 
-public interface PskvorWashBoxDaoService {
+public interface PskvorWashBoxDataAccessService {
     void addWashBox(WashBox washBox);
 
     void updateWashBox(WashBox washBox);
 
     void deleteWashBox(WashBox washBox);
 
-    WashBox getWashBoxByID(int id);
+    WashBox getWashBoxById(int id);
 
-    WashBox getWashBox(int idFclt, String name);
+    WashBox getWashBoxByName(int idFclt, String name);
 
     List<WashBox> getAllWashBoxes();
 

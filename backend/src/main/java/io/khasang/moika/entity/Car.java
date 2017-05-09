@@ -1,5 +1,6 @@
 package io.khasang.moika.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.cache.annotation.Cacheable;
@@ -41,11 +42,12 @@ public class Car extends ABaseMoikaEntity {
     @Column(name = "date_Last_Wash")
     @Temporal(TemporalType.DATE)
     private Date dateLastWash;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinTable(name = "r_client_car", joinColumns = {
             @JoinColumn(name = "id_car", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "id_client",
                     nullable = false, updatable = false)})
+    @JsonIgnore
     private List<Client> clients = new ArrayList<>();
     public Car() {
     }

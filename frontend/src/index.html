@@ -1,19 +1,23 @@
 <!doctype html>
 <html>
-<head>
+ <head>
   <meta charset="utf-8">
   <title>Frontend</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="./images/car-4-16.ico">
+  <link rel="icon" type="image/x-icon" href="images/car-4-16.ico">
 
   <script>
-    System.import('main.js').catch(function(err){ console.error(err); });
+    System.import('main.js').catch(function (err) {
+      console.error(err);
+    });
   </script>
 
-</head>
-<body>
+ </head>
+ <body >
+  <!-- Enable bootstrap 4 theme -->
+  <script>window.__theme = 'bs4';</script>
   <app-root>Загрузка...</app-root>
-</body>
+ </body>
 </html>

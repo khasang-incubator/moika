@@ -10,7 +10,7 @@ import io.khasang.moika.entity.BoxStatus;
 import io.khasang.moika.entity.BoxType;
 import io.khasang.moika.entity.WashBox;
 import io.khasang.moika.entity.WashFacility;
-import io.khasang.moika.service.PskvorWashBoxDaoService;
+import io.khasang.moika.service.PskvorWashBoxDataAccessService;
 import io.khasang.moika.service.PskvorWashFacilityDaoService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -34,7 +34,7 @@ public class WashFacilityImplTest {
     PskvorWashFacilityDaoService fcltService;
 
     @Autowired
-    PskvorWashBoxDaoService boxService;
+    PskvorWashBoxDataAccessService boxService;
 
     @Autowired
     BoxStatusDao boxStatusDao;

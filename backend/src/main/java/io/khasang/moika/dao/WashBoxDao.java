@@ -10,7 +10,7 @@ import java.util.List;
  *
  */
 public interface WashBoxDao extends IMoikaDaoCrud<WashBox>{
-    WashBox getWashBox(int idFacility, String name ) throws MoikaDaoException;
+    WashBox getWashBoxByName(int idFacility, String name ) throws MoikaDaoException;
     List<WashBox> getWashBoxesOnFacility(int idFacility) throws MoikaDaoException;
     List<WashBox> getWashBoxesByType(int boxType) throws MoikaDaoException;
     List<WashBox> getWashBoxesByStatus(int boxStatus) throws MoikaDaoException;

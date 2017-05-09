@@ -1,0 +1,13 @@
+<h2>Клиенты</h2>
+<ul class="aList">
+  <li *ngFor="let client of clientList"
+      [class.selected]="client === selectedClient"
+      (click)="onSelect(client)">
+    <span class="badge">{{client.id}}</span> {{client.person.firstName}} {{client.person.lastName}}
+  </li>
+</ul>
+<div *ngIf="selectedClient">
+  <h2>
+    Клиeнт: {{selectedClient.person.firstName | uppercase}} {{selectedClient.person.lastName | uppercase}}
+  </h2>
+</div>

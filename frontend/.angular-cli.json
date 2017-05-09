@@ -9,7 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "images/car-4-16.ico"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -18,9 +18,10 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
-      "styles": [
-        "styles.css"
-      ],
+      "styles": [  
+      "../node_modules/bootstrap/dist/css/bootstrap.min.css",  
+      "styles.css"  
+       ],
       "fonts": [
         "fonts"
       ],
