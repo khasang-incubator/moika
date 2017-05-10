@@ -68,7 +68,7 @@ public class PsWashBoxController {
      * @param washBox
      * @return
      */
-    @RequestMapping(value = "/washBox/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object updateWashBox(@RequestBody WashBox washBox) {
         pskvorWashBoxDataAccessService.updateWashBox(washBox);

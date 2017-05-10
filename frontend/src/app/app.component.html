@@ -2,7 +2,7 @@
 <h1>
   {{title}}
 </h1>
-<div class="container-fluid">
+<div class="container">
   <div class="row-fluid">
     <div class="span2">
       <ul>Выберите объект
@@ -12,21 +12,8 @@
       </ul>
     </div>
     <div class="span10">
-      <div class="btn-group" dropdown>
-        <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
-          Button dropdown <span class="caret"></span>
-        </button>
-        <ul *dropdownMenu class="dropdown-menu" role="menu">
-          <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
-          <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
-          <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
-          <li class="divider dropdown-divider"></li>
-          <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
-          </li>
-        </ul>
-      </div>
-      <wash-facilities></wash-facilities>
-      <app-client-list></app-client-list>
+      <a routerLink="start"></a>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>
