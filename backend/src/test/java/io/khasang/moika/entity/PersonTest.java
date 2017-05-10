@@ -33,8 +33,8 @@ public class PersonTest {
     public void setGetPhones() throws Exception {
         Phone phone = new Phone("0123456789");
         person.getPhones().add(phone);
-        System.out.println(person.getPhones().get(0).getNumber());
-        assertEquals("0123456789", person.getPhones().get(0).getNumber());
+        System.out.println(person.getPhones().get(0).getPhoneNumber());
+        assertEquals("0123456789", person.getPhones().get(0).getPhoneNumber());
     }
 
 }

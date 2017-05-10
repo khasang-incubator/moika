@@ -6,4 +6,4 @@
 *.rar
 /.project
 *.txt
-*.new
+/node.xxx/

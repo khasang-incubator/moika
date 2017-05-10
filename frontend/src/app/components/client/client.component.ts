@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Client} from "../../entities/client";
 
 @Component({
-  selector: 'app-client',
+  selector: 'client-detail',
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.css']
 })
-export class ClientComponent implements OnInit {
+export class ClientComponent {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  @Input() client: Client;
 
 }

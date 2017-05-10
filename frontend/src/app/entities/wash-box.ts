@@ -1,4 +1,6 @@
 import {BaseMoikaEntity} from "./base-moika-entity";
+import {SomeStatus} from "./some-status";
+import {SomeType} from "./some-type";
 /*
  Wash Box FrontEnd REST entity
  */
@@ -8,8 +10,9 @@ export class WashBox extends BaseMoikaEntity {
   private _boxName: string;
   private _description: string;
   private _idType: number;
+  private _boxTypeEntity: SomeType;
   private _idStatus: number;
-
+  private _boxStatusEntity: SomeStatus;
 
   get id(): number {
     return this._id;
@@ -57,5 +60,22 @@ export class WashBox extends BaseMoikaEntity {
 
   set idStatus(value: number) {
     this._idStatus = value;
+  }
+
+
+  get boxTypeEntity(): SomeType {
+    return this._boxTypeEntity;
+  }
+
+  set boxTypeEntity(value: SomeType) {
+    this._boxTypeEntity = value;
+  }
+
+  get boxStatusEntity(): SomeStatus {
+    return this._boxStatusEntity;
+  }
+
+  set boxStatusEntity(value: SomeStatus) {
+    this._boxStatusEntity = value;
   }
 }

@@ -5,9 +5,9 @@ import { HttpModule } from '@angular/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-import {WashBoxComponent} from './components/wash-box.component';
+import {WashBoxComponent} from './components/facility/wash-box.component';
 import {WashBoxService} from './services/wash-box.service';
-import { WashFacilityComponent } from './components/wash-facility.component';
+import { WashFacilityComponent } from './components/facility/wash-facility.component';
 import {WashFacilityService} from './services/wash-facility.service';
 import {ClientService} from "./services/client.service";
 import { ClientComponent } from './components/client/client.component';
@@ -15,6 +15,9 @@ import { ClientListComponent } from './components/client/client-list.component';
 import {CrudService} from "./services/crud.service";
 import {BsDropdownModule} from "ngx-bootstrap";
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { PhoneListComponent } from './components/client/phone-list.component';
+import { FacilityDetailComponent } from './components/facility/facility-detail.component';
+import { WashBoxDetailComponent } from './components/facility/wash-box-detail.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     WashFacilityComponent,
     ClientComponent,
     ClientListComponent,
-    NavbarComponent
+    NavbarComponent,
+    PhoneListComponent,
+    FacilityDetailComponent,
+    WashBoxDetailComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),

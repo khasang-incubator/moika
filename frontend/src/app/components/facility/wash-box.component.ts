@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {WashBoxService} from '../services/wash-box.service';
-import {WashBox} from '../entities/wash-box';
+import {Component, Input, OnInit} from '@angular/core';
+import {WashBoxService} from '../../services/wash-box.service';
+import {WashBox} from '../../entities/wash-box';
 
 @Component({
   selector: 'washbox-list',
   templateUrl: './wash-box.component.html',
   styleUrls: ['./wash-box.component.css']
 })
-export class WashBoxComponent implements OnInit {
-  washBoxList: Array<WashBox> = [];
+export class WashBoxComponent {
+  @Input() washBoxList: Array<WashBox> = [];
   selectedBox: WashBox;
   washBoxService: WashBoxService;
 
@@ -18,10 +18,6 @@ export class WashBoxComponent implements OnInit {
 
   getAll(): void {
     this.washBoxService.getAll().then(washBoxList => this.washBoxList = washBoxList).catch(this.handleError);
-  }
-
-  ngOnInit(): void {
-    this.getAll();
   }
 
   onSelect(washBox: WashBox): void {

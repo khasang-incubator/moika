@@ -3,12 +3,10 @@
   <li *ngFor="let washBox of washBoxList"
       [class.selected]="washBox === selectedBox"
       (click)="onSelect(washBox)">
-    <span class="badge">{{washBox.id}}</span> {{washBox.description}}
+    <span class="badge">{{washBox.id}}</span> {{washBox.boxName}}
   </li>
 </ul>
 <div *ngIf="selectedBox">
-  <h2>
-    {{selectedBox.boxName | uppercase}} выбран
-  </h2>
+  <wash-box-detail [washBox]="selectedBox" ></wash-box-detail>
 </div>
 

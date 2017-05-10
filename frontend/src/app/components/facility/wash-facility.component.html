@@ -7,7 +7,5 @@
   </li>
 </ul>
 <div *ngIf="selectedFclt">
-  <h2>
-   Мойка {{selectedFclt.name | uppercase}} выбрана
-  </h2>
+  <facility-detail [washFacility]="selectedFclt" ></facility-detail>
 </div>

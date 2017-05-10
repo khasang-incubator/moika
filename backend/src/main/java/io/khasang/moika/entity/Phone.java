@@ -17,7 +17,7 @@ public class Phone extends ABaseMoikaEntity {
     @Column(name="phone_number")
     @NotBlank
     @Pattern(regexp = PHONE_NUMBER_PATTERN, message = "{phone.not_10digits.message}")
-    private String number;
+    private String phoneNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_person", foreignKey = @ForeignKey(name = "fk_person_phone"))
@@ -27,16 +27,16 @@ public class Phone extends ABaseMoikaEntity {
 
     public Phone() {
     }
-    public Phone(String number) {
-        this.number = number;
+    public Phone(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getNumber() {
-        return number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public Person getPerson() {
@@ -47,15 +47,15 @@ public class Phone extends ABaseMoikaEntity {
         this.person = person;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
     public String toString() {
         return "Phone{" +
                 "id=" + id +
-                ", number='" + number + '\'' +'}';
+                ", number='" + phoneNumber + '\'' +'}';
     }
 
     @Override
@@ -66,14 +66,14 @@ public class Phone extends ABaseMoikaEntity {
         Phone uphone = (Phone) o;
 
         if (getId() != null ? !getId().equals(uphone.getId()) : uphone.getId() != null) return false;
-        if (getNumber() != null ? !getNumber().equals(uphone.getNumber()) : uphone.getNumber() != null) return false;
+        if (getPhoneNumber() != null ? !getPhoneNumber().equals(uphone.getPhoneNumber()) : uphone.getPhoneNumber() != null) return false;
         return getPerson() != null ? getPerson().equals(uphone.getPerson()) : uphone.getPerson() == null;
     }
 
     @Override
     public int hashCode() {
         int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getNumber() != null ? getNumber().hashCode() : 0);
+        result = 31 * result + (getPhoneNumber() != null ? getPhoneNumber().hashCode() : 0);
         result = 31 * result + (getPerson() != null ? getPerson().hashCode() : 0);
         return result;
     }

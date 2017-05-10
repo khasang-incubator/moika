@@ -7,7 +7,5 @@
   </li>
 </ul>
 <div *ngIf="selectedClient">
-  <h2>
-    Клиeнт: {{selectedClient.person.firstName | uppercase}} {{selectedClient.person.lastName | uppercase}}
-  </h2>
+  <client-detail [client]="selectedClient"></client-detail>
 </div>

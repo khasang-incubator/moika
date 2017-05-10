@@ -1,0 +1,29 @@
+.phoneList {
+  margin: 0 0 2em 0;
+  list-style-type: none;
+  padding: 0;
+  width: 15em;
+}
+.phoneList li {
+  cursor: pointer;
+  position: relative;
+  left: 0;
+  background-color: #EEE;
+  margin: .5em;
+  padding: .3em 0;
+  height: 2em;
+  border-radius: 4px;
+}
+.phoneList li:hover {
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
+.phoneList li.selected:hover {
+  background-color: #BBD8DC !important;
+  color: white;
+}
+.phoneList .text {
+  position: relative;
+  top: -3px;
+}

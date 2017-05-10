@@ -70,7 +70,7 @@ public class PersonImplTest {
         List<Phone> phoneList = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
             Phone phone = new Phone();
-            phone.setNumber("962-555-55-55"+i);
+            phone.setPhoneNumber("962-555-55-55"+i);
             phoneList.add(phone);
         }
 
@@ -88,7 +88,7 @@ public class PersonImplTest {
                 Assert.assertEquals("tel list not ", 4, resPerson.getPhones().size());
                 List<Phone>  resPhoneList = resPerson.getPhones();
                 for (Phone phone : resPhoneList) {
-                    if (phone.getNumber().equalsIgnoreCase("962-555-55-551")) {
+                    if (phone.getPhoneNumber().equalsIgnoreCase("962-555-55-551")) {
                         isTel= true;
                         break;
                     }

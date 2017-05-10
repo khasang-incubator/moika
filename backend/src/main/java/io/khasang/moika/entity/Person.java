@@ -149,7 +149,7 @@ public class Person extends ABaseMoikaEntity {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Phone phone : phones) {
-            sb.append(phone.getNumber());
+            sb.append(phone.getPhoneNumber());
             sb.append("\n");
         }
         return "Person{" +

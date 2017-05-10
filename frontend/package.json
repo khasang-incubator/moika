@@ -24,6 +24,7 @@
     "@angular/router": "^4.1.1",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.25",
     "@types/node": "^6.0.72",
+    "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "es6-promise": "^4.1.0",
     "es6-shim": "^0.35.3",

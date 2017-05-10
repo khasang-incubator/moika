@@ -132,7 +132,7 @@ public class Client extends ABaseMoikaEntity  {
     @Override
     public String toString() {
         StringBuffer telStr = new StringBuffer();
-        person.getPhones().forEach((Phone p)-> telStr.append(p.getNumber() + ",\n" ));
+        person.getPhones().forEach((Phone p)-> telStr.append(p.getPhoneNumber() + ",\n" ));
         return "Client{" +
                 "id=" + id +
                 ", Full Name='" + person.getFullName() + '\n' +

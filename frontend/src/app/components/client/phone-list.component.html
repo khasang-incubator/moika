@@ -1,0 +1,8 @@
+<div *ngIf="phoneList">
+  <label>Телефоны: </label>
+  <ul class="phoneList">
+    <li *ngFor="let phone of phoneList">
+      {{phone.phoneNumber}}
+    </li>
+  </ul>
+</div>
