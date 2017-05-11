@@ -21,15 +21,16 @@ import { AppAboutComponent } from './components/common/app-about.component';
 import { NotFoundComponent } from './components/common/not-found.component';
 import { HomePageComponent } from './components/common/home-page.component';
 import { RouterModule, Routes } from "@angular/router";
+import { MainOutletComponent } from './components/main-outlet.component';
 
 // определение маршрутов
 const appRoutes: Routes =[
   { path: '', redirectTo: '/start', pathMatch: 'full'},
   { path: 'start', component: HomePageComponent},
   { path: 'about', component: AppAboutComponent},
-  { path: '**', component: NotFoundComponent },
   { path: 'clients', component: ClientListComponent},
-  { path: 'washFacilities', component: WashFacilityComponent}
+  { path: 'washFacilities', component: WashFacilityComponent},
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
@@ -45,7 +46,8 @@ const appRoutes: Routes =[
     WashBoxDetailComponent,
     AppAboutComponent,
     NotFoundComponent,
-    HomePageComponent
+    HomePageComponent,
+    MainOutletComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),
