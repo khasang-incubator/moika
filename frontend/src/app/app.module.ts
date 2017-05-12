@@ -22,6 +22,10 @@ import { NotFoundComponent } from './components/common/not-found.component';
 import { HomePageComponent } from './components/common/home-page.component';
 import { RouterModule, Routes } from "@angular/router";
 import { MainOutletComponent } from './components/main-outlet.component';
+import {DataTableModule, DropdownModule, InputTextareaModule, PanelModule, SharedModule} from 'primeng/primeng';
+import { CommonTypeComponent } from './components/reference/common-type.component';
+import { CommonTypeSelectorComponent } from './components/reference/common-type-selector.component';
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 
 // определение маршрутов
 const appRoutes: Routes =[
@@ -30,6 +34,7 @@ const appRoutes: Routes =[
   { path: 'about', component: AppAboutComponent},
   { path: 'clients', component: ClientListComponent},
   { path: 'washFacilities', component: WashFacilityComponent},
+  { path: 'refs', component: CommonTypeSelectorComponent},
   { path: '**', component: NotFoundComponent },
 ];
 
@@ -47,14 +52,17 @@ const appRoutes: Routes =[
     AppAboutComponent,
     NotFoundComponent,
     HomePageComponent,
-    MainOutletComponent
+    MainOutletComponent,
+    CommonTypeComponent,
+    CommonTypeSelectorComponent,
   ],
   imports: [
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    DataTableModule, SharedModule,  DataTableModule, InputTextareaModule, FormsModule, PanelModule, DropdownModule, NoopAnimationsModule
   ],
   providers: [WashBoxService, WashFacilityService, ClientService, CrudService],
   bootstrap: [AppComponent]

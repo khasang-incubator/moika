@@ -3,6 +3,8 @@ package io.khasang.moika.controller;
 import io.khasang.moika.entity.BoxStatus;
 import io.khasang.moika.entity.BoxType;
 import io.khasang.moika.entity.WashBox;
+import io.khasang.moika.service.BoxStatusDataAccessService;
+import io.khasang.moika.service.BoxTypesDataAccessService;
 import io.khasang.moika.service.PskvorWashBoxDataAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,12 @@ public class PsWashBoxController {
 
     @Autowired
     PskvorWashBoxDataAccessService pskvorWashBoxDataAccessService;
+
+    @Autowired
+    BoxStatusDataAccessService boxStatusDataAccessService;
+
+    @Autowired
+    BoxTypesDataAccessService boxTypesDataAccessService;
 
     /**
      * Вывод информации о всех боксах
@@ -100,9 +108,9 @@ public class PsWashBoxController {
      */
     @RequestMapping(value = "/{idFacility}/{boxName}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public WashBox getWashBoxesOnFacility(@PathVariable(value = "idFacility") String idFclt, @PathVariable(value = "boxName") String boxName,
+    public WashBox getWashBoxesOnFacility(@PathVariable(value = "idFacility") int idFclt, @PathVariable(value = "boxName") String boxName,
                                          HttpServletResponse response, Model model) {
-        WashBox washBox = pskvorWashBoxDataAccessService.getWashBoxByName(Integer.valueOf(idFclt), boxName);
+        WashBox washBox = pskvorWashBoxDataAccessService.getWashBoxByName(idFclt, boxName);
         return washBox;
     }
 
@@ -125,7 +133,7 @@ public class PsWashBoxController {
     }
 
     /**
-     * вывод списка типов боксов
+     * вывод списка  боксов по их типам
      *
      * @param typeId
      * @param model
@@ -155,26 +163,23 @@ public class PsWashBoxController {
     /**
      * выод статутсов боксов
      *
-     * @param boxStatus
-     * @param model
      * @return
      */
-    @RequestMapping(value = "/boxStatus/list/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/boxStatus/list", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public List<BoxStatus> getBoxStatusList(@RequestBody BoxStatus boxStatus, Model model) {
-        return pskvorWashBoxDataAccessService.getWashBoxesStatuses();//"ps-dao-carwashfacilities";
+    public List<BoxStatus> getBoxStatusList() {
+        return boxStatusDataAccessService.getAllStatuses();//"ps-dao-carwashfacilities";
     }
 
     /**
      * Список типов боксов
      *
-     * @param boxtypel
      * @return
      */
-    @RequestMapping(value = "/boxType/list/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/boxType/list", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public List<BoxType> getBoxTypesList(@RequestBody BoxType boxtypel) {
-        return pskvorWashBoxDataAccessService.getWashBoxesTypes();//"ps-dao-carwashfacilities";
+    public List<BoxType> getBoxTypesList() {
+        return boxTypesDataAccessService.getAllTypes();//"ps-dao-carwashfacilities";
     }
 
     /**
@@ -186,7 +191,7 @@ public class PsWashBoxController {
     @RequestMapping(value = "/boxStatus/{code}/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public BoxStatus getBoxStatusByCode(@PathVariable(value = "code") String code) {
-        return pskvorWashBoxDataAccessService.getWashBoxesStatusByCode(code);//"ps-dao-carwashfacilities";
+        return (BoxStatus)boxStatusDataAccessService.getStatusByCode(code);//"ps-dao-carwashfacilities";
     }
 
     /**
@@ -198,7 +203,7 @@ public class PsWashBoxController {
     @RequestMapping(value = "/boxType/{code}/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public BoxType getBoxTypesList(@PathVariable(value = "code") String code) {
-        return pskvorWashBoxDataAccessService.getWashBoxesTypeByCode(code);//"ps-dao-carwashfacilities";
+        return (BoxType) boxTypesDataAccessService.getTypeByCode(code);//"ps-dao-carwashfacilities";
     }
 
 

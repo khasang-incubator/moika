@@ -7,9 +7,9 @@ import io.khasang.moika.entity.WashBox;
 import java.util.List;
 
 public interface PskvorWashBoxDataAccessService {
-    void addWashBox(WashBox washBox);
+    WashBox addWashBox(WashBox washBox);
 
-    void updateWashBox(WashBox washBox);
+    WashBox updateWashBox(WashBox washBox);
 
     void deleteWashBox(WashBox washBox);
 
@@ -24,7 +24,7 @@ public interface PskvorWashBoxDataAccessService {
     List<WashBox> getWashBoxesByType(int boxType);
 
     List<WashBox> getWashBoxesByStatus(int boxStatus);
-
+/*
     List<BoxStatus> getWashBoxesStatuses();
 
     BoxStatus getWashBoxesStatusByCode(String code);
@@ -32,5 +32,5 @@ public interface PskvorWashBoxDataAccessService {
     List<BoxType> getWashBoxesTypes();
 
     BoxType getWashBoxesTypeByCode(String code);
-
+*/
 }

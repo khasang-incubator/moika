@@ -9,11 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service(value = "carTypesDataAccessService")
 @Transactional
 public class CarTypesDataAccessServiceImpl extends  ATypeDataAccessServiceImpl implements CarTypesDataAccessService {
-    @Autowired
-    CarTypeDao carTypeDao;
+    final CarTypeDao carTypeDao;
 
-    public CarTypesDataAccessServiceImpl() {
-        setTypeDao(carTypeDao);
+
+    @Autowired()
+    public CarTypesDataAccessServiceImpl(CarTypeDao carTypeDao) {
+        this.carTypeDao = carTypeDao;
+        setTypeDao(this.carTypeDao);
     }
+
 
 }

@@ -1,0 +1,9 @@
+
+<p-dataTable [value]="someTypeList">
+  <p-header>{{typeFullName}}</p-header>
+  <p-footer>Выбирите для редактирования</p-footer>
+  <p-column field="id" header="ID" [sortable]="true"></p-column>
+  <p-column field="typeCode" header="Код" [sortable]="true"></p-column>
+  <p-column field="typeName" header="Наименование" [sortable]="true"></p-column>
+  <p-column field="description" header="Доп. информация"></p-column>
+</p-dataTable>

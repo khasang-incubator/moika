@@ -40,3 +40,4 @@ frontend/node/
 /target/
 /DB/
 /lib/
+/.settings/

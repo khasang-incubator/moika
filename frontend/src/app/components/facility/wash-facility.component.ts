@@ -12,7 +12,7 @@ export class WashFacilityComponent implements OnInit {
 
   washFacilityList: Array<WashFacility> = [];
   selectedFclt: WashFacility;
-  washFacilityService: WashFacilityService;
+  private washFacilityService: WashFacilityService;
 
   constructor(washFacilityService: WashFacilityService) {
     this.washFacilityService = washFacilityService;

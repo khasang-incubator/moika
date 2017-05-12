@@ -1,0 +1,6 @@
+<p-dropdown [options]="typeRefs"  [(ngModel)]="selectedType"  [style]="{'width':'300px'}" placeholder="Выбирите справочник типов"></p-dropdown>
+<p>Selected Ref: {{selectedType ? selectedType.name + ' ' + selectedType.url : 'none'}}</p>
+<div *ngIf="selectedType">
+ <p>{{ selectedType.id}}</p>
+<app-common-type [refType]="selectedType"></app-common-type>
+</div>

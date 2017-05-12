@@ -93,8 +93,8 @@ public class WashFacilityImplTest {
         fclt.setDescription("моет тех, кто чешется");
         fclt.setIdAddr(1); // setFacilityAddr(washAddr.get(1L));
 
-   //     BoxStatus boxStatus = boxStatusDao.getEntityByCode(stausCode);
-   //     BoxType boxType = boxTypeDao.getEntityByCode(typeCode);
+        //     BoxStatus boxStatus = boxStatusDao.getEntityByCode(stausCode);
+        //     BoxType boxType = boxTypeDao.getEntityByCode(typeCode);
         List<WashBox> boxList = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
             WashBox box = new WashBox();
@@ -102,8 +102,8 @@ public class WashFacilityImplTest {
             box.setIdStatus((short) 1);
             box.setIdType(2);
             box.setDescription(box.getBoxName() + " " + fclt.getName());
-        //    box.setBoxStatusEntity(boxStatus);
-        //    box.setBoxTypeEntity(boxType);
+            //    box.setBoxStatusEntity(boxStatus);
+            //    box.setBoxTypeEntity(boxType);
             boxList.add(box);
         }
 
@@ -115,6 +115,7 @@ public class WashFacilityImplTest {
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
+
         Assert.assertNotNull("Facility is null", resFclt);
         boolean isBox = false;
         boolean isType;

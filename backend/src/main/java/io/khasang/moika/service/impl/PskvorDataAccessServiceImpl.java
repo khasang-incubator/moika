@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service(value = "pskvorJDBCDataAccessServiceImpl" )
 public class PskvorDataAccessServiceImpl implements PskvorDataAccessService {
     PskvorDataAccess pskvorDataAccess;
 

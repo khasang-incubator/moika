@@ -18,6 +18,7 @@ import java.util.List;
  * @since 2017-03-01
  */
 @Controller
+@RequestMapping(value = "/api/car")
 public class CarController {
     @Autowired
     private CarService carService;
@@ -31,7 +32,7 @@ public class CarController {
      * @return сохранённый автомобиль
      */
 
-    @RequestMapping(value = "car/add",
+    @RequestMapping(value = "/add",
             method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public Car addCar(@RequestBody Car car){
@@ -44,10 +45,10 @@ public class CarController {
      * @param car автомобиль для добавления
      * @return сохранённый автомобиль
      */
-    @RequestMapping(value = "/car/update/",
+    @RequestMapping(value = "/update",
             method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public Object updateCar(@ModelAttribute(value = "company") Car car, @PathVariable("id") String id){
+    public Car updateCar(@ModelAttribute(value = "company") Car car, @PathVariable("id") String id){
         car = carService.updateCar(car);
         return car;
     }
@@ -57,7 +58,7 @@ public class CarController {
      * @param id автомобиля для удаления
      * @return redirect
      */
-    @RequestMapping(value = "/car/delete/{id}",
+    @RequestMapping(value = "/delete/{id}",
             method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public String deleteCar(@PathVariable("id") String id){
@@ -70,7 +71,7 @@ public class CarController {
      * @param id автомобиль для добавления
      * @return  автомобиль по id
      */
-    @RequestMapping(value = "/car/id/{id}",
+    @RequestMapping(value = "id/{id}",
             method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public Car getCarById(@PathVariable("id") String id){
@@ -82,52 +83,51 @@ public class CarController {
      * @return  автомобили
      */
 
-    @RequestMapping(value = "/car/number/{number}",
+    @RequestMapping(value = "/number/{number}",
             method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-    public String getCarByNumber(Model model, @PathVariable("number") String carNumber){
-        model.addAttribute("cars", carService.getCarByNumber(carNumber));
-        return "cars";
+    @ResponseBody
+    public List<Car> getCarByNumber(@PathVariable("number") String carNumber){
+        return carService.getCarByNumber(carNumber);
     }
     /**
      * Возвращение автомобиля по модели
-     * @param model модель автмобиля
+     * @param 'модель автмобиля
      * @return  автомобили
      */
 
-    @RequestMapping(value = "/car/model/{model}",
+    @RequestMapping(value = "/model/{model}",
             method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-    public String getCarByModel(Model model, @PathVariable("model") String carModel){
-        model.addAttribute("cars", carService.getCarByModel(carModel));
-        return "cars";
+    @ResponseBody
+    public List<Car> getCarByModel(@PathVariable("model") String carModel){
+        return carService.getCarByModel(carModel);
     }
     /**
      * Возвращение автомобиля по типу кузова
      * @param carType тип кузова
      * @return  автомобили
      */
-
-    @RequestMapping(value = "/car/type/{type}",
+    @RequestMapping(value = "/type/{type}",
             method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-    public String getCarByType(Model model, @PathVariable("type") String carType) {
-        model.addAttribute("cars", carService.getCarByType(carType));
-        return "cars";
+    @ResponseBody
+    public List<Car> getCarByType(@PathVariable("type") String carType) {
+        return carService.getCarByType(carType);
+     }
+
+    @RequestMapping(value = "/cars", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Car>  getCarList(){
+       return carService.getCarList();
     }
 
-    @RequestMapping(value = "/car", method = RequestMethod.GET)
-    public String getCarList(Model model){
-        model.addAttribute("cars", carService.getCarList());
-        return "cars";
-    }
-
-    @RequestMapping(value = "/carType/{code}/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/carType/{code}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public CarType getCarTypes(@PathVariable(value = "code") String code) {
         return (CarType)carTypeService.getTypeByCode(code);
     }
 
-    @RequestMapping(value = "/carTypeList/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/carType/list", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public List<CarType> getCarTypesList(@PathVariable(value = "code") String code) {
+    public List<CarType> getCarTypesList() {
         return carTypeService.getAllTypes();
     }
 }

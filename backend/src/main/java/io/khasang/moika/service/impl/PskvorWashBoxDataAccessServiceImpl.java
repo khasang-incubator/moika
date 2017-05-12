@@ -10,6 +10,7 @@ import io.khasang.moika.entity.BoxType;
 import io.khasang.moika.entity.WashBox;
 import io.khasang.moika.service.PskvorWashBoxDataAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,30 +21,38 @@ import java.util.List;
 public class PskvorWashBoxDataAccessServiceImpl implements PskvorWashBoxDataAccessService {
     @Autowired
     private WashBoxDao washBoxDao;
+
     @Autowired
+  //  @Qualifier("boxStatusDataAccessServiceImpl")
     private BoxStatusDao boxStatusDao;
+
     @Autowired
+ //   @Qualifier("boxTypesDataAccessService")
     private BoxTypeDao boxTypeDao;
 
     public PskvorWashBoxDataAccessServiceImpl() {
     }
 
     @Override
-    public void addWashBox(WashBox washBox) {
+    public WashBox addWashBox(WashBox washBox) {
+        WashBox resBox = null;
         try {
-            washBoxDao.create(washBox);
+            resBox =  washBoxDao.create(washBox);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }
+        return resBox;
     }
 
     @Override
-    public void updateWashBox(WashBox washBox) {
+    public WashBox updateWashBox(WashBox washBox) {
+        WashBox resBox = null;
         try {
-            washBoxDao.update(washBox);
+            resBox = washBoxDao.update(washBox);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }
+        return resBox;
     }
 
     @Override
@@ -116,6 +125,7 @@ public class PskvorWashBoxDataAccessServiceImpl implements PskvorWashBoxDataAcce
     }
 
 
+/*
     @Override
     public List<BoxStatus> getWashBoxesStatuses() {
         try {
@@ -129,7 +139,7 @@ public class PskvorWashBoxDataAccessServiceImpl implements PskvorWashBoxDataAcce
     @Override
     public BoxStatus getWashBoxesStatusByCode(String code) {
         try {
-            return boxStatusDao.getEntityByCode(code);
+            return (BoxStatus) boxStatusDao.getEntityByCode(code);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
             return null;
@@ -148,10 +158,11 @@ public class PskvorWashBoxDataAccessServiceImpl implements PskvorWashBoxDataAcce
     @Override
     public BoxType getWashBoxesTypeByCode(String code) {
         try {
-            return boxTypeDao.getEntityByCode(code);
+            return (BoxType) boxTypeDao.getEntityByCode(code);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
             return null;
         }
     }
+    */
 }
