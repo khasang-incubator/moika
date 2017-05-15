@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {WashFacility} from '../../entities/wash-facility';
-import {WashFacilityService} from "../../services/wash-facility.service";
+import {WashFacility} from '../../model/entities/wash-facility';
+import {WashFacilityService} from "../../model/services/wash-facility.service";
 
 @Component({
   selector: 'wash-facilities',

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {WashBox} from "../../entities/wash-box";
+import {WashBox} from "../../model/entities/wash-box";
 
 @Component({
   selector: 'wash-box-detail',

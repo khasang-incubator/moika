@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Client} from "../../entities/client";
-import {ClientService} from "../../services/client.service";
-import {CrudService} from "../../services/crud.service";
-import {ICrudService} from "../../services/icrud.service";
+import {Client} from "../../model/entities/client";
+import {ClientService} from "../../model/services/client.service";
+import {CrudService} from "../../model/services/crud.service";
+import {ICrudService} from "../../model/services/icrud.service";
 
 @Component({
   selector: 'app-client-list',

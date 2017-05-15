@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {WashBoxService} from '../../services/wash-box.service';
-import {WashBox} from '../../entities/wash-box';
+import {WashBoxService} from '../../model/services/wash-box.service';
+import {WashBox} from '../../model/entities/wash-box';
 
 @Component({
   selector: 'washbox-list',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {TypeRefList} from "../../entities/ref-type-list";
+import {TypeRefList} from "../../model/entities/ref-type-list";
 import {DropdownModule, SelectItem} from 'primeng/primeng';
 
 

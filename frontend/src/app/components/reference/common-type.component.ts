@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {SomeType} from "../../entities/some-type";
-import {CrudService} from "../../services/crud.service";
+import {SomeType} from "../../model/entities/some-type";
+import {CrudService} from "../../model/services/crud.service";
 
 @Component({
   selector: 'app-common-type',

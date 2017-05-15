@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {WashFacility} from "../../entities/wash-facility";
+import {WashFacility} from "../../model/entities/wash-facility";
 
 @Component({
   selector: 'facility-detail',

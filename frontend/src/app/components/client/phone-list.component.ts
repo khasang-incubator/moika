@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Phone} from "../../entities/phone";
-import {Person} from "../../entities/person";
+import {Phone} from "../../model/entities/phone";
+import {Person} from "../../model/entities/person";
 
 @Component({
   selector: 'phone-list',

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Client} from "../../entities/client";
+import {Client} from "../../model/entities/client";
 
 @Component({
   selector: 'client-detail',
