@@ -5,16 +5,22 @@ import {CrudService} from "../../model/services/crud.service";
 @Component({
   selector: 'app-common-type',
   templateUrl: './common-type.component.html',
-  styleUrls: ['./common-type.component.css']
+  styleUrls: ['./common-type.component.css','/../../../../node_modules/primeng/components/dialog/dialog.css']
 })
-export class CommonTypeComponent implements OnChanges{
+export class CommonTypeComponent implements OnChanges, OnInit{
 
   @Input() refType: any;
 
   someTypeList: SomeType[];
+  typeRec: SomeType;
+  isNewTypeRec: boolean;
+  displayDialog: boolean;
+  selectedType : SomeType;
+
   private typeUrl: string;
   private startUrl: string;
   private typeFullName: string;
+
 
   constructor(private typeService: CrudService<SomeType>) {
      this.startUrl = typeService.getBaseUrl();
@@ -24,6 +30,9 @@ export class CommonTypeComponent implements OnChanges{
     this.typeService.getAll().then(someTypeList => this.someTypeList = someTypeList).catch(this.handleError);
   }
 
+  ngOnInit(): void {
+    this.typeRec = new SomeType();
+  }
 
   ngOnChanges(): void {
     console.log(this.refType);
@@ -36,6 +45,48 @@ export class CommonTypeComponent implements OnChanges{
     }
   }
 
+  showDialogToAdd() {
+    this.isNewTypeRec = true;
+    this.typeRec = new SomeType();
+    this.displayDialog = true;
+  }
+
+  save() {
+    let tmpList = [...this.someTypeList];
+    if(this.isNewTypeRec)
+      tmpList.push(this.typeRec);
+    else
+      tmpList[this.findSelectedTypeID()] = this.typeRec;
+
+    this.someTypeList = tmpList;
+    this.typeRec = null;
+    this.displayDialog = false;
+  }
+
+  delete() {
+    let index = this.findSelectedTypeID();
+    this.someTypeList = this.someTypeList.filter((val,i) => i!=index);
+    this.typeRec = null;
+    this.displayDialog = false;
+  }
+
+  onRowSelect(event) {
+    this.isNewTypeRec = false;
+    this.typeRec = this.cloneTypeRec(event.data);
+    this.displayDialog = true;
+  }
+
+  cloneTypeRec(aType: SomeType): SomeType {
+    let t = new SomeType();
+    for(let prop in aType) {
+      t[prop] = aType[prop];
+    }
+    return t;
+  }
+
+  findSelectedTypeID(): number {
+    return this.someTypeList.indexOf(this.selectedType);
+  }
 
   private handleError(error: any): Promise<any> {
     console.error('Не могу получить список моек. Error code: %s, URL: %s ', error.status, error.url); // for demo purposes only
