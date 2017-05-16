@@ -24,6 +24,7 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
   }
 
   getEntity(id: number): Promise<T> {
+    //TODO change Promise to Observable
     const entity = this.http.get(`${this._baseUrl}/${id}`, {headers: this.getHeaders()})
       .toPromise()
       .then(response => response.json().data as T)
@@ -32,12 +33,14 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
   }
 
   getAll(): Promise<T[]> {
+    //TODO change Promise to Observable
     const entityArr = this.http.get(`${this._baseUrl}/list`, {headers: this.getHeaders()})
       .map((res: Response) => res.json()).toPromise();
     return entityArr;
   }
 
   createEntity<T>(entity: T): Promise<T> {
+    //TODO change Promise to Observable
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
     const body = JSON.stringify(entity);
@@ -53,6 +56,7 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
   }
 
   updateEntity<T>(entity: T): Promise<T> {
+    //TODO change Promise to Observable
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
     const body = JSON.stringify(entity);

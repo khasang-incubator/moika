@@ -7,14 +7,12 @@ import io.khasang.moika.service.BoxStatusDataAccessService;
 import io.khasang.moika.service.BoxTypesDataAccessService;
 import io.khasang.moika.service.PskvorWashBoxDataAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,17 +36,17 @@ public class PsWashBoxController {
     /**
      * Вывод информации о всех боксах
      *
-     * @param model
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object getWashBoxList(Model model) {
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
+    @ResponseStatus(HttpStatus.OK)
+    public Object getWashBoxList() {
         List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getAllWashBoxes();
-        model.addAttribute("boxlist", washBoxList);
-        model.addAttribute("nrows", washBoxList.size() + " rows affected");
-        return washBoxList;
+        if (washBoxList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return washBoxList;
     }
 
     /**
@@ -59,11 +57,13 @@ public class PsWashBoxController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
     public Object addWashBox(@RequestBody WashBox washBox) {
-        pskvorWashBoxDataAccessService.addWashBox(washBox);
-        List<WashBox> washBoxList = new ArrayList<>();
-        washBoxList.add(washBox);
-        return washBoxList;
+        WashBox retWashBox = pskvorWashBoxDataAccessService.addWashBox(washBox);
+        if (retWashBox == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return retWashBox;
     }
 
     /**
@@ -74,58 +74,66 @@ public class PsWashBoxController {
      */
     @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public Object updateWashBox(@RequestBody WashBox washBox) {
-        pskvorWashBoxDataAccessService.updateWashBox(washBox);
-        return washBox;
+        WashBox retWashBox = pskvorWashBoxDataAccessService.updateWashBox(washBox);
+        if (retWashBox == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return retWashBox;
     }
 
     /**
      * Выаод информаии о боксе по id
      *
      * @param inputId
-     * @param model
      * @return
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public WashBox getWashBox(@PathVariable(value = "id") String inputId, Model model) {
+    @ResponseStatus(HttpStatus.OK)
+    public Object getWashBox(@PathVariable(value = "id") String inputId) {
         WashBox washBox = pskvorWashBoxDataAccessService.getWashBoxById(Integer.valueOf(inputId));
-        return washBox;
+        if (washBox == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return washBox;
     }
 
     /**
      * Вывод информации о боксе по имени на конкретной мойке
      *
      * @param idFclt   - id мойки
-     * @param response
-     * @param model
      * @return
      */
     @RequestMapping(value = "/inFacility/{idFacility}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public List<WashBox> getWashBoxesOnFacility(@PathVariable(value = "idFacility") int idFclt,
-                                          HttpServletResponse response, Model model) {
+    @ResponseStatus(HttpStatus.OK)
+    public Object getWashBoxesOnFacility(@PathVariable(value = "idFacility") int idFclt) {
         List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getWashBoxesOnFacility(idFclt);
-        return washBoxList;
+        if (washBoxList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return washBoxList;
     }
 
     /**
      * Удаление бокса по id
      *
      * @param inputId
-     * @param response
      * @return
      */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String deleteWashBox(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Object deleteWashBox(@PathVariable(value = "id") String inputId) {
         WashBox washBox = pskvorWashBoxDataAccessService.getWashBoxById(Integer.valueOf(inputId));
         if (washBox != null) {
             int id = washBox.getId();
             pskvorWashBoxDataAccessService.deleteWashBox(washBox);
-            return String.valueOf(response.SC_OK);
+            return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
         } else {
-            return String.valueOf(response.SC_NOT_FOUND);
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -133,28 +141,34 @@ public class PsWashBoxController {
      * вывод списка  боксов по их типам
      *
      * @param typeId
-     * @param model
      * @return
      */
     @RequestMapping(value = "/ByType/{type}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public List<WashBox> getWashBoxListbyType(@PathVariable(value = "type") String typeId, Model model) {
+    @ResponseStatus(HttpStatus.OK)
+    public Object getWashBoxListbyType(@PathVariable(value = "type") String typeId) {
         List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByType(Integer.valueOf(typeId));
-        return washBoxList;
+        if (washBoxList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return washBoxList;
     }
 
     /**
      * вывод списка боксов по их статусам
      *
      * @param status
-     * @param model
      * @return
      */
     @RequestMapping(value = "/ByStatus/{status}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public List<WashBox> getWashBoxListbyStatus(@PathVariable(value = "status") String status, Model model) {
+    @ResponseStatus(HttpStatus.OK)
+    public Object getWashBoxListbyStatus(@PathVariable(value = "status") String status) {
         List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByStatus(Integer.valueOf(status));
-        return washBoxList;
+        if (washBoxList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return washBoxList;
     }
 
     /**
@@ -164,8 +178,13 @@ public class PsWashBoxController {
      */
     @RequestMapping(value = "/boxStatus/list", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public List<BoxStatus> getBoxStatusList() {
-        return boxStatusDataAccessService.getAllStatuses();//"ps-dao-carwashfacilities";
+    @ResponseStatus(HttpStatus.OK)
+    public Object getBoxStatusList() {
+        List<BoxStatus> statusList = boxStatusDataAccessService.getAllStatuses();
+        if (statusList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return statusList;
     }
 
     /**
@@ -175,9 +194,15 @@ public class PsWashBoxController {
      */
     @RequestMapping(value = "/boxType/list", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public List<BoxType> getBoxTypesList() {
-        return boxTypesDataAccessService.getAllTypes();//"ps-dao-carwashfacilities";
+    @ResponseStatus(HttpStatus.OK)
+    public Object getBoxTypesList(HttpServletResponse response) {
+        List<BoxType> typeList = boxTypesDataAccessService.getAllTypes();
+        if (typeList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return typeList;
     }
+
 
     /**
      * статус бокса по коду
@@ -187,8 +212,13 @@ public class PsWashBoxController {
      */
     @RequestMapping(value = "/boxStatus/byCode/{code}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public BoxStatus getBoxStatusByCode(@PathVariable(value = "code") String code) {
-        return (BoxStatus) boxStatusDataAccessService.getStatusByCode(code);//"ps-dao-carwashfacilities";
+    @ResponseStatus(HttpStatus.OK)
+    public Object getBoxStatusByCode(@PathVariable(value = "code") String code) {
+        BoxStatus boxStatus = (BoxStatus)boxStatusDataAccessService.getStatusByCode(code);
+        if (boxStatus == null)
+            return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return boxStatus;
     }
 
     /**
@@ -199,8 +229,13 @@ public class PsWashBoxController {
      */
     @RequestMapping(value = "/boxType/byCode/{code}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public BoxType getBoxTypeByCode(@PathVariable(value = "code") String code) {
-        return (BoxType) boxTypesDataAccessService.getTypeByCode(code);
+    @ResponseStatus(HttpStatus.OK)
+    public Object getBoxTypeByCode(@PathVariable(value = "code") String code) {
+        BoxType boxType =  (BoxType) boxTypesDataAccessService.getTypeByCode(code);
+        if (boxType == null)
+            return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return boxType;
     }
 
     /**
@@ -211,8 +246,13 @@ public class PsWashBoxController {
      */
     @RequestMapping(value = "/boxStatus/byId/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public BoxStatus getBoxStatusById(@PathVariable(value = "id") int id) {
-        return (BoxStatus) boxStatusDataAccessService.getStatusById(id);//"ps-dao-carwashfacilities";
+    @ResponseStatus(HttpStatus.OK)
+    public Object getBoxStatusById(@PathVariable(value = "id") int id) {
+        BoxStatus boxStatus =  (BoxStatus) boxStatusDataAccessService.getStatusById(id);
+        if (boxStatus == null)
+            return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return boxStatus;
     }
 
     /**
@@ -223,8 +263,13 @@ public class PsWashBoxController {
      */
     @RequestMapping(value = "/boxType/byId/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public BoxType getBoxTypeById(@PathVariable(value = "id") int id) {
-        return (BoxType) boxTypesDataAccessService.getTypeById(id);
+    @ResponseStatus(HttpStatus.OK)
+    public Object getBoxTypeById(@PathVariable(value = "id") int id) {
+        BoxType boxType = (BoxType) boxTypesDataAccessService.getTypeById(id);
+        if (boxType == null)
+            return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return boxType;
     }
 
     /**
@@ -234,8 +279,13 @@ public class PsWashBoxController {
      */
     @RequestMapping(value = "/boxStatus/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public BoxStatus addNewBoxStatus(@RequestBody BoxStatus newBoxStatus) {
-        return (BoxStatus) boxStatusDataAccessService.addStatus(newBoxStatus);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Object addNewBoxStatus(@RequestBody BoxStatus newBoxStatus) {
+        BoxStatus boxStatus =  (BoxStatus) boxStatusDataAccessService.addStatus(newBoxStatus);
+        if (boxStatus == null)
+            return  new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return boxStatus;
     }
 
     /**
@@ -245,8 +295,13 @@ public class PsWashBoxController {
      */
     @RequestMapping(value = "/boxType/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public BoxType addNewBoxType(@RequestBody BoxType newBoxType) {
-        return (BoxType) boxTypesDataAccessService.addType(newBoxType);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Object addNewBoxType(@RequestBody BoxType newBoxType) {
+        BoxType boxType = (BoxType) boxTypesDataAccessService.addType(newBoxType);
+        if (boxType == null)
+            return  new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return boxType;
     }
 
     /**
@@ -256,8 +311,13 @@ public class PsWashBoxController {
      */
     @RequestMapping(value = "/boxStatus/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public BoxStatus updateBoxStatus(@RequestBody BoxStatus newBoxStatus) {
-        return (BoxStatus) boxStatusDataAccessService.updateStatus(newBoxStatus);
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Object updateBoxStatus(@RequestBody BoxStatus newBoxStatus) {
+        BoxStatus boxStatus = (BoxStatus) boxStatusDataAccessService.updateStatus(newBoxStatus);
+        if (boxStatus == null)
+            return  new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return boxStatus;
     }
 
     /**
@@ -267,8 +327,13 @@ public class PsWashBoxController {
      */
     @RequestMapping(value = "/boxType/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public BoxType updateBoxType(@RequestBody BoxType newBoxType) {
-        return (BoxType) boxTypesDataAccessService.updateType(newBoxType);
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Object updateBoxType(@RequestBody BoxType newBoxType) {
+        BoxType boxType =  (BoxType) boxTypesDataAccessService.updateType(newBoxType);
+        if (boxType == null)
+            return  new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return boxType;
     }
 
     /**
@@ -278,32 +343,34 @@ public class PsWashBoxController {
      */
     @RequestMapping(value = "/boxStatus/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String deleteBoxStatus(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
-        BoxStatus boxStatus = (BoxStatus)boxStatusDataAccessService.getStatusById(Integer.valueOf(inputId));
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Object deleteBoxStatus(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
+        BoxStatus boxStatus = (BoxStatus) boxStatusDataAccessService.getStatusById(Integer.valueOf(inputId));
         if (boxStatus != null) {
             int id = boxStatus.getId();
             boxStatusDataAccessService.deleteStatus(boxStatus);
-            return String.valueOf(response.SC_OK);
+            return  new ResponseEntity<String>(HttpStatus.NO_CONTENT);
         } else {
-            return String.valueOf(response.SC_NOT_FOUND);
+            return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         }
     }
 
     /**
      * Удаление типа боксов
      *
-     * @return  -  HTTPResponce status
+     * @return -  HTTPResponce status
      */
     @RequestMapping(value = "/boxType/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String deleteBoxType(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
-        BoxType boxType = (BoxType)boxTypesDataAccessService.getTypeById(Integer.valueOf(inputId));
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Object deleteBoxType(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
+        BoxType boxType = (BoxType) boxTypesDataAccessService.getTypeById(Integer.valueOf(inputId));
         if (boxType != null) {
             int id = boxType.getId();
             boxTypesDataAccessService.deleteType(boxType);
-            return String.valueOf(response.SC_OK);
+            return  new ResponseEntity<String>(HttpStatus.NO_CONTENT);
         } else {
-            return String.valueOf(response.SC_NOT_FOUND);
+            return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         }
     }
 }

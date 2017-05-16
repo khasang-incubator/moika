@@ -1,6 +1,8 @@
 package io.khasang.moika.integration;
 
-import io.khasang.moika.entity.*;
+import io.khasang.moika.entity.BoxStatus;
+import io.khasang.moika.entity.BoxType;
+import io.khasang.moika.entity.WashBox;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -9,9 +11,9 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WashBoxIntegrationTest {
@@ -28,9 +30,9 @@ public class WashBoxIntegrationTest {
     final String boxName = "Бокс № TEST";
     final String existingFasity = "Мойка на Помойке";
     final String statusCode = "WORKING";
-    final String typeCode = "MEDIUM";
+    final String typeCode = "TEST";
 
-  //  @Ignore
+    //  @Ignore
     @Test
     @Transactional
     @Rollback
@@ -108,7 +110,7 @@ public class WashBoxIntegrationTest {
                 break;
             }
         }
-     }
+    }
 
     @Test
     public void getBoxById() {
@@ -123,17 +125,22 @@ public class WashBoxIntegrationTest {
                 HttpMethod.GET,
                 httpEntity,
                 new ParameterizedTypeReference<WashBox>() {
-                }, idBox );
-        Assert.assertNotNull("Reques body is incorrect", result);
-        Assert.assertEquals("Reques code non 202", result.getStatusCode().is2xxSuccessful());
+                }, idBox);
+        Assert.assertNotNull("Request body is incorrect", result);
+        Assert.assertTrue("Request code not 202 " + result.getStatusCode().toString(), result.getStatusCode().is2xxSuccessful());
 
-        result = restTemplate.exchange(
-                "http://localhost:8080/api/washBox/{id}",
-                HttpMethod.GET,
-                httpEntity,
-                new ParameterizedTypeReference<WashBox>() {
-                }, 0 );
-        Assert.assertEquals("Reques body is incorrect", result.getStatusCode().is4xxClientError());
+
+        //Запрос о несуществующей сущности. Ожидам exception и StatusCode 404
+        try {
+            result = restTemplate.exchange(
+                    "http://localhost:8080/api/washBox/{id}",
+                    HttpMethod.GET,
+                    httpEntity,
+                    new ParameterizedTypeReference<WashBox>() {
+                    }, 0);
+        } catch (HttpClientErrorException e) {
+            Assert.assertTrue("Request code 4xx " + result.getStatusCode().toString(), e.getStatusCode().is4xxClientError());
+        }
     }
 
     @Test
@@ -156,8 +163,8 @@ public class WashBoxIntegrationTest {
                 "http://localhost:8080/api/washBox/boxType/add",
                 HttpMethod.POST,
                 httpEntity,
-                BoxType.class, typeCode).getBody();
-        Assert.assertNotNull("UPDATE boxType "+typeCode+" incorrect!", resBoxType);
+                BoxType.class).getBody();
+        Assert.assertNotNull("UPDATE boxType " + typeCode + " incorrect!", resBoxType);
         Assert.assertTrue("Could not get box type TEST", resBoxType.getTypeCode().equalsIgnoreCase("TEST"));
     }
 
@@ -180,9 +187,9 @@ public class WashBoxIntegrationTest {
                 "http://localhost:8080/api/washBox/boxStatus/add",
                 HttpMethod.POST,
                 httpEntity,
-                BoxStatus.class, typeCode).getBody();
-        Assert.assertNotNull("UPDATE boxStaus "+statusCode+" incorrect!", resBoxStatus);
-        Assert.assertTrue("Could not get box type TEST" , resBoxStatus.getStatusCode().equalsIgnoreCase("TEST"));
+                BoxStatus.class).getBody();
+        Assert.assertNotNull("UPDATE boxStaus " + statusCode + " incorrect!", resBoxStatus);
+        Assert.assertTrue("Could not get box type TEST", resBoxStatus.getStatusCode().equalsIgnoreCase("TEST"));
     }
 
 
@@ -203,7 +210,7 @@ public class WashBoxIntegrationTest {
                 HttpMethod.GET,
                 httpEntity,
                 BoxType.class, typeCode).getBody();
-        Assert.assertNotNull("Request of boxType "+typeCode+" incorrect!");
+        Assert.assertNotNull("Request of boxType " + typeCode + " incorrect!", boxType);
         Assert.assertTrue("Could not get box type " + typeCode, boxType.getTypeCode().equalsIgnoreCase(typeCode));
         boxType.setDescription("Some test type description");
 
@@ -213,7 +220,7 @@ public class WashBoxIntegrationTest {
                 HttpMethod.PUT,
                 httpEntity,
                 BoxType.class).getBody();
-        Assert.assertNotNull("UPDATE boxType "+typeCode+" incorrect!", boxType);
+        Assert.assertNotNull("UPDATE boxType " + typeCode + " incorrect!", boxType);
         Assert.assertTrue("Could not get box type " + typeCode, boxType.getDescription().equalsIgnoreCase("Some test type description"));
     }
 
@@ -233,9 +240,9 @@ public class WashBoxIntegrationTest {
                 HttpMethod.GET,
                 httpEntity,
                 BoxStatus.class, statusCode).getBody();
-        Assert.assertNotNull("Request of boxType "+statusCode+" incorrect!");
+        Assert.assertNotNull("Request of boxType " + statusCode + " incorrect!", boxStatus);
         Assert.assertTrue("Could not get box type " + statusCode, boxStatus.getStatusCode().equalsIgnoreCase(statusCode));
-        boxStatus.setStatusName("Some test ststus description");
+        boxStatus.setStatusName("Some test status description");
 
         httpEntity = new HttpEntity<>(boxStatus, headers); //подготовили запрос для BoxType
         boxStatus = restTemplate.exchange(
@@ -243,8 +250,42 @@ public class WashBoxIntegrationTest {
                 HttpMethod.PUT,
                 httpEntity,
                 BoxStatus.class).getBody();
-        Assert.assertNotNull("UPDATE boxStatus "+statusCode+" incorrect!");
+        Assert.assertNotNull("UPDATE boxStatus " + statusCode + " incorrect!", boxStatus);
         Assert.assertTrue("Could not get box status " + statusCode, boxStatus.getStatusName().equalsIgnoreCase("Some test Status description"));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void deleteWashBoxType() {
+        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        RestTemplate restTemplate = new RestTemplate();
+
+        BoxType boxType = new BoxType();
+
+        HttpEntity httpEntity;
+        httpEntity = new HttpEntity<>(boxType, headers); //подготовили запрос для BoxType
+        try {
+            ResponseEntity<BoxType> result = restTemplate.exchange(
+                    "http://localhost:8080/api/washBox/boxType/byCode/{code}",
+                    HttpMethod.GET,
+                    httpEntity,
+                    BoxType.class, typeCode);
+            Assert.assertTrue("Response code is not 202 " + result.getStatusCode().toString(), result.getStatusCode().is2xxSuccessful());
+            boxType = result.getBody();
+            Assert.assertNotNull("Response of boxType " + typeCode + " is incorrect!", boxType);
+        } catch (HttpClientErrorException e) {
+            Assert.assertTrue("Response code is 4xx " + e.getStatusCode().toString(), e.getStatusCode().is4xxClientError());
+        }
+
+        httpEntity = new HttpEntity<>(boxType.getId(), headers); //подготовили запрос для BoxType
+        ResponseEntity<Boolean> isDeleted = restTemplate.exchange(
+                "http://localhost:8080/api/washBox/boxType/delete/{id}",
+                HttpMethod.DELETE,
+                httpEntity,
+                Boolean.class, boxType.getId());
+        Assert.assertTrue("Request code is not 20x " + isDeleted.getStatusCode().toString(), isDeleted.getStatusCode().is2xxSuccessful());
     }
 }
 
