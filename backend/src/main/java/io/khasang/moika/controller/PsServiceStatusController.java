@@ -96,7 +96,7 @@ public class PsServiceStatusController {
     public String getServiceStatus(@PathVariable(value = "id") String id, Model model) {
         ServiceStatus serviceStatus = null;
         try {
-            serviceStatus = (ServiceStatus) serviceStatusService.getStatusByID(Integer.valueOf(id));
+            serviceStatus = (ServiceStatus) serviceStatusService.getStatusById(Integer.valueOf(id));
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }
@@ -121,7 +121,7 @@ public class PsServiceStatusController {
     public String deleteServiceStatus(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
         ServiceStatus serviceStatus = null;
         try {
-            serviceStatus = (ServiceStatus) serviceStatusService.getStatusByID(Integer.valueOf(inputId));
+            serviceStatus = (ServiceStatus) serviceStatusService.getStatusById(Integer.valueOf(inputId));
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }

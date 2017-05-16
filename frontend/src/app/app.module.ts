@@ -22,7 +22,10 @@ import { NotFoundComponent } from './components/shared/common/not-found.componen
 import { HomePageComponent } from './components/shared/common/home-page.component';
 import { RouterModule, Routes } from "@angular/router";
 import { MainOutletComponent } from './components/main-outlet.component';
-import {DataTableModule, DropdownModule, InputTextareaModule, PanelModule, DialogModule, SharedModule} from 'primeng/primeng';
+import {
+  DataTableModule, DropdownModule, InputTextareaModule, PanelModule, DialogModule, SharedModule,
+  ButtonModule
+} from 'primeng/primeng';
 import { CommonTypeComponent } from './components/reference/common-type.component';
 import { CommonTypeSelectorComponent } from './components/reference/common-type-selector.component';
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
@@ -62,7 +65,8 @@ const appRoutes: Routes =[
     BrowserModule,
     FormsModule,
     HttpModule,
-    DataTableModule, DialogModule, SharedModule,  DataTableModule, InputTextareaModule, FormsModule, PanelModule, DropdownModule,
+    DataTableModule, DialogModule, SharedModule,  DataTableModule, InputTextareaModule,
+    FormsModule, PanelModule, DropdownModule, ButtonModule,
     NoopAnimationsModule
   ],
   providers: [WashBoxService, WashFacilityService, ClientService, CrudService],

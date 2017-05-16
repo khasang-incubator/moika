@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 
-public class ServiceStatusIntegrationalTest {
+public class ServiceStatusIntegrationTest {
 
     @Test
     @Ignore

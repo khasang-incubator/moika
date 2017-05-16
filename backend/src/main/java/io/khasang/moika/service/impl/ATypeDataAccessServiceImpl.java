@@ -43,7 +43,7 @@ public abstract class ATypeDataAccessServiceImpl<T extends ABaseMoikaTypeReferen
     }
     
     @Override
-    public ABaseMoikaTypeReference getTypeByID(int id) throws MoikaDaoException {
+    public ABaseMoikaTypeReference getTypeById(int id) throws MoikaDaoException {
         return (ABaseMoikaTypeReference) TypeDao.get(id);
     }
 

@@ -14,7 +14,8 @@ export class CommonTypeComponent implements OnChanges, OnInit{
   someTypeList: SomeType[];
   typeRec: SomeType;
   isNewTypeRec: boolean;
-  displayDialog: boolean;
+  displayAddDialog: boolean;
+  displayConfirmDialog: boolean;
   selectedType : SomeType;
 
   private typeUrl: string;
@@ -48,32 +49,42 @@ export class CommonTypeComponent implements OnChanges, OnInit{
   showDialogToAdd() {
     this.isNewTypeRec = true;
     this.typeRec = new SomeType();
-    this.displayDialog = true;
+    this.displayAddDialog = true;
+  }
+
+  showConfirmDialog() {
+    this.displayConfirmDialog = true;
   }
 
   save() {
     let tmpList = [...this.someTypeList];
-    if(this.isNewTypeRec)
-      tmpList.push(this.typeRec);
-    else
+    if(this.isNewTypeRec) {
+      this.typeService.createEntity(this.typeRec)
+        .subscribe(
+          typeRec => tmpList.push(this.typeRec),
+          error =>  this.handleError(<any>error)
+          );
+    } else
       tmpList[this.findSelectedTypeID()] = this.typeRec;
 
     this.someTypeList = tmpList;
     this.typeRec = null;
-    this.displayDialog = false;
+    this.displayAddDialog = false;
   }
+
 
   delete() {
     let index = this.findSelectedTypeID();
     this.someTypeList = this.someTypeList.filter((val,i) => i!=index);
     this.typeRec = null;
-    this.displayDialog = false;
+    this.displayConfirmDialog = false;
   }
 
-  onRowSelect(event) {
+
+  onRowDblclick(event) {
     this.isNewTypeRec = false;
     this.typeRec = this.cloneTypeRec(event.data);
-    this.displayDialog = true;
+    this.displayAddDialog = true;
   }
 
   cloneTypeRec(aType: SomeType): SomeType {

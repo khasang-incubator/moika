@@ -14,17 +14,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WashFacilityIntegrationalTest {
+public class WashFacilityIntegrationTest {
 
- /*   @Autowired
-    BoxStatusDao boxStatusDao;
-
-    @Autowired
-    BoxTypeDao boxTypeDao;
-
-    @Autowired
-    WashAddrDao washAddrDao;
-    */
 
     @Ignore
     @Before
@@ -62,7 +53,7 @@ public class WashFacilityIntegrationalTest {
 
         httpEntity = new HttpEntity<>(boxStatus, headers); //подготовили запрос для BoxStatus
         boxStatus = restTemplate.exchange(
-                "http://localhost:8080/boxStatus/{code}/",
+                "http://localhost:8080/api/boxStatus/{code}/",
                 HttpMethod.GET,
                 httpEntity,
                 BoxStatus.class,stausCode).getBody();
@@ -70,7 +61,7 @@ public class WashFacilityIntegrationalTest {
 
         httpEntity = new HttpEntity<>(boxType, headers); //подготовили запрос для BoxType
         boxType = restTemplate.exchange(
-                "http://localhost:8080/boxType/{code}/",
+                "http://localhost:8080/api/boxType/{code}/",
                 HttpMethod.GET,
                 httpEntity,
                 BoxType.class,typeCode).getBody();
@@ -90,7 +81,7 @@ public class WashFacilityIntegrationalTest {
         httpEntity = new HttpEntity<>(fclt, headers); //подготовили запрос га добавление Facility
         restTemplate = new RestTemplate();
         WashFacility resFclt = restTemplate.exchange(    //отправли запрос через веб (т.е. снаружи приложения)
-                "http://localhost:8080/washFacility/add",
+                "http://localhost:8080/api/washFacility/add",
                 HttpMethod.POST,
                 httpEntity,
                 WashFacility.class).getBody();
@@ -124,7 +115,7 @@ public class WashFacilityIntegrationalTest {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<List<WashFacility>> resultAll = restTemplate.exchange(
-                "http://localhost:8080/washFacilitylist/",
+                "http://localhost:8080/api/washFacilitylist/",
                 HttpMethod.GET,
                 httpEntity,
                 new ParameterizedTypeReference<List<WashFacility>>() {
@@ -154,7 +145,7 @@ public class WashFacilityIntegrationalTest {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<List<WashFacility>> resultAll = restTemplate.exchange(
-                "http://localhost:8080/washFacility/{id}/",
+                "http://localhost:8080/api/washFacility/{id}/",
                 HttpMethod.GET,
                 httpEntity,
                 new ParameterizedTypeReference<List<WashFacility>>() {

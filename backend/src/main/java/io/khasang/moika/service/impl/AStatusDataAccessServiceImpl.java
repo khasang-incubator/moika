@@ -50,7 +50,7 @@ public abstract class AStatusDataAccessServiceImpl<T extends ABaseMoikaStatusRef
     }
 
     @Override
-    public T getStatusByID(int id) throws MoikaDaoException {
+    public T getStatusById(int id) throws MoikaDaoException {
         return (T) statusDao.get(id);
     }
 

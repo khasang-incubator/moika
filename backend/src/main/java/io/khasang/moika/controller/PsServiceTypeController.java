@@ -94,7 +94,7 @@ public class PsServiceTypeController {
     public String getServiceType(@PathVariable(value = "id") String inputId, Model model) {
         ServiceType serviceType = null;
         try {
-            serviceType = (ServiceType) serviceTypeService.getTypeByID(Integer.valueOf(inputId));
+            serviceType = (ServiceType) serviceTypeService.getTypeById(Integer.valueOf(inputId));
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }
@@ -144,7 +144,7 @@ public class PsServiceTypeController {
     public String deleteServiceType(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
         ServiceType serviceType = null;
         try {
-            serviceType = (ServiceType) serviceTypeService.getTypeByID(Integer.valueOf(inputId));
+            serviceType = (ServiceType) serviceTypeService.getTypeById(Integer.valueOf(inputId));
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }

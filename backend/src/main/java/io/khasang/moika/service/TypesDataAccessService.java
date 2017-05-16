@@ -45,7 +45,7 @@ public interface TypesDataAccessService<T extends ABaseMoikaTypeReference> {
      * @return
      * @throws MoikaDaoException
      */
-    T getTypeByID(int id) throws MoikaDaoException;
+    T getTypeById(int id) throws MoikaDaoException;
 
     /**
      * Получить значение из справочника по Code

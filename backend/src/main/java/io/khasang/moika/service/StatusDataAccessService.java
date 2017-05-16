@@ -46,7 +46,7 @@ public interface StatusDataAccessService<T extends ABaseMoikaStatusReference> {
      * @return
      * @throws MoikaDaoException
      */
-    T getStatusByID(int id) throws MoikaDaoException;
+    T getStatusById(int id) throws MoikaDaoException;
 
     /**
      * получить статцус по его коду Code

@@ -22,14 +22,6 @@ public class PskvorWashBoxDataAccessServiceImpl implements PskvorWashBoxDataAcce
     @Autowired
     private WashBoxDao washBoxDao;
 
-    @Autowired
-  //  @Qualifier("boxStatusDataAccessServiceImpl")
-    private BoxStatusDao boxStatusDao;
-
-    @Autowired
- //   @Qualifier("boxTypesDataAccessService")
-    private BoxTypeDao boxTypeDao;
-
     public PskvorWashBoxDataAccessServiceImpl() {
     }
 

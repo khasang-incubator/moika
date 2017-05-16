@@ -125,11 +125,11 @@ public class WashBox  extends ABaseMoikaEntity {
     public String toString() {
         return "WashBox{" +
                 "id=" + id +
-                ", idFacility=" + washFacility.getId()+
+                ", idFacility=" + getIdFacility()+
                 ", boxName='" + boxName + '\'' +
                 ", boxTypeEntity=" + boxTypeEntity.toString() +
                 ", boxStatusEntity=" + boxStatusEntity.toString() + '\'' +
-                ", description='" + description  +
+                ", description='" + (description == null ? "" : description)  +
                 '}';
     }
 

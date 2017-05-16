@@ -55,18 +55,14 @@ public class PsWashBoxController {
      * Добавление бокса
      *
      * @param washBox
-     * @param model
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object addWashBox(@RequestBody WashBox washBox, Model model) {
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
+    public Object addWashBox(@RequestBody WashBox washBox) {
         pskvorWashBoxDataAccessService.addWashBox(washBox);
         List<WashBox> washBoxList = new ArrayList<>();
         washBoxList.add(washBox);
-        model.addAttribute("boxlist", washBoxList);
-        model.addAttribute("nrows", "ID: " + washBox.getId() + " added");
         return washBoxList;
     }
 
@@ -101,17 +97,16 @@ public class PsWashBoxController {
      * Вывод информации о боксе по имени на конкретной мойке
      *
      * @param idFclt   - id мойки
-     * @param boxName  - имя бокса
      * @param response
      * @param model
      * @return
      */
-    @RequestMapping(value = "/{idFacility}/{boxName}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/inFacility/{idFacility}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public WashBox getWashBoxesOnFacility(@PathVariable(value = "idFacility") int idFclt, @PathVariable(value = "boxName") String boxName,
-                                         HttpServletResponse response, Model model) {
-        WashBox washBox = pskvorWashBoxDataAccessService.getWashBoxByName(idFclt, boxName);
-        return washBox;
+    public List<WashBox> getWashBoxesOnFacility(@PathVariable(value = "idFacility") int idFclt,
+                                          HttpServletResponse response, Model model) {
+        List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getWashBoxesOnFacility(idFclt);
+        return washBoxList;
     }
 
     /**
@@ -121,7 +116,7 @@ public class PsWashBoxController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String deleteWashBox(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
         WashBox washBox = pskvorWashBoxDataAccessService.getWashBoxById(Integer.valueOf(inputId));
@@ -129,7 +124,9 @@ public class PsWashBoxController {
             int id = washBox.getId();
             pskvorWashBoxDataAccessService.deleteWashBox(washBox);
             return String.valueOf(response.SC_OK);
-        } else {return String.valueOf(response.SC_NOT_FOUND);}
+        } else {
+            return String.valueOf(response.SC_NOT_FOUND);
+        }
     }
 
     /**
@@ -141,7 +138,7 @@ public class PsWashBoxController {
      */
     @RequestMapping(value = "/ByType/{type}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public  List<WashBox> getWashBoxListbyType(@PathVariable(value = "type") String typeId, Model model) {
+    public List<WashBox> getWashBoxListbyType(@PathVariable(value = "type") String typeId, Model model) {
         List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByType(Integer.valueOf(typeId));
         return washBoxList;
     }
@@ -188,10 +185,10 @@ public class PsWashBoxController {
      * @param code
      * @return
      */
-    @RequestMapping(value = "/boxStatus/{code}/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/boxStatus/byCode/{code}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public BoxStatus getBoxStatusByCode(@PathVariable(value = "code") String code) {
-        return (BoxStatus)boxStatusDataAccessService.getStatusByCode(code);//"ps-dao-carwashfacilities";
+        return (BoxStatus) boxStatusDataAccessService.getStatusByCode(code);//"ps-dao-carwashfacilities";
     }
 
     /**
@@ -200,11 +197,113 @@ public class PsWashBoxController {
      * @param code
      * @return
      */
-    @RequestMapping(value = "/boxType/{code}/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/boxType/byCode/{code}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public BoxType getBoxTypesList(@PathVariable(value = "code") String code) {
-        return (BoxType) boxTypesDataAccessService.getTypeByCode(code);//"ps-dao-carwashfacilities";
+    public BoxType getBoxTypeByCode(@PathVariable(value = "code") String code) {
+        return (BoxType) boxTypesDataAccessService.getTypeByCode(code);
     }
 
+    /**
+     * статус бокса по коду
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/boxStatus/byId/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public BoxStatus getBoxStatusById(@PathVariable(value = "id") int id) {
+        return (BoxStatus) boxStatusDataAccessService.getStatusById(id);//"ps-dao-carwashfacilities";
+    }
 
+    /**
+     * тип бокса по коду
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/boxType/byId/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public BoxType getBoxTypeById(@PathVariable(value = "id") int id) {
+        return (BoxType) boxTypesDataAccessService.getTypeById(id);
+    }
+
+    /**
+     * Добавление нового статуса боксов
+     *
+     * @return
+     */
+    @RequestMapping(value = "/boxStatus/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public BoxStatus addNewBoxStatus(@RequestBody BoxStatus newBoxStatus) {
+        return (BoxStatus) boxStatusDataAccessService.addStatus(newBoxStatus);
+    }
+
+    /**
+     * Добавление нового типа боксов
+     *
+     * @return
+     */
+    @RequestMapping(value = "/boxType/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public BoxType addNewBoxType(@RequestBody BoxType newBoxType) {
+        return (BoxType) boxTypesDataAccessService.addType(newBoxType);
+    }
+
+    /**
+     * Обновление нового статуса боксов
+     *
+     * @return
+     */
+    @RequestMapping(value = "/boxStatus/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public BoxStatus updateBoxStatus(@RequestBody BoxStatus newBoxStatus) {
+        return (BoxStatus) boxStatusDataAccessService.updateStatus(newBoxStatus);
+    }
+
+    /**
+     * Обновление нового типа боксов
+     *
+     * @return
+     */
+    @RequestMapping(value = "/boxType/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public BoxType updateBoxType(@RequestBody BoxType newBoxType) {
+        return (BoxType) boxTypesDataAccessService.updateType(newBoxType);
+    }
+
+    /**
+     * Удаление статуса боксов
+     *
+     * @return - HTTPResponce status
+     */
+    @RequestMapping(value = "/boxStatus/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String deleteBoxStatus(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
+        BoxStatus boxStatus = (BoxStatus)boxStatusDataAccessService.getStatusById(Integer.valueOf(inputId));
+        if (boxStatus != null) {
+            int id = boxStatus.getId();
+            boxStatusDataAccessService.deleteStatus(boxStatus);
+            return String.valueOf(response.SC_OK);
+        } else {
+            return String.valueOf(response.SC_NOT_FOUND);
+        }
+    }
+
+    /**
+     * Удаление типа боксов
+     *
+     * @return  -  HTTPResponce status
+     */
+    @RequestMapping(value = "/boxType/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String deleteBoxType(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
+        BoxType boxType = (BoxType)boxTypesDataAccessService.getTypeById(Integer.valueOf(inputId));
+        if (boxType != null) {
+            int id = boxType.getId();
+            boxTypesDataAccessService.deleteType(boxType);
+            return String.valueOf(response.SC_OK);
+        } else {
+            return String.valueOf(response.SC_NOT_FOUND);
+        }
+    }
 }
