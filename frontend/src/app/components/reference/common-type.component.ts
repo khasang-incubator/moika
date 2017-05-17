@@ -7,7 +7,7 @@ import {CrudService} from "../../model/services/crud.service";
   templateUrl: './common-type.component.html',
   styleUrls: ['./common-type.component.css']
 })
-export class CommonTypeComponent implements OnChanges, OnInit{
+export class CommonTypeComponent implements OnChanges, OnInit {
 
   @Input() refType: any;
 
@@ -16,7 +16,7 @@ export class CommonTypeComponent implements OnChanges, OnInit{
   isNewTypeRec: boolean;
   displayAddDialog: boolean;
   displayConfirmDialog: boolean;
-  selectedType : SomeType;
+  selectedType: SomeType;
 
   private typeUrl: string;
   private startUrl: string;
@@ -24,7 +24,7 @@ export class CommonTypeComponent implements OnChanges, OnInit{
 
 
   constructor(private typeService: CrudService<SomeType>) {
-     this.startUrl = typeService.getBaseUrl();
+    this.startUrl = typeService.getBaseUrl();
   }
 
   getAll(): void {
@@ -42,7 +42,7 @@ export class CommonTypeComponent implements OnChanges, OnInit{
     if (this.refType) {
       this.typeUrl = this.refType.url;
       this.typeFullName = this.refType.descr;
-      console.log(this.typeFullName +" at "+this.typeUrl);
+      console.log(this.typeFullName + " at " + this.typeUrl);
       this.typeService.setBaseUrl(`${this.startUrl }/${this.typeUrl}`);
       this.getAll();
     }
@@ -60,33 +60,41 @@ export class CommonTypeComponent implements OnChanges, OnInit{
 
   save() {
     let tmpList = [...this.someTypeList];
-    if(this.isNewTypeRec) {
+    if (this.isNewTypeRec) {
       this.typeService.createEntity(this.typeRec)
         .then(
-          resRec => tmpList.push(resRec),
-          error =>  this.handleError(<any>error)
-          );
-    } else{
-      tmpList[this.findSelectedTypeId()] = this.typeRec;
+           resRec => {
+             console.log("Length before %d", tmpList.length);
+             tmpList.push(resRec);
+             console.log("Length after %d", tmpList.length);
+             console.log("Just create rec ID: " + JSON.stringify(resRec));
+           } )
+        .catch(
+          error => this.handleError(<any>error));
+    } else {
+      // tmpList[this.findSelectedTypeIdx()] = this.typeRec;
       this.typeService.updateEntity(this.typeRec)
         .then(
-          resRec => tmpList.push(resRec),
-          error =>  this.handleError(<any>error)
-        );
+          resRec => tmpList[this.findSelectedTypeIdx()] = resRec)
+        .catch(
+          error => this.handleError(<any>error));
     }
-
+    console.log("Length someTypeList before %d", this.someTypeList.length);
     this.someTypeList = tmpList;
+    console.log("Length  someTypeList after %d", this.someTypeList.length);
     this.typeRec = null;
     this.displayAddDialog = false;
   }
 
 
   delete() {
-    let index = this.findSelectedTypeId();
-    this.someTypeList = this.someTypeList.filter((val,i) => i!=index);
+    let index = this.findSelectedTypeIdx();
+    let id = this.selectedType.id;
+    this.someTypeList = this.someTypeList.filter((val, i) => i != index);
     this.typeRec = null;
     this.displayConfirmDialog = false;
-    this.typeService.deleteEntity(index);
+    console.log("About to delete ID: %d", id);
+    this.typeService.deleteEntity(id);
   }
 
 
@@ -98,13 +106,13 @@ export class CommonTypeComponent implements OnChanges, OnInit{
 
   cloneTypeRec(aType: SomeType): SomeType {
     let t = new SomeType();
-    for(let prop in aType) {
+    for (let prop in aType) {
       t[prop] = aType[prop];
     }
     return t;
   }
 
-  findSelectedTypeId(): number {
+  findSelectedTypeIdx(): number {
     return this.someTypeList.indexOf(this.selectedType);
   }
 

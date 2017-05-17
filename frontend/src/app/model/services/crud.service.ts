@@ -45,10 +45,7 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
     const url = `${this._baseUrl}/add`;
-    const body = JSON.stringify(entity, function(key, value){
-       const newKey = (key.charAt(0) === "_") ? key.slice(1) : key;
-       return {newKey, value};
-    });
+    const body = JSON.stringify(entity);
 
     console.log("Create at Url: %s -> body %s", url, body);
 
@@ -58,10 +55,6 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
       .catch(this.handleError);
   }
 
-  cutForward_(key, value){
-      const newKey = (key.charAt(0) === "_") ? key.slice(1) : key;
-      return {newKey, value};
-  }
 
   deleteEntity<T>(id: number): Boolean {
     let headers = this.getHeaders();
@@ -69,7 +62,7 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
     let resp : number = 404;
     const url = `${this._baseUrl}/delete/${id}`;
 
-    console.log("Delete at Url: %s -> Id %n", url, id);
+    console.log("Delete at Url: %s -> Id %d", url, id);
 
     this.http.delete(url, options)
       .toPromise()
@@ -100,8 +93,11 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
    */
   private extractData(res: Response) {
     let body = res.json();
-    console.log("HTTP reult status %n", res.status);
-    return body.data || {};
+    console.log("HTTP reult status %d", res.status);
+    if (body) {
+      console.log("Body %s", JSON.stringify(body));
+    }
+    return body || {} ;
   }
 
   /**

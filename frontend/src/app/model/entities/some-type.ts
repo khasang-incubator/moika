@@ -2,11 +2,12 @@
 import {BaseMoikaEntity} from "./base-moika-entity";
 
 export class SomeType extends BaseMoikaEntity {
-  private _idType: number;
-  private _typeCode: string;
-  private _typeName: string;
-  private _description: string;
+   id: number;
+   typeCode: string;
+   typeName: string;
+   description: string;
 
+  /*
   get id(): number {
     return this._idType;
   }
@@ -38,4 +39,5 @@ export class SomeType extends BaseMoikaEntity {
   set description(value: string) {
     this._description = value;
   }
+  */
 }
