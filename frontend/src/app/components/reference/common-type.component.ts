@@ -5,7 +5,7 @@ import {CrudService} from "../../model/services/crud.service";
 @Component({
   selector: 'app-common-type',
   templateUrl: './common-type.component.html',
-  styleUrls: ['./common-type.component.css','/../../../../node_modules/primeng/components/dialog/dialog.css']
+  styleUrls: ['./common-type.component.css']
 })
 export class CommonTypeComponent implements OnChanges, OnInit{
 
@@ -28,7 +28,9 @@ export class CommonTypeComponent implements OnChanges, OnInit{
   }
 
   getAll(): void {
-    this.typeService.getAll().then(someTypeList => this.someTypeList = someTypeList).catch(this.handleError);
+    this.typeService.getAll()
+      .then(someTypeList => this.someTypeList = someTypeList)
+      .catch(this.handleError);
   }
 
   ngOnInit(): void {
@@ -60,12 +62,18 @@ export class CommonTypeComponent implements OnChanges, OnInit{
     let tmpList = [...this.someTypeList];
     if(this.isNewTypeRec) {
       this.typeService.createEntity(this.typeRec)
-        .subscribe(
-          typeRec => tmpList.push(this.typeRec),
+        .then(
+          resRec => tmpList.push(resRec),
           error =>  this.handleError(<any>error)
           );
-    } else
-      tmpList[this.findSelectedTypeID()] = this.typeRec;
+    } else{
+      tmpList[this.findSelectedTypeId()] = this.typeRec;
+      this.typeService.updateEntity(this.typeRec)
+        .then(
+          resRec => tmpList.push(resRec),
+          error =>  this.handleError(<any>error)
+        );
+    }
 
     this.someTypeList = tmpList;
     this.typeRec = null;
@@ -74,10 +82,11 @@ export class CommonTypeComponent implements OnChanges, OnInit{
 
 
   delete() {
-    let index = this.findSelectedTypeID();
+    let index = this.findSelectedTypeId();
     this.someTypeList = this.someTypeList.filter((val,i) => i!=index);
     this.typeRec = null;
     this.displayConfirmDialog = false;
+    this.typeService.deleteEntity(index);
   }
 
 
@@ -95,12 +104,12 @@ export class CommonTypeComponent implements OnChanges, OnInit{
     return t;
   }
 
-  findSelectedTypeID(): number {
+  findSelectedTypeId(): number {
     return this.someTypeList.indexOf(this.selectedType);
   }
 
   private handleError(error: any): Promise<any> {
-    console.error('Не могу получить список моек. Error code: %s, URL: %s ', error.status, error.url); // for demo purposes only
+    console.error('Не могу получить список из БД. Error code: %s, URL: %s ', error.status, error.url); // for demo purposes only
     return Promise.reject(error.message || error);
   }
 }

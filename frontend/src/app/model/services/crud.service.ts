@@ -5,6 +5,7 @@ import {ICrudService} from './icrud.service';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import {parseHttpResponse} from "selenium-webdriver/http";
 
 
 @Injectable()
@@ -43,25 +44,50 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
     //TODO change Promise to Observable
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
-    const body = JSON.stringify(entity);
+    const url = `${this._baseUrl}/add`;
+    const body = JSON.stringify(entity, function(key, value){
+       const newKey = (key.charAt(0) === "_") ? key.slice(1) : key;
+       return {newKey, value};
+    });
 
-    return this.http.post(`${this._baseUrl}/add`, body, options)
+    console.log("Create at Url: %s -> body %s", url, body);
+
+    return this.http.post(url, body, options)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
   }
 
+  cutForward_(key, value){
+      const newKey = (key.charAt(0) === "_") ? key.slice(1) : key;
+      return {newKey, value};
+  }
+
   deleteEntity<T>(id: number): Boolean {
-    return true;
+    let headers = this.getHeaders();
+    let options = new RequestOptions({headers: headers});
+    let resp : number = 404;
+    const url = `${this._baseUrl}/delete/${id}`;
+
+    console.log("Delete at Url: %s -> Id %n", url, id);
+
+    this.http.delete(url, options)
+      .toPromise()
+      .then(response => resp = response.status)
+      .catch(this.handleError);
+    return (resp > 300 ? false: true);
   }
 
   updateEntity<T>(entity: T): Promise<T> {
     //TODO change Promise to Observable
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
+    const url = `${this._baseUrl}/update`;
     const body = JSON.stringify(entity);
 
-    return this.http.put(`${this._baseUrl}/update`, body, options)
+    console.log("Update at Url: %s -> body %s", url, body);
+
+    return this.http.put(url, body, options)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
@@ -74,6 +100,7 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
    */
   private extractData(res: Response) {
     let body = res.json();
+    console.log("HTTP reult status %n", res.status);
     return body.data || {};
   }
 
