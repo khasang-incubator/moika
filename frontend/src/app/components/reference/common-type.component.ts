@@ -11,6 +11,7 @@ export class CommonTypeComponent implements OnChanges, OnInit {
 
   @Input() refType: any;
 
+  actionMsg: string = "...";
   someTypeList: SomeType[];
   typeRec: SomeType;
   isNewTypeRec: boolean;
@@ -28,8 +29,12 @@ export class CommonTypeComponent implements OnChanges, OnInit {
   }
 
   getAll(): void {
+    this.actionMsg = 'Обработка данных. Ждите...';
     this.typeService.getAll()
-      .then(someTypeList => this.someTypeList = someTypeList)
+      .then(someTypeList => {
+        this.someTypeList = someTypeList;
+        this.actionMsg = 'Двойной клик для редактирования';
+      })
       .catch(this.handleError);
   }
 
@@ -60,32 +65,41 @@ export class CommonTypeComponent implements OnChanges, OnInit {
 
   save() {
     let tmpList = [...this.someTypeList];
+    this.actionMsg = 'Обработка данных. Ждите...';
     if (this.isNewTypeRec) {
       this.typeService.createEntity(this.typeRec)
         .then(
-           resRec => {
-             console.log("Length before %d", tmpList.length);
-             tmpList.push(resRec);
-             console.log("Length after %d", tmpList.length);
-             console.log("Just create rec ID: " + JSON.stringify(resRec));
-           } )
+          resRec => {
+            console.log("Length before %d", tmpList.length);
+            tmpList.push(resRec);
+            console.log("Length after %d", tmpList.length);
+            console.log("Just create rec ID: " + JSON.stringify(resRec));
+            this.updateList(tmpList);
+            this.actionMsg = 'Двойной клик для редактирования';
+          })
         .catch(
           error => this.handleError(<any>error));
     } else {
       // tmpList[this.findSelectedTypeIdx()] = this.typeRec;
       this.typeService.updateEntity(this.typeRec)
         .then(
-          resRec => tmpList[this.findSelectedTypeIdx()] = resRec)
+          resRec => {
+            tmpList[this.findSelectedTypeIdx()] = resRec;
+            this.updateList(tmpList);
+            this.actionMsg = 'Двойной клик для редактирования';
+          })
         .catch(
           error => this.handleError(<any>error));
     }
-    console.log("Length someTypeList before %d", this.someTypeList.length);
-    this.someTypeList = tmpList;
-    console.log("Length  someTypeList after %d", this.someTypeList.length);
-    this.typeRec = null;
     this.displayAddDialog = false;
   }
 
+  updateList(newLIst: SomeType[]) {
+    console.log("Length someTypeList before %d", this.someTypeList.length);
+    this.someTypeList = newLIst;
+    console.log("Length  someTypeList after %d", this.someTypeList.length);
+    this.typeRec = null;
+  }
 
   delete() {
     let index = this.findSelectedTypeIdx();
@@ -94,9 +108,16 @@ export class CommonTypeComponent implements OnChanges, OnInit {
     this.typeRec = null;
     this.displayConfirmDialog = false;
     console.log("About to delete ID: %d", id);
-    this.typeService.deleteEntity(id);
+    if (!this.typeService.deleteEntity(id) ){
+      let error = new Error();
+      error.message = "Удаление невозможно"
+      this.handleError(error);
+    }
   }
 
+  refresh(){
+    this.getAll();
+  }
 
   onRowDblclick(event) {
     this.isNewTypeRec = false;
@@ -116,8 +137,10 @@ export class CommonTypeComponent implements OnChanges, OnInit {
     return this.someTypeList.indexOf(this.selectedType);
   }
 
-  private handleError(error: any): Promise<any> {
+  private handleError(error: any): String {
     console.error('Не могу получить список из БД. Error code: %s, URL: %s ', error.status, error.url); // for demo purposes only
-    return Promise.reject(error.message || error);
+    this.actionMsg = 'Двойной клик для редактирования';
+    alert(error.message);
+    return error.message || error;
   }
 }

@@ -114,6 +114,7 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
     } else {
       errMsg = error.message ? error.message : error.toString();
     }
+    console.error(JSON.stringify(error));
     console.error('Can`t get entity. Error code: %s, URL: %s ', error.status, error.url);
     return Promise.reject(error.message || error);
   }
