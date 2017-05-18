@@ -143,7 +143,7 @@ public class PsWashBoxController {
      * @param typeId
      * @return
      */
-    @RequestMapping(value = "/ByType/{type}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/type/{type}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getWashBoxListbyType(@PathVariable(value = "type") String typeId) {
@@ -160,7 +160,7 @@ public class PsWashBoxController {
      * @param status
      * @return
      */
-    @RequestMapping(value = "/ByStatus/{status}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/status/{status}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getWashBoxListbyStatus(@PathVariable(value = "status") String status) {
@@ -176,7 +176,7 @@ public class PsWashBoxController {
      *
      * @return
      */
-    @RequestMapping(value = "/boxStatus/list", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/status/list", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getBoxStatusList() {
@@ -192,7 +192,7 @@ public class PsWashBoxController {
      *
      * @return
      */
-    @RequestMapping(value = "/boxType/list", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/type/list", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getBoxTypesList(HttpServletResponse response) {
@@ -210,7 +210,7 @@ public class PsWashBoxController {
      * @param code
      * @return
      */
-    @RequestMapping(value = "/boxStatus/byCode/{code}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/status/byCode/{code}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getBoxStatusByCode(@PathVariable(value = "code") String code) {
@@ -227,7 +227,7 @@ public class PsWashBoxController {
      * @param code
      * @return
      */
-    @RequestMapping(value = "/boxType/byCode/{code}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/type/byCode/{code}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getBoxTypeByCode(@PathVariable(value = "code") String code) {
@@ -244,7 +244,7 @@ public class PsWashBoxController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/boxStatus/byId/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/status/byId/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getBoxStatusById(@PathVariable(value = "id") int id) {
@@ -261,7 +261,7 @@ public class PsWashBoxController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/boxType/byId/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/type/byId/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getBoxTypeById(@PathVariable(value = "id") int id) {
@@ -277,7 +277,7 @@ public class PsWashBoxController {
      *
      * @return
      */
-    @RequestMapping(value = "/boxStatus/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/status/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public Object addNewBoxStatus(@RequestBody BoxStatus newBoxStatus) {
@@ -293,7 +293,7 @@ public class PsWashBoxController {
      *
      * @return
      */
-    @RequestMapping(value = "/boxType/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/type/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public Object addNewBoxType(@RequestBody BoxType newBoxType) {
@@ -309,7 +309,7 @@ public class PsWashBoxController {
      *
      * @return
      */
-    @RequestMapping(value = "/boxStatus/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/status/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Object updateBoxStatus(@RequestBody BoxStatus newBoxStatus) {
@@ -325,7 +325,7 @@ public class PsWashBoxController {
      *
      * @return
      */
-    @RequestMapping(value = "/boxType/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/type/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Object updateBoxType(@RequestBody BoxType newBoxType) {
@@ -341,7 +341,7 @@ public class PsWashBoxController {
      *
      * @return - HTTPResponce status
      */
-    @RequestMapping(value = "/boxStatus/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/status/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Object deleteBoxStatus(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
@@ -360,10 +360,10 @@ public class PsWashBoxController {
      *
      * @return -  HTTPResponce status
      */
-    @RequestMapping(value = "/boxType/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/type/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Object deleteBoxType(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
+    public Object deleteBoxType(@PathVariable(value = "id") String inputId) {
         BoxType boxType = (BoxType) boxTypesDataAccessService.getTypeById(Integer.valueOf(inputId));
         if (boxType != null) {
             int id = boxType.getId();

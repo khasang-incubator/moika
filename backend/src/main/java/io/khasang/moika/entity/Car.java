@@ -1,31 +1,25 @@
 package io.khasang.moika.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.cache.annotation.Cacheable;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Entity()
-@Table(name = "cars")
+
+@Entity(name = "cars")
 public class Car extends ABaseMoikaEntity {
 
     @Id
-    @Column(name = "id_car")
+    @Column(name = "id_car", columnDefinition = "bigserial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long idCar;
     @Column(name = "id_car_type")
     private Short idCarType;
     @ManyToOne
     @JoinColumn(name = "id_car_type", foreignKey = @ForeignKey(name = "fk_car_type"), insertable = false, updatable = false)
-    private CarType CarTypeEntity;
+    private CarType carTypeEntity;
     @Column (name = "carnum")
     private String carNumber;
     @Column(name = "carmodel")
@@ -38,7 +32,7 @@ public class Car extends ABaseMoikaEntity {
     private String note;
     @Column(name = "date_reg")
     @Temporal(TemporalType.TIMESTAMP)
-    private Calendar dateReg;
+    private Date dateReg;
     @Column(name = "date_Last_Wash")
     @Temporal(TemporalType.DATE)
     private Date dateLastWash;
@@ -49,8 +43,11 @@ public class Car extends ABaseMoikaEntity {
                     nullable = false, updatable = false)})
     @JsonIgnore
     private List<Client> clients = new ArrayList<>();
+
     public Car() {
+        dateReg = new Date();
     }
+
 
     public Short getIdCarType() {
         return idCarType;
@@ -61,11 +58,11 @@ public class Car extends ABaseMoikaEntity {
     }
 
     public CarType getCarTypeEntity() {
-        return CarTypeEntity;
+        return this.carTypeEntity;
     }
 
     public void setCarTypeEntity(CarType carTypeEntity) {
-        CarTypeEntity = carTypeEntity;
+        this.carTypeEntity = carTypeEntity;
     }
 
     public String getCarNumber() {
@@ -108,11 +105,11 @@ public class Car extends ABaseMoikaEntity {
         this.note = note;
     }
 
-    public Calendar getDateReg() {
+    public Date getDateReg() {
         return dateReg;
     }
 
-    public void setDateReg(Calendar dateReg) {
+    public void setDateReg(Date dateReg) {
         this.dateReg = dateReg;
     }
 
@@ -137,8 +134,8 @@ public class Car extends ABaseMoikaEntity {
         clients.add(newClient);
     }
 
-    public int getId() {
-        return id;
+    public long getId() {
+        return idCar;
     }
 
   //  public void setId(long id) {

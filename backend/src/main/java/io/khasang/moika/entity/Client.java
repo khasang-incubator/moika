@@ -12,7 +12,7 @@ public class Client extends ABaseMoikaEntity  {
     @Id
     @Column(name = "id_client", columnDefinition = "bigserial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(name = "id_person", insertable=false, updatable=false)
     private int idPerson;
@@ -60,7 +60,7 @@ public class Client extends ABaseMoikaEntity  {
         this.cars = cars;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -155,6 +155,8 @@ public class Client extends ABaseMoikaEntity  {
 
     @Override
     public int hashCode() {
-        return getId();
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + idPerson;
+        return result;
     }
 }

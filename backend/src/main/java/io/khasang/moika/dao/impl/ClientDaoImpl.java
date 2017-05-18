@@ -42,4 +42,18 @@ public class ClientDaoImpl extends MoikaDaoCrudImpl<Client> implements ClientDao
         query.setParameter(0, idFclt);
         return query.list();
     }
+
+    @Override
+    public List<Client> getClientsByCar(long idCar) {
+        Query query  = sessionFactory.getCurrentSession().createQuery("from clients cl join cars c where c.idCar = ?");
+        query.setParameter(0, idCar);
+        return query.list();
+    }
+
+    @Override
+    public List<Client> getClientsByCarNum(String carNumber) {
+        Query query  = sessionFactory.getCurrentSession().createQuery("from clients cl join cars c where c.carNumber= ?");
+        query.setParameter(0, carNumber);
+        return query.list();
+    }
 }

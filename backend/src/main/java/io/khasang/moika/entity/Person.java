@@ -14,7 +14,7 @@ public class Person extends ABaseMoikaEntity {
     @Id
     @Column(name = "id_person", columnDefinition = "bigserial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    protected long id;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "middle_name")
@@ -75,7 +75,7 @@ public class Person extends ABaseMoikaEntity {
 
     @JsonIgnore
     public String getFullName() {
-        return firstName + " "+ middleName + " "+lastName;
+        return lastName+" "+firstName + " "+ middleName ;
     }
 
     public void setFullName(String fullName) {
@@ -85,8 +85,8 @@ public class Person extends ABaseMoikaEntity {
             this.setFirstName(arrName[1]);
         }
         else{
-            this.setMiddleName(arrName[1]);
-            this.setFirstName(arrName[2]);
+            this.setMiddleName(arrName[2]);
+            this.setFirstName(arrName[1]);
         }
     }
 
@@ -155,7 +155,7 @@ public class Person extends ABaseMoikaEntity {
         return "Person{" +
                 "id=" + id +
                 ", full name='" + getFullName() + '\'' +
-                ", birthDate=" + birthDate +
+                ", birthDate=" + (birthDate == null ? "": birthDate.toString())+
                 ", phones=" + sb.toString() +
                 '}';
     }

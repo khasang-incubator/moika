@@ -2,11 +2,13 @@ package io.khasang.moika.dao.impl;
 
 import io.khasang.moika.dao.CarDao;
 import io.khasang.moika.entity.Car;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository("carDao")
@@ -15,17 +17,34 @@ public class CarDaoImpl extends MoikaDaoCrudImpl<Car> implements CarDao {
     private static final Logger logger = LoggerFactory.getLogger(CarDaoImpl.class);
 
     @Override
-    public List<Car> getByType(String type) {
-        return null;
+    public List<Car> getByTypeCode(String typeCode) {
+        final Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from cars where carTypeEntity.code = :typeCode");
+        query.setParameter("typeCode", typeCode);
+        List<Car> cars = query.getResultList();
+        return cars;
     }
 
     @Override
-    public List<Car> getByNumber(String number) {
-        return null;
+    public Car getByNumber(String number) {
+        final Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from cars where carNumber = :number");
+        query.setParameter("number", number);
+        Car car = (Car)query.getSingleResult();
+        return car;
     }
 
     @Override
     public List<Car> getByModel(String model) {
         return null;
+    }
+
+    @Override
+    public List<Car> getByClient(Long idClient) {
+        final Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from cars c join clients cl where cl.id = :idClient");
+        query.setParameter("idClient", idClient);
+        List<Car> cars = query.getResultList();
+        return cars;
     }
 }

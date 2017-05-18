@@ -2,13 +2,15 @@ package io.khasang.moika.controller;
 
 import io.khasang.moika.entity.Car;
 import io.khasang.moika.entity.CarType;
-import io.khasang.moika.service.CarService;
+import io.khasang.moika.service.CarDataAccessService;
 import io.khasang.moika.service.CarTypesDataAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -21,23 +23,27 @@ import java.util.List;
 @RequestMapping(value = "/api/car")
 public class CarController {
     @Autowired
-    private CarService carService;
+    private CarDataAccessService carService;
 
     @Autowired
     private CarTypesDataAccessService carTypeService;
 
     /**
      * Добавления автомобиля
-     * @param car автомобиль для добавления
+     * @param newCar автомобиль для добавления
      * @return сохранённый автомобиль
      */
 
     @RequestMapping(value = "/add",
             method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public Car addCar(@RequestBody Car car){
-        carService.addCar(car);
-        return car;
+    @ResponseStatus(HttpStatus.CREATED)
+    public Object addCar(@RequestBody Car newCar){
+        Car car = carService.addCar(newCar);
+        if (car == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return car;
     }
 
     /**
@@ -48,9 +54,13 @@ public class CarController {
     @RequestMapping(value = "/update",
             method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public Car updateCar(@ModelAttribute(value = "company") Car car, @PathVariable("id") String id){
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Object updateCar(@ModelAttribute(value = "company") Car car){
         car = carService.updateCar(car);
-        return car;
+        if (car == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return car;
     }
 
     /**
@@ -61,9 +71,16 @@ public class CarController {
     @RequestMapping(value = "/delete/{id}",
             method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public String deleteCar(@PathVariable("id") String id){
-        carService.deleteCar(Long.parseLong(id));
-        return "redirect:/car";
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Object deleteCar(@PathVariable("id") String id){
+        Car car = carService.getCarById(Long.parseLong(id));
+        if (car != null) {
+            long idCar = car.getId();
+            carService.deleteCar(idCar);
+            return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
@@ -71,11 +88,16 @@ public class CarController {
      * @param id автомобиль для добавления
      * @return  автомобиль по id
      */
-    @RequestMapping(value = "id/{id}",
+    @RequestMapping(value = "/{id}",
             method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public Car getCarById(@PathVariable("id") String id){
-        return carService.getCarById(Long.parseLong(id));
+    @ResponseStatus(HttpStatus.OK)
+    public Object getCarById(@PathVariable("id") String id){
+        Car car =carService.getCarById(Long.parseLong(id));
+        if (car == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return car;
     }
     /**
      * Возвращение автомобиля по номеру
@@ -83,11 +105,16 @@ public class CarController {
      * @return  автомобили
      */
 
-    @RequestMapping(value = "/number/{number}",
+    @RequestMapping(value = "/byNumber/{number}",
             method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public List<Car> getCarByNumber(@PathVariable("number") String carNumber){
-        return carService.getCarByNumber(carNumber);
+    @ResponseStatus(HttpStatus.OK)
+    public Object getCarByNumber(@PathVariable("number") String carNumber){
+        Car car = carService.getCarByNumber(carNumber);
+        if (car == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return car;
     }
     /**
      * Возвращение автомобиля по модели
@@ -95,39 +122,161 @@ public class CarController {
      * @return  автомобили
      */
 
-    @RequestMapping(value = "/model/{model}",
+    @RequestMapping(value = "/byModel/{model}",
             method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public List<Car> getCarByModel(@PathVariable("model") String carModel){
-        return carService.getCarByModel(carModel);
+    @ResponseStatus(HttpStatus.OK)
+    public Object getCarsByModel(@PathVariable("model") String carModel){
+        List<Car>  cars =  carService.getCarByModel(carModel);
+        if (cars == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return cars;
     }
     /**
      * Возвращение автомобиля по типу кузова
      * @param carType тип кузова
      * @return  автомобили
      */
-    @RequestMapping(value = "/type/{type}",
+    @RequestMapping(value = "/byType/{code}",
             method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public List<Car> getCarByType(@PathVariable("type") String carType) {
-        return carService.getCarByType(carType);
+    @ResponseStatus(HttpStatus.OK)
+    public Object getCarsByType(@PathVariable("code") String carType) {
+        List<Car>  cars =  carService.getCarByType(carType);;
+        if (cars == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return cars;
      }
 
-    @RequestMapping(value = "/cars", method = RequestMethod.GET)
+    /**
+     * Возвращение автомобиля по типу кузова
+     * @param id тип кузова
+     * @return  автомобили
+     */
+    @RequestMapping(value = "/byClient/{id}",
+            method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public List<Car>  getCarList(){
-       return carService.getCarList();
+    @ResponseStatus(HttpStatus.OK)
+    public Object getCarsByClent(@PathVariable("id") String id) {
+        List<Car>  cars =  carService.getByClient(Long.parseLong(id));
+        if (cars == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return cars;
+    }
+    /**
+     * Получение списка списка машин по коду
+     * @return
+     */
+    @RequestMapping(value = "/cars", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public Object  getCarsList(){
+        List<Car>  cars =  carService.getCarList();
+        if (cars == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return cars;
     }
 
-    @RequestMapping(value = "/carType/{code}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    /**
+     * Получение списка типа машин по коду
+     * @param code
+     * @return
+     */
+    @RequestMapping(value = "/type/byCode/{code}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public CarType getCarTypes(@PathVariable(value = "code") String code) {
-        return (CarType)carTypeService.getTypeByCode(code);
+    @ResponseStatus(HttpStatus.OK)
+    public Object getCarTypes(@PathVariable(value = "code") String code) {
+        CarType  carType =  (CarType) carTypeService.getTypeByCode(code);
+        if (carType == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return carType;
     }
 
-    @RequestMapping(value = "/carType/list", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    /**
+     * Получение списка типов машин
+     * @return
+     */
+    @RequestMapping(value = "/type/list", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public List<CarType> getCarTypesList() {
-        return carTypeService.getAllTypes();
+    @ResponseStatus(HttpStatus.OK)
+    public Object getCarTypesList() {
+        List<CarType> carTypeList = carTypeService.getAllTypes();
+        if (carTypeList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return carTypeList;
+    }
+
+    /**
+     * тип машин по коду
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/type/byId/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public Object getCarTypeById(@PathVariable(value = "id") int id) {
+        CarType carType = (CarType) carTypeService.getTypeById(id);
+        if (carType == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return carType;
+    }
+
+    /**
+     * Добавление нового типа машин
+     *
+     * @return
+     */
+    @RequestMapping(value = "/type/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
+    public Object addNewBoxType(@RequestBody CarType newCarType) {
+        CarType carType = (CarType) carTypeService.addType(newCarType);
+        if (carType == null)
+            return  new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return carType;
+    }
+
+    /**
+     * Обновление нового типа машин
+     *
+     * @return
+     */
+    @RequestMapping(value = "/type/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Object updateBoxType(@RequestBody CarType newCarType) {
+        CarType carType =  (CarType) carTypeService.updateType(newCarType);
+        if (carType == null)
+            return  new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return carType;
+    }
+
+    /**
+     * Удаление типа машин
+     *
+     * @return -  HTTPResponce status
+     */
+    @RequestMapping(value = "/type/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Object deleteBoxType(@PathVariable(value = "id") String inputId) {
+        CarType carType = (CarType) carTypeService.getTypeById(Integer.valueOf(inputId));
+        if (carType != null) {
+            int id = carType.getId();
+            carTypeService.deleteType(carType);
+            return  new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+        } else {
+            return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        }
     }
 }

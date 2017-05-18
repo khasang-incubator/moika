@@ -4,14 +4,14 @@ import io.khasang.moika.entity.Car;
 
 import java.util.List;
 
-public interface CarService {
-    void addCar(Car car);
+public interface CarDataAccessService {
+    Car addCar(Car car);
 
     Car getCarById(long id);
 
     List getCarByType(String type);
 
-    List getCarByNumber(String number);
+    Car getCarByNumber(String number);
 
     List getCarByModel(String model);
 
@@ -20,4 +20,6 @@ public interface CarService {
     void deleteCar(long id);
 
     Car updateCar(Car car);
+
+    List<Car> getByClient(long idClient);
 }

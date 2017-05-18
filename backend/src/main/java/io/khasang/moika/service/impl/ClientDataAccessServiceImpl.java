@@ -27,34 +27,38 @@ public class ClientDataAccessServiceImpl implements ClientDataAccessService {
     }
 
     @Override
-    public void addClient(Client client) {
+    public Client addClient(Client client) {
         try {
-            clientDao.create(client);
+            return clientDao.create(client);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
     @Override
-    public void updateClient(Client client) {
+    public Client updateClient(Client client) {
         try {
-            clientDao.update(client);
+            return clientDao.update(client);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
     @Override
-    public void deleteClient(Client client) {
+    public boolean deleteClient(Client client) {
         try {
             clientDao.delete(client);
+            return true;
         } catch (MoikaDaoException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public Client getClientById(int id) {
+    public Client getClientById(long id) {
         try {
             return clientDao.get(id);
         } catch (MoikaDaoException e) {
@@ -104,4 +108,23 @@ public class ClientDataAccessServiceImpl implements ClientDataAccessService {
         }
     }
 
+    @Override
+    public List<Client> getClientsByCar(long idCar) {
+        try {
+            return clientDao.getClientsByCar(idCar);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<Client> getClientsByCarNum(String carNumber) {
+        try {
+            return clientDao.getClientsByCarNum(carNumber);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
