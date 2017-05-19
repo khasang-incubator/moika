@@ -60,8 +60,4 @@ public class CarDataAccessServiceImpl implements CarDataAccessService {
         return carDao.update(car);
     }
 
-    @Override
-    public List<Car> getByClient(long idClient) {
-        return carDao.getByClient(idClient);
-    }
 }

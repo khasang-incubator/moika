@@ -1,6 +1,7 @@
 package io.khasang.moika.dao.impl;
 
 import io.khasang.moika.dao.ClientDao;
+import io.khasang.moika.entity.Car;
 import io.khasang.moika.entity.Client;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -30,7 +31,7 @@ public class ClientDaoImpl extends MoikaDaoCrudImpl<Client> implements ClientDao
     @Override
     public List<Client> getClientsByStatus(String statusCode) {
         Query query  = sessionFactory.getCurrentSession().createQuery("from clients c join client_status s " +
-                "on c.status = s.id where s.code = ?");
+                "on c.idStatus = s.id where s.code = ?");
         query.setParameter(0, statusCode);
         return query.list();
     }
@@ -43,17 +44,13 @@ public class ClientDaoImpl extends MoikaDaoCrudImpl<Client> implements ClientDao
         return query.list();
     }
 
-    @Override
-    public List<Client> getClientsByCar(long idCar) {
-        Query query  = sessionFactory.getCurrentSession().createQuery("from clients cl join cars c where c.idCar = ?");
-        query.setParameter(0, idCar);
-        return query.list();
-    }
 
     @Override
     public List<Client> getClientsByCarNum(String carNumber) {
-        Query query  = sessionFactory.getCurrentSession().createQuery("from clients cl join cars c where c.carNumber= ?");
+        //Query query  = sessionFactory.getCurrentSession().createQuery("from clients cl join cars c where c.carNumber= ?");
+        Query query  = sessionFactory.getCurrentSession().createQuery("from cars where carNumber= ?");
         query.setParameter(0, carNumber);
-        return query.list();
+        Car car = (Car)query.getSingleResult();
+        return car.getClients();
     }
 }

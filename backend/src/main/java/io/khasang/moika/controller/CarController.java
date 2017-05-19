@@ -52,15 +52,15 @@ public class CarController {
      * @return сохранённый автомобиль
      */
     @RequestMapping(value = "/update",
-            method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+            method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Object updateCar(@ModelAttribute(value = "company") Car car){
-        car = carService.updateCar(car);
-        if (car == null)
+        Car retCar = carService.updateCar(car);
+        if (retCar == null)
             return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
         else
-            return car;
+            return retCar;
     }
 
     /**
@@ -88,7 +88,7 @@ public class CarController {
      * @param id автомобиль для добавления
      * @return  автомобиль по id
      */
-    @RequestMapping(value = "/{id}",
+    @RequestMapping(value = "/byId/{id}",
             method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
@@ -134,7 +134,7 @@ public class CarController {
             return cars;
     }
     /**
-     * Возвращение автомобиля по типу кузова
+     * Возвращение cgbcrf автомобилtq по типу кузова
      * @param carType тип кузова
      * @return  автомобили
      */
@@ -149,28 +149,27 @@ public class CarController {
         else
             return cars;
      }
-
     /**
-     * Возвращение автомобиля по типу кузова
-     * @param id тип кузова
-     * @return  автомобили
+     * Получение списка списка машин по коду
+     * @return
      */
-    @RequestMapping(value = "/byClient/{id}",
-            method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+
+    @RequestMapping(value = "/all", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public Object getCarsByClent(@PathVariable("id") String id) {
-        List<Car>  cars =  carService.getByClient(Long.parseLong(id));
+    public Object  getAllCars(){
+        List<Car>  cars =  carService.getCarList();
         if (cars == null)
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         else
             return cars;
     }
+
     /**
      * Получение списка списка машин по коду
      * @return
      */
-    @RequestMapping(value = "/cars", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object  getCarsList(){
@@ -180,7 +179,6 @@ public class CarController {
         else
             return cars;
     }
-
     /**
      * Получение списка типа машин по коду
      * @param code

@@ -39,12 +39,4 @@ public class CarDaoImpl extends MoikaDaoCrudImpl<Car> implements CarDao {
         return null;
     }
 
-    @Override
-    public List<Car> getByClient(Long idClient) {
-        final Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("from cars c join clients cl where cl.id = :idClient");
-        query.setParameter("idClient", idClient);
-        List<Car> cars = query.getResultList();
-        return cars;
-    }
 }

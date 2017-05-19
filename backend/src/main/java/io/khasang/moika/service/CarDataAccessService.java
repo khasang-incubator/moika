@@ -21,5 +21,4 @@ public interface CarDataAccessService {
 
     Car updateCar(Car car);
 
-    List<Car> getByClient(long idClient);
 }

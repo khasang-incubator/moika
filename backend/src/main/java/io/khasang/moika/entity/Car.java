@@ -15,10 +15,10 @@ public class Car extends ABaseMoikaEntity {
     @Column(name = "id_car", columnDefinition = "bigserial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idCar;
-    @Column(name = "id_car_type")
-    private Short idCarType;
-    @ManyToOne
-    @JoinColumn(name = "id_car_type", foreignKey = @ForeignKey(name = "fk_car_type"), insertable = false, updatable = false)
+    @Column(name = "id_car_type", insertable = false, updatable = false)
+    private int idCarType;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_car_type", foreignKey = @ForeignKey(name = "fk_car_type"))
     private CarType carTypeEntity;
     @Column (name = "carnum")
     private String carNumber;
@@ -27,7 +27,7 @@ public class Car extends ABaseMoikaEntity {
     @Column(name = "description")
     private String description;
     @Column(name = "status")
-    private Short status;
+    private Short status = 1;
     @Column(name = "note")
     private String note;
     @Column(name = "date_reg")
@@ -48,12 +48,18 @@ public class Car extends ABaseMoikaEntity {
         dateReg = new Date();
     }
 
+    public long getId() {
+        return idCar;
+    }
 
-    public Short getIdCarType() {
+    public void setId(long id) {
+        this.idCar = id;
+    }
+    public int getIdCarType() {
         return idCarType;
     }
 
-    public void setIdCarType(Short idCarType) {
+    public void setIdCarType(int idCarType) {
         this.idCarType = idCarType;
     }
 
@@ -134,12 +140,5 @@ public class Car extends ABaseMoikaEntity {
         clients.add(newClient);
     }
 
-    public long getId() {
-        return idCar;
-    }
-
-  //  public void setId(long id) {
-  //      this.id = id;
-  //  }
 
 }

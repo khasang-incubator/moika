@@ -89,11 +89,11 @@ public class PsWashBoxController {
      * @param inputId
      * @return
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/byId/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public Object getWashBox(@PathVariable(value = "id") String inputId) {
-        WashBox washBox = pskvorWashBoxDataAccessService.getWashBoxById(Integer.valueOf(inputId));
+    public Object getWashBox(@PathVariable(value = "id") int inputId) {
+        WashBox washBox = pskvorWashBoxDataAccessService.getWashBoxById(inputId);
         if (washBox == null)
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         else
@@ -126,7 +126,7 @@ public class PsWashBoxController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Object deleteWashBox(@PathVariable(value = "id") String inputId) {
+    public Object deleteWashBox(@PathVariable(value = "id") int inputId) {
         WashBox washBox = pskvorWashBoxDataAccessService.getWashBoxById(Integer.valueOf(inputId));
         if (washBox != null) {
             int id = washBox.getId();
@@ -143,7 +143,7 @@ public class PsWashBoxController {
      * @param typeId
      * @return
      */
-    @RequestMapping(value = "/type/{type}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/byType/{type}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getWashBoxListbyType(@PathVariable(value = "type") String typeId) {
@@ -160,7 +160,7 @@ public class PsWashBoxController {
      * @param status
      * @return
      */
-    @RequestMapping(value = "/status/{status}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/byStatus/{status}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getWashBoxListbyStatus(@PathVariable(value = "status") String status) {
@@ -344,8 +344,8 @@ public class PsWashBoxController {
     @RequestMapping(value = "/status/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Object deleteBoxStatus(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
-        BoxStatus boxStatus = (BoxStatus) boxStatusDataAccessService.getStatusById(Integer.valueOf(inputId));
+    public Object deleteBoxStatus(@PathVariable(value = "id") int inputId, HttpServletResponse response) {
+        BoxStatus boxStatus = (BoxStatus) boxStatusDataAccessService.getStatusById(inputId);
         if (boxStatus != null) {
             int id = boxStatus.getId();
             boxStatusDataAccessService.deleteStatus(boxStatus);
@@ -363,8 +363,8 @@ public class PsWashBoxController {
     @RequestMapping(value = "/type/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Object deleteBoxType(@PathVariable(value = "id") String inputId) {
-        BoxType boxType = (BoxType) boxTypesDataAccessService.getTypeById(Integer.valueOf(inputId));
+    public Object deleteBoxType(@PathVariable(value = "id") int inputId) {
+        BoxType boxType = (BoxType) boxTypesDataAccessService.getTypeById(inputId);
         if (boxType != null) {
             int id = boxType.getId();
             boxTypesDataAccessService.deleteType(boxType);

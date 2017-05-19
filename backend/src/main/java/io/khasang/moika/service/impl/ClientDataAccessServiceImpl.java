@@ -108,15 +108,6 @@ public class ClientDataAccessServiceImpl implements ClientDataAccessService {
         }
     }
 
-    @Override
-    public List<Client> getClientsByCar(long idCar) {
-        try {
-            return clientDao.getClientsByCar(idCar);
-        } catch (MoikaDaoException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     @Override
     public List<Client> getClientsByCarNum(String carNumber) {

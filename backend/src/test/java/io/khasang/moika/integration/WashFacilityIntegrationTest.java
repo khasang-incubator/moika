@@ -115,7 +115,7 @@ public class WashFacilityIntegrationTest {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<List<WashFacility>> resultAll = restTemplate.exchange(
-                "http://localhost:8080/api/washFacilitylist/",
+                "http://localhost:8080/api/washFacility/list",
                 HttpMethod.GET,
                 httpEntity,
                 new ParameterizedTypeReference<List<WashFacility>>() {

@@ -9,5 +9,4 @@ public interface CarDao extends IMoikaDaoCrud<Car>{
     List<Car> getByTypeCode(String typeCode);
     Car getByNumber(String number);
     List<Car> getByModel(String model);
-    List<Car> getByClient(Long idClient);
 }

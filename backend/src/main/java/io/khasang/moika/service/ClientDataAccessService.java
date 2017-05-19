@@ -13,6 +13,5 @@ public interface ClientDataAccessService {
     List<Client> getClientsByStatus(int idStatus);
     List<Client> getClientsByStatus(String statusCode);
     List<Client> getClientsOnFacility(int idFclt);
-    List<Client> getClientsByCar(long idCar);
     List<Client> getClientsByCarNum(String carNumber);
 }
