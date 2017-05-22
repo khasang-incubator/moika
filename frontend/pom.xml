@@ -40,7 +40,7 @@
               <goal>npm</goal>
             </goals>
             <configuration>
-            <installDirectory>c:\nodejs</installDirectory>
+            <installDirectory>.\</installDirectory>
             <arguments>install --no-optional</arguments>
             </configuration>
           </execution>

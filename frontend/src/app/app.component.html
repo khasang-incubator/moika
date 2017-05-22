@@ -1,12 +1,16 @@
 <app-navbar></app-navbar>
-<h1>
-  {{title}}
-</h1>
+<h2>{{title}}</h2>
 <div class="container">
-  <div class="row-fluid">
-    <div class="span2">
+  <div class="row">
+    <div class="col-md-4">
+        <ul>
+          <li>Главная</li>
+          <li>Выбор моек</li>
+          <li>Акции</li>
+          <li>Вопросы и ответы</li>
+        </ul>
     </div>
-    <div class="span10">
+    <div class="col-md-7">
       <app-main-outlet></app-main-outlet>
     </div>
   </div>

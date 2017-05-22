@@ -29,6 +29,8 @@ import {
 import { CommonTypeComponent } from './components/reference/common-type.component';
 import { CommonTypeSelectorComponent } from './components/reference/common-type-selector.component';
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import { UserNavbarComponent } from './components/shared/navbar/user-navbar.component';
+import { UserFooterComponent } from './components/shared/navbar/user-footer.component';
 
 // определение маршрутов
 const appRoutes: Routes =[
@@ -58,6 +60,8 @@ const appRoutes: Routes =[
     MainOutletComponent,
     CommonTypeComponent,
     CommonTypeSelectorComponent,
+    UserNavbarComponent,
+    UserFooterComponent,
   ],
   imports: [
     BsDropdownModule.forRoot(),
