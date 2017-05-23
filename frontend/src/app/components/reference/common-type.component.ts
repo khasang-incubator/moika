@@ -43,7 +43,7 @@ export class CommonTypeComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(): void {
-    console.log(this.refType);
+   // console.log(this.refType);
     if (this.refType) {
       this.typeUrl = this.refType.url;
       this.typeFullName = this.refType.descr;

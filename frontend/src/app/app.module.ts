@@ -31,6 +31,9 @@ import { CommonTypeSelectorComponent } from './components/reference/common-type-
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import { UserNavbarComponent } from './components/shared/navbar/user-navbar.component';
 import { UserFooterComponent } from './components/shared/navbar/user-footer.component';
+import { CommonTypeDroplistComponent } from './components/reference/common-type-droplist.component';
+import {MockMoikaObjectService} from "./model/services/mock-moika-objects.service";
+import {MockMoikaObjects} from "./model/entities/mock-moika-objects";
 
 // определение маршрутов
 const appRoutes: Routes =[
@@ -62,6 +65,7 @@ const appRoutes: Routes =[
     CommonTypeSelectorComponent,
     UserNavbarComponent,
     UserFooterComponent,
+    CommonTypeDroplistComponent,
   ],
   imports: [
     BsDropdownModule.forRoot(),
@@ -73,7 +77,7 @@ const appRoutes: Routes =[
     FormsModule, PanelModule, DropdownModule, ButtonModule,
     NoopAnimationsModule
   ],
-  providers: [WashBoxService, WashFacilityService, ClientService, CrudService],
+  providers: [WashBoxService, WashFacilityService, ClientService, CrudService, MockMoikaObjectService, MockMoikaObjects],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,4 @@
+<p-dropdown [options]="someTypeItemList"  [(ngModel)]="selectedType"  autoWidth="true" [style]="{'width':'200px'}"  placeholder="Выбирите тип из списка"></p-dropdown>
+<div *ngIf="selectedType">
+  <p>{{ selectedType.id}} {{ selectedType.typeCode}} </p>
+</div>

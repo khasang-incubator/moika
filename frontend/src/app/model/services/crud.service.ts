@@ -5,8 +5,6 @@ import {ICrudService} from './icrud.service';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {parseHttpResponse} from "selenium-webdriver/http";
-
 
 @Injectable()
 export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> {
