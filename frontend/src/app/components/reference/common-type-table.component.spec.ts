@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommonTypeComponent } from './common-type.component';
+import { CommonTypeComponent } from './common-type-table.component';
 
 describe('CommonTypeComponent', () => {
   let component: CommonTypeComponent;

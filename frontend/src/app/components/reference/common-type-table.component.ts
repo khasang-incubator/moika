@@ -3,9 +3,9 @@ import {SomeType} from "../../model/entities/some-type";
 import {CrudService} from "../../model/services/crud.service";
 
 @Component({
-  selector: 'app-common-type',
-  templateUrl: './common-type.component.html',
-  styleUrls: ['./common-type.component.css']
+  selector: 'app-common-type-table',
+  templateUrl: './common-type-table.component.html',
+  styleUrls: ['./common-type-table.component.css']
 })
 export class CommonTypeComponent implements OnChanges, OnInit {
 

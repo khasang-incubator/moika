@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {InterfaceMode} from "./model/entities/interface-enum";
 
 
 @Component({
@@ -7,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'Мойка ждет вас';
+  //InterfaceMode : InterfaceMode;
+ // interfaceMode : InterfaceMode.user;
+  // TODO разобраться c ENUM в шаблонах
+  interfaceMode = 0;
+  title = 'АвтоМойка ждет вас';
 }

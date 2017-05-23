@@ -13,7 +13,7 @@ import { ClientComponent } from './components/client/client.component';
 import { ClientListComponent } from './components/client/client-list.component';
 import { CrudService} from "./model/services/crud.service";
 import { BsDropdownModule} from "ngx-bootstrap";
-import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import { AdminNavbarComponent } from './components/shared/navbar/admin/admin-navbar.component';
 import { PhoneListComponent } from './components/client/phone-list.component';
 import { FacilityDetailComponent } from './components/facility/facility-detail.component';
 import { WashBoxDetailComponent } from './components/facility/wash-box-detail.component';
@@ -24,16 +24,17 @@ import { RouterModule, Routes } from "@angular/router";
 import { MainOutletComponent } from './components/main-outlet.component';
 import {
   DataTableModule, DropdownModule, InputTextareaModule, PanelModule, DialogModule, SharedModule,
-  ButtonModule
+  ButtonModule, MenuModule, TieredMenuModule
 } from 'primeng/primeng';
-import { CommonTypeComponent } from './components/reference/common-type.component';
+import { CommonTypeComponent } from './components/reference/common-type-table.component';
 import { CommonTypeSelectorComponent } from './components/reference/common-type-selector.component';
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
-import { UserNavbarComponent } from './components/shared/navbar/user-navbar.component';
-import { UserFooterComponent } from './components/shared/navbar/user-footer.component';
+import { NoopAnimationsModule} from "@angular/platform-browser/animations";
+import { UserNavbarComponent } from './components/shared/navbar/user/user-navbar.component';
+import { UserFooterComponent } from './components/shared/navbar/user/user-footer.component';
 import { CommonTypeDroplistComponent } from './components/reference/common-type-droplist.component';
-import {MockMoikaObjectService} from "./model/services/mock-moika-objects.service";
-import {MockMoikaObjects} from "./model/entities/mock-moika-objects";
+import { MockMoikaObjectService} from "./model/services/mock-moika-objects.service";
+import { MockMoikaObjects} from "./model/entities/mock-moika-objects";
+import { CustomerNavbarComponent} from "./components/shared/navbar/customer/customer-navbar.component";
 
 // определение маршрутов
 const appRoutes: Routes =[
@@ -53,7 +54,6 @@ const appRoutes: Routes =[
     WashFacilityComponent,
     ClientComponent,
     ClientListComponent,
-    NavbarComponent,
     PhoneListComponent,
     FacilityDetailComponent,
     WashBoxDetailComponent,
@@ -66,6 +66,8 @@ const appRoutes: Routes =[
     UserNavbarComponent,
     UserFooterComponent,
     CommonTypeDroplistComponent,
+    CustomerNavbarComponent,
+    AdminNavbarComponent,
   ],
   imports: [
     BsDropdownModule.forRoot(),
@@ -74,7 +76,7 @@ const appRoutes: Routes =[
     FormsModule,
     HttpModule,
     DataTableModule, DialogModule, SharedModule,  DataTableModule, InputTextareaModule,
-    FormsModule, PanelModule, DropdownModule, ButtonModule,
+    FormsModule, PanelModule, DropdownModule, ButtonModule, MenuModule, TieredMenuModule,
     NoopAnimationsModule
   ],
   providers: [WashBoxService, WashFacilityService, ClientService, CrudService, MockMoikaObjectService, MockMoikaObjects],

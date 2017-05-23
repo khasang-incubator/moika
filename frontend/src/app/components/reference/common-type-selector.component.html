@@ -2,7 +2,7 @@
 <p>Selected Ref: {{selectedTypeRef ? selectedTypeRef.name + ' ' + selectedTypeRef.url : 'none'}}</p>
 <div *ngIf="selectedTypeRef">
  <p>{{ selectedTypeRef.id}}</p>
-<app-common-type [refType]="selectedTypeRef"></app-common-type>
+<app-common-type-table [refType]="selectedTypeRef"></app-common-type-table>
 <app-common-type-droplist [refType]="selectedTypeRef"></app-common-type-droplist>
 </div>
 
