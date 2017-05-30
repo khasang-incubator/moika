@@ -35,6 +35,7 @@ import { CommonTypeDroplistComponent } from './components/reference/common-type-
 import { MockMoikaObjectService} from "./model/services/mock-moika-objects.service";
 import { MockMoikaObjects} from "./model/entities/mock-moika-objects";
 import { CustomerNavbarComponent} from "./components/shared/navbar/customer/customer-navbar.component";
+import { WashFacilityDashboardComponent } from './components/facility/wash-facility-dashboard.component';
 
 // определение маршрутов
 const appRoutes: Routes =[
@@ -42,6 +43,7 @@ const appRoutes: Routes =[
   { path: 'start', component: HomePageComponent},
   { path: 'about', component: AppAboutComponent},
   { path: 'clients', component: ClientListComponent},
+  { path: 'facilitiesDash', component: WashFacilityDashboardComponent},
   { path: 'washFacilities', component: WashFacilityComponent},
   { path: 'refs', component: CommonTypeSelectorComponent},
   { path: '**', component: NotFoundComponent },
@@ -68,6 +70,7 @@ const appRoutes: Routes =[
     CommonTypeDroplistComponent,
     CustomerNavbarComponent,
     AdminNavbarComponent,
+    WashFacilityDashboardComponent,
   ],
   imports: [
     BsDropdownModule.forRoot(),

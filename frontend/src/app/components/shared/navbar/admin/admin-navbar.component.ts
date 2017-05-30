@@ -61,7 +61,7 @@ export class AdminNavbarComponent implements OnInit {
       {
         label: 'Мойки',
         icon: 'fa-car',
-        url:'/washFacilities'
+        url:'/facilitiesDash'
       },
       {
         label: 'Справочники',
