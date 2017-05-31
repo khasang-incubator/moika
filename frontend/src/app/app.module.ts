@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { WashBoxComponent} from './components/facility/wash-box.component';
 import { WashBoxService} from './model/services/wash-box.service';
-import { WashFacilityComponent } from './components/facility/wash-facility.component';
+import { WashFacilityListComponent } from './components/facility/wash-facility-list.component';
 import { WashFacilityService} from './model/services/wash-facility.service';
 import { ClientService} from "./model/services/client.service";
 import { ClientComponent } from './components/client/client.component';
@@ -39,13 +39,15 @@ import {AppRoutingModule} from "./app-routing.module";
 import { CommonStatusTableComponent } from './components/reference/common-status-table.component';
 import { CommonStatusSelectorComponent } from './components/reference/common-status-selector.component';
 import { CommonStatusDroplistComponent } from './components/reference/common-status-droplist.component';
+import { WashFacilityTableComponent } from './components/facility/wash-facility-table.component';
+import { CityDropdownComponent } from './components/reference/city-dropdown.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     WashBoxComponent,
-    WashFacilityComponent,
+    WashFacilityListComponent,
     ClientComponent,
     ClientListComponent,
     PhoneListComponent,
@@ -66,6 +68,8 @@ import { CommonStatusDroplistComponent } from './components/reference/common-sta
     CommonStatusTableComponent,
     CommonStatusSelectorComponent,
     CommonStatusDroplistComponent,
+    WashFacilityTableComponent,
+    CityDropdownComponent,
   ],
   imports: [
     BsDropdownModule.forRoot(),

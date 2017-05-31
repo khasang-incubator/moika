@@ -192,6 +192,118 @@ public class WashBoxIntegrationTest {
     }
 
     @Test
+    public void getBoxTypeByCode() {
+        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+        HttpEntity<WashBox> httpEntity = new HttpEntity<>(headers); //подготовили запрос
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<BoxType> result = restTemplate.exchange(
+                requestMapping + "/type/byCode/{code}",
+                HttpMethod.GET,
+                httpEntity,
+                new ParameterizedTypeReference<BoxType>() {
+                }, existingTypeCode);
+        Assert.assertNotNull("Request body is incorrect", result);
+        Assert.assertTrue("Request code not 202 " + result.getStatusCode().toString(), result.getStatusCode().is2xxSuccessful());
+        BoxType resType = result.getBody();
+        Assert.assertNotNull("Request body does not contain wash box type", resType);
+        Assert.assertTrue("Box type code does not exists", resType.getTypeCode().equalsIgnoreCase(existingTypeCode));
+
+        //Запрос о несуществующей сущности. Ожидам exception и StatusCode 404
+        try {
+            result = restTemplate.exchange(
+                    requestMapping + "/type/byCode/{code}",
+                    HttpMethod.GET,
+                    httpEntity,
+                    new ParameterizedTypeReference<BoxType>() {
+                    }, "XZE");
+        } catch (HttpClientErrorException e) {
+            Assert.assertTrue("Request code 4xx " + result.getStatusCode().toString(), e.getStatusCode().is4xxClientError());
+        }
+    }
+
+
+    @Test
+    public void getBoxStatusByCode() {
+        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+        HttpEntity<WashBox> httpEntity = new HttpEntity<>(headers); //подготовили запрос
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<BoxStatus> result = restTemplate.exchange(
+                requestMapping + "/status/byCode/{code}",
+                HttpMethod.GET,
+                httpEntity,
+                new ParameterizedTypeReference<BoxStatus>() {
+                }, existingStatusCode);
+        Assert.assertNotNull("Request body is incorrect", result);
+        Assert.assertTrue("Request code not 202 " + result.getStatusCode().toString(), result.getStatusCode().is2xxSuccessful());
+        BoxStatus resStatus = result.getBody();
+        Assert.assertNotNull("Request body does not contain wash box type", resStatus);
+        Assert.assertTrue("Box status code does not exists", resStatus.getStatusCode().equalsIgnoreCase(existingStatusCode));
+
+        //Запрос о несуществующей сущности. Ожидам exception и StatusCode 404
+        try {
+            result = restTemplate.exchange(
+                    requestMapping + "/status/byCode/{code}",
+                    HttpMethod.GET,
+                    httpEntity,
+                    new ParameterizedTypeReference<BoxStatus>() {
+                    }, "XYZ");
+        } catch (HttpClientErrorException e) {
+            Assert.assertTrue("Request code 4xx " + result.getStatusCode().toString(), e.getStatusCode().is4xxClientError());
+        }
+    }
+
+
+    @Test
+    public void getBoxTypeList() {
+        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+        HttpEntity<List<BoxType>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<List<BoxType>> result = restTemplate.exchange(
+                requestMapping+"/type/list",
+                HttpMethod.GET,
+                httpEntity,
+                new ParameterizedTypeReference<List<BoxType>>() {
+                });
+        Assert.assertNotNull("Request body is incorrect", result);
+        Assert.assertTrue("Request code not 202 " + result.getStatusCode().toString()
+                , result.getStatusCode().is2xxSuccessful());
+        List<BoxType> resBoxTypeList = result.getBody();
+        Assert.assertNotNull("Box type list is null", resBoxTypeList);
+        Assert.assertFalse("Box type list is empty", resBoxTypeList.isEmpty());
+    }
+
+    @Test
+    public void getBoxStatusList() {
+        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+        HttpEntity<List<BoxStatus>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<List<BoxStatus>> result = restTemplate.exchange(
+                requestMapping+"/status/list",
+                HttpMethod.GET,
+                httpEntity,
+                new ParameterizedTypeReference<List<BoxStatus>>() {
+                });
+        Assert.assertNotNull("Request body is incorrect", result);
+        Assert.assertTrue("Request code not 202 " + result.getStatusCode().toString()
+                , result.getStatusCode().is2xxSuccessful());
+        List<BoxStatus> resBoxStatusList = result.getBody();
+        Assert.assertNotNull("Box type list is null", resBoxStatusList);
+        Assert.assertFalse("Box type list is empty", resBoxStatusList.isEmpty());
+    }
+
+    @Test
     @Transactional
     @Rollback
     public void createWashBoxType() {

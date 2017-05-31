@@ -4,12 +4,12 @@ import {WashFacilityService} from "../../model/services/wash-facility.service";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
-  selector: 'wash-facilities',
-  templateUrl: './wash-facility.component.html',
-  styleUrls: ['./wash-facility.component.css']
+  selector: 'wash-facilities-list',
+  templateUrl: './wash-facility-list.component.html',
+  styleUrls: ['./wash-facility-list.component.css']
 })
 
-export class WashFacilityComponent implements OnInit {
+export class WashFacilityListComponent implements OnInit {
 
   washFacilityList: Array<WashFacility> = [];
   selectedFclt: WashFacility;

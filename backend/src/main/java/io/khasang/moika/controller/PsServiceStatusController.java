@@ -1,17 +1,13 @@
 package io.khasang.moika.controller;
 
-import io.khasang.moika.dao.MoikaDaoException;
 import io.khasang.moika.entity.ServiceStatus;
 import io.khasang.moika.service.MoikaServiceStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +16,7 @@ import java.util.List;
  * @author Pauls
  */
 @Controller
+@RequestMapping(value = "/api/service/status")
 public class PsServiceStatusController {
     @Autowired
     MoikaServiceStatusService serviceStatusService;
@@ -28,137 +25,109 @@ public class PsServiceStatusController {
     /**
      * Список всех статусов услуг мойки
      *
-     * @param model
      * @return
      */
-    @RequestMapping(value = "/serviceStatuslist", method = RequestMethod.GET)
-    public String getServiceStatusList(Model model) {
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        List<ServiceStatus> serviceStatusList = null;
-        try {
-            serviceStatusList = serviceStatusService.getAllStatuses();
-        } catch (MoikaDaoException e) {
-            e.printStackTrace();
-        }
-        model.addAttribute("retList", serviceStatusList);
-        model.addAttribute("nrows", serviceStatusList.size() + " rows affected");
-        return "ps-dao-service-status";
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public Object getServiceStatusList() {
+        List<ServiceStatus> serviceStatusList = serviceStatusService.getAllStatuses();
+        if (serviceStatusList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return serviceStatusList;
     }
 
     /**
      * Добавление статуса
      *
-     * @param serviceStatus
-     * @param model
+     * @param newServiceStatus
      * @return
      */
-    @RequestMapping(value = "/serviceStatus/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    //@ResponseBody
-    public Object addServiceStatus(@RequestBody ServiceStatus serviceStatus, Model model) {
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        try {
-            serviceStatusService.addStatus(serviceStatus);
-        } catch (MoikaDaoException e) {
-            e.printStackTrace();
-        }
-        List<ServiceStatus> serviceStatusList = new ArrayList<>();
-        serviceStatusList.add(serviceStatus);
-        model.addAttribute("retList", serviceStatusList);
-        model.addAttribute("nrows", "ID: " + serviceStatus.getId() + " added");
-        return "ps-dao-service-status";
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
+    public Object addServiceStatus(@RequestBody ServiceStatus newServiceStatus) {
+        ServiceStatus serviceStatus = (ServiceStatus) serviceStatusService.addStatus(newServiceStatus);
+        if (serviceStatus == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return serviceStatus;
     }
 
     /**
      * обновление информации  статуса
      *
-     * @param serviceStatus
+     * @param updatedServiceStatus
      * @return
      */
-    @RequestMapping(value = "/serviceStatus/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+
+    @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object updateServiceStatus(@RequestBody ServiceStatus serviceStatus) {
-        try {
-            serviceStatusService.updateStatus(serviceStatus);
-        } catch (MoikaDaoException e) {
-            e.printStackTrace();
-        }
-        return serviceStatus;
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Object updateServiceStatus(@RequestBody ServiceStatus updatedServiceStatus) {
+        ServiceStatus serviceStatus = (ServiceStatus) serviceStatusService.updateStatus(updatedServiceStatus);
+        if (serviceStatus == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return serviceStatus;
     }
 
     /**
      * Статус по ID
      *
      * @param id
-     * @param model
      * @return
      */
-    @RequestMapping(value = "/serviceStatus/{id}", method = RequestMethod.GET)
-    public String getServiceStatus(@PathVariable(value = "id") String id, Model model) {
-        ServiceStatus serviceStatus = null;
-        try {
-            serviceStatus = (ServiceStatus) serviceStatusService.getStatusById(Integer.valueOf(id));
-        } catch (MoikaDaoException e) {
-            e.printStackTrace();
-        }
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        if (serviceStatus != null) {
-            List<ServiceStatus> serviceStatusList = new ArrayList<>();
-            serviceStatusList.add(serviceStatus);
-            model.addAttribute("retList", serviceStatusList);
-        } else {model.addAttribute("nrows", "ID: " + id + " doesn`t exists ");}
-        return "ps-dao-serivce-status";
+
+    @RequestMapping(value = "/byId/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public Object getServiceStatus(@PathVariable(value = "id") int id) {
+        ServiceStatus serviceStatus = (ServiceStatus) serviceStatusService.getStatusById(id);
+        if (serviceStatus == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return serviceStatus;
     }
 
     /**
      * Elfktybtс по ID
      *
-     * @param inputId - id entity для удаления
+     * @param deletedId - id entity для удаления
      * @return
      */
 
-    @RequestMapping(value = "/serviceStatus/delete/{id}", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String deleteServiceStatus(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
-        ServiceStatus serviceStatus = null;
-        try {
-            serviceStatus = (ServiceStatus) serviceStatusService.getStatusById(Integer.valueOf(inputId));
-        } catch (MoikaDaoException e) {
-            e.printStackTrace();
-        }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Object deleteServiceStatus(@PathVariable(value = "id") int deletedId) {
+        ServiceStatus serviceStatus = (ServiceStatus) serviceStatusService.getStatusById(deletedId);
         if (serviceStatus != null) {
             int id = serviceStatus.getId();
-            try {
-                serviceStatusService.deleteStatus(serviceStatus);
-            } catch (MoikaDaoException e) {
-                e.printStackTrace();
-            }
-            return String.valueOf(response.SC_OK);
-        } else {return String.valueOf(response.SC_NOT_FOUND);}
+            serviceStatusService.deleteStatus(serviceStatus);
+            return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
      * Статус по коду
      *
      * @param code
-     * @param model
      * @return
      */
-    @RequestMapping(value = "/serviceStatus/{code}", method = RequestMethod.GET)
-    public String getServiceStatusListbyType(@PathVariable(value = "type") String code, Model model) {
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        ServiceStatus serviceStatus = null;
-        try {
-            serviceStatus = (ServiceStatus) serviceStatusService.getStatusByCode(code);
-        } catch (MoikaDaoException e) {
-            e.printStackTrace();
-        }
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        if (serviceStatus != null) {
-            List<ServiceStatus> serviceStatusList = new ArrayList<>();
-            serviceStatusList.add(serviceStatus);
-            model.addAttribute("retList", serviceStatusList);
-        } else {model.addAttribute("nrows", "code: " + code + " doesn`t exists ");}
-        return "ps-dao-serivce-status";
+    @RequestMapping(value = "/byCode/{code}", method = RequestMethod.GET)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public Object getServiceStatusCode(@PathVariable(value = "code") String code) {
+        ServiceStatus serviceStatus = (ServiceStatus) serviceStatusService.getStatusByCode(code);
+        if (serviceStatus == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return serviceStatus;
     }
 
 }

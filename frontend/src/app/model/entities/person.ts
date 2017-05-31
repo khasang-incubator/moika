@@ -9,5 +9,6 @@ export class Person extends BaseMoikaEntity {
   birthDate: Date;
   phones: Phone[];
   email: string = '';
+  get fullname(): string {return this.firstName+' '+this.middleName +' '+this.lastName};
 
 }

@@ -1,16 +1,18 @@
 import {Injectable} from '@angular/core';
 import {WashFacility} from '../entities/wash-facility';
-import {Http, Headers, Response} from '@angular/http';
+import {Http} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
+import {CrudService} from "./crud.service";
 // import {WashFacilityList} from "./mock-wash-facility";
 
 @Injectable()
-export class WashFacilityService {
+export class WashFacilityService extends CrudService<WashFacility> {
 
-  private baseUrl: string = 'http://localhost:8080/api/washFacility';
 
-  constructor(private http: Http) {
+  constructor(http: Http) {
+    super(http);
+    this.workUrl = 'http://localhost:8080/api/washFacility';
   }
 
   /*
@@ -37,6 +39,7 @@ export class WashFacilityService {
    }
    */
 
+  /*
   getAll(): Promise<WashFacility[]> {
     const washFcltArr = this.http.get(`${this.baseUrl}/list`, {headers: this.getHeaders()})
       .map((res: Response) => res.json()).toPromise();
@@ -53,21 +56,12 @@ export class WashFacilityService {
     let z: WashFacility = r.resolve();
     return z;
   }
+ */
 
-
-  private handleError(error: any): Promise<any> {
+ /* private handleError(error: any): Promise<any> {
     console.error('Не могу получить список моек. Error code: %s, URL: %s ', error.status, error.url); // for demo purposes only
     return Promise.reject(error.message || error);
-  }
-
-  private getHeaders() {
-    const headers = new Headers();
-    headers.append('Accept', 'application/json');
-    headers.append('Content-Type', 'application/json');
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Credentials', 'true');
-    return headers;
-  }
+  } */
 
 
 }

@@ -25,7 +25,7 @@ export class CommonStatusTableComponent implements OnChanges, OnInit {
 
 
   constructor(private statusService: CrudService<SomeStatus>) {
-    this.startUrl = statusService.getBaseUrl();
+    this.startUrl = statusService.baseUrl;
   }
 
   getAll(): void {
@@ -48,7 +48,7 @@ export class CommonStatusTableComponent implements OnChanges, OnInit {
       this.statusUrl = this.refStatus.url;
       this.statusFullName = this.refStatus.descr;
       console.log(this.statusFullName + " at " + this.statusUrl);
-      this.statusService.setBaseUrl(`${this.startUrl }/${this.statusUrl}`);
+      this.statusService.workUrl =`${this.startUrl }/${this.statusUrl}`;
       this.getAll();
     }
   }

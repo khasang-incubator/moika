@@ -51,28 +51,28 @@ export class MockMoikaObjects {
       name: 'Статусы клиентов',
       descr: 'Статусы клиентов автомоек',
       type: 2,
-      url: 'api/client/type'
+      url: 'api/client/status'
     });
     this.objectList.push({
       code: "serviceStatus",
       name: 'Статусы услуг',
       descr: 'Статусы услуг автомоек',
       type: 2,
-      url: 'api/service/type'
+      url: 'api/service/status'
     });
     this.objectList.push({
       code: "carStatus",
       name: 'Статусы машин',
       descr: 'Статусы машин клиентов',
       type: 2,
-      url: 'api/car/type'
+      url: 'api/car/status'
     });
     this.objectList.push({
       code: "boxStatus",
       name: 'Статусы боксов',
       descr: 'Статусы моечных боксов',
       type: 2,
-      url: 'api/washBox/type'
+      url: 'api/washBox/status'
     });
   }
 

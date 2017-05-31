@@ -258,7 +258,7 @@ public class CarIntegrationTest {
         //Запрос о несуществующей сущности. Ожидам exception и StatusCode 404
         try {
             result = restTemplate.exchange(
-                    "http://localhost:8080/api/byType/{code}",
+                    requestMapping+"/byType/{code}",
                     HttpMethod.GET,
                     httpEntity,
                     new ParameterizedTypeReference<List<Car>>() {
@@ -269,6 +269,28 @@ public class CarIntegrationTest {
         }
     }
 
+
+    @Test
+    public void getCarTypeList() {
+        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+        HttpEntity<List<CarType>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<List<CarType>> result = restTemplate.exchange(
+                requestMapping+"/type/list",
+                HttpMethod.GET,
+                httpEntity,
+                new ParameterizedTypeReference<List<CarType>>() {
+                });
+        Assert.assertNotNull("Request body is incorrect", result);
+        Assert.assertTrue("Request code not 202 " + result.getStatusCode().toString()
+                , result.getStatusCode().is2xxSuccessful());
+        List<CarType> resCarTypeList = result.getBody();
+        Assert.assertNotNull("Car type list is null", resCarTypeList);
+        Assert.assertFalse("Car type list is empty", resCarTypeList.isEmpty());
+    }
 
     @Test
     @Transactional

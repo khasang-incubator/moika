@@ -1,14 +1,9 @@
 package io.khasang.moika.entity;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity()
 @Table(name = "addr")
 public class WashAddr extends ABaseMoikaEntity {
@@ -18,6 +13,8 @@ public class WashAddr extends ABaseMoikaEntity {
    // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "id_city", insertable=false, updatable=false)
+    private int idCity ;
     @ManyToOne
     @JoinColumn(name = "id_city", referencedColumnName = "id_city")
     private City city;
@@ -42,7 +39,7 @@ public class WashAddr extends ABaseMoikaEntity {
         this.coordinate.setLong(longitude);
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -82,6 +79,21 @@ public class WashAddr extends ABaseMoikaEntity {
         this.letter = letter;
     }
 
+    public int getIdCity() {
+        return idCity;
+    }
+
+    public void setIdCity(int idCity) {
+        this.idCity = idCity;
+    }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
 
     @Override
     public String toString() {

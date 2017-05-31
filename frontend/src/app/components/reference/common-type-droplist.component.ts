@@ -22,7 +22,7 @@ export class CommonTypeDroplistComponent implements OnInit {
 
 
   constructor(private typeService: CrudService<SomeType>) {
-    this.startUrl = typeService.getBaseUrl();
+    this.startUrl = typeService.baseUrl;
   }
 
   getAll(): void {
@@ -49,7 +49,7 @@ export class CommonTypeDroplistComponent implements OnInit {
       this.someTypeItemList = [];
       this.typeUrl = this.refType.url;
       this.typeFullName = this.refType.descr;
-      this.typeService.setBaseUrl(`${this.startUrl }/${this.typeUrl}`);
+      this.typeService.workUrl =`${this.startUrl }/${this.typeUrl}`;
       this.getAll();
     }
   }

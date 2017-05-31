@@ -25,7 +25,7 @@ export class CommonTypeComponent implements OnChanges, OnInit {
 
 
   constructor(private typeService: CrudService<SomeType>) {
-    this.startUrl = typeService.getBaseUrl();
+    this.startUrl = typeService.baseUrl;
   }
 
   getAll(): void {
@@ -48,7 +48,7 @@ export class CommonTypeComponent implements OnChanges, OnInit {
       this.typeUrl = this.refType.url;
       this.typeFullName = this.refType.descr;
       console.log(this.typeFullName + " at " + this.typeUrl);
-      this.typeService.setBaseUrl(`${this.startUrl }/${this.typeUrl}`);
+      this.typeService.workUrl =`${this.startUrl }/${this.typeUrl}`;
       this.getAll();
     }
   }

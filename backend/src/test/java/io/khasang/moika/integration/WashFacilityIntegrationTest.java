@@ -26,8 +26,9 @@ public class WashFacilityIntegrationTest {
     final int id = 8;
     final String fcltName = "Test REST мойка";
     final String existingFasity = "Мойка на Помойке";
-    final String stausCode = "WORKING";
+    final String statusCode = "WORKING";
     final String typeCode = "MEDIUM";
+    private final String requestMapping = "http://localhost:8080/api";
 
     @Ignore
     @Test
@@ -47,21 +48,18 @@ public class WashFacilityIntegrationTest {
         fclt.setName(fcltName);
         fclt.setIdNet(1);
         fclt.setDescription("RESTовая тестовая мойка");
-        WashAddr addr =  new WashAddr();
-        addr.setCity(new City("Москва"));
-        fclt.setFacilityAddr(addr);
 
         httpEntity = new HttpEntity<>(boxStatus, headers); //подготовили запрос для BoxStatus
         boxStatus = restTemplate.exchange(
-                "http://localhost:8080/api/boxStatus/{code}/",
+                requestMapping+"/washBox/status/byCode/{code}",
                 HttpMethod.GET,
                 httpEntity,
-                BoxStatus.class,stausCode).getBody();
-        Assert.assertNotNull("Could not get box status "+stausCode,boxStatus);
+                BoxStatus.class,statusCode).getBody();
+        Assert.assertNotNull("Could not get box status "+statusCode, boxStatus);
 
         httpEntity = new HttpEntity<>(boxType, headers); //подготовили запрос для BoxType
         boxType = restTemplate.exchange(
-                "http://localhost:8080/api/boxType/{code}/",
+                requestMapping+"/washBox/type/byCode/{code}",
                 HttpMethod.GET,
                 httpEntity,
                 BoxType.class,typeCode).getBody();
@@ -78,10 +76,37 @@ public class WashFacilityIntegrationTest {
         }
         fclt.setWashBoxes(boxList);
 
+        City newCity = new City("Омск");
+        httpEntity = new HttpEntity<>(newCity, headers); //подготовили запрос га добавление Facility
+        restTemplate = new RestTemplate();
+        City resCity = restTemplate.exchange(    //отправли запрос через веб (т.е. снаружи приложения)
+                requestMapping+"/washAddr/city/add",
+                HttpMethod.POST,
+                httpEntity,
+                City.class).getBody();
+        Assert.assertNotNull("Could not add address", resCity);
+
+        WashAddr addr =  new WashAddr();
+        addr.setCity(newCity);
+        addr.setStreet("Адмирала Колчака");
+        addr.setBuilding("1919");
+
+        httpEntity = new HttpEntity<>(addr, headers); //подготовили запрос га добавление Facility
+        restTemplate = new RestTemplate();
+        WashAddr resAddr = restTemplate.exchange(    //отправли запрос через веб (т.е. снаружи приложения)
+                requestMapping+"/washAddr/add",
+                HttpMethod.POST,
+                httpEntity,
+                WashAddr.class).getBody();
+        Assert.assertNotNull("Could not add address", resAddr);
+
+        fclt.setIdAddr((int)resAddr.getId());
+        fclt.setFacilityAddr(addr);
+
         httpEntity = new HttpEntity<>(fclt, headers); //подготовили запрос га добавление Facility
         restTemplate = new RestTemplate();
         WashFacility resFclt = restTemplate.exchange(    //отправли запрос через веб (т.е. снаружи приложения)
-                "http://localhost:8080/api/washFacility/add",
+                requestMapping+"/washFacility/add",
                 HttpMethod.POST,
                 httpEntity,
                 WashFacility.class).getBody();
@@ -95,7 +120,7 @@ public class WashFacilityIntegrationTest {
             for (WashBox box : resBoxList) {
                 if (box.getBoxName().equalsIgnoreCase("Бокс № 1")) {
                     isBox = true;
-                    Assert.assertTrue("Facility  box status not " + stausCode, box.getBoxStatusEntity().getStatusCode().equalsIgnoreCase(stausCode));
+                    Assert.assertTrue("Facility  box status not " + statusCode, box.getBoxStatusEntity().getStatusCode().equalsIgnoreCase(statusCode));
                     Assert.assertTrue("Facility  box type not " + typeCode, box.getBoxTypeEntity().getTypeCode().equalsIgnoreCase(typeCode));
                     break;
                 }
@@ -115,7 +140,7 @@ public class WashFacilityIntegrationTest {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<List<WashFacility>> resultAll = restTemplate.exchange(
-                "http://localhost:8080/api/washFacility/list",
+                requestMapping+"/washFacility/list",
                 HttpMethod.GET,
                 httpEntity,
                 new ParameterizedTypeReference<List<WashFacility>>() {
@@ -124,7 +149,7 @@ public class WashFacilityIntegrationTest {
         Assert.assertFalse("Request body does not contain WashFacilities", resList.isEmpty());
 
         WashFacility resFclt = resList.get(0);
-        Assert.assertNotNull("Could not get any facility fro list",resFclt);
+        Assert.assertNotNull("Could not get any facility from list",resFclt);
 
         Assert.assertTrue("Facility does  not contain boxes", resFclt.getWashBoxes().size() > 0);
         WashBox resBox = resFclt.getWashBoxes().get(0);
@@ -144,19 +169,17 @@ public class WashFacilityIntegrationTest {
         HttpEntity<List<WashFacility>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<List<WashFacility>> resultAll = restTemplate.exchange(
-                "http://localhost:8080/api/washFacility/{id}/",
+        ResponseEntity<WashFacility> resultAll = restTemplate.exchange(
+                requestMapping+"/washFacility/byId/{id}/",
                 HttpMethod.GET,
                 httpEntity,
-                new ParameterizedTypeReference<List<WashFacility>>() {
+                new ParameterizedTypeReference<WashFacility>() {
                 }, id);
         Assert.assertNotNull("Reques body is incorrect", resultAll);
 
-        List<WashFacility> resList = resultAll.getBody();
-        Assert.assertFalse("Request body does not contain WashFacilities", resList.isEmpty());
+        WashFacility resFclt = resultAll.getBody();
+        Assert.assertNotNull("Request body does not contain WashFacilities", resFclt);
 
-        WashFacility resFclt = resList.get(0);
-        Assert.assertNotNull(resFclt);
         Assert.assertTrue("Facility does not exist " + existingFasity, resFclt.getName().equalsIgnoreCase(existingFasity));
         boolean isBox = false;
 
@@ -165,7 +188,7 @@ public class WashFacilityIntegrationTest {
         for (WashBox box : resBoxList) {
             if (box.getBoxName().equalsIgnoreCase("Бокс № 1")) {
                 isBox = true;
-                Assert.assertTrue("Facility  box status not " + stausCode, box.getBoxStatusEntity().getStatusCode().equalsIgnoreCase(stausCode));
+                Assert.assertTrue("Facility  box status not " + statusCode, box.getBoxStatusEntity().getStatusCode().equalsIgnoreCase(statusCode));
                 Assert.assertTrue("Facility  box type not " + typeCode, box.getBoxTypeEntity().getTypeCode().equalsIgnoreCase(typeCode));
                 break;
             }

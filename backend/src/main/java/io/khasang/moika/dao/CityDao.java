@@ -9,4 +9,5 @@ import io.khasang.moika.entity.City;
  */
 public interface CityDao extends IMoikaDaoCrud<City> {
 
+    City getByName(String cityName);
 }

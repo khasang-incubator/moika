@@ -8,7 +8,7 @@ import java.util.List;
 @Entity (name = "service_status")
 public class ServiceStatus extends ABaseMoikaStatusReference{
 
-    @OneToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_status",  insertable = false, updatable = false)
     @JsonIgnore
     private List<MoikaService> moikaServices;

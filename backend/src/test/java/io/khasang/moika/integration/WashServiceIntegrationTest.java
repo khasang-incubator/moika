@@ -71,7 +71,7 @@ public class WashServiceIntegrationTest {
 
         httpEntity = new HttpEntity<>(serviceStatus, headers); //подготовили запрос для BoxStatus
         serviceStatus = restTemplate.exchange(
-                "http://localhost:8080/MoikaService/serviceStatus/{id}/",
+                "http://localhost:8080/service/status/byId/{id}",
                 HttpMethod.GET,
                 httpEntity,
                 ServiceStatus.class,serviceStatusCode).getBody();
@@ -82,7 +82,7 @@ public class WashServiceIntegrationTest {
         ServiceType serviceType = new  ServiceType();
         httpEntity = new HttpEntity<>(serviceType, headers); //подготовили запрос для BoxType
         serviceType = restTemplate.exchange(
-                "http://localhost:8080/serviceType/{code}/",
+                "http://localhost:8080/service/type/byCode/{code}",
                 HttpMethod.GET,
                 httpEntity,
                 ServiceType.class,serviceTypeCode).getBody();
@@ -94,7 +94,7 @@ public class WashServiceIntegrationTest {
         WashService washService =  (WashService) moikaService;
 
         CarType carType = restTemplate.exchange(
-                "http://localhost:8080/carType/{code}/",
+                "http://localhost:8080/car/type/byCode/{code}",
                 HttpMethod.GET,
                 httpEntity,
                 CarType.class,carTypeCode1).getBody();
@@ -107,7 +107,7 @@ public class WashServiceIntegrationTest {
 
         washService = new WashService();
         carType = restTemplate.exchange(
-                "http://localhost:8080/carType/{code}/",
+                "http://localhost:8080/car/type/byCode/{code}",
                 HttpMethod.GET,
                 httpEntity,
                 CarType.class,carTypeCode2).getBody();
@@ -179,7 +179,7 @@ public class WashServiceIntegrationTest {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<List<WashService>> resultAll = restTemplate.exchange(
-                "http://localhost:8080/MoikaService/washServiceListbyService",
+                "http://localhost:8080/service/washServiceListbyService",
                 HttpMethod.GET,
                 httpEntity,
                 new ParameterizedTypeReference<List<WashService>>() {

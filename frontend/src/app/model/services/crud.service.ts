@@ -9,22 +9,28 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> {
 
-  private _baseUrl = 'http://localhost:8080';
+  private _baseUrl: string = 'http://localhost:8080';
+  private _workUrl: string;
 
   constructor(private http: Http) {
   }
 
-  getBaseUrl(): string {
+  get baseUrl(): string {
     return this._baseUrl;
   }
 
-  setBaseUrl(value: string) {
-    this._baseUrl = value;
+  get workUrl(): string {
+    return this._workUrl;
+  }
+
+  set workUrl(value: string) {
+    this._workUrl = value;
   }
 
   getEntity(id: number): Promise<T> {
     //TODO change Promise to Observable
-    const entity = this.http.get(`${this._baseUrl}/${id}`, {headers: this.getHeaders()})
+    const url = this.workUrl ? this.workUrl : this._baseUrl;
+    const entity = this.http.get(`${url}/${id}`, {headers: this.getHeaders()})
       .toPromise()
       .then(response => response.json().data as T)
       .catch(this.handleError);
@@ -33,7 +39,8 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
 
   getAll(): Promise<T[]> {
     //TODO change Promise to Observable
-    const entityArr = this.http.get(`${this._baseUrl}/list`, {headers: this.getHeaders()})
+    const url = this.workUrl ? this.workUrl : this._baseUrl;
+    const entityArr = this.http.get(`${url}/list`, {headers: this.getHeaders()})
       .map((res: Response) => res.json()).toPromise();
     return entityArr;
   }
@@ -42,7 +49,7 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
     //TODO change Promise to Observable
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
-    const url = `${this._baseUrl}/add`;
+    const url = `${this.workUrl ? this.workUrl : this._baseUrl}/add`;
     const body = JSON.stringify(entity);
 
     console.log("Create at Url: %s -> body %s", url, body);
@@ -58,7 +65,7 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
     let resp : number = 404;
-    const url = `${this._baseUrl}/delete/${id}`;
+    const url = `${this.workUrl ? this.workUrl : this._baseUrl}/delete/${id}`;
 
     console.log("Delete at Url: %s -> Id %d", url, id);
 
@@ -73,7 +80,7 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
     //TODO change Promise to Observable
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
-    const url = `${this._baseUrl}/update`;
+    const url = `${this.workUrl ? this.workUrl : this._baseUrl}/update`;
     const body = JSON.stringify(entity);
 
     console.log("Update at Url: %s -> body %s", url, body);

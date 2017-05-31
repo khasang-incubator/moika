@@ -8,6 +8,6 @@ export class ClientService<T extends Client> extends CrudService<T> {
 
   constructor( http: Http) {
     super(http);
-    this.setBaseUrl('http://localhost:8080/api/client');
+    this.workUrl ='http://localhost:8080/api/client';
   }
 }
