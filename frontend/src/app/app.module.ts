@@ -20,7 +20,6 @@ import { WashBoxDetailComponent } from './components/facility/wash-box-detail.co
 import { AppAboutComponent } from './components/shared/common/app-about.component';
 import { NotFoundComponent } from './components/shared/common/not-found.component';
 import { HomePageComponent } from './components/shared/common/home-page.component';
-import { RouterModule, Routes } from "@angular/router";
 import { MainOutletComponent } from './components/main-outlet.component';
 import {
   DataTableModule, DropdownModule, InputTextareaModule, PanelModule, DialogModule, SharedModule,
@@ -36,18 +35,11 @@ import { MockMoikaObjectService} from "./model/services/mock-moika-objects.servi
 import { MockMoikaObjects} from "./model/entities/mock-moika-objects";
 import { CustomerNavbarComponent} from "./components/shared/navbar/customer/customer-navbar.component";
 import { WashFacilityDashboardComponent } from './components/facility/wash-facility-dashboard.component';
+import {AppRoutingModule} from "./app-routing.module";
+import { CommonStatusTableComponent } from './components/reference/common-status-table.component';
+import { CommonStatusSelectorComponent } from './components/reference/common-status-selector.component';
+import { CommonStatusDroplistComponent } from './components/reference/common-status-droplist.component';
 
-// определение маршрутов
-const appRoutes: Routes =[
-  { path: '', redirectTo: '/start', pathMatch: 'full'},
-  { path: 'start', component: HomePageComponent},
-  { path: 'about', component: AppAboutComponent},
-  { path: 'clients', component: ClientListComponent},
-  { path: 'facilitiesDash', component: WashFacilityDashboardComponent},
-  { path: 'washFacilities', component: WashFacilityComponent},
-  { path: 'refs', component: CommonTypeSelectorComponent},
-  { path: '**', component: NotFoundComponent },
-];
 
 @NgModule({
   declarations: [
@@ -71,10 +63,13 @@ const appRoutes: Routes =[
     CustomerNavbarComponent,
     AdminNavbarComponent,
     WashFacilityDashboardComponent,
+    CommonStatusTableComponent,
+    CommonStatusSelectorComponent,
+    CommonStatusDroplistComponent,
   ],
   imports: [
     BsDropdownModule.forRoot(),
-    RouterModule.forRoot(appRoutes),
+    AppRoutingModule,
     BrowserModule,
     FormsModule,
     HttpModule,

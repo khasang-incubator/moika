@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TieredMenuModule,MenuItem} from 'primeng/primeng';
 import {MockMoikaObjectService} from "../../../../model/services/mock-moika-objects.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-navbar',
@@ -16,7 +17,8 @@ export class AdminNavbarComponent implements OnInit {
   private reportItems: MenuItem[];
 
 
-  constructor(private objectService: MockMoikaObjectService) { }
+  constructor(private objectService: MockMoikaObjectService,
+              private router: Router) { }
 
 
   ngOnInit() {
@@ -56,23 +58,35 @@ export class AdminNavbarComponent implements OnInit {
     ]
   }
 
+  goWashFacilities(){
+    this.router.navigate(['/washFacilities']);
+  }
+
   private prepareMainItems() : void{
     this.items = [
       {
         label: 'Мойки',
         icon: 'fa-car',
-        url:'/facilitiesDash'
+        command: (click) => {
+          this.router.navigate(['/facilitiesDash']);
+        }
       },
       {
         label: 'Справочники',
         icon: 'fa-edit',
         items: [{
           label: 'Справочники типов',
-          items:this.refTypeItems
+          items:this.refTypeItems,
+          command: (click) => {
+            this.router.navigate(['/typeRefs']);
+          }
         },
         {
             label: 'Справочники статусов',
-            items:this.refStatusItems
+            items:this.refStatusItems,
+          command: (click) => {
+            this.router.navigate(['/statusRefs']);
+          }
         }
         ]
       },

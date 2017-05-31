@@ -1,0 +1,7 @@
+<p-dropdown [options]="statusRefs"  [(ngModel)]="selectedStatusRef"  [style]="{'width':'300px'}" placeholder="Выбирите справочник статусов"></p-dropdown>
+<p>Selected Ref: {{selectedStatusRef ? selectedStatusRef.name + ' ' + selectedStatusRef.url : 'none'}}</p>
+<div *ngIf="selectedStatusRef">
+  <p>{{selectedStatusRef.id}}</p>
+  <app-common-status-table [refStatus]="selectedStatusRef"></app-common-status-table>
+  <app-common-status-droplist [refStatus]="selectedStatusRef"></app-common-status-droplist>
+</div>

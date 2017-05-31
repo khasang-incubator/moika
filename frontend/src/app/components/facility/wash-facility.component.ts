@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {WashFacility} from '../../model/entities/wash-facility';
 import {WashFacilityService} from "../../model/services/wash-facility.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'wash-facilities',
@@ -14,7 +15,8 @@ export class WashFacilityComponent implements OnInit {
   selectedFclt: WashFacility;
   private washFacilityService: WashFacilityService;
 
-  constructor(washFacilityService: WashFacilityService) {
+  constructor(private activateRoute: ActivatedRoute,
+    washFacilityService: WashFacilityService)  {
     this.washFacilityService = washFacilityService;
   }
 
@@ -23,6 +25,7 @@ export class WashFacilityComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("Current route "+this.activateRoute.snapshot.url.toString());
     this.getAll();
   }
 

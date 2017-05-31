@@ -70,9 +70,9 @@ export class CommonTypeComponent implements OnChanges, OnInit {
       this.typeService.createEntity(this.typeRec)
         .then(
           resRec => {
-            console.log("Length before %d", tmpList.length);
+          //  console.log("Length before %d", tmpList.length);
             tmpList.push(resRec);
-            console.log("Length after %d", tmpList.length);
+         //   console.log("Length after %d", tmpList.length);
             console.log("Just create rec ID: " + JSON.stringify(resRec));
             this.updateList(tmpList);
             this.actionMsg = 'Двойной клик для редактирования';
@@ -95,9 +95,9 @@ export class CommonTypeComponent implements OnChanges, OnInit {
   }
 
   updateList(newLIst: SomeType[]) {
-    console.log("Length someTypeList before %d", this.someTypeList.length);
+ //   console.log("Length someTypeList before %d", this.someTypeList.length);
     this.someTypeList = newLIst;
-    console.log("Length  someTypeList after %d", this.someTypeList.length);
+  //  console.log("Length  someTypeList after %d", this.someTypeList.length);
     this.typeRec = null;
   }
 
