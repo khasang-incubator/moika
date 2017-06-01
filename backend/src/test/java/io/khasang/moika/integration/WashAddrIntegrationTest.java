@@ -1,6 +1,7 @@
 package io.khasang.moika.integration;
 
 import io.khasang.moika.entity.City;
+import io.khasang.moika.entity.Coordinate;
 import io.khasang.moika.entity.WashAddr;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,6 +13,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -28,7 +30,7 @@ public class WashAddrIntegrationTest {
 
     private final String requestMapping = "http://localhost:8080/api/washAddr";
     private final String existingAddrStreet = "Пресня";
-    private final String newAddrStreet = "Princesse Luisa Allee";
+    private final String newAddrStreet = "Rosen schtrasse";
     private final String existingCity = "Москва";
     private final String newCityName = "Калининград";
 
@@ -87,25 +89,21 @@ public class WashAddrIntegrationTest {
     @Transactional
     @Rollback
     public void createWashAddress() {
+        final BigDecimal lat =  new BigDecimal("50.12345").setScale(5);
+        final BigDecimal lon = new BigDecimal("40.54321").setScale(5);
+
         HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate;
 
         HttpEntity httpEntity;
-        City newCity = new City(newCityName);
-        httpEntity = new HttpEntity<>(newCity, headers); //подготовили запрос га добавление Facility
-        restTemplate = new RestTemplate();
-        City resCity = restTemplate.exchange(    //отправли запрос через веб (т.е. снаружи приложения)
-                requestMapping+"/city/add",
-                HttpMethod.POST,
-                httpEntity,
-                City.class).getBody();
-        Assert.assertNotNull("Could not add city", resCity);
 
+        City newCity = new City(newCityName);
         WashAddr addr =  new WashAddr();
         addr.setCity(newCity);
         addr.setStreet(newAddrStreet);
-        addr.setBuilding("233");
+        addr.setBuilding("6");
+        addr.setCoordinate(new Coordinate(lat,lon ));
 
         httpEntity = new HttpEntity<>(addr, headers); //подготовили запрос га добавление Facility
         restTemplate = new RestTemplate();
@@ -116,9 +114,11 @@ public class WashAddrIntegrationTest {
                 WashAddr.class);
         Assert.assertNotNull("WashAddress Request body is incorrect", result);
         WashAddr resAddr = result.getBody();
-
-        Assert.assertTrue("New addr city is not " + newCityName, resAddr.getCity().getName().equalsIgnoreCase(newCityName));
+        Assert.assertNotNull("WashAddress is null", resAddr);
         Assert.assertTrue("New addr city is not" + newAddrStreet, resAddr.getStreet().equalsIgnoreCase(newAddrStreet));
+        Assert.assertEquals("New addr not equals coordinate lat " +lat.toString(), resAddr.getCoordinate().getLat(), lat);
+        Assert.assertEquals("New addr not equals coordinate lon " + lon.toString(), resAddr.getCoordinate().getLon(), lon);
+        Assert.assertTrue("New addr not contain city " + newCityName, resAddr.getCity().getName().equalsIgnoreCase(newCityName));
     }
 
 }

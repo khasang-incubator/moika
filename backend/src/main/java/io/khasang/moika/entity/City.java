@@ -17,8 +17,8 @@ public class City extends ABaseMoikaEntity {
     public City() {
     }
 
-    public City(String city) {
-        name = city;
+    public City(String cityName) {
+        this.name = cityName;
     }
     public int getId() {
         return id;

@@ -42,9 +42,6 @@ public class WashBoxDataAccessImplTest {
     @Qualifier("boxTypesDataAccessService")
     private BoxTypesDataAccessService boxTypeDao;
 
-    @Autowired
-    WashAddrDao washAddr;
-
     final String testExistingBoxName = "Бокс № 1";
     final String testNewBoxName = "Test box";
     final String stausCode = "WORKING";

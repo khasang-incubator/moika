@@ -1,14 +1,19 @@
 package io.khasang.moika.entity;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.persistence.MappedSuperclass;
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
  * Базовый пустой абстрактный класс, для идентификации Entity проекта
  */
 @MappedSuperclass
-public abstract class ABaseMoikaEntity implements Serializable{
-   // private static final long serialVersionUID = 1L;
+public abstract class ABaseMoikaEntity implements Serializable {
+    // private static final long serialVersionUID = 1L;
 
     /**
      * Удаляет лидирующие и завершающие пробелы в тнепустых строках.
@@ -21,6 +26,21 @@ public abstract class ABaseMoikaEntity implements Serializable{
      */
     public static String trim(String string) {
         return string == null ? null : string.trim();
+    }
+
+    public String toJSONString() {
+        String jsonInString ="";
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            jsonInString = mapper.writeValueAsString(this);
+        } catch (JsonGenerationException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return jsonInString;
     }
 
 }
