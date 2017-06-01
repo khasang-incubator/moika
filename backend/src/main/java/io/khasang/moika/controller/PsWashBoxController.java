@@ -143,10 +143,10 @@ public class PsWashBoxController {
      * @param typeId
      * @return
      */
-    @RequestMapping(value = "/byType/{type}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/byTypeId/{typeId}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public Object getWashBoxListbyType(@PathVariable(value = "type") String typeId) {
+    public Object getWashBoxListByTypeId(@PathVariable(value = "typeId") String typeId) {
         List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByType(Integer.valueOf(typeId));
         if (washBoxList == null)
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
@@ -155,16 +155,32 @@ public class PsWashBoxController {
     }
 
     /**
-     * вывод списка боксов по их статусам
+     * вывод списка  боксов по их типам
      *
-     * @param status
+     * @param typeId
      * @return
      */
-    @RequestMapping(value = "/byStatus/{status}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/byTypeCod/{typeCode}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public Object getWashBoxListbyStatus(@PathVariable(value = "status") String status) {
-        List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByStatus(Integer.valueOf(status));
+    public Object getWashBoxListByTypeCode(@PathVariable(value = "typeCode") String typeId) {
+        List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByType(Integer.valueOf(typeId));
+        if (washBoxList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return washBoxList;
+    }
+    /**
+     * вывод списка боксов по их статусам
+     *
+     * @param statusId
+     * @return
+     */
+    @RequestMapping(value = "/byStatusId/{statusId}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public Object getWashBoxListbyStatus(@PathVariable(value = "statusId") String statusId) {
+        List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByStatus(Integer.valueOf(statusId));
         if (washBoxList == null)
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         else

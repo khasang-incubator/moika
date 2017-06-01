@@ -64,17 +64,6 @@
 [ссылка](http://yandex.ru)
 [![ссылка](https://cdn.everypony.ru/storage/00/44/24/2016/05/17/f1b099cd15.jpg)](http://yandex.ru/)
 
-### new world
-
-* menu
-* menu
-* menu
-    * menu
-    * menu
-        * menu
-1. menu
-2. menu
-
 # menu
 
 | Day     | Car    | Price |
@@ -82,7 +71,51 @@
 | Monday  | VAZ   | $6    |
 | Tuesday | EU | $8    |
 
+
+#API (BackEnd)
+## Общие принципы
+ * Все сущности имеют свой контроллер
+ * Один контроллер может покрывать несколько сущностей, 
+    например, основную, и связанные с ней справочники и дочерние сущности
+  * Запросы REST-подобные
+  * Для enity используется "CamelStyle", но первая буква всего меленькая
+  * Запросы строятся по принципу:
+   
+`   
+/api/<_entiyName_>/<_queryType_>/<_parameter_>
+      или
+   /api/<_entiyName_>/<_childEntiyName_><_queryType_>/<_parameter_>`
+   
+   например
+   
+   ``` 
+   /api/washFacility/list
+   /api/washBox/byId/1
+   `````
+   * Типы запросов:
+     * list - список всех обхектов
+     * add - добавить
+     * update - обновить
+     * delete - удалит
+     * byId - по id
+     * byCode - по символьному коду
+     * byNamу - по имени объекта
+     
+   * Взвращается всегда объект, содержащий данные или HTTP-статус 
+     Объект затем парсится в JSON 
+     
 ## Контроллеры
+####Общий список готовых к употреблению контроллеров
+* CarController.java
+* ClientController.java
+* PsServiceStatusController.java
+* PsServiceTypeController.java
+* PsWashBoxController.java
+* PsWashFacilityController.java
+* UserController.java
+* WashAddrController.java
+* WorkController.java
+
 ### PsWashFaclilityController
 Управляет сущностями - мойками через REST.
 Запросs в JSON
@@ -97,13 +130,13 @@
 }
 ```
 
-* /washFacility/
+* /api/washFacility/ - мойки
     * /list - список моек
     * /add - добавить
     * /update - изменить
-    * /delete - удалить
-    * /{id} - получить по id
-    * / inCity/{city} - список моек в городе
+    * /delete/{id} - удалить
+    * /byId/{id} - получить по id
+    * /inCity/{city} - список моек в городе
     ````
     {"id"="1","name"="Москва"}
     ````
@@ -111,7 +144,20 @@
      ```json
     {"lat":"50.34555", "long":"67.23655"}
      ```
-    * /byAddr/{idAddr} - получение мойки по адресу, зпрегмтрированному в бд
+    * /byAddr/{idAddr} - получение мойки по адресу, зарегмтрированному в бд
+
+### PsWashBoxController.java
+
+* /api/washBox
+    * /list
+    * /add
+     * /update - изменить
+     * /delete - удалить
+     * /byId/{id} - получить по id
+     * /byType/{typeId}
+     * /byStatus/{statusId}
+     * /inFacility/{idFacility}
+ 
 
     
     
