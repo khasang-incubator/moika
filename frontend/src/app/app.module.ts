@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { WashBoxComponent} from './components/facility/wash-box.component';
+import { WashBoxComponent} from './components/facility/wash-box-list.component';
 import { WashBoxService} from './model/services/wash-box.service';
 import { WashFacilityListComponent } from './components/facility/wash-facility-list.component';
 import { WashFacilityService} from './model/services/wash-facility.service';
@@ -41,6 +41,7 @@ import { CommonStatusSelectorComponent } from './components/reference/common-sta
 import { CommonStatusDroplistComponent } from './components/reference/common-status-droplist.component';
 import { WashFacilityTableComponent } from './components/facility/wash-facility-table.component';
 import { CityDropdownComponent } from './components/reference/city-dropdown.component';
+import { WashBoxTableComponent } from './components/facility/wash-box-table.component';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { CityDropdownComponent } from './components/reference/city-dropdown.comp
     CommonStatusDroplistComponent,
     WashFacilityTableComponent,
     CityDropdownComponent,
+    WashBoxTableComponent,
   ],
   imports: [
     BsDropdownModule.forRoot(),

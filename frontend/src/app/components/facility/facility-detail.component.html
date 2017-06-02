@@ -7,9 +7,10 @@
   <div><label>Описание: </label>{{washFacility.description }}
   </div>
   <div><label>Адрес: </label>
-    <div  *ngIf="washFacility.facilityAddr">
-      Город: {{washFacility.facilityAddr.city.name}},  {{washFacility.facilityAddr.city.region}}
-      Улица: {{washFacility.facilityAddr.street}},  д. {{washFacility.facilityAddr.building}}{{washFacility.facilityAddr.letter}}
+    <div *ngIf="washFacility.facilityAddr">
+      Город: {{washFacility.facilityAddr.city.name}}, {{washFacility.facilityAddr.city.region}}
+      Улица: {{washFacility.facilityAddr.street}}, д.
+      {{washFacility.facilityAddr.building}}{{washFacility.facilityAddr.letter}}
     </div>
     <washbox-list [washBoxList]="washFacility.washBoxes"></washbox-list>
   </div>

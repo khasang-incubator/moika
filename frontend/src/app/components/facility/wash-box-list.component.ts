@@ -4,8 +4,8 @@ import {WashBox} from '../../model/entities/wash-box';
 
 @Component({
   selector: 'washbox-list',
-  templateUrl: './wash-box.component.html',
-  styleUrls: ['./wash-box.component.css']
+  templateUrl: './wash-box-list.component.html',
+  styleUrls: ['./wash-box-list.component.css']
 })
 export class WashBoxComponent {
   @Input() washBoxList: Array<WashBox> = [];

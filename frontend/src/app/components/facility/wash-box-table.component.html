@@ -1,0 +1,66 @@
+<p-dataTable [value]="washBoxList" [(selection)]="selectedBox" selectionMode="single"
+(onRowDblclick)="onRowDblclick($event)" [paginator]="true" rows="10" [responsive]="true">
+<p-header>
+  <div class="ui-datatable-header">Список боксов
+    <button type="button" pButton icon="fa-refresh" style="float:right" (click)="refresh()"></button>
+  </div>
+</p-header>
+
+<p-column field="id" header="ID" [sortable]="true"></p-column>
+<p-column field="boxName" header="Наименование" [sortable]="true"></p-column>
+<p-column field="description" header="Доп. информация"></p-column>
+<p-column field="boxTypeEntity.typeCode" header="Тип" [sortable]="true"></p-column>
+<p-column field="boxStatusEntity.statusCode" header="Статус" [sortable]="false"></p-column>
+<p-footer>
+  <div class="ui-helper-clearfix" style="width:100%">
+    <button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()"
+            label="Добавить"></button>
+    <button type="button" pButton icon="fa-trash" style="float:left" (click)="showConfirmDialog()"
+            label="Удалить"></button>
+    {{actionMsg}}
+  </div>
+</p-footer>
+</p-dataTable>
+
+
+<p-dialog header="Параметры моечного бокса" [(visible)]="displayAddDialog" [responsive]="true" showEffect="fade" [modal]="true"
+          [resizable]="true" width="600" >
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="boxRec">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="name">Наименование</label></div>
+      <div class="ui-grid-col-8"><input pInputText id="name" [(ngModel)]="boxRec.boxName"/></div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="description">Доп. информация</label></div>
+      <div class="ui-grid-col-8"><input pInputText id="description" [(ngModel)]="boxRec.description"/></div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label>Тип</label></div>
+      <div class="ui-grid-col-8">
+        <app-common-type-droplist [refType]="refType" ></app-common-type-droplist>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label>Статус</label></div>
+      <div class="ui-grid-col-8">
+        <app-common-status-droplist [refStatus]="refStatus"></app-common-status-droplist>
+      </div>
+    </div>
+   </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+      <button type="button" pButton icon="fa-close" (click)="displayAddDialog=false" label="Отменить"></button>
+      <button type="button" pButton icon="fa-floppy-o" (click)="save()" label="Сохранть"></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Внимание!" [(visible)]="displayConfirmDialog" modal="modal" icon="fa fa-question-circle">
+  <p>Вы уверены, что хотите бокс?</p>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+      <button type="button" pButton icon="fa-close" (click)="displayConfirmDialog=false" label="No"></button>
+      <button type="button" pButton icon="fa-check" (click)="delete()" label="Yes"></button>
+    </div>
+  </p-footer>
+</p-dialog>

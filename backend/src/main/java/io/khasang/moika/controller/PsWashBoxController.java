@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+import static org.apache.commons.lang3.math.NumberUtils.*;
+
 /**
  * Контроллер для управления боксами автомоек
  *
@@ -43,7 +45,7 @@ public class PsWashBoxController {
     @ResponseStatus(HttpStatus.OK)
     public Object getWashBoxList() {
         List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getAllWashBoxes();
-        if (washBoxList == null)
+        if ((washBoxList == null) || (washBoxList.isEmpty()))
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         else
             return washBoxList;
@@ -103,7 +105,7 @@ public class PsWashBoxController {
     /**
      * Вывод информации о боксе по имени на конкретной мойке
      *
-     * @param idFclt   - id мойки
+     * @param idFclt - id мойки
      * @return
      */
     @RequestMapping(value = "/inFacility/{idFacility}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
@@ -111,7 +113,7 @@ public class PsWashBoxController {
     @ResponseStatus(HttpStatus.OK)
     public Object getWashBoxesOnFacility(@PathVariable(value = "idFacility") int idFclt) {
         List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getWashBoxesOnFacility(idFclt);
-        if (washBoxList == null)
+        if ((washBoxList == null) || (washBoxList.isEmpty()))
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         else
             return washBoxList;
@@ -143,45 +145,40 @@ public class PsWashBoxController {
      * @param typeId
      * @return
      */
-    @RequestMapping(value = "/byTypeId/{typeId}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/byType/{typeId}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getWashBoxListByTypeId(@PathVariable(value = "typeId") String typeId) {
-        List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByType(Integer.valueOf(typeId));
-        if (washBoxList == null)
+        List<WashBox> washBoxList;
+        if (isNumber(typeId))
+            washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByType(Integer.valueOf(typeId));
+        else
+            washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByType(typeId);
+
+        if ((washBoxList == null) || (washBoxList.isEmpty()))
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         else
             return washBoxList;
     }
 
-    /**
-     * вывод списка  боксов по их типам
-     *
-     * @param typeId
-     * @return
-     */
-    @RequestMapping(value = "/byTypeCod/{typeCode}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    public Object getWashBoxListByTypeCode(@PathVariable(value = "typeCode") String typeId) {
-        List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByType(Integer.valueOf(typeId));
-        if (washBoxList == null)
-            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
-        else
-            return washBoxList;
-    }
+
     /**
      * вывод списка боксов по их статусам
      *
      * @param statusId
      * @return
      */
-    @RequestMapping(value = "/byStatusId/{statusId}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/byStatus/{statusId}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public Object getWashBoxListbyStatus(@PathVariable(value = "statusId") String statusId) {
-        List<WashBox> washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByStatus(Integer.valueOf(statusId));
-        if (washBoxList == null)
+    public Object getWashBoxListByStatus(@PathVariable(value = "statusId") String statusId) {
+        List<WashBox> washBoxList;
+        if (isNumber(statusId))
+            washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByStatus(Integer.valueOf(statusId));
+        else
+            washBoxList = pskvorWashBoxDataAccessService.getWashBoxesByStatus(statusId);
+
+        if ((washBoxList == null) || (washBoxList.isEmpty()))
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         else
             return washBoxList;
@@ -197,7 +194,7 @@ public class PsWashBoxController {
     @ResponseStatus(HttpStatus.OK)
     public Object getBoxStatusList() {
         List<BoxStatus> statusList = boxStatusDataAccessService.getAllStatuses();
-        if (statusList == null)
+        if ((statusList == null) || (statusList.isEmpty()))
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         else
             return statusList;
@@ -213,7 +210,7 @@ public class PsWashBoxController {
     @ResponseStatus(HttpStatus.OK)
     public Object getBoxTypesList(HttpServletResponse response) {
         List<BoxType> typeList = boxTypesDataAccessService.getAllTypes();
-        if (typeList == null)
+        if ((typeList == null) || (typeList.isEmpty()))
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         else
             return typeList;
@@ -230,9 +227,9 @@ public class PsWashBoxController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getBoxStatusByCode(@PathVariable(value = "code") String code) {
-        BoxStatus boxStatus = (BoxStatus)boxStatusDataAccessService.getStatusByCode(code);
+        BoxStatus boxStatus = (BoxStatus) boxStatusDataAccessService.getStatusByCode(code);
         if (boxStatus == null)
-            return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         else
             return boxStatus;
     }
@@ -247,9 +244,9 @@ public class PsWashBoxController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getBoxTypeByCode(@PathVariable(value = "code") String code) {
-        BoxType boxType =  (BoxType) boxTypesDataAccessService.getTypeByCode(code);
+        BoxType boxType = (BoxType) boxTypesDataAccessService.getTypeByCode(code);
         if (boxType == null)
-            return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         else
             return boxType;
     }
@@ -264,9 +261,9 @@ public class PsWashBoxController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getBoxStatusById(@PathVariable(value = "id") int id) {
-        BoxStatus boxStatus =  (BoxStatus) boxStatusDataAccessService.getStatusById(id);
+        BoxStatus boxStatus = (BoxStatus) boxStatusDataAccessService.getStatusById(id);
         if (boxStatus == null)
-            return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         else
             return boxStatus;
     }
@@ -283,7 +280,7 @@ public class PsWashBoxController {
     public Object getBoxTypeById(@PathVariable(value = "id") int id) {
         BoxType boxType = (BoxType) boxTypesDataAccessService.getTypeById(id);
         if (boxType == null)
-            return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         else
             return boxType;
     }
@@ -297,9 +294,9 @@ public class PsWashBoxController {
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public Object addNewBoxStatus(@RequestBody BoxStatus newBoxStatus) {
-        BoxStatus boxStatus =  (BoxStatus) boxStatusDataAccessService.addStatus(newBoxStatus);
+        BoxStatus boxStatus = (BoxStatus) boxStatusDataAccessService.addStatus(newBoxStatus);
         if (boxStatus == null)
-            return  new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+            return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
         else
             return boxStatus;
     }
@@ -315,7 +312,7 @@ public class PsWashBoxController {
     public Object addNewBoxType(@RequestBody BoxType newBoxType) {
         BoxType boxType = (BoxType) boxTypesDataAccessService.addType(newBoxType);
         if (boxType == null)
-            return  new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+            return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
         else
             return boxType;
     }
@@ -331,7 +328,7 @@ public class PsWashBoxController {
     public Object updateBoxStatus(@RequestBody BoxStatus newBoxStatus) {
         BoxStatus boxStatus = (BoxStatus) boxStatusDataAccessService.updateStatus(newBoxStatus);
         if (boxStatus == null)
-            return  new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+            return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
         else
             return boxStatus;
     }
@@ -345,9 +342,9 @@ public class PsWashBoxController {
     @ResponseBody
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Object updateBoxType(@RequestBody BoxType newBoxType) {
-        BoxType boxType =  (BoxType) boxTypesDataAccessService.updateType(newBoxType);
+        BoxType boxType = (BoxType) boxTypesDataAccessService.updateType(newBoxType);
         if (boxType == null)
-            return  new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+            return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
         else
             return boxType;
     }
@@ -365,9 +362,9 @@ public class PsWashBoxController {
         if (boxStatus != null) {
             int id = boxStatus.getId();
             boxStatusDataAccessService.deleteStatus(boxStatus);
-            return  new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
         } else {
-            return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -384,9 +381,9 @@ public class PsWashBoxController {
         if (boxType != null) {
             int id = boxType.getId();
             boxTypesDataAccessService.deleteType(boxType);
-            return  new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
         } else {
-            return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         }
     }
 }

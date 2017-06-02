@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {TieredMenuModule,MenuItem} from 'primeng/primeng';
+import {Component, OnInit} from '@angular/core';
+import {TieredMenuModule, MenuItem} from 'primeng/primeng';
 import {MockMoikaObjectService} from "../../../../model/services/mock-moika-objects.service";
 import {Router} from "@angular/router";
 
@@ -18,12 +18,13 @@ export class AdminNavbarComponent implements OnInit {
 
 
   constructor(private objectService: MockMoikaObjectService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
 
   ngOnInit() {
     this.prepareRefTypeItems();
-    this. prepareRefStatusItems();
+    this.prepareRefStatusItems();
     this.prepareReportItems();
     this.prepareMainItems();
   }
@@ -40,14 +41,14 @@ export class AdminNavbarComponent implements OnInit {
     return {label: element.name};
   }
 
-  private prepareRefStatusItems() : void {
+  private prepareRefStatusItems(): void {
     this.objectService.getStatusRefs().then(
       typeItemList =>
         this.refTypeItems = typeItemList.map(this.mapItems)
     )
   }
 
-  private prepareReportItems() : void {
+  private prepareReportItems(): void {
     this.reportItems = [
       {
         label: 'Клиенты',
@@ -58,37 +59,53 @@ export class AdminNavbarComponent implements OnInit {
     ]
   }
 
-  goWashFacilities(){
+  goWashFacilities() {
     this.router.navigate(['/washFacilities']);
   }
 
-  private prepareMainItems() : void{
+
+  private prepareMainItems(): void {
     this.items = [
       {
         label: 'Мойки',
         icon: 'fa-car',
-        command: (click) => {
-          this.router.navigate(['/facilitiesDash']);
-        }
+        items: [{
+          label: 'Dash',
+          icon: 'fa-th-large',
+          command: (click) => {
+            this.router.navigate(['/facilitiesDash']);
+          }
+        }, {
+          label: 'Table',
+          icon: 'fa-table',
+          command: (click) => {
+            this.router.navigate(['/facilitiesTable']);
+          }
+        },{
+          label: 'List',
+          icon: ' fa-list-ol ',
+          command: (click) => {
+            this.router.navigate(['/washFacilitiesList']);
+          }
+        }]
       },
       {
         label: 'Справочники',
         icon: 'fa-edit',
         items: [{
           label: 'Справочники типов',
-          items:this.refTypeItems,
+          items: this.refTypeItems,
           command: (click) => {
             this.router.navigate(['/typeRefs']);
           }
         },
-        {
+          {
             label: 'Справочники статусов',
-            items:this.refStatusItems,
-          command: (click) => {
-            this.router.navigate(['/statusRefs']);
-          }
-        }
-        ]
+            items: this.refStatusItems,
+            command: (click) => {
+              this.router.navigate(['/statusRefs']);
+            }
+          }]
       },
       {
         label: 'Пользователи',

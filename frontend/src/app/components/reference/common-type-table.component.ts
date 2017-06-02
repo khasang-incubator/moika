@@ -35,7 +35,11 @@ export class CommonTypeComponent implements OnChanges, OnInit {
         this.someTypeList = someTypeList;
         this.actionMsg = 'Двойной клик для редактирования';
       })
-      .catch(this.handleError);
+      .catch(error => {
+        this.handleError(<any>error);
+        this.actionMsg = `Не могу получить список из БД. Error code: ${error.status}, URL: ${error.url}`;
+        alert(this.actionMsg);
+      });
   }
 
   ngOnInit(): void {
@@ -139,8 +143,6 @@ export class CommonTypeComponent implements OnChanges, OnInit {
 
   private handleError(error: any): String {
     console.error('Не могу получить список из БД. Error code: %s, URL: %s ', error.status, error.url); // for demo purposes only
-    this.actionMsg = 'Двойной клик для редактирования';
-    alert(error.message);
     return error.message || error;
   }
 }

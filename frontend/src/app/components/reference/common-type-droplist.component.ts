@@ -31,7 +31,11 @@ export class CommonTypeDroplistComponent implements OnInit {
         this.retList = typeItemList;
         this.someTypeItemList = this.retList.map(this.makeDropDownItem);
       })
-      .catch(this.handleError);
+      .catch(error => {
+        this.handleError(<any>error);
+        let errMsg = `Не могу получить список из БД. Error code: ${error.status}, URL: ${error.url}`;
+        alert(errMsg);
+      });
   }
 
 
@@ -45,6 +49,7 @@ export class CommonTypeDroplistComponent implements OnInit {
 
   ngOnChanges(): void {
    // console.log("RefType is" + JSON.stringify(this.refType));
+
     if (this.refType) {
       this.someTypeItemList = [];
       this.typeUrl = this.refType.url;
@@ -61,7 +66,6 @@ export class CommonTypeDroplistComponent implements OnInit {
 
   private handleError(error: any): String {
     console.error('Не могу получить список из БД. Error code: %s, URL: %s ', error.status, error.url); // for demo purposes only
-    alert(error.message);
     return error.message || error;
   }
 

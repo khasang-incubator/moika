@@ -31,7 +31,11 @@ export class CommonStatusDroplistComponent implements OnInit {
         this.retList = statusItemList;
         this.someStatusItemList = this.retList.map(this.makeDropDownItem);
       })
-      .catch(this.handleError);
+      .catch(error => {
+        this.handleError(<any>error);
+        let errMsg = `Не могу получить список из БД. Error code: ${error.status}, URL: ${error.url}`;
+        alert(errMsg);
+      });
   }
 
 
@@ -61,7 +65,6 @@ export class CommonStatusDroplistComponent implements OnInit {
 
   private handleError(error: any): String {
     console.error('Не могу получить список из БД. Error code: %s, URL: %s ', error.status, error.url); // for demo purposes only
-    alert(error.message);
     return error.message || error;
   }
 }

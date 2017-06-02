@@ -9,7 +9,7 @@ export class WashFacility extends BaseMoikaEntity {
    name: string;
    description: string;
    idAddr:  number;
-   address: Address;
+   facilityAddr: Address;
    idManager: number;
    manager: User;
    washBoxes: Array<WashBox>;

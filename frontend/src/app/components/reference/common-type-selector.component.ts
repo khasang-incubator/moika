@@ -24,12 +24,6 @@ export class CommonTypeSelectorComponent implements OnInit {
     )
   }
 
-  getStatusRefs(): void {
-    this.objectService.getStatusRefs().then(
-     statusItemList =>
-        this.statusRefs = statusItemList.map(this.makeDropDownItem)
-    )
-  }
 
   makeDropDownItem(element): SelectItem {
     return {label: element.name, value: element};

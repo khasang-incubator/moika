@@ -3,16 +3,19 @@ import {Http, Response, Headers } from '@angular/http';
 import {WashBox} from '../entities/wash-box';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
+import {CrudService} from "./crud.service";
 //import {WashBoxList} from "./mock-wash-box";
 
 @Injectable()
-export class WashBoxService {
+export class WashBoxService extends CrudService<WashBox> {
 
-  private baseUrl = 'http://localhost:8080/api/washBox';
-
-  constructor(private http: Http) {
+  constructor(http: Http) {
+    super(http);
+    this.workUrl = 'http://localhost:8080/api/washBox';
   }
 
+
+  /*
   get(id: number): Promise<WashBox> {
      const washBox = this.http.get(`${this.baseUrl}/${id}`, {headers: this.getHeaders()})
        .toPromise()
@@ -43,5 +46,5 @@ export class WashBoxService {
     headers.append('Access-Control-Allow-Credentials', 'true');
     return headers;
   }
-
+ */
 }

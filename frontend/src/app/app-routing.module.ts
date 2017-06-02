@@ -8,6 +8,7 @@ import {WashFacilityListComponent} from "./components/facility/wash-facility-lis
 import {CommonTypeSelectorComponent} from "./components/reference/common-type-selector.component";
 import {NotFoundComponent} from "./components/shared/common/not-found.component";
 import {CommonStatusSelectorComponent} from "./components/reference/common-status-selector.component";
+import {WashFacilityTableComponent} from "./components/facility/wash-facility-table.component";
 
 // определение маршрутов
 const appRoutes: Routes =[
@@ -17,6 +18,7 @@ const appRoutes: Routes =[
   { path: 'about', component: AppAboutComponent},
   { path: 'clients', component: ClientListComponent},
   { path: 'facilitiesDash', component: WashFacilityDashboardComponent},
+  { path: 'facilitiesTable', component: WashFacilityTableComponent},
   { path: 'washFacilitiesList', component: WashFacilityListComponent},
   { path: 'typeRefs', component: CommonTypeSelectorComponent},
   { path: 'statusRefs', component: CommonStatusSelectorComponent},

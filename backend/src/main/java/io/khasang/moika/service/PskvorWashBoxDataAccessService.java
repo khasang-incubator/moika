@@ -23,7 +23,11 @@ public interface PskvorWashBoxDataAccessService {
 
     List<WashBox> getWashBoxesByType(int boxType);
 
+    List<WashBox> getWashBoxesByType(String boxType);
+
     List<WashBox> getWashBoxesByStatus(int boxStatus);
+
+    List<WashBox> getWashBoxesByStatus(String boxStatus);
 /*
     List<BoxStatus> getWashBoxesStatuses();
 

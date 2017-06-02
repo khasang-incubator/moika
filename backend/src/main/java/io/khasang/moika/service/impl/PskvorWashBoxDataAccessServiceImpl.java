@@ -79,7 +79,27 @@ public class PskvorWashBoxDataAccessServiceImpl implements PskvorWashBoxDataAcce
     @Override
     public List<WashBox> getWashBoxesByType(int boxType) {
         try {
-            return washBoxDao.getWashBoxesByType(boxType);
+            return washBoxDao.getWashBoxesByTypeId(boxType);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    @Override
+    public List<WashBox> getWashBoxesByType(String boxType) {
+        try {
+            return washBoxDao.getWashBoxesByTypeCode(boxType);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    @Override
+    public List<WashBox> getWashBoxesByStatus(int boxStatus) {
+        try {
+            return washBoxDao.getWashBoxesByStatusId(boxStatus);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
             return null;
@@ -87,9 +107,9 @@ public class PskvorWashBoxDataAccessServiceImpl implements PskvorWashBoxDataAcce
     }
 
     @Override
-    public List<WashBox> getWashBoxesByStatus(int boxStatus) {
+    public List<WashBox> getWashBoxesByStatus(String boxStatus) {
         try {
-            return washBoxDao.getWashBoxesByStatus(boxStatus);
+            return washBoxDao.getWashBoxesByStatusCode(boxStatus);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
             return null;

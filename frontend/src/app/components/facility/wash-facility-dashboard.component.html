@@ -1,7 +1,14 @@
-<div class="grid grid-pad">
-  <div *ngFor="let facility of washFacilities"  class="col-1-4">
-    <div class="module facility">
-      <h4>{{facility.name}}</h4>
+<div class="row">
+  <div class="grid grid-pad">
+    <div *ngFor="let facility of washFacilities" class="col-1-4">
+      <div class="module facility" (click)="onSelect(facility)">
+        <h4>{{facility.name}}</h4>
+      </div>
     </div>
+  </div>
+</div>
+<div class="row">
+  <div *ngIf="selectedFclt">
+    <washbox-list [washBoxList]="selectedFclt.washBoxes"></washbox-list>
   </div>
 </div>

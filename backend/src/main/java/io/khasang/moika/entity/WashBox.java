@@ -29,14 +29,14 @@ public class WashBox  extends ABaseMoikaEntity {
 
     @Column(name = "id_type", insertable=false, updatable=false)
     private int idType;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn( name = "id_type")//, foreignKey = @ForeignKey(name = "fk_box_type"), insertable=false, updatable=false )
     private BoxType boxTypeEntity;
 
 
     @Column(name = "id_status", insertable=false, updatable=false)
     private Short idStatus;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_status")//, insertable=false, updatable=false )
     private BoxStatus boxStatusEntity;
 

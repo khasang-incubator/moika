@@ -37,7 +37,7 @@ public class WashBoxDaoImpl extends MoikaDaoCrudImpl<WashBox> implements WashBox
     }
 
     @Override
-    public List<WashBox> getWashBoxesByType(int boxType) {
+    public List<WashBox> getWashBoxesByTypeId(int boxType) {
      //   Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from wash_box where id_type = ?;")
      //           .create(WashBox.class);
         Query query  = sessionFactory.getCurrentSession().createQuery("from wash_boxes where idType = ?");
@@ -47,8 +47,25 @@ public class WashBoxDaoImpl extends MoikaDaoCrudImpl<WashBox> implements WashBox
     }
 
     @Override
-    public List<WashBox> getWashBoxesByStatus(int boxStatus) {
-        Query query  = sessionFactory.getCurrentSession().createQuery("from wash_boxes where box_status = ?");
+    public List<WashBox> getWashBoxesByStatusId(int boxStatus) {
+        Query query  = sessionFactory.getCurrentSession().createQuery("from wash_boxes where idType = ?");
+        query.setParameter(0, boxStatus);
+        return query.list();
+    }
+
+    @Override
+    public List<WashBox> getWashBoxesByTypeCode(String boxType) {
+        //   Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from wash_box where id_type = ?;")
+        //           .create(WashBox.class);
+        Query query  = sessionFactory.getCurrentSession().createQuery("from wash_boxes where boxTypeEntity.code = ?");
+        query.setParameter(0, boxType);
+        //  query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        return query.list();
+    }
+
+    @Override
+    public List<WashBox> getWashBoxesByStatusCode(String boxStatus) {
+        Query query  = sessionFactory.getCurrentSession().createQuery("from wash_boxes where boxStatusEntity.code = ?");
         query.setParameter(0, boxStatus);
         return query.list();
     }

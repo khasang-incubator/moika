@@ -1,46 +1,44 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {WashFacility} from "../../model/entities/wash-facility";
-import {WashFacilityService} from "app/model/services/wash-facility.service";
-import {Address} from "../../model/entities/address";
+import {Component, Input, OnInit} from '@angular/core';
 import {WashBox} from "../../model/entities/wash-box";
-import {Person} from "../../model/entities/person";
+import {WashBoxService} from "../../model/services/wash-box.service";
 import {ActivatedRoute} from "@angular/router";
-import {City} from "../../model/entities/city";
+import {SomeStatus} from "../../model/entities/some-status";
+import {SomeType} from "../../model/entities/some-type";
+import {MoikaObject} from "../../model/entities/moika-object";
+import {MockMoikaObjects} from "../../model/entities/mock-moika-objects";
 
 @Component({
-  selector: 'app-wash-facility-table',
-  templateUrl: './wash-facility-table.component.html',
-  styleUrls: ['./wash-facility-table.component.css']
+  selector: 'app-wash-box-table',
+  templateUrl: './wash-box-table.component.html',
+  styleUrls: ['./wash-box-table.component.css']
 })
-export class WashFacilityTableComponent implements OnInit {
+export class WashBoxTableComponent implements OnInit {
 
-  @Input() selCity: City;
+  @Input() washBoxList: Array<WashBox> = [];
+  selectedBox: WashBox;
+  boxRec: WashBox;
+  refType: MoikaObject;
+  refStatus: MoikaObject;
 
   actionMsg: string = "...";
-  washFcltList: WashFacility[];
-  fcltAddr: Address;
-  wasBoxes: WashBox[];
-  manager: Person;
-  fcltRec: WashFacility;
+
   isNewRec: boolean;
   displayAddDialog: boolean;
   displayConfirmDialog: boolean;
-  selectedFclt: WashFacility;
-
-  private typeUrl: string;
-  private startUrl: string;
-  private typeFullName: string;
 
 
   constructor(private activateRoute: ActivatedRoute,
-    private fcltService: WashFacilityService) {
+              private washBoxService: WashBoxService) {
+    const objList = new MockMoikaObjects();
+    this.refType = objList.getObject('boxType');
+    this.refStatus = objList.getObject('boxStatus');
   }
 
   getAll(): void {
     this.actionMsg = 'Обработка данных. Ждите...';
-    this.fcltService.getAll()
-      .then(washFcltList => {
-        this.washFcltList = washFcltList;
+    this.washBoxService.getAll()
+      .then(washBoxList => {
+        this.washBoxList = washBoxList;
         this.actionMsg = 'Двойной клик для редактирования';
       })
       .catch(this.handleError);
@@ -48,14 +46,14 @@ export class WashFacilityTableComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("Current route "+this.activateRoute.snapshot.url.toString());
-    this.fcltRec = new WashFacility();
-    this.getAll();
+    this.boxRec = new WashBox();
+   // this.getAll();
   }
 
 
   showDialogToAdd() {
     this.isNewRec = true;
-    this.fcltRec = new WashFacility();
+    this.boxRec = new WashBox();
     this.displayAddDialog = true;
   }
 
@@ -64,10 +62,10 @@ export class WashFacilityTableComponent implements OnInit {
   }
 
   save() {
-    let tmpList = [...this.washFcltList];
+    let tmpList = [...this.washBoxList];
     this.actionMsg = 'Обработка данных. Ждите...';
     if (this.isNewRec) {
-      this.fcltService.createEntity(this.fcltRec)
+      this.washBoxService.createEntity(this.boxRec)
         .then(
           resRec => {
             //  console.log("Length before %d", tmpList.length);
@@ -81,10 +79,10 @@ export class WashFacilityTableComponent implements OnInit {
           error => this.handleError(<any>error));
     } else {
       // tmpList[this.findSelectedTypeIdx()] = this.typeRec;
-      this.fcltService.updateEntity(this.fcltRec)
+      this.washBoxService.updateEntity(this.boxRec)
         .then(
           resRec => {
-            tmpList[this.findSelectedFcltIdx()] = resRec;
+            tmpList[this.findSelectedBoxIdx()] = resRec;
             this.updateList(tmpList);
             this.actionMsg = 'Двойной клик для редактирования';
           })
@@ -94,23 +92,23 @@ export class WashFacilityTableComponent implements OnInit {
     this.displayAddDialog = false;
   }
 
-  updateList(newFcltList: WashFacility[]) {
+  updateList(newBoxList: WashBox[]) {
     //   console.log("Length someTypeList before %d", this.someTypeList.length);
-    this.washFcltList = newFcltList;
+    this.washBoxList = newBoxList;
     //  console.log("Length  someTypeList after %d", this.someTypeList.length);
-    this.fcltRec = null;
+    this.boxRec = null;
   }
 
   delete() {
-    let index = this.findSelectedFcltIdx();
-    let id = this.selectedFclt.id;
+    let index = this.findSelectedBoxIdx();
+    let id = this.selectedBox.id;
     this.displayConfirmDialog = false;
     console.log("About to delete ID: %d", id);
-    if (this.fcltService.deleteEntity(id) ) { //удалили из БД
-      this.washFcltList = this.washFcltList.filter((val, i) => i != index); //Удалили из view
-      this.fcltRec = null;
+    if (this.washBoxService.deleteEntity(id) ) { //удалили из БД
+      this.washBoxList = this.washBoxList.filter((val, i) => i != index); //удалили из view
+      this.boxRec = null;
     }
-    else{
+     else {
       let error = new Error();
       error.message = "Удаление невозможно"
       this.handleError(error);
@@ -123,23 +121,20 @@ export class WashFacilityTableComponent implements OnInit {
 
   onRowDblclick(event) {
     this.isNewRec = false;
-    this.fcltRec = this.cloneFcltRec(event.data);
-    console.log(JSON.stringify(this.fcltRec));
-    this.fcltAddr = this.fcltRec.facilityAddr;
-    console.log(JSON.stringify(this.fcltAddr));
+    this.boxRec = this.cloneBoxRec(event.data);
     this.displayAddDialog = true;
   }
 
-  cloneFcltRec(aFclt: WashFacility): WashFacility {
-    let t = new WashFacility();
-    for (let prop in aFclt) {
-      t[prop] = aFclt[prop];
+  cloneBoxRec(aBox: WashBox): WashBox {
+    let t = new WashBox();
+    for (let prop in aBox) {
+      t[prop] = aBox[prop];
     }
     return t;
   }
 
-  findSelectedFcltIdx(): number {
-    return this.washFcltList.indexOf(this.selectedFclt);
+  findSelectedBoxIdx(): number {
+    return this.washBoxList.indexOf(this.selectedBox);
   }
 
   private handleError(error: any): String {
@@ -148,5 +143,4 @@ export class WashFacilityTableComponent implements OnInit {
     alert(error.message);
     return error.message || error;
   }
-
 }
