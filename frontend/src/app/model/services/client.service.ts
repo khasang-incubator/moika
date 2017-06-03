@@ -4,7 +4,7 @@ import {Client} from "../entities/client";
 import {Http} from "@angular/http";
 
 @Injectable()
-export class ClientService<T extends Client> extends CrudService<T> {
+export class ClientService extends CrudService<Client> {
 
   constructor( http: Http) {
     super(http);

@@ -10,10 +10,10 @@ import {CrudService} from "../../model/services/crud.service";
 })
 export class CityDropdownComponent implements OnInit {
   @Input() curCity: string;
+  @Input() selectedCity: City;
 
   private cityItemList: SelectItem[];
   private cityList : City[];
-  selectedCity: City;
 
   private cityListUrl = 'http://localhost:8080/api/washAddr/city/' ;
 

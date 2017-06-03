@@ -11,10 +11,11 @@ import {SelectItem} from "primeng/primeng";
 export class CommonTypeDroplistComponent implements OnInit {
 
   @Input() refType: any;
+  @Input() selectedType: SomeType;
 
   someTypeItemList: SelectItem[];
   retList : SomeType[];
-  selectedType: SomeType;
+
 
   private typeUrl: string;
   private startUrl: string;

@@ -37,13 +37,13 @@
     <div class="ui-grid-row">
       <div class="ui-grid-col-4"><label>Тип</label></div>
       <div class="ui-grid-col-8">
-        <app-common-type-droplist [refType]="refType" ></app-common-type-droplist>
-      </div>
+        <app-common-type-droplist [refType]="refType" [(selectedType)] ="boxRec.boxTypeEntity" ></app-common-type-droplist>
+    </div>
     </div>
     <div class="ui-grid-row">
       <div class="ui-grid-col-4"><label>Статус</label></div>
       <div class="ui-grid-col-8">
-        <app-common-status-droplist [refStatus]="refStatus"></app-common-status-droplist>
+        <app-common-status-droplist [refStatus]="refStatus" [(selectedStatus)] ="boxRec.boxStatusEntity"></app-common-status-droplist>
       </div>
     </div>
    </div>

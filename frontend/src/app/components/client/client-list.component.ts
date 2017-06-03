@@ -13,9 +13,9 @@ export class ClientListComponent implements OnInit {
 
   clientList: Array<Client> = [];
   selectedClient: Client;
-  clientService: ClientService<Client>;
+  clientService: ClientService;
 
-  constructor(clientService: ClientService<Client>) {
+  constructor(clientService: ClientService) {
     this.clientService = clientService;
   }
 

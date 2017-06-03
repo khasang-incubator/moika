@@ -40,7 +40,7 @@
       <div class="ui-grid-row">
         <div class="ui-grid-col-4"><label>Город</label></div>
         <div class="ui-grid-col-8">
-          <app-city-dropdown></app-city-dropdown>
+          <app-city-dropdown>[(selectedCity)] ="fcltRec.facilityAddr.city" </app-city-dropdown>
         </div>
       </div>
       <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="fcltAddr">

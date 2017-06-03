@@ -11,10 +11,11 @@ import {CrudService} from "../../model/services/crud.service";
 export class CommonStatusDroplistComponent implements OnInit {
 
   @Input() refStatus: any;
+  @Input() selectedStatus: SomeStatus;
 
   someStatusItemList: SelectItem[];
   retList: SomeStatus[];
-  selectedStatus: SomeStatus;
+
 
   private statusUrl: string;
   private startUrl: string;
