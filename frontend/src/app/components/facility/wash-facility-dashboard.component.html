@@ -7,8 +7,17 @@
     </div>
   </div>
 </div>
+<!--
 <div class="row">
   <div *ngIf="selectedFclt">
     <washbox-list [washBoxList]="selectedFclt.washBoxes"></washbox-list>
+  </div>
+</div>
+-->
+<!-- карта моек-->
+<div class="row-fluid">
+  <div *ngIf="selectedFclt">
+  <app-facility-map [washFcltList] = "washFacilities" [initLon] = "selectedFclt.facilityAddr.coordinate.lon"
+                    [initLat] = "selectedFclt.facilityAddr.coordinate.lat" ></app-facility-map>
   </div>
 </div>

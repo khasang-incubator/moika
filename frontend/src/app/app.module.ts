@@ -42,6 +42,8 @@ import { CommonStatusDroplistComponent } from './components/reference/common-sta
 import { WashFacilityTableComponent } from './components/facility/wash-facility-table.component';
 import { CityDropdownComponent } from './components/reference/city-dropdown.component';
 import { WashBoxTableComponent } from './components/facility/wash-box-table.component';
+import { FacilityMapComponent } from './components/facility/facility-map.component';
+import {AgmCoreModule} from "angular2-google-maps/core";
 
 
 @NgModule({
@@ -72,6 +74,7 @@ import { WashBoxTableComponent } from './components/facility/wash-box-table.comp
     WashFacilityTableComponent,
     CityDropdownComponent,
     WashBoxTableComponent,
+    FacilityMapComponent,
   ],
   imports: [
     BsDropdownModule.forRoot(),
@@ -81,7 +84,10 @@ import { WashBoxTableComponent } from './components/facility/wash-box-table.comp
     HttpModule,
     DataTableModule, DialogModule, SharedModule,  DataTableModule, InputTextareaModule,
     FormsModule, PanelModule, DropdownModule, ButtonModule, MenuModule, TieredMenuModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDX_0DCgqImKoRTUPQ3QRjdOwLEVKwm3uE'
+    }),
   ],
   providers: [WashBoxService, WashFacilityService, ClientService, CrudService, MockMoikaObjectService, MockMoikaObjects],
   bootstrap: [AppComponent]

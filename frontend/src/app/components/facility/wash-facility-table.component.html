@@ -25,7 +25,7 @@
     </p-footer>
   </p-dataTable>
 
-
+  <!-- диалог редактирования записи мойки-->
   <p-dialog header="Параметры мойки" [(visible)]="displayAddDialog" [responsive]="true" showEffect="fade" [modal]="true"
             [resizable]="true" width="600">
     <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="fcltRec">
@@ -66,6 +66,7 @@
     </p-footer>
   </p-dialog>
 
+  <!-- диалог-запрос на удаление-->
   <p-dialog header="Внимание!" [(visible)]="displayConfirmDialog" modal="modal" icon="fa fa-question-circle">
     <p>Вы уверены, что хотите удалить мойку?</p>
     <p-footer>
@@ -76,12 +77,18 @@
     </p-footer>
   </p-dialog>
 </div>
+
 <div class="row-fluid">
   <p></p>
 </div>
+<!-- Таблица моечных боксов-->
 <div class="row-fluid">
   <div *ngIf="selectedFclt">
     <app-wash-box-table [washBoxList]="selectedFclt.washBoxes"></app-wash-box-table>
   </div>
 </div>
 
+<!-- карта моек-->
+<div class="row-fluid">
+  <app-facility-map [washFcltList] = "washFcltList"></app-facility-map>
+</div>
