@@ -1,17 +1,18 @@
 <div *ngIf="washFacility">
-  <h3>
-    Автомойка
-  </h3>
-  <div><label>Наименование: </label>{{washFacility.name | uppercase}}
-  </div>
-  <div><label>Описание: </label>{{washFacility.description }}
-  </div>
-  <div><label>Адрес: </label>
-    <div *ngIf="washFacility.facilityAddr">
-      Город: {{washFacility.facilityAddr.city.name}}, {{washFacility.facilityAddr.city.region}}
-      Улица: {{washFacility.facilityAddr.street}}, д.
-      {{washFacility.facilityAddr.building}}{{washFacility.facilityAddr.letter}}
+  <p-fieldset legend="Подробности об автомойке" [toggleable]="true">
+    <div><label>Наименование: </label>{{washFacility.name | uppercase}}
     </div>
-    <washbox-list [washBoxList]="washFacility.washBoxes"></washbox-list>
-  </div>
+    <div><label>Описание: </label>{{washFacility.description }}
+    </div>
+    <div *ngIf="washFacility.facilityAddr">
+      <div><label>Адрес: </label>
+        Город: {{washFacility.facilityAddr.city.name}}, {{washFacility.facilityAddr.city.region}}
+        Улица: {{washFacility.facilityAddr.street}}, д.
+        {{washFacility.facilityAddr.building}}{{washFacility.facilityAddr.letter}}
+      </div>
+    </div>
+    <p-fieldset legend="Моечные боксы" [toggleable]="true">
+      <washbox-list [washBoxList]="washFacility.washBoxes"></washbox-list>
+    </p-fieldset>
+  </p-fieldset>
 </div>

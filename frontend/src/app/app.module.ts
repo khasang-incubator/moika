@@ -23,7 +23,7 @@ import { HomePageComponent } from './components/shared/common/home-page.componen
 import { MainOutletComponent } from './components/main-outlet.component';
 import {
   DataTableModule, DropdownModule, InputTextareaModule, PanelModule, DialogModule, SharedModule,
-  ButtonModule, MenuModule, TieredMenuModule
+  ButtonModule, MenuModule, TieredMenuModule, FieldsetModule, CarouselModule, PasswordModule, AccordionModule
 } from 'primeng/primeng';
 import { CommonTypeComponent } from './components/reference/common-type-table.component';
 import { CommonTypeSelectorComponent } from './components/reference/common-type-selector.component';
@@ -44,6 +44,7 @@ import { CityDropdownComponent } from './components/reference/city-dropdown.comp
 import { WashBoxTableComponent } from './components/facility/wash-box-table.component';
 import { FacilityMapComponent } from './components/facility/facility-map.component';
 import {AgmCoreModule} from "angular2-google-maps/core";
+import { LoginDialogComponent } from './components/shared/common/login-dialog.component';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import {AgmCoreModule} from "angular2-google-maps/core";
     CityDropdownComponent,
     WashBoxTableComponent,
     FacilityMapComponent,
+    LoginDialogComponent,
   ],
   imports: [
     BsDropdownModule.forRoot(),
@@ -84,7 +86,7 @@ import {AgmCoreModule} from "angular2-google-maps/core";
     HttpModule,
     DataTableModule, DialogModule, SharedModule,  DataTableModule, InputTextareaModule,
     FormsModule, PanelModule, DropdownModule, ButtonModule, MenuModule, TieredMenuModule,
-    NoopAnimationsModule,
+    NoopAnimationsModule, FieldsetModule, CarouselModule, PasswordModule, AccordionModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDX_0DCgqImKoRTUPQ3QRjdOwLEVKwm3uE'
     }),

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {WashFacilityService} from "../../model/services/wash-facility.service";
 import {WashFacility} from "../../model/entities/wash-facility";
 import {ActivatedRoute} from "@angular/router";
+import {City} from "../../model/entities/city";
 
 @Component({
   selector: 'app-wash-facility-dashboard',
@@ -10,8 +11,10 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class WashFacilityDashboardComponent implements OnInit {
 
-  washFacilities: Array<WashFacility> = [];
+  @Input() selCity: City;
+  washFacilities: WashFacility[];
   selectedFclt: WashFacility;
+  actionMsg: string;
 
   constructor(private activateRoute: ActivatedRoute,
     private washFacilityService: WashFacilityService) {
@@ -22,9 +25,19 @@ export class WashFacilityDashboardComponent implements OnInit {
     this.washFacilityService.getAll().then(washFacilityList => this.washFacilities = washFacilityList.slice(0,cnt)).catch(this.handleError);
   }
 
+  getAll(): void {
+    this.actionMsg = 'Обработка данных. Ждите...';
+    this.washFacilityService.getAll()
+      .then(washFcltList => {
+        this.washFacilities = washFcltList;
+        this.actionMsg = '';
+      })
+      .catch(this.handleError);
+  }
+
   ngOnInit(): void {
     console.log("Current route "+this.activateRoute.snapshot.url.toString());
-    this.getShortFacilityList(3);
+    this.getAll();
   }
 
   onSelect(washFacility: WashFacility): void {

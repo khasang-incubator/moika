@@ -15,6 +15,7 @@ export class AdminNavbarComponent implements OnInit {
   private refTypeItems: MenuItem[];
   private refStatusItems: MenuItem[];
   private reportItems: MenuItem[];
+  private showLoginDialog = false;
 
 
   constructor(private objectService: MockMoikaObjectService,
@@ -29,7 +30,9 @@ export class AdminNavbarComponent implements OnInit {
     this.prepareMainItems();
   }
 
-
+  /**
+   * Готовим список пунктов под-меню для всяческих типов
+   */
   private prepareRefTypeItems(): void {
     this.objectService.getTypeRefs().then(
       typeItemList =>
@@ -41,6 +44,9 @@ export class AdminNavbarComponent implements OnInit {
     return {label: element.name};
   }
 
+  /**
+   * Готовим список пунктов под-меню для всяческих статусов
+   */
   private prepareRefStatusItems(): void {
     this.objectService.getStatusRefs().then(
       typeItemList =>
@@ -48,6 +54,13 @@ export class AdminNavbarComponent implements OnInit {
     )
   }
 
+  private aboutClick(): void{
+    this.router.navigate(['/about']);
+  }
+
+  /**
+   * Готовим список пунктов под-меню для всяческих отчетов
+   */
   private prepareReportItems(): void {
     this.reportItems = [
       {
@@ -63,6 +76,9 @@ export class AdminNavbarComponent implements OnInit {
     this.router.navigate(['/washFacilities']);
   }
 
+  /**
+   * Готовим список пунктов пменю
+   */
 
   private prepareMainItems(): void {
     this.items = [

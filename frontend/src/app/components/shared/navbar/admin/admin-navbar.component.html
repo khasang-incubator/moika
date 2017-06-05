@@ -1,50 +1,23 @@
 <nav class="navbar navbar-light bg-faded">
   <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>
-      <button #btn type="button" pButton icon="fa fa-list" style="float:right"  (click)="menu.toggle($event)"></button>
-    </div>
-
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="/clients">Клиенты <span class="sr-only">(current)</span></a></li>
-        <li class="active"><a href="/washFacilities">Мойки<span class="sr-only">(current)</span></a></li>
-        <li class="active"><a href="/refs">Справочники<span class="sr-only">(current)</span></a></li>
-        <li class="active"><a href="/about">О программе<span class="sr-only">(current)</span></a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul *dropdownMenu class="dropdown-menu" role="menu">
-            <li role="menuitem"><a href="#">Action</a></li>
-            <li role="menuitem"><a href="#">Another action</a></li>
-            <li role="menuitem">><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li role="menuitem">><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li role="menuitem">><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-      <form class="navbar-form navbar-left">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>
+        <button type="button" pButton icon="fa-list" style="float:right"  (click)="menu.toggle($event)"></button>
+      </div>
+      <div class="navbar-left">
+      <button type="button" pButton icon="fa-commenting-o" style="float:right" label="О сервисе" (click)="aboutClick()"></button>
+      </div>
+      <form class="navbar-form-serch navbar-left">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search">
+          <button type="submit" class="btn btn-default" >Искать</button>
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
       </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown 2<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
+      <button type="button" pButton icon="fa-user" style="float:right" label="Login" (click)="showLoginDialog=true"></button>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<app-login-dialog [displayLoginDialog]="showLoginDialog"></app-login-dialog>

@@ -10,6 +10,7 @@ import {MouseEvent} from 'angular2-google-maps/core';
   styleUrls: ['./facility-map.component.css']
 })
 export class FacilityMapComponent implements OnInit, OnChanges {
+  //TODO переделать на PrimeNg GMap
   @Input() washFcltList: WashFacility[];
   @Input() initLat: number;
   @Input() initLon: number;

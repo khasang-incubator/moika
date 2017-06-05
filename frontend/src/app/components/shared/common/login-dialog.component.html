@@ -1,0 +1,18 @@
+<p-dialog header="Введите имя пользователя и пароль" [(visible)]="displayLoginDialog" [responsive]="true" showEffect="fade" [modal]="true" [resizable]="true" width="400">
+  <div class="ui-grid ui-grid-responsive ui-fluid" >
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="login">Login</label></div>
+      <div class="ui-grid-col-8"><input pInputText id="login" [(ngModel)]="user" placeholder="user name"/></div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="pwd">Password</label></div>
+      <div class="ui-grid-col-8"><input type="password" pPassword id="pwd" [(ngModel)]="pwd" placeholder="password"/></div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+      <button type="button" pButton icon="fa-check" (click)="loginUser()" label="Войти"></button>
+      <button type="button" pButton icon="fa-close" (click)="displayLoginDialog=false" label="Отмена"></button>
+    </div>
+  </p-footer>
+</p-dialog>
