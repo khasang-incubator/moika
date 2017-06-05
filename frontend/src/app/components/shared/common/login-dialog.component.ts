@@ -10,6 +10,7 @@ export class LoginDialogComponent implements OnInit {
 
   user: string;
   pwd: string;
+  interfaceMode: number = 2;
 
 
   constructor() { }
@@ -20,5 +21,17 @@ export class LoginDialogComponent implements OnInit {
   loginUser(){
     this.displayLoginDialog = false;
     console.log(`User ${this.user} logged in whit pwd ${this.pwd}`);
+    switch (this.user){
+      case "admin":
+       this.interfaceMode = 0;
+
+       break;
+      case "user":
+        this.interfaceMode = 1;
+        break;
+      default:
+        this.interfaceMode = 2;
+        break;
+    }
   }
 }

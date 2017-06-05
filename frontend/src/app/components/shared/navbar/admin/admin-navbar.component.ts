@@ -72,9 +72,6 @@ export class AdminNavbarComponent implements OnInit {
     ]
   }
 
-  goWashFacilities() {
-    this.router.navigate(['/washFacilities']);
-  }
 
   /**
    * Готовим список пунктов пменю
@@ -86,7 +83,7 @@ export class AdminNavbarComponent implements OnInit {
         label: 'Мойки',
         icon: 'fa-car',
         items: [{
-          label: 'Dash',
+          label: 'Carousel',
           icon: 'fa-th-large',
           command: (click) => {
             this.router.navigate(['/facilitiesDash']);
