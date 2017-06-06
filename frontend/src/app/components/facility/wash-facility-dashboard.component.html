@@ -1,5 +1,5 @@
 <div *ngIf="washFacilities">
-  <p-carousel headerText="Наши Мойки" [value]="washFacilities" circular="true">
+  <p-carousel id="fcltCarousel" headerText="Наши Мойки" [value]="washFacilities" circular="true">
     <ng-template let-facility pTemplate="item">
       <div class="module facility" (click)="onSelect(facility)">
         <h4> {{facility.name}} </h4>

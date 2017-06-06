@@ -1,4 +1,4 @@
-<div [ngSwitch]="interfaceMode">
+<div class = "main-app" [ngSwitch]="interfaceMode">
   <app-admin-navbar *ngSwitchCase="0"></app-admin-navbar>
   <app-user-navbar *ngSwitchCase="1"></app-user-navbar>
   <app-customer-navbar *ngSwitchCase="2"></app-customer-navbar>
@@ -7,6 +7,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-4">
+      <app-app-about></app-app-about>
     </div>
     <div class="col-md-8">
       <app-main-outlet></app-main-outlet>

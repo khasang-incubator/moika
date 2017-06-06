@@ -1,1 +1,9 @@
-
+.main-app{
+ /*background-image: url(../images/car-wash-service-funny-project-32483991.jpg) ;*/
+  background-color: lightgrey;
+}
+h2{
+  color: #048DC8;
+  font-weight: bold;
+  text-align:center;
+}

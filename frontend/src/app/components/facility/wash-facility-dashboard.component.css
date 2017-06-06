@@ -19,6 +19,7 @@ h3 {
 }
 h4 {
   position: relative;
+  font-weight: bold;
 }
 .grid {
   margin: 0;
@@ -36,7 +37,7 @@ h4 {
   border-radius: 2px;
 }
 .module:hover {
-  background-color: #EEE;
+  background-color: #FFF;
   cursor: pointer;
   color: #607d8b;
 }

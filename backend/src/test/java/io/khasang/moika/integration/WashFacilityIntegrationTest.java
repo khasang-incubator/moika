@@ -23,9 +23,9 @@ public class WashFacilityIntegrationTest {
         System.out.println("Tests are beginning...");
     }
 
-    final int id = 8;
+    final int id = 16;
     final String fcltName = "Test2 REST мойка";
-    final String existingFasity = "Мойка на Помойке";
+    final String existingFasity = "Test2 REST мойка";
     final String statusCode = "WORKING";
     final String typeCode = "MEDIUM";
     private final String requestMapping = "http://localhost:8080/api";
@@ -132,6 +132,8 @@ public class WashFacilityIntegrationTest {
                 httpEntity,
                 new ParameterizedTypeReference<List<WashFacility>>() {
                 });
+        Assert.assertTrue("Request code not 202 " + resultAll.getStatusCode().toString(), resultAll.getStatusCode().is2xxSuccessful());
+
         List<WashFacility> resList = resultAll.getBody();
         Assert.assertFalse("Request body does not contain WashFacilities", resList.isEmpty());
 
@@ -153,18 +155,19 @@ public class WashFacilityIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
 
-        HttpEntity<List<WashFacility>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
+        HttpEntity<WashFacility> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<WashFacility> resultAll = restTemplate.exchange(
+        ResponseEntity<WashFacility> fcltResponse = restTemplate.exchange(
                 requestMapping + "/washFacility/byId/{id}/",
                 HttpMethod.GET,
                 httpEntity,
                 new ParameterizedTypeReference<WashFacility>() {
                 }, id);
-        Assert.assertNotNull("Reques body is incorrect", resultAll);
+        Assert.assertNotNull("Request body is incorrect", fcltResponse);
+        Assert.assertTrue("Request code not 202 " + fcltResponse.getStatusCode().toString(), fcltResponse.getStatusCode().is2xxSuccessful());
 
-        WashFacility resFclt = resultAll.getBody();
+        WashFacility resFclt = fcltResponse.getBody();
         Assert.assertNotNull("Request body does not contain WashFacilities", resFclt);
 
         Assert.assertTrue("Facility does not exist " + existingFasity, resFclt.getName().equalsIgnoreCase(existingFasity));
@@ -180,5 +183,55 @@ public class WashFacilityIntegrationTest {
             Assert.assertTrue("Facility  box type not " + typeCode, box.getBoxTypeEntity().getTypeCode().equalsIgnoreCase(typeCode));
         }
         Assert.assertTrue("Facility does not contain box", isBox);
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void updatetFacilityTest() {
+        final String newDescr = "Обновленная Тестовая RESTовая мойка";
+        final WashFacility fclt;
+
+        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+        HttpEntity<WashFacility> httpEntity = new HttpEntity<>(headers); //подготовили запрос
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<WashFacility> fcltResponse = restTemplate.exchange(
+                requestMapping + "/washFacility/byId/{id}/",
+                HttpMethod.GET,
+                httpEntity,
+                new ParameterizedTypeReference<WashFacility>() {
+                }, id);
+        Assert.assertNotNull("Request body is incorrect", fcltResponse);
+        Assert.assertTrue("Request code not 202 " + fcltResponse.getStatusCode().toString(), fcltResponse.getStatusCode().is2xxSuccessful());
+
+        fclt = fcltResponse.getBody();
+        Assert.assertNotNull("Request body does not contain WashFacilitiy", fclt);
+        Assert.assertTrue("Facility does not exist " + existingFasity + "but "+ fclt.getName(), fclt.getName().equalsIgnoreCase(existingFasity));
+        Assert.assertTrue("Facility does  not contain boxes", fclt.getWashBoxes().size() > 0);
+
+        fclt.setDescription(newDescr);
+
+        httpEntity = new HttpEntity<>(fclt, headers); //подготовили запрос га добавление Facility
+        restTemplate = new RestTemplate();
+        fcltResponse = restTemplate.exchange(    //отправли запрос через веб (т.е. снаружи приложения)
+                requestMapping + "/washFacility/update",
+                HttpMethod.PUT,
+                httpEntity,
+                WashFacility.class);
+        Assert.assertNotNull("Reques body is incorrect", fcltResponse);
+        Assert.assertTrue("Request code not 202 " + fcltResponse.getStatusCode().toString(), fcltResponse.getStatusCode().is2xxSuccessful());
+
+        WashFacility resFclt = fcltResponse.getBody();
+        Assert.assertNotNull("Request body does not contain WashFacilities", resFclt);
+        Assert.assertTrue("Updateted Facility does not exist " + existingFasity, resFclt.getName().equalsIgnoreCase(existingFasity));
+        Assert.assertEquals("Updateted Facility is not with same Id", fclt.getId(),resFclt.getId());
+        Assert.assertTrue("Updateted Facility does  not contain boxes", resFclt.getWashBoxes().size() > 0);
+        Assert.assertEquals("Updateted Facility doe not contain same boxes", fclt.getWashBoxes().size(), resFclt.getWashBoxes().size());
+        Assert.assertTrue("Updateted Facility is not the same name " + fcltName, resFclt.getName().equalsIgnoreCase(fclt.getName()));
+        Assert.assertTrue("Updateted Facility is not the same address " + fcltName, resFclt.getFacilityAddr().getStreet().equalsIgnoreCase(fclt.getFacilityAddr().getStreet()));
+        Assert.assertTrue("Updateted Facility not contain new description ", resFclt.getDescription().equalsIgnoreCase(newDescr));
     }
 }
