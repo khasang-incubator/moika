@@ -41,3 +41,4 @@ frontend/node/
 /DB/
 /lib/
 /.settings/
+/frontend/node_modules/
