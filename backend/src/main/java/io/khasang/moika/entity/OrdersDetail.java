@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Entity(name = "order_details")
 public class OrdersDetail extends ABaseMoikaEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="id_detail")
     private Long id;
 

@@ -45,6 +45,7 @@ public class WashFacilityImplTest {
     @Autowired
     WashAddrDao washAddr;
 
+    final int id = 16;
     final String testExistingFacilityName = "Мойка на Фонтанке";
     final String testNonExistFacilityName = "Мойка test";
     final String stausCode = "WORKING";
@@ -118,8 +119,6 @@ public class WashFacilityImplTest {
 
         Assert.assertNotNull("Facility is null", resFclt);
         boolean isBox = false;
-        boolean isType;
-        boolean isStatus;
         if (resFclt.getName().equalsIgnoreCase(testNonExistFacilityName)) {
             Assert.assertEquals("Facility  does not contain boxes", 4, resFclt.getWashBoxes().size());
             List<WashBox> resBoxList = resFclt.getWashBoxes();
@@ -152,7 +151,7 @@ public class WashFacilityImplTest {
             List<WashFacility> fcltList = fcltService.getAllWashFacilities();
             box.setIdFacility(fcltList.get(0).getId());
             fcltList.get(0).getWashBoxes().add(box);
-           // boxService.addWashBox(box);
+            // boxService.addWashBox(box);
             fcltService.updateWashFacility(fcltList.get(0));
             List<WashBox> boxList = fcltList.get(0).getWashBoxes();
             Assert.assertTrue("Facility does not contain box", boxList.contains(box));
@@ -174,10 +173,38 @@ public class WashFacilityImplTest {
             boxList = fcltList.get(0).getWashBoxes();
             int postBoxCnt = boxList.size();
             Assert.assertFalse("Facility still contain box", boxList.contains(boxToDelete));
-            Assert.assertNotEquals("Facility box list still the same size", prevBoxCnt,postBoxCnt);
+            Assert.assertNotEquals("Facility box list still the same size", prevBoxCnt, postBoxCnt);
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
     }
 
+    @Test
+    @Transactional
+    public void testUpdateFacility() {
+        final String newDescr = "Обновленная Тестовая RESTовая мойка";
+        final WashFacility existingFacility;
+        WashFacility resFclt = null;
+
+
+        existingFacility = fcltService.getWashFacilityByID(id);
+        Assert.assertNotNull("Request body does not contain WashFacilitiy", existingFacility);
+        Assert.assertTrue("Facility does  not contain boxes", existingFacility.getWashBoxes().size() > 0);
+
+        existingFacility.setDescription(newDescr);
+        try {
+            resFclt = fcltService.updateWashFacility(existingFacility);
+        } catch (MoikaDaoException e) {
+            Assert.fail(e.getMessage());
+        }
+        Assert.assertNotNull("Request is empty", resFclt);
+        Assert.assertTrue("Updated Facility does not exist " + existingFacility, resFclt.getName().equalsIgnoreCase(existingFacility.getName()));
+        Assert.assertEquals("Updated Facility is not with same Id", existingFacility.getId(), resFclt.getId());
+        Assert.assertTrue("Updated Facility does  not contain boxes", resFclt.getWashBoxes().size() > 0);
+        Assert.assertEquals("Updated Facility doe not contain same boxes", existingFacility.getWashBoxes().size(), resFclt.getWashBoxes().size());
+        Assert.assertTrue("Updated Facility is not the same name " + existingFacility.getName(), resFclt.getName().equalsIgnoreCase(existingFacility.getName()));
+        Assert.assertTrue("Updated Facility is not the same address " + existingFacility.getFacilityAddr().getStreet(), resFclt.getFacilityAddr().getStreet().equalsIgnoreCase(existingFacility.getFacilityAddr().getStreet()));
+        Assert.assertTrue("Updated Facility not contain new description ", resFclt.getDescription().equalsIgnoreCase(newDescr));
+
+    }
 }

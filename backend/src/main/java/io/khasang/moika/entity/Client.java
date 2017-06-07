@@ -11,7 +11,7 @@ public class Client extends ABaseMoikaEntity  {
 
     @Id
     @Column(name = "id_client", columnDefinition = "bigserial")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @Column(name = "id_person", insertable=false, updatable=false)
@@ -25,7 +25,7 @@ public class Client extends ABaseMoikaEntity  {
     @Column(name = "id_status", nullable = false , insertable=false, updatable=false)
     private Short idStatus;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_status")//, insertable=false, updatable=false )
     private ClientStatus status;
 

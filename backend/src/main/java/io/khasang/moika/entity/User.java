@@ -17,7 +17,7 @@ public class User extends ABaseMoikaEntity implements Serializable {
 
     @Id
     @Column(name = "id_user")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @NotNullLength(min = 3, max = 16)

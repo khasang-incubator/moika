@@ -25,26 +25,25 @@ public class MoikaService extends ABaseMoikaEntity{
 
     @Column(name = "id_fclt", insertable = false, updatable = false)
     protected long idFacility;
-
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_service_id_fclt"), insertable = false, updatable = false)
     protected WashFacility washFacility;
 
     @Column(name = "type_code", insertable = false, updatable = false)
     protected String serviceTypeCode;
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "type_code", foreignKey = @ForeignKey(name = "fk_service_type_code"), insertable = false, updatable = false)
     protected ServiceType serviceTypeEntity;
 
     @Column(name = "id_subtype", insertable = false, updatable = false)
     protected int idSubType;
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_subtype", insertable = false, updatable = false)
     protected ServiceSubType serviceSubTypeEntity;
 
     @Column(name = "id_status",insertable = false, updatable = false)
     protected int idStatus;
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_status", foreignKey = @ForeignKey(name = "fk_service_status"), insertable = false, updatable = false)
     protected ServiceStatus serviceStatusEntity;
 

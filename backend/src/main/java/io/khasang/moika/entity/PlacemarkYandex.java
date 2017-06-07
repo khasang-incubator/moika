@@ -9,7 +9,7 @@ import javax.persistence.Id;
 @Entity(name = "Placemark_Yandex")
 public class PlacemarkYandex extends ABaseMoikaEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
 

@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Role extends ABaseMoikaEntity implements Serializable  {
     @Id
     @Column(name = "id_role")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     @Column(name = "role_name", nullable = false, unique = true)
     private String name;

@@ -10,12 +10,12 @@ public class WashAddr extends ABaseMoikaEntity {
 
     @Id
     @Column(name = "id_addr", columnDefinition = "serial")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
     @Column(name = "id_city", insertable=false, updatable=false)
     private int idCity ;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_city", referencedColumnName = "id_city")
     private City city;
 

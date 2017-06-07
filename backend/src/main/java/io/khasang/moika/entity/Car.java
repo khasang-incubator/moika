@@ -13,7 +13,7 @@ public class Car extends ABaseMoikaEntity {
 
     @Id
     @Column(name = "id_car", columnDefinition = "bigserial")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long idCar;
     @Column(name = "id_car_type", insertable = false, updatable = false)
     private int idCarType;

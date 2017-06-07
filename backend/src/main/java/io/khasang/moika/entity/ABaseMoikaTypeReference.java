@@ -14,7 +14,7 @@ public abstract class ABaseMoikaTypeReference extends ABaseMoikaEntity {
 
     @Id
     @Column(name = "id_type", columnDefinition = "serial")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected int id;
     @Column(name = "type_code", unique = true, nullable = false)
     @NaturalId

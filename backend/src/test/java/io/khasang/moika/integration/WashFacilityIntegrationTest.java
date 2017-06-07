@@ -177,12 +177,11 @@ public class WashFacilityIntegrationTest {
         List<WashBox> resBoxList = resFclt.getWashBoxes();
         Assert.assertEquals("Facility box list is not 4 item length", 4 , resBoxList.size());
         WashBox box = resBoxList.get(0);
-        if (box.getBoxName().equalsIgnoreCase("Бокс № 1")) {
-            isBox = true;
+        if (box != null) {
             Assert.assertTrue("Facility  box status not " + statusCode, box.getBoxStatusEntity().getStatusCode().equalsIgnoreCase(statusCode));
             Assert.assertTrue("Facility  box type not " + typeCode, box.getBoxTypeEntity().getTypeCode().equalsIgnoreCase(typeCode));
         }
-        Assert.assertTrue("Facility does not contain box", isBox);
+        else Assert.assertTrue("Facility does not contain box", isBox);
     }
 
     @Test
@@ -226,12 +225,12 @@ public class WashFacilityIntegrationTest {
 
         WashFacility resFclt = fcltResponse.getBody();
         Assert.assertNotNull("Request body does not contain WashFacilities", resFclt);
-        Assert.assertTrue("Updateted Facility does not exist " + existingFasity, resFclt.getName().equalsIgnoreCase(existingFasity));
-        Assert.assertEquals("Updateted Facility is not with same Id", fclt.getId(),resFclt.getId());
-        Assert.assertTrue("Updateted Facility does  not contain boxes", resFclt.getWashBoxes().size() > 0);
-        Assert.assertEquals("Updateted Facility doe not contain same boxes", fclt.getWashBoxes().size(), resFclt.getWashBoxes().size());
-        Assert.assertTrue("Updateted Facility is not the same name " + fcltName, resFclt.getName().equalsIgnoreCase(fclt.getName()));
-        Assert.assertTrue("Updateted Facility is not the same address " + fcltName, resFclt.getFacilityAddr().getStreet().equalsIgnoreCase(fclt.getFacilityAddr().getStreet()));
-        Assert.assertTrue("Updateted Facility not contain new description ", resFclt.getDescription().equalsIgnoreCase(newDescr));
+        Assert.assertTrue("Updated Facility does not exist " + existingFasity, resFclt.getName().equalsIgnoreCase(existingFasity));
+        Assert.assertEquals("Updated Facility is not with same Id", fclt.getId(),resFclt.getId());
+        Assert.assertTrue("Updated Facility does  not contain boxes", resFclt.getWashBoxes().size() > 0);
+        Assert.assertEquals("Updated Facility doe not contain same boxes", fclt.getWashBoxes().size(), resFclt.getWashBoxes().size());
+        Assert.assertTrue("Updated Facility is not the same name " + fcltName, resFclt.getName().equalsIgnoreCase(fclt.getName()));
+        Assert.assertTrue("Updated Facility is not the same address " + fclt.getFacilityAddr().getStreet(), resFclt.getFacilityAddr().getStreet().equalsIgnoreCase(fclt.getFacilityAddr().getStreet()));
+        Assert.assertTrue("Updated Facility not contain new description ", resFclt.getDescription().equalsIgnoreCase(newDescr));
     }
 }

@@ -11,7 +11,7 @@ import static io.khasang.moika.util.DataValidationPatterns.PHONE_NUMBER_PATTERN;
 @Entity(name="phones")
 public class Phone extends ABaseMoikaEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_phone")
     private Long id;
     @Column(name="phone_number")

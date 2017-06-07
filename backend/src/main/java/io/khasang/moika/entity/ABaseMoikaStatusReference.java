@@ -15,7 +15,7 @@ public abstract class ABaseMoikaStatusReference extends ABaseMoikaEntity {
 
     @Id
     @Column(name = "id_status", columnDefinition = "serial")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected int id;
     @Column(name = "code", unique = true, nullable = false)
     @NaturalId

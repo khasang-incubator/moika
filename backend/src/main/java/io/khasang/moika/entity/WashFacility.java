@@ -12,7 +12,7 @@ public class WashFacility  extends ABaseMoikaEntity  {
 
     @Id
     @Column(name = "id_fclt") //, columnDefinition = "serial"
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     @Column(name = "id_net")
     private int idNet;

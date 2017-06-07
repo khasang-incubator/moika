@@ -4,7 +4,7 @@ import javax.persistence.*;
 @Entity
 public class PhoneDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
         private Long id;
         private String provider;
         private String technology;

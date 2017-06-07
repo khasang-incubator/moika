@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity(name = "products_sales")
 public class ProductSale {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @ManyToOne

@@ -13,7 +13,7 @@ import java.util.List;
 public class Person extends ABaseMoikaEntity {
     @Id
     @Column(name = "id_person", columnDefinition = "bigserial")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected long id;
     @Column(name = "first_name")
     private String firstName;

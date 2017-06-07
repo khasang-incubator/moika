@@ -9,7 +9,7 @@ public class WashBox  extends ABaseMoikaEntity {
 
     @Id
     @Column(name = "id_box")   // columnDefinition = "serial"
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
     @Column(name = "id_fclt", insertable=false, updatable=false)
@@ -29,14 +29,14 @@ public class WashBox  extends ABaseMoikaEntity {
 
     @Column(name = "id_type", insertable=false, updatable=false)
     private int idType;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn( name = "id_type")//, foreignKey = @ForeignKey(name = "fk_box_type"), insertable=false, updatable=false )
     private BoxType boxTypeEntity;
 
 
     @Column(name = "id_status", insertable=false, updatable=false)
     private Short idStatus;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_status")//, insertable=false, updatable=false )
     private BoxStatus boxStatusEntity;
 
