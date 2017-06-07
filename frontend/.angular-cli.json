@@ -9,7 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "images/car-4-16.ico"
+        "favicon.ico"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -19,17 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-       "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-       "../node_modules/primeng/resources/primeng.min.css",
-       "../node_modules/primeng/resources/themes/omega/theme.css",
-       "../node_modules/font-awesome/css/font-awesome.min.css",
-      "styles.css"
-       ],
-      "fonts": [
-        "fonts"
-      ],
-      "images": [
-        "images"
+        "styles.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
