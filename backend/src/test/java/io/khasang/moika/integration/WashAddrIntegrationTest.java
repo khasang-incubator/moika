@@ -36,7 +36,7 @@ public class WashAddrIntegrationTest {
 
 
     @Test
-    public void getAddrList() {
+    public void testGetAddrList() {
         HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
@@ -50,7 +50,7 @@ public class WashAddrIntegrationTest {
                 new ParameterizedTypeReference<List<WashAddr>>() {
                 });
         List<WashAddr> resList = resultAll.getBody();
-        Assert.assertFalse("Request body does not contain WashAddr", resList.isEmpty());
+        Assert.assertFalse("Request body does not contain WashAddr list", resList.isEmpty());
 
         WashAddr resAddr = resList.get(0);
         Assert.assertNotNull("Could not get any address from list", resAddr);
@@ -61,12 +61,12 @@ public class WashAddrIntegrationTest {
     }
 
     @Test
-    public void getAddrById() {
+    public void testGetAddrById() {
         HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
 
-        HttpEntity<List<WashAddr>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
+        HttpEntity<WashAddr> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<WashAddr> resultAll = restTemplate.exchange(
@@ -75,10 +75,10 @@ public class WashAddrIntegrationTest {
                 httpEntity,
                 new ParameterizedTypeReference<WashAddr>() {
                 }, (int)1);
-        Assert.assertNotNull("Reques body is incorrect", resultAll);
+        Assert.assertNotNull("Request body is incorrect", resultAll);
 
         WashAddr resAddr = resultAll.getBody();
-        Assert.assertNotNull("Request body does not contain WashFacilities", resAddr);
+        Assert.assertNotNull("Request body does not contain WashAddr", resAddr);
 
         Assert.assertTrue("Address does not exist " + existingAddrStreet, resAddr.getStreet().equalsIgnoreCase(existingAddrStreet));
 
@@ -88,7 +88,7 @@ public class WashAddrIntegrationTest {
     @Test
     @Transactional
     @Rollback
-    public void createWashAddress() {
+    public void testCreateWashAddress() {
         final BigDecimal lat =  new BigDecimal("50.12345").setScale(5);
         final BigDecimal lon = new BigDecimal("40.54321").setScale(5);
 
@@ -115,11 +115,55 @@ public class WashAddrIntegrationTest {
         Assert.assertNotNull("WashAddress Request body is incorrect", result);
         WashAddr resAddr = result.getBody();
         Assert.assertNotNull("WashAddress is null", resAddr);
-        Assert.assertTrue("New addr city is not" + newAddrStreet, resAddr.getStreet().equalsIgnoreCase(newAddrStreet));
-        Assert.assertEquals("New addr not equals coordinate lat " +lat.toString(), resAddr.getCoordinate().getLat(), lat);
-        Assert.assertEquals("New addr not equals coordinate lon " + lon.toString(), resAddr.getCoordinate().getLon(), lon);
+        Assert.assertTrue("New addr street is not" + newAddrStreet, resAddr.getStreet().equalsIgnoreCase(newAddrStreet));
+        Assert.assertEquals("New addr not equals coordinate lat ", lat, resAddr.getCoordinate().getLat());
+        Assert.assertEquals("New addr not equals coordinate lon ", lon, resAddr.getCoordinate().getLon());
         Assert.assertTrue("New addr not contain city " + newCityName, resAddr.getCity().getName().equalsIgnoreCase(newCityName));
     }
 
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testUpdateWashAddress() {
+        final WashAddr baseAddr;
+
+        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+        HttpEntity<WashAddr> httpEntity = new HttpEntity<>(headers); //подготовили запрос
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<WashAddr> resultAll = restTemplate.exchange(
+                requestMapping + "/byId/{id}",
+                HttpMethod.GET,
+                httpEntity,
+                new ParameterizedTypeReference<WashAddr>() {
+                }, (int)1);
+        Assert.assertNotNull("Request body is incorrect", resultAll);
+        baseAddr = resultAll.getBody();
+        Assert.assertNotNull("Request body does not contain WashAddr", baseAddr);
+        Assert.assertTrue("Address does not exist " + existingAddrStreet, baseAddr.getStreet().equalsIgnoreCase(existingAddrStreet));
+        Assert.assertTrue("Address does  not contain city", baseAddr.getCity().getName().equalsIgnoreCase(existingCity));
+
+        baseAddr.setStreet(baseAddr.getStreet() + " updates");
+        baseAddr.getCoordinate().setLat(baseAddr.getCoordinate().getLat().add(BigDecimal.ONE));
+
+        httpEntity = new HttpEntity<>(baseAddr, headers); //подготовили запрос га добавление Facility
+        restTemplate = new RestTemplate();
+        ResponseEntity<WashAddr> result = restTemplate.exchange(    //отправли запрос через веб (т.е. снаружи приложения)
+                requestMapping+"/update",
+                HttpMethod.PUT,
+                httpEntity,
+                WashAddr.class);
+        Assert.assertNotNull("WashAddress Request body is incorrect", result);
+        WashAddr resAddr = result.getBody();
+        Assert.assertNotNull("WashAddress is null", resAddr);
+        Assert.assertTrue("Updated addr city is not" + baseAddr.getCity().getName(),
+                      resAddr.getCity().getName().equalsIgnoreCase(baseAddr.getCity().getName()));
+        Assert.assertTrue("Updated addr street is not" + baseAddr.getStreet(),
+                resAddr.getStreet().equalsIgnoreCase(baseAddr.getStreet()));
+        Assert.assertEquals("Updated addr not equals coordinate lat ", baseAddr.getCoordinate().getLat(), resAddr.getCoordinate().getLat());
+    }
 }
 

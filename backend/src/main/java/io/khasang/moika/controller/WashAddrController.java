@@ -61,7 +61,7 @@ public class WashAddrController {
     @ResponseBody
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Object updateWashAddr(@RequestBody WashAddr updatedWashAddr) {
-        WashAddr washAddr = (WashAddr) washAddrdDAS.updateWashAddr(updatedWashAddr);
+         WashAddr washAddr = (WashAddr) washAddrdDAS.updateWashAddr(updatedWashAddr);
         if (washAddr == null)
             return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
         else
