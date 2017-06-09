@@ -5,9 +5,12 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 
+import { MainAreaComponent } from './components/common/main-area/main-area.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MainAreaComponent
   ],
   imports: [
     BrowserModule,
