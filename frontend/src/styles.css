@@ -25,9 +25,9 @@ div[class^=col] {
 }
 .content {
   margin-top: 18px;
-  height: 90vh;
+  height: 95vh;
   /*border: 1px red solid;*/
-  background: url( src/assets/images/car1.png) no-repeat center center #3699EC;
+  background: url( assets/images/car1.png) no-repeat center center #3699EC;
   background-size: 100vw;
 }
 
