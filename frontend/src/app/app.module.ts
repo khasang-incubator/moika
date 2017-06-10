@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { AppComponent } from './app.component';
+import {ButtonModule} from 'primeng/primeng';
 
+import { AppComponent } from './app.component';
 import { MainAreaComponent } from './components/common/main-area/main-area.component';
 import { HeaderComponent } from './components/common/header/header.component';
 
@@ -12,12 +13,13 @@ import { HeaderComponent } from './components/common/header/header.component';
   declarations: [
     AppComponent,
     MainAreaComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

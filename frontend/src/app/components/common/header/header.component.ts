@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ButtonModule} from 'primeng/primeng';
 
 @Component({
   selector: 'app-header',
@@ -7,6 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   text: string ='Поиск';
+  clicks: number = 0;
+  search() {
+    this.clicks++;
+  }
   constructor() { }
 
   ngOnInit() {

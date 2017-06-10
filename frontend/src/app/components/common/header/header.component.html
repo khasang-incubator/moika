@@ -5,5 +5,7 @@
   <div class="ui-md-1">
     <input id="in" type="text" size="10" pInputText [(ngModel)]="text">
   </div>
-  <div class="ui-md-1">Поиск кнопка</div>
+  <div class="ui-md-1">
+    <button pButton type="button" (click)="search()" icon="fa-search" label="Поиск"></button>
+  </div>
 </div>
