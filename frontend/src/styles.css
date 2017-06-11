@@ -23,13 +23,6 @@ div[class^=col] {
 .navig {
   height: 35px;
 }
-.content {
-  margin-top: 18px;
-  height: 95vh;
-  /*border: 1px red solid;*/
-  background: url( assets/images/car1.png) no-repeat center center #3699EC;
-  background-size: 100vw;
-}
 
 .footer {
   background-color: #009AEF;

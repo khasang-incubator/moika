@@ -6,14 +6,14 @@ import { HttpModule } from '@angular/http';
 import {ButtonModule} from 'primeng/primeng';
 
 import { AppComponent } from './app.component';
-import { MainAreaComponent } from './components/common/main-area/main-area.component';
 import { HeaderComponent } from './components/common/header/header.component';
+import { LadingComponent } from './components/common/lading/lading.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainAreaComponent,
     HeaderComponent,
+    LadingComponent,
   ],
   imports: [
     BrowserModule,
