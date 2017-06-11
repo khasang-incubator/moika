@@ -1,4 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+#main-area{
+  /*background: url( ../../../../assets/images/bg3.png)  #3699EC;*/
+  background: #3699EC;
+  /*opacity: 0.05;*/
+  min-height:  100vw;
+}
+
 body {
   /*background-image: url(../img/car.png);*/
   /*background-color: #3699EC;*/
@@ -24,11 +31,6 @@ div[class^=col] {
   height: 35px;
 }
 
-.footer {
-  background-color: #009AEF;
-  min-height: 50px;
-  border-top: 1px solid;
-  color: white;
-}
+
 
 
