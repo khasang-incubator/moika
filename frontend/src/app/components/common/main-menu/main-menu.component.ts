@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MenuItem} from 'primeng/primeng';
+import {Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-main-menu',
@@ -8,32 +10,40 @@ import {MenuItem} from 'primeng/primeng';
 })
 export class MainMenuComponent  {
   private items: MenuItem[];
-
+  constructor(private router: Router) {
+  }
   ngOnInit() {
-    this.items = [
-      {
-        label: 'File',
+    this.items = [ // все меню
+      {//Клиентам
+        label: 'Клиентам',
         items: [{
-          label: 'New',
+          label: 'Пункт1',
           icon: 'fa-plus',
           items: [
-            {label: 'Project'},
-            {label: 'Other'},
+            {label: 'подпункт1-1'},
+            {label: 'подпункт1-1'},
           ]
         },
-          {label: 'Open'},
-          {label: 'Quit'}
+          {label: 'Пункт2'},
+          {label: 'Пункт3'}
         ]
-      },
-      {
-        label: 'Edit',
-        icon: 'fa-edit',
+      }, //клиентам
+        {
+         label: 'Менеджерам',
+         icon: 'fa-edit',
+        items: []
+       },
+       {label: 'Владельцам'},
+       {label: 'Администраторам'},
+       {
+        label: 'Разработка',
         items: [
-          {label: 'Undo', icon: 'fa-mail-forward'},
-          {label: 'Redo', icon: 'fa-mail-reply'}
+          {label: 'Страница Любарева'},
+          {label: 'Страница Мадорина',routerLink: ['/dev-madv']},
+          {label: 'Страница Скворцова'}
         ]
       }
     ];
   }
-
+//
 }
