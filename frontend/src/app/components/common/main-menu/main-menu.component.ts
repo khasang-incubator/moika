@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./main-menu.component.css']
 })
 export class MainMenuComponent  {
-  private items: MenuItem[];
+  items: MenuItem[];
   constructor(private router: Router) {
   }
   ngOnInit() {
