@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 import {Routes, RouterModule} from '@angular/router';
 
 // Имплот Primeng
-import {ButtonModule} from 'primeng/primeng';
+import {ButtonModule, MenubarModule} from 'primeng/primeng';
 
 // Иоплоь полекьа млйка
 import { AppComponent } from './app.component';
@@ -16,6 +16,7 @@ import { AboutComponent } from './components/common/about/about.component';
 import { DevMadvComponent } from './components/common/dev-madv/dev-madv.component';
 import { NotFoundComponent } from './components/common/not-found/not-found.component';
 import { FooterComponent } from './components/common/footer/footer.component';
+import { MainMenuComponent } from './components/common/main-menu/main-menu.component';
 
 // определение маршрутов
 const appRoutes: Routes =[
@@ -33,10 +34,11 @@ const appRoutes: Routes =[
     AboutComponent,
     DevMadvComponent,
     NotFoundComponent,
-    FooterComponent
+    FooterComponent,
+    MainMenuComponent
   ],
   imports: [BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(appRoutes),
-    ButtonModule
+    ButtonModule,MenubarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 #main-area{
+  border: 1px #3699EC solid;
   /*background: url( ../../../../assets/images/bg3.png)  #3699EC;*/
   background: #3699EC;
   /*opacity: 0.05;*/
@@ -25,7 +26,7 @@ div[class^=col] {
 }
 
 .navbar-brand {
-  background: url( assets/images/carwash.jpg) no-repeat center center #3699EC;
+  background: url( assets/images/car-wash.png) no-repeat center center #3699EC;
 }
 .navig {
   height: 35px;

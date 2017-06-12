@@ -1,7 +1,6 @@
 .laging {
-  margin-top: 18px;
   height: 95vh;
-  /*border: 1px red solid;*/
+  border: 1px #3699EC solid;
   background: url( ../../../../assets/images/car1.png) no-repeat center #3699EC;
   background-size: 100vw;
 }
