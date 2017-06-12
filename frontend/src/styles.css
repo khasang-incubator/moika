@@ -26,8 +26,11 @@ div[class^=col] {
 }
 
 .navbar-brand {
-  background: url( assets/images/car-wash.png) no-repeat center center #3699EC;
+  padding: 0px;
+  /*background: url( assets/images/car-wash.png) no-repeat center center #3699EC;*/
 }
+/**/
+
 .navig {
   height: 35px;
 }
