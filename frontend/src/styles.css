@@ -1,39 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+/* Главный файл Css */
+
+/* Все включения надо длелать здесь */
+@import '../node_modules/primeng/resources/primeng.min.css';
+@import '../node_modules/primeng/resources/themes/omega/theme.css';
+@import '../node_modules/font-awesome/css/font-awesome.min.css';
+/*
+background: url( assets/images/car-wash.png) no-repeat center center #3699EC;
+
+правило для всех колонок сетки bootstrap
+div[class^=col] {
+}
+opacity: 0.05; //прозрачность
+*/
+.navbar-brand{
+  padding: 0px;
+}
 #main-area{
   border: 1px #3699EC solid;
-  /*background: url( ../../../../assets/images/bg3.png)  #3699EC;*/
   background: #3699EC;
-  /*opacity: 0.05;*/
   min-height:  100vw;
 }
 
-body {
-  /*background-image: url(../img/car.png);*/
-  /*background-color: #3699EC;*/
-  /*font-family: "Lato";*/
-  /*font-weight: 300;*/
-  /*font-size: 16px;*/
-  /*color: #555;*/
-  /*-webkit-font-smoothing: antialiased;*/
-  /*-webkit-overflow-scrolling: touch;*/
-  /*margin-top: 70px;*/
-
-}
-/* правило для всех колонок сетки bootstrap*/
-div[class^=col] {
-  /*background: #8CC7D9;*/
-  /*border: 1px solid #6B6ACD;*/
-}
-
-.navbar-brand {
-  padding: 0px;
-  /*background: url( assets/images/car-wash.png) no-repeat center center #3699EC;*/
-}
-/**/
-
-.navig {
-  height: 35px;
-}
 
 
 
