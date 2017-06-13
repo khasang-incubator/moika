@@ -3,6 +3,7 @@ package io.khasang.moika.entity;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Базовый абстрактный класс для всех таблиц типов xxx_type
@@ -77,18 +78,14 @@ public abstract class ABaseMoikaTypeReference extends ABaseMoikaEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ABaseMoikaTypeReference)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         ABaseMoikaTypeReference that = (ABaseMoikaTypeReference) o;
-
-        if (getId() != that.getId()) return false;
-        return getTypeCode().equals(that.getTypeCode());
+        return id == that.id &&
+                Objects.equals(code, that.code);
     }
 
     @Override
     public int hashCode() {
-        int result = getId();
-        result = 31 * result + getTypeCode().hashCode();
-        return result;
+        return Objects.hash(id, code);
     }
 }
