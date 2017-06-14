@@ -56,7 +56,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:4200")
+                .allowedOrigins("http://localhost","http://localhost:4200", "http://localhost:8080")
                 .allowedMethods("GET", "PUT", "DELETE", "POST");
     }
 
@@ -78,7 +78,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/views/images/");
         registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/views/resources/");
         //DRS таким образом мы разрешим сайту отображать статичный контент, такой как HTML-страницы
-        registry.addResourceHandler("/**").addResourceLocations("/ng");
+        registry.addResourceHandler("/**").addResourceLocations("/WEB-INF/views/");
     }
 
 

@@ -1,6 +1,5 @@
 package io.khasang.moika.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -11,11 +10,9 @@ import java.util.Objects;
 @Embeddable
 public class TimeTablePk implements Serializable{
 
-    @Column(name = "idfclt")
-    protected int idFclt;
-    @Column(name = "date_x")
+    protected int id;
+    @Temporal(TemporalType.DATE)
     protected Date dateX;
-    @Column(name = "time_off_starts")
     @Temporal(TemporalType.TIME)
     protected Date timeOffStarts;
 
@@ -23,18 +20,18 @@ public class TimeTablePk implements Serializable{
     public TimeTablePk() {
     }
 
-    public TimeTablePk(int idFclt, Date dateX, Date timeOffStarts) {
-        this.idFclt = idFclt;
+    public TimeTablePk(int id, Date dateX, Date timeOffStarts) {
+        this.id = id;
         this.dateX = dateX;
         this.timeOffStarts = timeOffStarts;
     }
 
     public int getIdFaciilty() {
-        return idFclt;
+        return id;
     }
 
-    public void setIdFacility(int idFclt) {
-        this.idFclt = idFclt;
+    public void setIdFacility(int id) {
+        this.id = id;
     }
 
     public Date getDateX() {
@@ -58,13 +55,13 @@ public class TimeTablePk implements Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TimeTablePk that = (TimeTablePk) o;
-        return idFclt == that.idFclt &&
+        return id == that.id &&
                 Objects.equals(dateX, that.dateX) &&
                 Objects.equals(timeOffStarts, that.timeOffStarts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idFclt, dateX, timeOffStarts);
+        return Objects.hash(id, dateX, timeOffStarts);
     }
 }

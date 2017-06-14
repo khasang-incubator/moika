@@ -19,7 +19,9 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping("/MoikaService/service")
+@RequestMapping(value =  "/MoikaService/service",
+        consumes = "application/json;charset=UTF-8",
+        produces = "application/json;charset=UTF-8")
 public class PsServicesController {
     @Qualifier("moikaServiceDataAccessService")
     @Autowired
@@ -68,7 +70,7 @@ public class PsServicesController {
      * @param moikaService
      * @return
      */
-    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/add", method = RequestMethod.POST )
     @ResponseBody
     public MoikaService addMoikaService(@RequestBody MoikaService moikaService) {
         moikaService = allService.addService(moikaService);
@@ -80,7 +82,7 @@ public class PsServicesController {
      * @param moikaService
      * @return
      */
-    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/update", method = RequestMethod.POST )
     @ResponseBody
     public MoikaService updateWashService(@RequestBody MoikaService moikaService) {
         moikaService = allService.addService(moikaService);
@@ -92,7 +94,7 @@ public class PsServicesController {
      * @param id - услуги
      * @return
      */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST )
     @ResponseBody
     public MoikaService deleteWashService(@PathVariable(value = "id") int id) {
         MoikaService moikaService = allService.getServiceById(id);
@@ -105,7 +107,7 @@ public class PsServicesController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/serviceList/{code}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/serviceList/{code}", method = RequestMethod.GET )
     @ResponseBody
     public Object getWashServiceList(@PathVariable(value = "code") String typeCode, Model model) {
         List<MoikaService> servicesList = new ArrayList<>();
@@ -125,7 +127,7 @@ public class PsServicesController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/serviceListByStatus/{status}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/serviceListByStatus/{status}", method = RequestMethod.GET )
     @ResponseBody
     public Object getWashServiceListByStatus(@PathVariable(value = "status") String status, Model model) {
         List<MoikaService> servicesList = new ArrayList<>();
@@ -145,7 +147,7 @@ public class PsServicesController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/actualServiceList", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/actualServiceList", method = RequestMethod.GET )
     @ResponseBody
     public Object getActualServiceListByStatus( Model model) {
         List<MoikaService> servicesList = new ArrayList<>();

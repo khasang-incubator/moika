@@ -8,59 +8,87 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity(name = "facility_time_table")
+@IdClass(TimeTablePk.class)
 public class FacilityTimeTable extends ABaseMoikaEntity {
 
     @Id
-    private TimeTablePk pk;
-
-    @Column(name = "time_open")
+    @Column(name = "id_fclt")
+    protected int id;
+    @Id
+    @Column(name = "date_x")
+    protected Date dateX;
+    @Id
+    @Column(name = "time_off_starts")
     @Temporal(TemporalType.TIME)
-    private Date timeClose;
+    protected Date timeOffStarts;
+
+    @Column(name = "time_off_ends")
+    @Temporal(TemporalType.TIME)
+    private Date timeOffEnds;
 
 
     public FacilityTimeTable() {
     }
 
     public FacilityTimeTable(int idFacility, Date dateX, Date timeOpen ) {
-        this.pk.idFclt = idFacility;
-        this.pk.dateX = dateX;
-        if (DateUtils.isSameDay(this.pk.dateX, timeOpen)) {
-            this.pk.timeOpen = timeOpen;
-            this.timeClose = DateUtils.round(this.pk.timeOpen, Calendar.DATE);
+        this.id = idFacility;
+        this.dateX = dateX;
+        if (DateUtils.isSameDay(this.dateX, timeOpen)) {
+            this.timeOffStarts = timeOpen;
+            this.timeOffEnds = DateUtils.round(this.timeOffStarts, Calendar.DATE);
         }
     }
 
-    public CalendarPk getPk() {
-        return pk;
+
+    public int getIdFaciilty() {
+        return id;
     }
 
-    public int getIdDateType() {
-        return idDateType;
+    public void setIdFacility(int idFclt) {
+        this.id = idFclt;
     }
 
-    public CalendarDateType getDateTypeEntity() {
-        return dateTypeEntity;
+    public Date getDateX() {
+        return dateX;
     }
 
-    public void setIdDateType(int idDateType) {
-        this.idDateType = idDateType;
+    public void setdateX(Date dateX) {
+        this.dateX = dateX;
     }
 
-    public void setDateTypeEntity(CalendarDateType dateTypeEntity) {
-        this.dateTypeEntity = dateTypeEntity;
+    public Date getTimeOffStarts() {
+        return timeOffStarts;
+    }
+
+    public void settimeOffStarts(Date timeOffStarts) {
+        this.timeOffStarts = timeOffStarts;
+    }
+
+    public Date getTimeOffEnds() {
+        return timeOffEnds;
+    }
+
+    public void setTimeOffEnds(Date timeOffEnds) {
+        this.timeOffEnds = timeOffEnds;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof FacilityTimeTable)) return false;
+
         FacilityTimeTable that = (FacilityTimeTable) o;
-        return idDateType == that.idDateType &&
-                Objects.equals(pk, that.pk);
+
+        if (id != that.getIdFaciilty()) return false;
+        if (!getDateX().equals(that.getDateX())) return false;
+        return getTimeOffStarts().equals(that.getTimeOffStarts());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pk, idDateType);
+        int result = id;
+        result = 31 * result + getDateX().hashCode();
+        result = 31 * result + getTimeOffStarts().hashCode();
+        return result;
     }
 }

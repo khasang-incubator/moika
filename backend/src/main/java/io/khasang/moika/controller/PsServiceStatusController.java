@@ -15,8 +15,10 @@ import java.util.List;
  *
  * @author Pauls
  */
-@Controller
-@RequestMapping(value = "/api/service/status")
+@RestController
+@RequestMapping(value = "/api/service/status",
+        consumes = "application/json;charset=UTF-8",
+        produces = "application/json;charset=UTF-8")
 public class PsServiceStatusController {
     @Autowired
     MoikaServiceStatusService serviceStatusService;
@@ -28,7 +30,6 @@ public class PsServiceStatusController {
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getServiceStatusList() {
         List<ServiceStatus> serviceStatusList = serviceStatusService.getAllStatuses();
@@ -44,8 +45,7 @@ public class PsServiceStatusController {
      * @param newServiceStatus
      * @return
      */
-    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @RequestMapping(value = "/add", method = RequestMethod.POST )
     @ResponseStatus(HttpStatus.CREATED)
     public Object addServiceStatus(@RequestBody ServiceStatus newServiceStatus) {
         ServiceStatus serviceStatus = (ServiceStatus) serviceStatusService.addStatus(newServiceStatus);
@@ -62,8 +62,7 @@ public class PsServiceStatusController {
      * @return
      */
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @RequestMapping(value = "/update", method = RequestMethod.PUT )
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Object updateServiceStatus(@RequestBody ServiceStatus updatedServiceStatus) {
         ServiceStatus serviceStatus = (ServiceStatus) serviceStatusService.updateStatus(updatedServiceStatus);
@@ -81,7 +80,6 @@ public class PsServiceStatusController {
      */
 
     @RequestMapping(value = "/byId/{id}", method = RequestMethod.GET)
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getServiceStatus(@PathVariable(value = "id") int id) {
         ServiceStatus serviceStatus = (ServiceStatus) serviceStatusService.getStatusById(id);
@@ -100,7 +98,6 @@ public class PsServiceStatusController {
 
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Object deleteServiceStatus(@PathVariable(value = "id") int deletedId) {
         ServiceStatus serviceStatus = (ServiceStatus) serviceStatusService.getStatusById(deletedId);
@@ -120,7 +117,6 @@ public class PsServiceStatusController {
      * @return
      */
     @RequestMapping(value = "/byCode/{code}", method = RequestMethod.GET)
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getServiceStatusCode(@PathVariable(value = "code") String code) {
         ServiceStatus serviceStatus = (ServiceStatus) serviceStatusService.getStatusByCode(code);

@@ -23,8 +23,10 @@ import java.util.List;
  * @author Pauls
  */
 
-@Controller
-@RequestMapping(value = "/api/washFacility")
+@RestController
+@RequestMapping(value = "/api/washFacility",
+        consumes = "application/json;charset=UTF-8",
+        produces = "application/json;charset=UTF-8")
 public class PsWashFacilityController {
 
     @Autowired
@@ -37,8 +39,7 @@ public class PsWashFacilityController {
      *
      * @return
      */
-    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public Object getWashFacilityList() {
         List<WashFacility> washFacilityList = pskvorWashFacilityDaoService.getAllWashFacilities();
@@ -54,8 +55,7 @@ public class PsWashFacilityController {
      * @param newWashFacility
      * @return
      */
-    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Object addWashFacility(@RequestBody WashFacility newWashFacility) {
         WashFacility washFacility = pskvorWashFacilityDaoService.addWashFacility(newWashFacility);
@@ -71,8 +71,7 @@ public class PsWashFacilityController {
      * @param updatedWashFacility
      * @return
      */
-    @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Object updateWashFacility(@RequestBody WashFacility updatedWashFacility) {
         WashFacility washFacility = pskvorWashFacilityDaoService.updateWashFacility(updatedWashFacility);
@@ -88,8 +87,7 @@ public class PsWashFacilityController {
      * @param idFclt
      * @return
      */
-    @RequestMapping(value = "/byId/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @RequestMapping(value = "/byId/{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public Object getWashFacility(@PathVariable(value = "id") int idFclt) {
         WashFacility washFacility = pskvorWashFacilityDaoService.getWashFacilityByID(idFclt);
@@ -105,8 +103,7 @@ public class PsWashFacilityController {
      * @param idNet - id Сети
      * @return
      */
-    @RequestMapping(value = "/OnNet/{idNet}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @RequestMapping(value = "/OnNet/{idNet}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public Object getWashFacilityesOnNet(@PathVariable(value = "idNet") int idNet) {
         List<WashFacility> washFacilityList = pskvorWashFacilityDaoService.getWashFacilitiesOnNet(idNet);
@@ -122,8 +119,7 @@ public class PsWashFacilityController {
      * @param inputId
      * @return
      */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Object deleteWashFacility(@PathVariable(value = "id") int inputId) {
         WashFacility washFacility = pskvorWashFacilityDaoService.getWashFacilityByID(Integer.valueOf(inputId));
@@ -142,8 +138,7 @@ public class PsWashFacilityController {
      * @param cityId
      * @return
      */
-    @RequestMapping(value = "/inCity/{cityId}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @RequestMapping(value = "/inCity/{cityId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public Object getFacilitiesInCity(@PathVariable(value = "cityId") int cityId) {
         City city = washAddrDAS.getCityById(cityId);
@@ -165,8 +160,7 @@ public class PsWashFacilityController {
      * @param addrId
      * @return
      */
-    @RequestMapping(value = "/onAddr/{addrId}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @RequestMapping(value = "/onAddr/{addrId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public Object getFacilityByAddr(@PathVariable(value = "addrId") int addrId) {
         WashAddr addr = washAddrDAS.getWashAddrById(addrId);
@@ -182,7 +176,7 @@ public class PsWashFacilityController {
     }
 
     /**
-     * Вывод мойки по ккрдинатам
+     * Вывод мойки по координатам
      *
      * @param coord
      * @return

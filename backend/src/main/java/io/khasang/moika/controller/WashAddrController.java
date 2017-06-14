@@ -15,15 +15,16 @@ import java.util.List;
  * Created by pauls on 31.05.2017.
  */
 
-@Controller
-@RequestMapping(value = "/api/washAddr")
+@RestController
+@RequestMapping(value = "/api/washAddr",
+        consumes = "application/json;charset=UTF-8",
+        produces = "application/json;charset=UTF-8")
 public class WashAddrController {
 
     @Autowired
     WashAddrDataAccessService washAddrdDAS;
     
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getWashAddrList() {
         List<WashAddr> addrList = washAddrdDAS.getAllWashAddr();
@@ -39,8 +40,7 @@ public class WashAddrController {
      * @param newWashAddr
      * @return
      */
-    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Object addWashAddr(@RequestBody WashAddr newWashAddr) {
         WashAddr washAddr = washAddrdDAS.addWashAddr(newWashAddr);
@@ -57,8 +57,7 @@ public class WashAddrController {
      * @return
      */
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Object updateWashAddr(@RequestBody WashAddr updatedWashAddr) {
          WashAddr washAddr = (WashAddr) washAddrdDAS.updateWashAddr(updatedWashAddr);
@@ -75,7 +74,6 @@ public class WashAddrController {
      * @return
      */
     @RequestMapping(value = "/byId/{id}", method = RequestMethod.GET)
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getWashAddrById(@PathVariable(value = "id") int id) {
         WashAddr washAddr = (WashAddr) washAddrdDAS.getWashAddrById(id);
@@ -93,7 +91,6 @@ public class WashAddrController {
      * @return
      */
     @RequestMapping(value = "/byCityId/{id}", method = RequestMethod.GET)
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getWashAddrByCityId(@PathVariable(value = "id") int id) {
         List<WashAddr> washAddrList =  washAddrdDAS.getWashAddrListInCity(id);
@@ -111,7 +108,6 @@ public class WashAddrController {
      * @return
      */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Object deleteWashAddr(@PathVariable(value = "id") int deletedId) {
         WashAddr washAddr = washAddrdDAS.getWashAddrById(deletedId);
@@ -125,7 +121,6 @@ public class WashAddrController {
     }
 
     @RequestMapping(value = "/city/list", method = RequestMethod.GET)
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getCityList() {
         List<City> cityList = washAddrdDAS.getCityList();
@@ -141,8 +136,7 @@ public class WashAddrController {
      * @param newCity
      * @return
      */
-    @RequestMapping(value = "/city/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @RequestMapping(value = "/city/add", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Object addCity(@RequestBody City newCity) {
         City city = washAddrdDAS.addCity(newCity);
@@ -159,8 +153,7 @@ public class WashAddrController {
      * @return
      */
 
-    @RequestMapping(value = "/city/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @RequestMapping(value = "/city/update", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Object updatCity(@RequestBody City updatedCity) {
         City city =  washAddrdDAS.updateCity(updatedCity);
@@ -177,7 +170,6 @@ public class WashAddrController {
      * @return
      */
     @RequestMapping(value = "/city/byId/{id}", method = RequestMethod.GET)
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getCityById(@PathVariable(value = "id") int id) {
         City city =  washAddrdDAS.getCityById(id);
@@ -194,7 +186,6 @@ public class WashAddrController {
      * @return
      */
     @RequestMapping(value = "/city/byName/{name}", method = RequestMethod.GET)
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getCityByName(@PathVariable(value = "name") String cityName) {
         City city =  washAddrdDAS.getCityByName(cityName);
@@ -211,7 +202,6 @@ public class WashAddrController {
      * @return
      */
     @RequestMapping(value = "/city/byAddrId/{id}", method = RequestMethod.GET)
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getCityByAddrId(@PathVariable(value = "id") int id) {
         City city =  washAddrdDAS.getCityByAddrId(id);
@@ -229,7 +219,6 @@ public class WashAddrController {
      * @return
      */
     @RequestMapping(value = "/city/delete/{id}", method = RequestMethod.POST)
-    @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Object deleteCity(@PathVariable(value = "id") int deletedId) {
         City city = washAddrdDAS.getCityById(deletedId);
