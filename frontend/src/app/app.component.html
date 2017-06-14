@@ -1,7 +1,9 @@
+<div class = "row">
 <div class = "main-app" [ngSwitch]="interfaceMode">
   <app-admin-navbar *ngSwitchCase="0"></app-admin-navbar>
   <app-user-navbar *ngSwitchCase="1"></app-user-navbar>
   <app-customer-navbar *ngSwitchCase="2"></app-customer-navbar>
+</div>
 </div>
   <h2>{{title}}</h2>
 <div class="container-fluid">
@@ -14,4 +16,8 @@
     </div>
   </div>
 </div>
+<div class = "row">
+  <app-footer>Loading...</app-footer>
+</div>
+
 

@@ -205,12 +205,12 @@ public class WashAddrController {
     }
 
     /**
-     * город по id Ареса
+     * город по id Адреса
      *
      * @param id
      * @return
      */
-    @RequestMapping(value = "/city/byAddId/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/city/byAddrId/{id}", method = RequestMethod.GET)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object getCityByAddrId(@PathVariable(value = "id") int id) {

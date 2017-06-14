@@ -1,6 +1,6 @@
 package io.khasang.moika.entity;
 
-import javax.persistence.Entity;
+import javax.persistence.Entity;;
 
 @Entity(name = "calendar_date_types")
 public class CalendarDateType extends ABaseMoikaTypeReference {

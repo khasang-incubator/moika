@@ -45,6 +45,7 @@ import { WashBoxTableComponent } from './components/facility/wash-box-table.comp
 import { FacilityMapComponent } from './components/facility/facility-map.component';
 import {AgmCoreModule} from "angular2-google-maps/core";
 import { LoginDialogComponent } from './components/shared/common/login-dialog.component';
+import {FooterComponent} from "./components/shared/footer/footer.component";
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { LoginDialogComponent } from './components/shared/common/login-dialog.co
     WashBoxTableComponent,
     FacilityMapComponent,
     LoginDialogComponent,
+    FooterComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),

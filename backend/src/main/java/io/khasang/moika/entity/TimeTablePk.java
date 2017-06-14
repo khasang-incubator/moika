@@ -1,30 +1,32 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+@Embeddable
 public class TimeTablePk implements Serializable{
 
     @Column(name = "idfclt")
     protected int idFclt;
     @Column(name = "date_x")
     protected Date dateX;
-    @Column(name = "time_open")
+    @Column(name = "time_off_starts")
     @Temporal(TemporalType.TIME)
-    protected Date timeOpen;
+    protected Date timeOffStarts;
 
 
     public TimeTablePk() {
     }
 
-    public TimeTablePk(int idFclt, Date dateX, Date timeOpen) {
+    public TimeTablePk(int idFclt, Date dateX, Date timeOffStarts) {
         this.idFclt = idFclt;
         this.dateX = dateX;
-        this.timeOpen = timeOpen;
+        this.timeOffStarts = timeOffStarts;
     }
 
     public int getIdFaciilty() {
@@ -43,12 +45,12 @@ public class TimeTablePk implements Serializable{
         this.dateX = dateX;
     }
 
-    public Date getTimeOpen() {
-        return timeOpen;
+    public Date getTimeOffStarts() {
+        return timeOffStarts;
     }
 
-    public void setTimeOpen(Date timeOpen) {
-        this.timeOpen = timeOpen;
+    public void settimeOffStarts(Date timeOffStarts) {
+        this.timeOffStarts = timeOffStarts;
     }
 
     @Override
@@ -58,11 +60,11 @@ public class TimeTablePk implements Serializable{
         TimeTablePk that = (TimeTablePk) o;
         return idFclt == that.idFclt &&
                 Objects.equals(dateX, that.dateX) &&
-                Objects.equals(timeOpen, that.timeOpen);
+                Objects.equals(timeOffStarts, that.timeOffStarts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idFclt, dateX, timeOpen);
+        return Objects.hash(idFclt, dateX, timeOffStarts);
     }
 }

@@ -1,13 +1,15 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class CalendarPk implements Serializable{
+@Embeddable
+public class CalendarPk extends ABaseMoikaEntity{
 
     @Column(name = "idfclt")
     protected int idFclt;
