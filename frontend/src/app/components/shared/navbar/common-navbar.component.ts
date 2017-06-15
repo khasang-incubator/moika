@@ -61,8 +61,6 @@ export class CommonNavbarComponent implements OnInit {
 
   loginDialogShow(){
     this.showLoginDialog=true;
-    //TODO поменять на реальное значение после регистрации пользователя
-    this.interfaceSelected = 3;
   }
 
 }

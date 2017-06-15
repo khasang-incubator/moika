@@ -45,12 +45,12 @@
             </configuration>
           </execution>
           <execution>
-            <id>npm run build</id>
+            <id>npm run start</id>
             <goals>
               <goal>npm</goal>
             </goals>
             <configuration>
-              <arguments>run build</arguments>
+              <arguments>run start</arguments>
             </configuration>
           </execution>
         </executions>
@@ -66,11 +66,11 @@
       </plugin>
 -->
     </plugins>
-    <resources>
-      <resource>
-        <directory>dist</directory>
-        <targetPath>META-INF/resources/ng2</targetPath>
-      </resource>
-    </resources>
-  </build>
-</project>
+    <!--   <resources>
+         <resource>
+           <directory>dist</directory>
+           <targetPath>WEB-INF/static/</targetPath>
+         </resource>
+       </resources> -->
+     </build>
+   </project>

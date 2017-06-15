@@ -8,8 +8,6 @@ import {InterfaceMode} from "./model/entities/interface-enum";
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements  OnInit {
-  //InterfaceMode : InterfaceMode;
-  // interfaceMode : InterfaceMode.user;
   // TODO разобраться c ENUM в шаблонах
 
   ngOnInit(): void {

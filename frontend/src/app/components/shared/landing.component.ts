@@ -16,8 +16,7 @@ export class LandingComponent implements OnInit, OnDestroy {
   interfaceSubscription: Subscription;
   menuSubscriptiomn: Subscription;
 
-  constructor(private router: Router,
-              private interfaceSwitcher: InterfaceSwitchingService,
+  constructor(private interfaceSwitcher: InterfaceSwitchingService,
               private menuToggler: MenuToggleService) {
     this.interfaceSubscription = this.interfaceSwitcher.getInterface().subscribe(mode => this.onInterfaceChanges(mode));
     this.menuSubscriptiomn = this.menuToggler.getMenuStatus().subscribe(status => { this.menuShowed = status; })
@@ -27,6 +26,7 @@ export class LandingComponent implements OnInit, OnDestroy {
   }
 
   onInterfaceChanges(mode: number): void {
+    console.log(`LandingComponent. Interface switched to ${mode}`);
     this.interfaceMode = mode;
     switch (this.interfaceMode) {
       case 0:

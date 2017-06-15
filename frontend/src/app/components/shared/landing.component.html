@@ -9,7 +9,21 @@
 
     <div class="col-md-9">
       <h2>{{title}}</h2>
-      <app-main-outlet></app-main-outlet>
+      <div *ngIf="interfaceMode === 0"> <!-- default -->
+        <app-main-outlet></app-main-outlet>
+      </div>
+      <div *ngIf="interfaceMode === 1"> <!-- автовладельца -->
+        <app-auto-owner-outlet></app-auto-owner-outlet>
+      </div>
+      <div *ngIf="interfaceMode === 2"> <!-- мойко владельца -->
+        <app-fclt-owner-outlet></app-fclt-owner-outlet>
+      </div>
+      <div *ngIf="interfaceMode === 3"><!-- админ -->
+        <app-admin-outlet></app-admin-outlet>
+      </div>
+      <div *ngIf="interfaceMode === 4"> <!-- user -->
+        <app-user-outlet></app-user-outlet>
+      </div>
     </div>
 
   </div>

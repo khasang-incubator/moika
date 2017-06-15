@@ -12,8 +12,8 @@ import {WashFacilityTableComponent} from "./components/facility/wash-facility-ta
 
 // определение маршрутов
 const appRoutes: Routes =[
-  { path: '', redirectTo: '/start', pathMatch: 'full'},
-  { path: '#', redirectTo: '/start', pathMatch: 'full'},
+  { path: '', redirectTo: '/home', pathMatch: 'full'},
+  { path: '#', redirectTo: '/home', pathMatch: 'full'},
   { path: 'about', component: AppAboutComponent},
   { path: 'clients', component: ClientListComponent},
   { path: 'home', component: HomePageComponent},

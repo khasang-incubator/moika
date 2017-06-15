@@ -30,7 +30,7 @@ export class MainMenuComponent implements OnInit {
 
   constructor(private objectService: MockMoikaObjectService,
               private router: Router,
-  private interfaceSwitcher: InterfaceSwitchingService){
+              private interfaceSwitcher: InterfaceSwitchingService) {
     // Сразу инициализируем необходимые наботы меню под разные интерфейсы
     this.adminMenuItems = new AdminMenuItems(objectService, router);
     this.defaultMenuItems = new DefaultMenuItems(objectService, router);
@@ -46,6 +46,7 @@ export class MainMenuComponent implements OnInit {
   }
 
   onInterfaceChanges(mode: number): void {
+    console.log(`MainMenuComponent. Interface switched to ${mode}`);
     this.interfaceMode = mode;
     switch (this.interfaceMode) {
       case 0:
