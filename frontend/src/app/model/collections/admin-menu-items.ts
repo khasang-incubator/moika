@@ -1,33 +1,29 @@
-import {Component, OnInit} from '@angular/core';
-import {TieredMenuModule, MenuItem} from 'primeng/primeng';
-import {MockMoikaObjectService} from "../../../../model/services/mock-moika-objects.service";
+import {MenuItem} from "primeng/primeng";
 import {Router} from "@angular/router";
+import {MockMoikaObjectService} from "app/model/services/mock-moika-objects.service";
+import {Injectable} from "@angular/core";
 
-@Component({
-  selector: 'app-admin-navbar',
-  templateUrl: './admin-navbar.component.html',
-  styleUrls: ['./admin-navbar.component.css']
-})
-export class AdminNavbarComponent implements OnInit {
-
-
-  private items: MenuItem[];
+export class AdminMenuItems {
+  private _items: MenuItem[];
   private refTypeItems: MenuItem[];
   private refStatusItems: MenuItem[];
   private reportItems: MenuItem[];
-  private showLoginDialog = false;
 
-
-  constructor(private objectService: MockMoikaObjectService,
-              private router: Router) {
+  constructor(private objectService: MockMoikaObjectService, private router: Router) {
+      this.prepareRefTypeItems();
+      this.prepareRefStatusItems();
+      this.prepareReportItems();
+      this.prepareMainItems();
   }
 
 
-  ngOnInit() {
-    this.prepareRefTypeItems();
-    this.prepareRefStatusItems();
-    this.prepareReportItems();
-    this.prepareMainItems();
+  mapItems(element): MenuItem {
+    return {label: element.name};
+  }
+
+
+  get items(): MenuItem[] {
+    return this._items;
   }
 
   /**
@@ -40,10 +36,6 @@ export class AdminNavbarComponent implements OnInit {
     )
   }
 
-  mapItems(element): MenuItem {
-    return {label: element.name};
-  }
-
   /**
    * Готовим список пунктов под-меню для всяческих статусов
    */
@@ -52,10 +44,6 @@ export class AdminNavbarComponent implements OnInit {
       typeItemList =>
         this.refTypeItems = typeItemList.map(this.mapItems)
     )
-  }
-
-  private aboutClick(): void{
-    this.router.navigate(['/about']);
   }
 
   /**
@@ -72,13 +60,11 @@ export class AdminNavbarComponent implements OnInit {
     ]
   }
 
-
   /**
-   * Готовим список пунктов пменю
+   * Готовим полный список пунктов пменю
    */
-
-  private prepareMainItems(): void {
-    this.items = [
+  prepareMainItems() {
+    this._items = [
       {
         label: 'Мойки',
         icon: 'fa-car',
@@ -94,7 +80,7 @@ export class AdminNavbarComponent implements OnInit {
           command: (click) => {
             this.router.navigate(['/facilitiesTable']);
           }
-        },{
+        }, {
           label: 'List',
           icon: ' fa-list-ol ',
           command: (click) => {
@@ -132,7 +118,11 @@ export class AdminNavbarComponent implements OnInit {
       {
         label: 'Выход',
         icon: 'fa-sign-out',
+        command: (click) => {
+          window.close();;
+        }
       },
     ];
   }
+
 }

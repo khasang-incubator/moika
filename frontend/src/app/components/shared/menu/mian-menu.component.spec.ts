@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CustomerNavbarComponent } from './customer-navbar.component';
+import { AdminMenuComponent } from './main-menu.component';
 
-describe('CustomerNavbarComponent', () => {
-  let component: CustomerNavbarComponent;
-  let fixture: ComponentFixture<CustomerNavbarComponent>;
+describe('AdminMenuComponent', () => {
+  let component: AdminMenuComponent;
+  let fixture: ComponentFixture<AdminMenuComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CustomerNavbarComponent ]
+      declarations: [ AdminMenuComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CustomerNavbarComponent);
+    fixture = TestBed.createComponent(AdminMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

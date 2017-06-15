@@ -1,0 +1,16 @@
+<div class="container-fluid">
+  <div class="row">
+
+    <div *ngIf="menuShowed">
+      <div class="col-md-3">
+        <app-main-menu></app-main-menu>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+      <h2>{{title}}</h2>
+      <app-main-outlet></app-main-outlet>
+    </div>
+
+  </div>
+</div>

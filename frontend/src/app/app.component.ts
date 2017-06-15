@@ -7,31 +7,14 @@ import {InterfaceMode} from "./model/entities/interface-enum";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnChanges, OnInit {
+export class AppComponent implements  OnInit {
   //InterfaceMode : InterfaceMode;
   // interfaceMode : InterfaceMode.user;
   // TODO разобраться c ENUM в шаблонах
-  @Input() interfaceMode = 0;
-           title: string;
-
 
   ngOnInit(): void {
-    this.interfaceMode = 0;
-    this.title = 'Интерфейс администратора';
+
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    switch (this.interfaceMode){
-      case 0:
-       this.title = 'Интерфейс администратора';
-        break;
-      case 1:
-        this.title = 'Интерфейс пользователя'
-        break;
-      default:
-        this.title = 'Интерфейс клиента'
-        break;
-    }
-  }
 }
 

@@ -14,9 +14,9 @@ import {WashFacilityTableComponent} from "./components/facility/wash-facility-ta
 const appRoutes: Routes =[
   { path: '', redirectTo: '/start', pathMatch: 'full'},
   { path: '#', redirectTo: '/start', pathMatch: 'full'},
-  { path: 'start', component: HomePageComponent},
   { path: 'about', component: AppAboutComponent},
   { path: 'clients', component: ClientListComponent},
+  { path: 'home', component: HomePageComponent},
   { path: 'facilitiesDash', component: WashFacilityDashboardComponent},
   { path: 'facilitiesTable', component: WashFacilityTableComponent},
   { path: 'washFacilitiesList', component: WashFacilityListComponent},

@@ -13,10 +13,6 @@ import { ClientComponent } from './components/client/client.component';
 import { ClientListComponent } from './components/client/client-list.component';
 import { CrudService} from "./model/services/crud.service";
 import { BsDropdownModule} from "ngx-bootstrap";
-import { AdminNavbarComponent } from './components/shared/navbar/admin/admin-navbar.component';
-import { UserNavbarComponent } from './components/shared/navbar/user/user-navbar.component';
-import { UserFooterComponent } from './components/shared/navbar/user/user-footer.component';
-import { CustomerNavbarComponent} from "./components/shared/navbar/customer/customer-navbar.component";
 import { PhoneListComponent } from './components/client/phone-list.component';
 import { FacilityDetailComponent } from './components/facility/facility-detail.component';
 import { WashBoxDetailComponent } from './components/facility/wash-box-detail.component';
@@ -26,7 +22,8 @@ import { HomePageComponent } from './components/shared/common/home-page.componen
 import { MainOutletComponent } from './components/main-outlet.component';
 import {
   DataTableModule, DropdownModule, InputTextareaModule, PanelModule, DialogModule, SharedModule,
-  ButtonModule, MenuModule, TieredMenuModule, FieldsetModule, CarouselModule, PasswordModule, AccordionModule
+  ButtonModule, MenuModule, TieredMenuModule, FieldsetModule, CarouselModule, PasswordModule, AccordionModule,
+  PanelMenuModule
 } from 'primeng/primeng';
 import { CommonTypeComponent } from './components/reference/common-type-table.component';
 import { CommonTypeSelectorComponent } from './components/reference/common-type-selector.component';
@@ -46,6 +43,11 @@ import { FacilityMapComponent } from './components/facility/facility-map.compone
 import {AgmCoreModule} from "angular2-google-maps/core";
 import { LoginDialogComponent } from './components/shared/common/login-dialog.component';
 import {FooterComponent} from "./components/shared/footer/footer.component";
+import {CommonNavbarComponent} from "app/components/shared/navbar/common-navbar.component";
+import { LandingComponent } from './components/shared/landing.component';
+import {InterfaceSwitchingService} from "./model/services/interface-switching.service";
+import {MenuToggleService} from "./model/services/menu-toggle.service";
+import {MainMenuComponent} from "./components/shared/menu/main-menu.component";
 
 
 @NgModule({
@@ -64,11 +66,7 @@ import {FooterComponent} from "./components/shared/footer/footer.component";
     MainOutletComponent,
     CommonTypeComponent,
     CommonTypeSelectorComponent,
-    UserNavbarComponent,
-    UserFooterComponent,
     CommonTypeDroplistComponent,
-    CustomerNavbarComponent,
-    AdminNavbarComponent,
     WashFacilityDashboardComponent,
     CommonStatusTableComponent,
     CommonStatusSelectorComponent,
@@ -78,7 +76,10 @@ import {FooterComponent} from "./components/shared/footer/footer.component";
     WashBoxTableComponent,
     FacilityMapComponent,
     LoginDialogComponent,
-    FooterComponent
+    FooterComponent,
+    CommonNavbarComponent,
+    LandingComponent,
+    MainMenuComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),
@@ -89,11 +90,13 @@ import {FooterComponent} from "./components/shared/footer/footer.component";
     DataTableModule, DialogModule, SharedModule,  DataTableModule, InputTextareaModule,
     FormsModule, PanelModule, DropdownModule, ButtonModule, MenuModule, TieredMenuModule,
     NoopAnimationsModule, FieldsetModule, CarouselModule, PasswordModule, AccordionModule,
+    PanelMenuModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDX_0DCgqImKoRTUPQ3QRjdOwLEVKwm3uE'
     }),
   ],
-  providers: [WashBoxService, WashFacilityService, ClientService, CrudService, MockMoikaObjectService, MockMoikaObjects],
+  providers: [WashBoxService, WashFacilityService, ClientService, CrudService, MockMoikaObjectService, MockMoikaObjects,
+    InterfaceSwitchingService, MenuToggleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

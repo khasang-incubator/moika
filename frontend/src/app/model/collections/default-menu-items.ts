@@ -1,24 +1,12 @@
-import { Component, OnInit } from '@angular/core';
 import {MenuItem} from "primeng/primeng";
 import {Router} from "@angular/router";
+import {MockMoikaObjectService} from "app/model/services/mock-moika-objects.service";
+import {Injectable} from "@angular/core";
 
-@Component({
-  selector: 'app-customer-navbar',
-  templateUrl: './customer-navbar.component.html',
-  styleUrls: ['./customer-navbar.component.css']
-})
-export class CustomerNavbarComponent implements OnInit {
+export class DefaultMenuItems {
+  private _items: MenuItem[];
 
-
-  private items: MenuItem[];
-  private showLoginDialog = false;
-
-
-  constructor(private router: Router) {
-  }
-
-
-  ngOnInit() {
+  constructor(private objectService: MockMoikaObjectService, private router: Router) {
     this.prepareMainItems();
   }
 
@@ -28,22 +16,22 @@ export class CustomerNavbarComponent implements OnInit {
   }
 
 
-  private aboutClick(): void{
-    this.router.navigate(['/about']);
+  get items(): MenuItem[] {
+    return this._items;
   }
 
-  /**
-   * Готовим список пунктов пменю
-   */
 
+  /**
+   * Готовим полный список пунктов пменю
+   */
   private prepareMainItems(): void {
-    this.items = [
+    this._items = [
       {
         label: 'Записаться',
         icon: 'fa-car',
         command: (click) => {
           this.router.navigate(['/facilitiesDash']);}
-        },
+      },
       {
         label: 'О программе',
         icon: 'fa-commenting-o ',
@@ -57,11 +45,18 @@ export class CustomerNavbarComponent implements OnInit {
           this.router.navigate(['/about']);}
       },
       {
-        label: 'Вход',
+        label: 'Вход в личный кабинет',
         icon: 'fa-sign-in',
         command: (click) => {
-          this.showLoginDialog=true;}
+        }
       },
-     ];
+      {
+        label: 'Выход',
+        icon: 'fa-sign-in',
+        command: (click) => {
+          window.close();}
+      },
+    ];
   }
+
 }
