@@ -8,6 +8,10 @@ import javax.validation.constraints.Pattern;
 
 import static io.khasang.moika.util.DataValidationPatterns.PHONE_NUMBER_PATTERN;
 
+/**
+ * Сущность, описывающая телефоны клиентов
+ */
+
 @Entity(name="phones")
 public class Phone extends ABaseMoikaEntity {
     @Id

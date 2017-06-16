@@ -2,6 +2,10 @@ package io.khasang.moika.entity;
 
 import javax.persistence.*;
 
+/**
+ * Сущность, описывающая города, в которых расположены автомойки
+ * Нужна для фильтрации во FrontEnd
+ */
 @Entity(name= "cities")
 public class City extends ABaseMoikaEntity {
     @Id

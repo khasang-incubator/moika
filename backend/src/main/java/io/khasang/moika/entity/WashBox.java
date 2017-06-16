@@ -4,6 +4,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
+/**
+ * WashBox - Сущность, представляющая моечный бокс, из которых состоят автомойки
+ * Связана с:
+ *  - автомойкой, которй принадлежит
+ *  - имеет тип, от которого зависит, какие машины и как могут обслуживаться
+ *  - статус, который определяет срабочее состояние бокса
+ */
 @Entity(name = "wash_boxes")
 public class WashBox  extends ABaseMoikaEntity {
 

@@ -3,6 +3,14 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Сущность описывающая роли пользователей
+ *   - администратор
+ *   - владелец автомойки
+ *   - менеджер
+ *   - клиент
+ *   -???
+ */
 @Entity
 @Table(name = "roles")
 public class Role extends ABaseMoikaEntity implements Serializable  {

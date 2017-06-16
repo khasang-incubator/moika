@@ -5,7 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+/**
+ * !!! На удаление ???
+ */
 @Entity(name = "Placemark_Yandex")
 public class PlacemarkYandex extends ABaseMoikaEntity {
     @Id

@@ -6,6 +6,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import java.util.*;
 
+/**
+ * Сущность, описывающая клиента сервиса
+ *
+ */
 @Entity(name = "clients")
 public class Client extends ABaseMoikaEntity  {
 

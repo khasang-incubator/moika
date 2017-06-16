@@ -5,6 +5,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+/**
+ * Work - сСущность, описывающая работы, которые проводились или в данный момент проводятся конкретным боксом,
+ * на конкретной автомойке с конкретным автомобилем, по конкретному заказу
+ * Необходимы для учета производительности и в первую голову для управления очередью маошин
+ */
 @Entity(name = "works")
 public class Work extends ABaseMoikaEntity {
     @Id

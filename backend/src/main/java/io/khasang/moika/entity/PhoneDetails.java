@@ -1,6 +1,10 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.*;
+
+/**
+ * !!! На удаление ???
+ */
 @Entity
 public class PhoneDetails {
     @Id

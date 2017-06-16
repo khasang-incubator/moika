@@ -7,7 +7,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by pauls on 13.06.2017.
+ *  WashBoxTimeTable - Сущность описывающая расписание работы(нерабочие часы) конкретного бокса на автомойке,
+ *  котрое может отличаться от общего расписания работы автомойки
+ *  В бизнес логике должно проверяться что оно не выходить за пределы расписания автомойки
  */
 @Entity(name = "box_time_table")
 @IdClass(TimeTablePk.class)

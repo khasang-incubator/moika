@@ -1,6 +1,8 @@
 package io.khasang.moika.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+/**
+ * Сущность, описывающая рабочий календарь (выходнные или нестандартные дни) для автомойки
+ */
 
 import javax.persistence.*;
 import java.util.Date;

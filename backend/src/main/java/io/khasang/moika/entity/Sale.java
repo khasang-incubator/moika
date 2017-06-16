@@ -3,7 +3,9 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
-
+/**
+ * !!! На удаление ???
+ */
 @Entity(name = "sales")
 public class Sale {
     @Id

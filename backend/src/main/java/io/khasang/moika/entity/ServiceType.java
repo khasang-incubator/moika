@@ -3,7 +3,10 @@ package io.khasang.moika.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.List;
+
+/**
+ * Сущность, описывающая типы цслуг, предоставляемы мойками (мока, чистка, полировак и т.р.)
+ */
 
 @Entity(name = "service_types")
 public class ServiceType extends ABaseMoikaTypeReference {

@@ -7,6 +7,15 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * WashFacility - Сущность представляющая автомойки.
+ * Связана с
+ * - адресом
+ * - менеджером
+ * - моечными боксами, из клоторых состоит
+ * - производственным календарем, который определяет время работы (not yet ready)*
+ * - очередью машин, записанных на помывку (not yet ready)*
+ */
 @Entity(name = "wash_facilities")
 public class WashFacility  extends ABaseMoikaEntity  {
 

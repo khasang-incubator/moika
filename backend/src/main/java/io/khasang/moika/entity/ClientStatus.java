@@ -2,6 +2,10 @@ package io.khasang.moika.entity;
 
 import javax.persistence.Entity;
 
+/**
+ * Сущность, описывающая статус клиента.
+ * Нужна для управления взаимоотношениями с ним
+ */
 @Entity (name = "client_status")
 public class ClientStatus extends ABaseMoikaStatusReference{
 

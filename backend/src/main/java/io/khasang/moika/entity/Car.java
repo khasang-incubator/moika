@@ -7,7 +7,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * Сущность описывающая авто, с которым будут что-то делать или уже делали
+ */
 @Entity(name = "cars")
 public class Car extends ABaseMoikaEntity {
 

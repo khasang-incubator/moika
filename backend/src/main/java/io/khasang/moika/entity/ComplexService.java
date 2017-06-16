@@ -4,6 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+/**
+ * Сущность описывающая комплексные услуги (т.е. набор услуг),
+ * например, мойка и чиска салона, мойка, чиска салона и полировка корпуса
+ */
 @Entity(name = "complex_services")
 public class ComplexService extends MoikaService {
 

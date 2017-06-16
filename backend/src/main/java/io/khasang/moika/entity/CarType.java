@@ -6,6 +6,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Сущность описывающа типы авто
+ * необходима для расчета цены услуг
+ */
 @Entity(name = "car_types")
 public class CarType extends ABaseMoikaTypeReference {
 

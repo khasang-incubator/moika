@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 
 /**
- * Created by pauls on 13.06.2017.
+ *  WashBoxTimeTable - Сущность описывающая расписание работы(нерабочие часы)  автомойки
+ *
  */
 @Entity(name = "facility_calendar")
 public class WashFacilityCalendar extends ABaseMoikaEntity {
