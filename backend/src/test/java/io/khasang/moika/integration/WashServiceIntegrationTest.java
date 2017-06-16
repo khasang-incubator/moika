@@ -30,6 +30,8 @@ public class WashServiceIntegrationTest {
     @Autowired
     private CarTypeDao carTypeDao;
 
+    private HttpHeaders headers;
+
     private final String serviceName = "Мойка силой мысли";
     private final String testDescr = "к нам на полставки устроился Йода";
 
@@ -48,6 +50,8 @@ public class WashServiceIntegrationTest {
     @Before
     public void initTests() {
         System.out.println("Tests adding wash service are beginning...");
+        headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
     }
 
 
@@ -56,8 +60,7 @@ public class WashServiceIntegrationTest {
     @Transactional
     @Rollback
     public void createTestWashService() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        //использовать именно из org.springframework.http.HttpHeaders
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity httpEntity;
 
@@ -172,8 +175,6 @@ public class WashServiceIntegrationTest {
 
     @Test
     public void getWashServiceListByService() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         HttpEntity<List<WashService>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -199,8 +200,6 @@ public class WashServiceIntegrationTest {
 
     @Test
     public void getWashServiceList() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         HttpEntity<List<WashService>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -226,9 +225,6 @@ public class WashServiceIntegrationTest {
 
     @Test
     public void getServiceById() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
 
         HttpEntity<List<MoikaService>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();

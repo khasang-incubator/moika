@@ -16,10 +16,13 @@ import java.util.List;
 
 public class WashFacilityIntegrationTest {
 
+    private HttpHeaders headers;
 
     @Ignore
     @Before
     public void initTests() {
+        headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         System.out.println("Tests are beginning...");
     }
 
@@ -35,8 +38,7 @@ public class WashFacilityIntegrationTest {
     @Transactional
     @Rollback
     public void createTestFacility() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
         RestTemplate restTemplate = new RestTemplate();
 
         WashFacility fclt = new WashFacility(); // подготовили класс для тестирования
@@ -120,8 +122,6 @@ public class WashFacilityIntegrationTest {
 
     @Test
     public void getFcltList() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         HttpEntity<List<WashFacility>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -151,9 +151,6 @@ public class WashFacilityIntegrationTest {
 
     @Test
     public void getFcltById() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
 
         HttpEntity<WashFacility> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -190,9 +187,6 @@ public class WashFacilityIntegrationTest {
     public void updatetFacilityTest() {
         final String newDescr = "Обновленная Тестовая RESTовая мойка";
         final WashFacility fclt;
-
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         HttpEntity<WashFacility> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();

@@ -20,7 +20,7 @@ import java.util.List;
 
 public class CarIntegrationTest {
 
-
+    HttpHeaders headers;
     private final String carTestNote = "Красный таз";
     private final String carTestDescr = "Чиста для поцанов " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date());
     private final String carTestNum = "M777CT99";
@@ -35,14 +35,14 @@ public class CarIntegrationTest {
     @Before
     public void initTests() {
         System.out.println("Car Tests are beginning...");
+        headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
     }
 
     @Test
     @Transactional
     @Rollback
     public void addCarTest() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         CarType carType = new CarType();
@@ -87,8 +87,6 @@ public class CarIntegrationTest {
     @Transactional
     @Rollback
     public void udateCarTest() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         HttpEntity<Car> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -121,8 +119,6 @@ public class CarIntegrationTest {
     @Ignore
     @Test
     public void deleteCar() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity httpEntity;
         httpEntity = new HttpEntity<>(testId, headers); //подготовили запрос для BoxType
@@ -138,9 +134,6 @@ public class CarIntegrationTest {
 
     @Test
     public void getCarById() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
         HttpEntity<Car> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 
@@ -173,9 +166,6 @@ public class CarIntegrationTest {
 
     @Test
     public void getCarList() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
         HttpEntity<List<Car>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 
@@ -203,9 +193,6 @@ public class CarIntegrationTest {
 
     @Test
     public void getCarByNum() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
         HttpEntity<Car> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 
@@ -236,9 +223,6 @@ public class CarIntegrationTest {
 
     @Test
     public void getCarListByType() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
         HttpEntity<List<Car>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 
@@ -272,9 +256,6 @@ public class CarIntegrationTest {
 
     @Test
     public void getCarTypeList() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
         HttpEntity<List<CarType>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 
@@ -296,8 +277,6 @@ public class CarIntegrationTest {
     @Transactional
     @Rollback
     public void createCarType() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         CarType carType = new CarType();
@@ -321,8 +300,6 @@ public class CarIntegrationTest {
     @Transactional
     @Rollback
     public void updateCarType() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         CarType carType = new CarType();
@@ -352,8 +329,6 @@ public class CarIntegrationTest {
     @Transactional
     @Rollback
     public void deleteCarType() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         CarType carType = new CarType();
@@ -384,9 +359,6 @@ public class CarIntegrationTest {
 
     @Test
     public void getCarTypeById() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
         HttpEntity<CarType> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 
@@ -419,9 +391,6 @@ public class CarIntegrationTest {
 
     @Test
     public void getCarTypeByCode() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
         HttpEntity<CarType> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 

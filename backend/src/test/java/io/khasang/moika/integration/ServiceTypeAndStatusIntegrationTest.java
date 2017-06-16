@@ -6,6 +6,7 @@ import io.khasang.moika.entity.BoxType;
 import io.khasang.moika.entity.ServiceStatus;
 import io.khasang.moika.entity.ServiceType;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
@@ -23,7 +24,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 
 public class ServiceTypeAndStatusIntegrationTest {
-
+    private HttpHeaders headers;
 
     private final String existingStatusCode = "ON";
     private final String testStatusCode = "TEST";
@@ -31,11 +32,17 @@ public class ServiceTypeAndStatusIntegrationTest {
     private final String testTypeCode = "TEST";
     private final String requestMapping = "http://localhost:8080/api/service";
 
+    @Ignore
+    @Before
+    public void initTests() {
+        System.out.println("Wash Address integration tests are beginning...");
+        headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+    }
+
+
     @Test
     public void getServiceTypeList() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
         HttpEntity<List<ServiceType>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 
@@ -56,9 +63,6 @@ public class ServiceTypeAndStatusIntegrationTest {
 
     @Test
     public void getServiceStatusList() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
         HttpEntity<List<ServiceStatus>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 
@@ -78,8 +82,6 @@ public class ServiceTypeAndStatusIntegrationTest {
 
     @Test
     public void getServiceStatus(){
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         ServiceStatus serviceStatus = new ServiceStatus();
@@ -106,8 +108,6 @@ public class ServiceTypeAndStatusIntegrationTest {
 
     @Test
     public void getServiceType(){
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         ServiceType serviceType = new ServiceType();
@@ -136,8 +136,6 @@ public class ServiceTypeAndStatusIntegrationTest {
     @Transactional
     @Rollback
     public void createServiceStatus() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         ServiceStatus serviceStatus = new ServiceStatus();
@@ -161,8 +159,6 @@ public class ServiceTypeAndStatusIntegrationTest {
     @Transactional
     @Rollback
     public void createWashServiceType() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         ServiceType serviceType = new ServiceType();
@@ -186,8 +182,6 @@ public class ServiceTypeAndStatusIntegrationTest {
     @Transactional
     @Rollback
     public void updateWashServiceType() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         ServiceType serviceType = new ServiceType();
@@ -217,8 +211,6 @@ public class ServiceTypeAndStatusIntegrationTest {
     @Transactional
     @Rollback
     public void updateWashServiceStatus() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity httpEntity;
         ServiceStatus serviceStatus = new ServiceStatus();
@@ -247,8 +239,6 @@ public class ServiceTypeAndStatusIntegrationTest {
     @Transactional
     @Rollback
     public void deleteWashServiceType() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         ServiceType serviceType = new ServiceType();
@@ -281,8 +271,6 @@ public class ServiceTypeAndStatusIntegrationTest {
     @Transactional
     @Rollback
     public void deleteWashServiceStatus() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         ServiceStatus serviceStatus = new ServiceStatus();

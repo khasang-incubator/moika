@@ -21,12 +21,7 @@ import java.util.List;
  */
 public class WashAddrIntegrationTest {
 
-
-    @Ignore
-    @Before
-    public void initTests() {
-        System.out.println("Wash Address integration tests are beginning...");
-    }
+    private HttpHeaders headers;
 
     private final String requestMapping = "http://localhost:8080/api/washAddr";
     private final String existingAddrStreet = "Пресня";
@@ -35,11 +30,16 @@ public class WashAddrIntegrationTest {
     private final String newCityName = "Калининград";
 
 
+    @Ignore
+    @Before
+    public void initTests() {
+        System.out.println("Wash Address integration tests are beginning...");
+        headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+    }
+
     @Test
     public void testGetAddrList() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
         HttpEntity<List<WashAddr>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 
@@ -62,10 +62,6 @@ public class WashAddrIntegrationTest {
 
     @Test
     public void testGetAddrById() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
-
         HttpEntity<WashAddr> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 
@@ -92,8 +88,6 @@ public class WashAddrIntegrationTest {
         final BigDecimal lat =  new BigDecimal("50.12345").setScale(5);
         final BigDecimal lon = new BigDecimal("40.54321").setScale(5);
 
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate;
 
         HttpEntity httpEntity;
@@ -127,10 +121,6 @@ public class WashAddrIntegrationTest {
     @Rollback
     public void testUpdateWashAddress() {
         final WashAddr baseAddr;
-
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
         HttpEntity<WashAddr> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 

@@ -20,12 +20,7 @@ import java.util.List;
 
 public class WashBoxIntegrationTest {
 
-
-    @Ignore
-    @Before
-    public void initTests() {
-        System.out.println("WashBox Tests are beginning...");
-    }
+    private HttpHeaders headers;
 
     private final int idFclt = 8;
     private final int idBox = 9;
@@ -38,13 +33,19 @@ public class WashBoxIntegrationTest {
     private final String requestMapping = "http://localhost:8080/api/washBox";
     private int addedTestBox;
 
+    @Ignore
+    @Before
+    public void initTests() {
+        headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        System.out.println("WashBox Tests are beginning...");
+    }
+
 
     @Test
     @Transactional
     @Rollback
     public void createWashBox() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         BoxStatus boxStatus = new BoxStatus();
@@ -97,9 +98,6 @@ public class WashBoxIntegrationTest {
     public void updateWashBox() {
         final String newDesc = "Some test description" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date());
 
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
         HttpEntity<WashBox> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 
@@ -130,8 +128,6 @@ public class WashBoxIntegrationTest {
 
     @Test
     public void getBoxListOnFclt() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         HttpEntity<List<WashBox>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -160,8 +156,6 @@ public class WashBoxIntegrationTest {
 
     @Test
     public void getBoxById() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         HttpEntity<WashBox> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -192,8 +186,6 @@ public class WashBoxIntegrationTest {
     }
     @Test
     public void getBoxListByType() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         HttpEntity<List<WashBox>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -228,8 +220,6 @@ public class WashBoxIntegrationTest {
 
     @Test
     public void getBoxListByStatus() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         HttpEntity<List<WashBox>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -264,8 +254,6 @@ public class WashBoxIntegrationTest {
 
     @Test
     public void getBoxTypeByCode() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         HttpEntity<WashBox> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -298,8 +286,6 @@ public class WashBoxIntegrationTest {
 
     @Test
     public void getBoxStatusByCode() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         HttpEntity<WashBox> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -332,8 +318,6 @@ public class WashBoxIntegrationTest {
 
     @Test
     public void getBoxTypeList() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         HttpEntity<List<BoxType>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -354,8 +338,6 @@ public class WashBoxIntegrationTest {
 
     @Test
     public void getBoxStatusList() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         HttpEntity<List<BoxStatus>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -378,8 +360,6 @@ public class WashBoxIntegrationTest {
     @Transactional
     @Rollback
     public void createWashBoxType() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         BoxType boxType = new BoxType();
@@ -403,8 +383,6 @@ public class WashBoxIntegrationTest {
     @Transactional
     @Rollback
     public void createWashBoxStatus() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         BoxStatus boxStatus = new BoxStatus();
@@ -428,8 +406,6 @@ public class WashBoxIntegrationTest {
     @Transactional
     @Rollback
     public void updateWashBoxType() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         BoxType boxType = new BoxType();
@@ -459,8 +435,6 @@ public class WashBoxIntegrationTest {
     @Transactional
     @Rollback
     public void updateWashBoxStatus() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity httpEntity;
         BoxStatus boxStatus = new BoxStatus();
@@ -489,8 +463,6 @@ public class WashBoxIntegrationTest {
     @Transactional
     @Rollback
     public void deleteWashBoxType() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         BoxType boxType = new BoxType();
@@ -523,8 +495,6 @@ public class WashBoxIntegrationTest {
     @Transactional
     @Rollback
     public void deleteWashBoxStatus() {
-        HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
 
         BoxStatus boxStatus = new BoxStatus();
