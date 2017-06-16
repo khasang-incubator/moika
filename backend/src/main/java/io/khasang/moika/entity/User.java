@@ -13,6 +13,17 @@ import java.util.Set;
 @Entity
 @UserLoginUnique
 @Table(name = "users")
+
+/**
+ * Сущность описывающая пользователя системы
+ * связана с
+ * - Ролями:
+ *   - администратор
+ *   - владелец автомойки
+ *   - менеджер
+ *   - клиент
+ *   От роли зависит доступ и интерфейс пользователя во FrontEnd`e
+ */
 public class User extends ABaseMoikaEntity implements Serializable {
 
     @Id

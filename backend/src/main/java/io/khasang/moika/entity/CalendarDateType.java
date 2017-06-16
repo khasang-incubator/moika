@@ -2,6 +2,9 @@ package io.khasang.moika.entity;
 
 import javax.persistence.Entity;;
 
+/**
+ * Сужность описывающая типы дат в календарях
+ */
 @Entity(name = "calendar_date_types")
 public class CalendarDateType extends ABaseMoikaTypeReference {
 

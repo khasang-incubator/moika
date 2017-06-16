@@ -7,6 +7,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * FacilityTimeTable - Сущность описывающая расписание работы(нерабочие часы) конкретного автомойки,
+ */
 @Entity(name = "facility_time_table")
 @IdClass(TimeTablePk.class)
 public class FacilityTimeTable extends ABaseMoikaEntity {
@@ -30,7 +33,7 @@ public class FacilityTimeTable extends ABaseMoikaEntity {
     public FacilityTimeTable() {
     }
 
-    public FacilityTimeTable(int idFacility, Date dateX, Date timeOpen ) {
+    public FacilityTimeTable(int idFacility, Date dateX, Date timeOpen) {
         this.id = idFacility;
         this.dateX = dateX;
         if (DateUtils.isSameDay(this.dateX, timeOpen)) {

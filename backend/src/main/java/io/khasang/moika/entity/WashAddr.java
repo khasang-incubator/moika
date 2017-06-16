@@ -6,6 +6,14 @@ import java.math.BigDecimal;
 
 @Entity()
 @Table(name = "addr")
+
+/**
+ * Сущность предоставляющая различные адреса (в первую очередь автомоек), используемы е программно
+ * в том числе для гео-сервисов
+ * Связана с:
+ *  - городами
+ *  - координатами
+ */
 public class WashAddr extends ABaseMoikaEntity {
 
     @Id

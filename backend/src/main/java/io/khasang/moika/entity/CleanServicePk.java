@@ -2,6 +2,9 @@ package io.khasang.moika.entity;
 
 import java.io.Serializable;
 
+/**
+ * !!! На удаление ???
+ */
 public class CleanServicePk implements Serializable{
 
     protected int id;

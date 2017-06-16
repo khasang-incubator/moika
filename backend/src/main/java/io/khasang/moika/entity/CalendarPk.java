@@ -7,7 +7,9 @@ import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
-
+/**
+ * Сужность составного первичного ключа для рабочего календаря
+ */
 @Embeddable
 public class CalendarPk extends ABaseMoikaEntity{
 

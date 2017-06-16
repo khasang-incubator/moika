@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Сущность, описывающая статуспредоставляемых автомойкой услушг
+ */
 @Entity (name = "service_status")
 public class ServiceStatus extends ABaseMoikaStatusReference{
 

@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Сущность описывающая физическое лицо, имеющее отнощение к систем, а именно?
+ *  - клиент
+ *  - внутренний пользователь
+ */
 @Entity(name = "persons")
 public class Person extends ABaseMoikaEntity {
     @Id

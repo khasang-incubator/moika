@@ -6,6 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 
+/**
+ * !!! На удаление ???
+ */
 @Entity(name = "company")
 public class Company extends ABaseMoikaEntity {
     BigDecimal amount;

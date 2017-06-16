@@ -2,6 +2,12 @@ package io.khasang.moika.entity;
 
 import javax.persistence.*;
 
+/**
+ * CleanService - Сущность описывающая услуги чиски салона авто.
+ * Наследуется от общей сущности услуг автомойки
+ * Связана с
+ * - типом загрязнений, от которого зависит цена услуги
+ */
 @Entity(name = "clean_Services")
 @DiscriminatorValue(value = "CLEAN")
 public class CleanService extends MoikaService {

@@ -3,6 +3,9 @@ package io.khasang.moika.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * !!! На удаление ???
+ */
 public class WashServicePk implements Serializable{
 
     protected int id;

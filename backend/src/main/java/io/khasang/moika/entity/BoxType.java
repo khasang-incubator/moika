@@ -2,6 +2,10 @@ package io.khasang.moika.entity;
 
 import javax.persistence.*;
 
+/**
+ * Сущность, описывающая типы моечных боксов
+ * От этого зависит какие типы авто в них могнут обслуживаться, а соответственно это влияет на заказы, работы и очереди
+ */
 @Entity(name = "box_types")
 public class BoxType extends ABaseMoikaTypeReference {
 

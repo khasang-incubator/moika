@@ -10,6 +10,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Orders - Сущность описыавющая заказы клиентов
+ * Связана с
+ * - клиентом и его машиной
+ * - автомойкой
+ * - услугой
+ * - скидками
+ */
 @Entity(name = "orders")
 public class Orders extends ABaseMoikaEntity {
     @Id
