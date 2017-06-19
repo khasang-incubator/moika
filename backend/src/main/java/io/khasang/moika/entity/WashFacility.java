@@ -38,6 +38,15 @@ public class WashFacility  extends ABaseMoikaEntity  {
     @JoinColumn(name = "id_addr", insertable = false, updatable = false)
     private WashAddr facilityAddr;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "r_facility_phones",
+            joinColumns = @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt"),
+             inverseJoinColumns = @JoinColumn(name = "id_phone", referencedColumnName = "id_phone"),
+              uniqueConstraints = @UniqueConstraint(columnNames = {"id_phone"}))
+  //  @JoinColumn( name = "id_fclt", referencedColumnName = "id_fclt")
+    @JsonManagedReference
+    protected List<Phone> phones = new ArrayList<>();
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
     @JsonManagedReference
@@ -47,6 +56,11 @@ public class WashFacility  extends ABaseMoikaEntity  {
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
     @JsonBackReference
     private List<Orders> orders = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
+    @JsonManagedReference
+    private List<WashFacilityCalendar> fcltCalendar = new ArrayList<>();
 
     public WashFacility() {
     }
@@ -87,13 +101,29 @@ public class WashFacility  extends ABaseMoikaEntity  {
         this.idAddr = idAddr;
     }
 
-
     public WashAddr getFacilityAddr() {
         return facilityAddr;
     }
 
     public void setFacilityAddr(WashAddr facilityAddr) {
         this.facilityAddr = facilityAddr;
+    }
+
+    public List<Phone> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(List<Phone> phones) {
+        this.phones = phones;
+    }
+
+    public void addPhone(Phone phone) {
+        this.phones.add(phone);
+    }
+
+    public void addPhone(String phone) {
+        Phone aPhone = new Phone(phone);
+        this.phones.add(aPhone);
     }
 
     public String getDescription() {
@@ -149,7 +179,7 @@ public class WashFacility  extends ABaseMoikaEntity  {
                 ", idNet=" + idNet +
                 ", idManager=" + idManager +
                 ", name='" + name + '\'' +
-                ", facilityAddr=" + facilityAddr.toString() + '\''+
+                ", facilityAddr=" + (( facilityAddr != null) ? facilityAddr.toString() : "") + '\''+
                 ", description='" + description + '\'' +
                 ", washBoxes=" + sb.toString() +
                 '}';

@@ -1,6 +1,5 @@
 package io.khasang.moika.service;
 
-import io.khasang.moika.entity.Butterfly;
 import io.khasang.moika.entity.Company;
 
 import java.util.List;
@@ -11,6 +10,5 @@ public interface CompanyService {
     Company getCompanyById(long id);
     void updateCompany(Company company);
     void deleteCompany(long id);
-    List<Company> getCompanyGazpromList();
-    void addButterfly(Butterfly butterfly);
+    List<Company> getCompanyList();
 }

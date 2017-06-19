@@ -2,6 +2,7 @@ package io.khasang.moika.integration;
 
 import io.khasang.moika.entity.Company;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
@@ -15,10 +16,20 @@ import static org.junit.Assert.assertEquals;
 
 public class CompanyIntegrationTest {
 
+    private HttpHeaders headers;
+
+    @Ignore
+    @Before
+    public void initTests() {
+        System.out.println("Tests are beginning...");
+        headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+    }
+
+
     @Test
     public void createCompany() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
         Company company = new Company();
         company.setName("Рога и копыта");
         company.setDescription("Свежее мясо");
@@ -61,10 +72,27 @@ public class CompanyIntegrationTest {
 
 }
 
+    @Ignore
+    @Test
+    public void getCompanyById() {
+
+        int id = 2;
+
+        HttpEntity<Company> httpEntity = new HttpEntity<>(headers); //подготовили запрос
+        RestTemplate restTemplate = new RestTemplate();
+        Company resultCompany = restTemplate.exchange(    //отправли запрос через веб (т.е. снаружи приложения)
+                "http://localhost:8080//company/{id}",
+                HttpMethod.GET,
+                httpEntity,
+                Company.class, id).getBody();
+
+        Assert.assertNotNull(resultCompany);
+        Assert.assertEquals("Рога и копыта", resultCompany.getName());
+    }
+
+
     @Test
     public void updateCompany() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Company> responseEntity = restTemplate.exchange(
                 "http://localhost:8080/company/{id}",

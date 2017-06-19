@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
+import java.util.Objects;
+
 import static io.khasang.moika.util.DataValidationPatterns.PHONE_NUMBER_PATTERN;
 
 /**
@@ -23,10 +25,6 @@ public class Phone extends ABaseMoikaEntity {
     @Pattern(regexp = PHONE_NUMBER_PATTERN, message = "{phone.not_10digits.message}")
     private String phoneNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_person", foreignKey = @ForeignKey(name = "fk_person_phone"))
-    @JsonBackReference
-    private Person person;
 
 
     public Phone() {
@@ -41,14 +39,6 @@ public class Phone extends ABaseMoikaEntity {
 
     public String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -66,19 +56,12 @@ public class Phone extends ABaseMoikaEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Phone)) return false;
-
-        Phone uphone = (Phone) o;
-
-        if (getId() != null ? !getId().equals(uphone.getId()) : uphone.getId() != null) return false;
-        if (getPhoneNumber() != null ? !getPhoneNumber().equals(uphone.getPhoneNumber()) : uphone.getPhoneNumber() != null) return false;
-        return getPerson() != null ? getPerson().equals(uphone.getPerson()) : uphone.getPerson() == null;
+        Phone phone = (Phone) o;
+        return Objects.equals(getPhoneNumber(), phone.getPhoneNumber());
     }
 
     @Override
     public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getPhoneNumber() != null ? getPhoneNumber().hashCode() : 0);
-        result = 31 * result + (getPerson() != null ? getPerson().hashCode() : 0);
-        return result;
+        return Objects.hash(getPhoneNumber());
     }
 }

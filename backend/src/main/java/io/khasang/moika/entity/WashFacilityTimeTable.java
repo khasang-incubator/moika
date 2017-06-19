@@ -5,14 +5,13 @@ import org.apache.commons.lang3.time.DateUtils;
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * FacilityTimeTable - Сущность описывающая расписание работы(нерабочие часы) конкретного автомойки,
  */
 @Entity(name = "facility_time_table")
 @IdClass(TimeTablePk.class)
-public class FacilityTimeTable extends ABaseMoikaEntity {
+public class WashFacilityTimeTable extends ABaseMoikaEntity {
 
     @Id
     @Column(name = "id_fclt")
@@ -30,10 +29,10 @@ public class FacilityTimeTable extends ABaseMoikaEntity {
     private Date timeOffEnds;
 
 
-    public FacilityTimeTable() {
+    public WashFacilityTimeTable() {
     }
 
-    public FacilityTimeTable(int idFacility, Date dateX, Date timeOpen) {
+    public WashFacilityTimeTable(int idFacility, Date dateX, Date timeOpen) {
         this.id = idFacility;
         this.dateX = dateX;
         if (DateUtils.isSameDay(this.dateX, timeOpen)) {
@@ -78,9 +77,9 @@ public class FacilityTimeTable extends ABaseMoikaEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof FacilityTimeTable)) return false;
+        if (!(o instanceof WashFacilityTimeTable)) return false;
 
-        FacilityTimeTable that = (FacilityTimeTable) o;
+        WashFacilityTimeTable that = (WashFacilityTimeTable) o;
 
         if (id != that.getIdFaciilty()) return false;
         if (!getDateX().equals(that.getDateX())) return false;

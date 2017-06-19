@@ -30,7 +30,7 @@ public class Person extends ABaseMoikaEntity {
     protected Date birthDate;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_person", referencedColumnName = "id_person")
+  //  @JoinColumn( name = "id_person", referencedColumnName = "id_person")
     @JsonManagedReference
     protected List<Phone> phones = new ArrayList<>();
 

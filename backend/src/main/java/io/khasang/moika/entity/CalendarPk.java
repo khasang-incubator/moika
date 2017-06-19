@@ -19,7 +19,6 @@ public class CalendarPk extends ABaseMoikaEntity{
     protected Date dateX;
 
 
-
     public CalendarPk() {
     }
 
@@ -40,7 +39,7 @@ public class CalendarPk extends ABaseMoikaEntity{
         return dateX;
     }
 
-    public void setdateX(Date dateX) {
+    public void setDateX(Date dateX) {
         this.dateX = dateX;
     }
 

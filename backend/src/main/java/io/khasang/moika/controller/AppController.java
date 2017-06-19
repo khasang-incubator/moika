@@ -97,7 +97,7 @@ public class AppController {
     public List<Company> getCompanyList() {
 //        model.addAttribute("companies", companyService.getCompanyGazpromList());
 //        return "companies";?
-        return companyService.getCompanyGazpromList();
+        return companyService.getCompanyList();
     }
 
     @RequestMapping(value = "/company/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
