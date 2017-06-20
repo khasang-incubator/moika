@@ -2,10 +2,15 @@ package io.khasang.moika.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * WashFacility - Сущность представляющая автомойки.
@@ -38,15 +43,14 @@ public class WashFacility  extends ABaseMoikaEntity  {
     @JoinColumn(name = "id_addr", insertable = false, updatable = false)
     private WashAddr facilityAddr;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "r_facility_phones",
             joinColumns = @JoinColumn(name = "id_fclt"),
              inverseJoinColumns = @JoinColumn(name = "id_phone"),
               uniqueConstraints = @UniqueConstraint(columnNames = {"id_phone"}))
-  //  @JoinColumn( name = "id_fclt", referencedColumnName = "id_fclt")
-    @JsonBackReference //важно именно BackReference при lazy инициализации
-    // https://stackoverflow.com/questions/33228531/spring-mvc-could-not-initialize-proxy-no-session-through-reference-chain
-    protected List<Phone> phones = new ArrayList<>();
+    @JsonManagedReference
+    protected Set<Phone> phones = new HashSet<>(); //важно, что бы была EAGER инициализация и не дрался с другими ome to many у которых так же EAGER инициальзация
+    //иначе будет ошибка:  org.hibernate.loader.MultipleBagFetchException: cannot simultaneously fetch multiple bags
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
@@ -55,12 +59,13 @@ public class WashFacility  extends ABaseMoikaEntity  {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
-    @JsonBackReference
+    @JsonBackReference //важно именно BackReference при lazy инициализации иначе будет драться с другими List<>
     private List<Orders> orders = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
-    @JsonBackReference
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JsonManagedReference
     private List<WashFacilityCalendar> fcltCalendar = new ArrayList<>();
 
     public WashFacility() {
@@ -110,11 +115,11 @@ public class WashFacility  extends ABaseMoikaEntity  {
         this.facilityAddr = facilityAddr;
     }
 
-    public List<Phone> getPhones() {
+    public Set<Phone> getPhones() {
         return phones;
     }
 
-    public void setPhones(List<Phone> phones) {
+    public void setPhones(Set<Phone> phones) {
         this.phones = phones;
     }
 

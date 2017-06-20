@@ -13,9 +13,9 @@
     </div>
     <div *ngIf="washFacility.phones">
         <h4>Телефоны: </h4>
-        <ul class="washFacility.phones" >Телефоны:
+        <ul class="washFacility.phones" >
           <li *ngFor="let phone of washFacility.phones">
-            {{phone}}
+            {{phone.phoneNumber}}
           </li>
         </ul>
     </div>

@@ -1,13 +1,12 @@
 package io.khasang.moika.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Сущность описывающая физическое лицо, имеющее отнощение к систем, а именно?
@@ -30,9 +29,12 @@ public class Person extends ABaseMoikaEntity {
     protected Date birthDate;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-  //  @JoinColumn( name = "id_person", referencedColumnName = "id_person")
+    @JoinTable(name = "r_person_phones",
+            joinColumns = @JoinColumn(name = "id_person"),
+            inverseJoinColumns = @JoinColumn(name = "id_phone"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id_phone"}))
     @JsonManagedReference
-    protected List<Phone> phones = new ArrayList<>();
+    protected Set<Phone> phones = new HashSet<>();
 
     @Email
     @Column(nullable = false, unique = true)
@@ -103,11 +105,11 @@ public class Person extends ABaseMoikaEntity {
         this.birthDate = birthDate;
     }
 
-    public List<Phone> getPhones() {
+    public Set<Phone> getPhones() {
         return phones;
     }
 
-    public void setPhones(List<Phone> phones) {
+    public void setPhones(Set<Phone> phones) {
         this.phones = phones;
     }
 
