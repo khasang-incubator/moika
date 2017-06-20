@@ -40,11 +40,12 @@ public class WashFacility  extends ABaseMoikaEntity  {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "r_facility_phones",
-            joinColumns = @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt"),
-             inverseJoinColumns = @JoinColumn(name = "id_phone", referencedColumnName = "id_phone"),
+            joinColumns = @JoinColumn(name = "id_fclt"),
+             inverseJoinColumns = @JoinColumn(name = "id_phone"),
               uniqueConstraints = @UniqueConstraint(columnNames = {"id_phone"}))
   //  @JoinColumn( name = "id_fclt", referencedColumnName = "id_fclt")
-    @JsonManagedReference
+    @JsonBackReference //важно именно BackReference при lazy инициализации
+    // https://stackoverflow.com/questions/33228531/spring-mvc-could-not-initialize-proxy-no-session-through-reference-chain
     protected List<Phone> phones = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -59,7 +60,7 @@ public class WashFacility  extends ABaseMoikaEntity  {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
-    @JsonManagedReference
+    @JsonBackReference
     private List<WashFacilityCalendar> fcltCalendar = new ArrayList<>();
 
     public WashFacility() {
