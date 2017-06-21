@@ -3,9 +3,6 @@ package io.khasang.moika.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.*;
@@ -67,7 +64,7 @@ public class WashFacility  extends ABaseMoikaEntity  {
     private Set<WashFacilityCalendar> oddOffDays = new HashSet<>();
 
     @OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
+    @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt",  foreignKey = @ForeignKey(name = "PERSON_ID_FK"))
     // @Fetch(value = FetchMode.SUBSELECT)
     @JsonManagedReference
     private Set<WashFacilityWeekDay> weekOffDays = new HashSet<>();

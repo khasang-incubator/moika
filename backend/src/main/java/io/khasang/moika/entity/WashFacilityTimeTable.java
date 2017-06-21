@@ -3,6 +3,7 @@ package io.khasang.moika.entity;
 import org.apache.commons.lang3.time.DateUtils;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -23,23 +24,21 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
     @Id
     @Column(name = "time_off_starts")
     @Temporal(TemporalType.TIME)
-    protected Date timeOffStarts;
+    protected LocalTime timeOffStarts;
 
     @Column(name = "time_off_ends")
     @Temporal(TemporalType.TIME)
-    private Date timeOffEnds;
+    private LocalTime timeOffEnds;
 
 
     public WashFacilityTimeTable() {
     }
 
-    public WashFacilityTimeTable(int idFacility, Date dateX, Date timeOpen) {
+    public WashFacilityTimeTable(int idFacility, Date dateX, LocalTime timeOffStarts, LocalTime timeOffEnds) {
         this.id = idFacility;
         this.dateX = dateX;
-        if (DateUtils.isSameDay(this.dateX, timeOpen)) {
-            this.timeOffStarts = timeOpen;
-            this.timeOffEnds = DateUtils.round(this.timeOffStarts, Calendar.DATE);
-        }
+        this.timeOffStarts = timeOffStarts;
+        this.timeOffEnds = timeOffEnds;
     }
 
 
@@ -59,19 +58,19 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
         this.dateX = dateX;
     }
 
-    public Date getTimeOffStarts() {
+    public LocalTime getTimeOffStarts() {
         return timeOffStarts;
     }
 
-    public void settimeOffStarts(Date timeOffStarts) {
+    public void setTimeOffStarts(LocalTime timeOffStarts) {
         this.timeOffStarts = timeOffStarts;
     }
 
-    public Date getTimeOffEnds() {
+    public LocalTime getTimeOffEnds() {
         return timeOffEnds;
     }
 
-    public void setTimeOffEnds(Date timeOffEnds) {
+    public void setTimeOffEnds(LocalTime timeOffEnds) {
         this.timeOffEnds = timeOffEnds;
     }
 
