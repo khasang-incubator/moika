@@ -1,27 +1,28 @@
 package io.khasang.moika.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
 /**
- *  WashBoxTimeTable - Сущность описывающая расписание работы(нерабочие часы)  автомойки
- *  Сущность, описывающая рабочий календарь (выходнные или нестандартные дни) для автомойки
+ *  WashАфсшдшенTimeTable - Сущность описывающая расписание работы(нерабочие часы)  автомойки
+ *  Сущность, описывающая рабочий календарь (выходнные или нестандартные дни) для автомойки, отличные от регулярнрых рабочих недель,
+ *  реализуемых в WashFacilityWeekDay
  *
  */
 @Entity(name = "facility_calendar")
 public class WashFacilityCalendar extends ABaseMoikaEntity {
 
     @EmbeddedId
-    private CalendarPk fcltCalendarPk;
+    private FacilityCalendarPk fcltCalendarPk;
 
     @Column(name = "id_date_type", insertable=false, updatable=false)
     private int idDateType;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_date_type")
-    @JsonBackReference
     private CalendarDateType dateType;
 
 
@@ -34,7 +35,7 @@ public class WashFacilityCalendar extends ABaseMoikaEntity {
         this.dateType = dateType;
     }
 
-    public CalendarPk getFcltCalendarId() {
+    public FacilityCalendarPk getFcltCalendarId() {
         return fcltCalendarPk;
     }
 

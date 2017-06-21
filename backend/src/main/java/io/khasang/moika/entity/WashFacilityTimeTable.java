@@ -5,6 +5,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * FacilityTimeTable - Сущность описывающая расписание работы(нерабочие часы) конкретного автомойки,
@@ -88,9 +89,6 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + getDateX().hashCode();
-        result = 31 * result + getTimeOffStarts().hashCode();
-        return result;
+        return Objects.hash(getIdFaciilty(), getDateX(), getTimeOffStarts() );
     }
 }

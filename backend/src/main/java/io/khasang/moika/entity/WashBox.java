@@ -26,7 +26,6 @@ public class WashBox  extends ABaseMoikaEntity {
     @JsonBackReference
     private WashFacility washFacility;
 
-
     @Column(name = "name")
     private String boxName;
 

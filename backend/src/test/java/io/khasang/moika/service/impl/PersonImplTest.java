@@ -17,8 +17,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -71,14 +70,14 @@ public class PersonImplTest {
         Person person = new Person(personName); // подготовили класс для тестирования
         person.setBirthDate(personBirthDay);
 
-        List<Phone> phoneList = new ArrayList<>();
+        Set<Phone> phoneSet = new HashSet<>();
         for (int i = 1; i < 5; i++) {
             Phone phone = new Phone();
             phone.setPhoneNumber(phoneNum+i);
-            phoneList.add(phone);
+            phoneSet.add(phone);
         }
 
-        person.setPhones(phoneList);
+        person.setPhones(phoneSet);
 
         Person resPerson = new Person();
         try {
@@ -90,8 +89,9 @@ public class PersonImplTest {
         boolean isTel = false;
             if (resPerson.getFullName().equalsIgnoreCase(personName)) {
                 Assert.assertEquals("tel list not ", 4, resPerson.getPhones().size());
-                List<Phone>  resPhoneList = resPerson.getPhones();
-                for (Phone phone : resPhoneList) {
+                Set<Phone> resPhoneSet = resPerson.getPhones();
+                for (Iterator<Phone> it = resPhoneSet.iterator(); it.hasNext(); ) {
+                    Phone phone = it.next();
                     if (phone.getPhoneNumber().equalsIgnoreCase(phoneNum+"1")) {
                         isTel= true;
                         break;

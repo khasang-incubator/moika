@@ -18,9 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -50,14 +48,12 @@ public class ClientServiceImplTest {
         Person person = new Person(personName); // подготовили класс для тестирования
         person.setBirthDate(personBirthDay);
 
-        List<Phone> phoneList = new ArrayList<>();
+        Set<Phone> phoneSet = new HashSet<>();
         for (int i = 1; i < 2; i++) {
-            Phone phone = new Phone();
-            phone.setPhoneNumber(phoneNum+i);
-            phoneList.add(phone);
+            phoneSet.add(new Phone(phoneNum+i));
         }
 
-        person.setPhones(phoneList);
+        person.setPhones(phoneSet);
 
         Client client = new Client();
         client.setPerson(person);

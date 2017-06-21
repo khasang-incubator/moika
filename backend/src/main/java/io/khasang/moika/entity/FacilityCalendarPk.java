@@ -2,27 +2,24 @@ package io.khasang.moika.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 /**
  * Сужность составного первичного ключа для рабочего календаря
  */
 @Embeddable
-public class CalendarPk extends ABaseMoikaEntity{
+public class FacilityCalendarPk extends ABaseMoikaEntity{
 
-    @Column(name = "idfclt")
+    @Column(name = "id_fclt")
     protected int idFclt;
     @Column(name = "date_x")
     protected Date dateX;
 
 
-    public CalendarPk() {
+    public FacilityCalendarPk() {
     }
 
-    public CalendarPk(int idFclt, Date dateX) {
+    public FacilityCalendarPk(int idFclt, Date dateX) {
         this.idFclt = idFclt;
         this.dateX = dateX;
     }
@@ -47,7 +44,7 @@ public class CalendarPk extends ABaseMoikaEntity{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CalendarPk that = (CalendarPk) o;
+        FacilityCalendarPk that = (FacilityCalendarPk) o;
         return idFclt == that.idFclt &&
                 Objects.equals(dateX, that.dateX);
     }

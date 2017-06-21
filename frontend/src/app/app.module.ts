@@ -55,7 +55,6 @@ import {AdminOutletComponent} from "./components/admin-outlet.component";
 import {FcltOwnerOutletComponent} from "./components/fclt-owner-outlet.component";
 import {AutoOwnerOutletComponent} from "app/components/auto-owner-outlet.component";
 
-
 @NgModule({
   declarations: [
     AppComponent,

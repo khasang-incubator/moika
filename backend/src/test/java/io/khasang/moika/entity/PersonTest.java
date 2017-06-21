@@ -6,23 +6,24 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class PersonTest {
     Person person =new Person();
 
     @Test
-    public void getId() throws Exception {
+    public void testGetId() throws Exception {
         person.getId();
 
         assertEquals(null,person.getId());
     }
     @Test
-    public void setGetName() throws Exception {
+    public void testSetName() throws Exception {
         person.setFullName("Вальтер Скот");
         assertEquals("Вальтер Скот", person.getFullName());
     }
     @Test
-    public void setGetBirthDate() throws Exception {
+    public void testSetBirthDate() throws Exception {
         Date date = new GregorianCalendar(1955,0,7).getTime();
         person.setBirthDate(date);
         System.out.println(date);
@@ -30,11 +31,10 @@ public class PersonTest {
     }
 
     @Test
-    public void setGetPhones() throws Exception {
+    public void testSetPhones() throws Exception {
         Phone phone = new Phone("0123456789");
         person.getPhones().add(phone);
-        System.out.println(person.getPhones().get(0).getPhoneNumber());
-        assertEquals("0123456789", person.getPhones().get(0).getPhoneNumber());
+        assertTrue( "Not contain " + phone.getPhoneNumber(), person.getPhones().contains(phone));
     }
 
 }

@@ -1,16 +1,14 @@
 package io.khasang.moika.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * WashFacility - Сущность представляющая автомойки.
@@ -62,11 +60,18 @@ public class WashFacility  extends ABaseMoikaEntity  {
     @JsonBackReference //важно именно BackReference при lazy инициализации иначе будет драться с другими List<>
     private List<Orders> orders = new ArrayList<>();
 
-    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
-    @Fetch(value = FetchMode.SUBSELECT)
+   // @Fetch(value = FetchMode.SUBSELECT)
     @JsonManagedReference
-    private List<WashFacilityCalendar> fcltCalendar = new ArrayList<>();
+    private Set<WashFacilityCalendar> oddOffDays = new HashSet<>();
+
+    @OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
+    // @Fetch(value = FetchMode.SUBSELECT)
+    @JsonManagedReference
+    private Set<WashFacilityWeekDay> weekOffDays = new HashSet<>();
+
 
     public WashFacility() {
     }
@@ -123,13 +128,16 @@ public class WashFacility  extends ABaseMoikaEntity  {
         this.phones = phones;
     }
 
+    public void setPhones(List<Phone> phones) {
+        this.phones = new HashSet<>(phones);
+    }
+
     public void addPhone(Phone phone) {
         this.phones.add(phone);
     }
 
     public void addPhone(String phone) {
-        Phone aPhone = new Phone(phone);
-        this.phones.add(aPhone);
+        this.phones.add(new Phone(phone));
     }
 
     public String getDescription() {
@@ -144,14 +152,37 @@ public class WashFacility  extends ABaseMoikaEntity  {
         return washBoxes;
     }
 
-    public void setWashBoxes(List<WashBox> washBowes) {
-        this.washBoxes = washBowes;
+    public void setWashBoxes(List<WashBox> washBoXes) {
+        this.washBoxes = washBoXes;
     }
 
     public List<Orders> getOrders() {
         return orders;
     }
 
+
+    public List<WashFacilityCalendar> getFcltOddOffDays() {
+        return new ArrayList<>(oddOffDays);
+    }
+
+    @JsonIgnore
+    public void setFcltOddOffDays(List<WashFacilityCalendar> oddOffDays) {
+        this.oddOffDays = new HashSet<>(oddOffDays);
+    }
+
+    public List<WashFacilityWeekDay> getFcltWeekOffDays() {
+        return new ArrayList<>(weekOffDays);
+    }
+
+    @JsonIgnore
+    public void setFcltWeekOffDays(Set<WashFacilityWeekDay> weekOffDays) {
+        this.weekOffDays = weekOffDays;
+    }
+
+
+    public void setFcltWeekOffDays(List<WashFacilityWeekDay> weekOffDays) {
+        this.weekOffDays = new HashSet<>(weekOffDays);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -167,10 +198,7 @@ public class WashFacility  extends ABaseMoikaEntity  {
 
     @Override
     public int hashCode() {
-        int result = getId();
-        result = 31 * result + getIdNet();
-        result = 31 * result + getName().hashCode();
-        return result;
+        return Objects.hash(getId(), getIdNet(), getName());
     }
 
     @Override
