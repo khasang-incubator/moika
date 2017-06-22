@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Component("pskvorWashFacilityDaoServiceImpl")
 @Transactional
@@ -108,7 +109,7 @@ public class PskvorWashFacilityDaoServiceImpl implements PskvorWashFacilityDaoSe
     }
 
     @Override
-    public List<WashBox> getWashBoxesOnFacility(WashFacility washFacility) {
+    public Set<WashBox> getWashBoxesOnFacility(WashFacility washFacility) {
         try {
             // return washFacilityDao.getWashBoxesOnFacility(washFacility.getId());
             WashFacility fclt = washFacilityDao.get(washFacility.getId());
@@ -120,7 +121,7 @@ public class PskvorWashFacilityDaoServiceImpl implements PskvorWashFacilityDaoSe
     }
 
     @Override
-    public List<WashBox> getWashBoxesOnFacility(int idFclt) {
+    public Set<WashBox> getWashBoxesOnFacility(int idFclt) {
         try {
             WashFacility fclt = washFacilityDao.get(idFclt);
             return fclt.getWashBoxes(); //getWashBoxesOnFacility(idFclt);

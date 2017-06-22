@@ -30,21 +30,21 @@ public class Orders extends ABaseMoikaEntity {
     private Long idFclt;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_fclt", insertable=false, updatable=false )
-    @JsonBackReference
+    @JsonBackReference(value = "fclt-orders")
     private WashFacility washFacility;
 
     @Column(name = "id_car")
     private Long idCar;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_car", insertable=false, updatable=false )
-    @JsonBackReference
+    @JsonBackReference(value = "car-orders")
     private Car car;
 
     @Column(name = "id_client")
     private Long idClient;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_car", insertable=false, updatable=false )
-    @JsonBackReference
+    @JsonBackReference(value = "client-orders")
     private Client client;
 
     @Column(name = "id_discount")

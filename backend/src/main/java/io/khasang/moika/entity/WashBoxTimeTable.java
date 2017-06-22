@@ -3,13 +3,15 @@ package io.khasang.moika.entity;
 import org.apache.commons.lang3.time.DateUtils;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 /**
- *  WashBoxTimeTable - Сущность описывающая расписание работы(нерабочие часы) конкретного бокса на автомойке,
- *  котрое может отличаться от общего расписания работы автомойки
- *  В бизнес логике должно проверяться что оно не выходить за пределы расписания автомойки
+ * WashBoxTimeTable - Сущность описывающая расписание работы(нерабочие часы) конкретного бокса на автомойке,
+ * котрое может отличаться от общего расписания работы автомойки
+ * В бизнес логике должно проверяться что оно не выходить за пределы расписания автомойки
  */
 @Entity(name = "box_time_table")
 @IdClass(TimeTablePk.class)
@@ -22,24 +24,21 @@ public class WashBoxTimeTable extends ABaseMoikaEntity {
     @Column(name = "date_x")
     protected Date dateX;
     @Id
-    @Column(name = "time_off_starts")
-    @Temporal(TemporalType.TIME)
-    protected Date timeOffStarts;
+    @Column(name = "time_on_starts")
+    protected LocalTime timeOnStarts;
 
-    @Column(name = "time_off_ends")
-    @Temporal(TemporalType.TIME)
-    protected Date timeOffEnds;
+    @Column(name = "time_on_ends")
+    protected LocalTime timeOnEnds;
 
     public WashBoxTimeTable() {
     }
 
-    public WashBoxTimeTable(int idBox, Date dateX, Date timeOpen ) {
+    public WashBoxTimeTable(int idBox, Date dateX, LocalTime timeOpen, LocalTime timeClose) {
         this.id = idBox;
         this.dateX = dateX;
-        if (DateUtils.isSameDay(this.dateX, timeOpen)) {
-            this.timeOffStarts = timeOpen;
-            this.timeOffEnds = DateUtils.round(this.timeOffStarts, Calendar.DATE);
-        }
+        this.timeOnStarts = timeOpen;
+        this.timeOnEnds = timeClose;
+
     }
 
     public int getIdBox() {
@@ -58,40 +57,35 @@ public class WashBoxTimeTable extends ABaseMoikaEntity {
         this.dateX = dateX;
     }
 
-    public Date getTimeOffStarts() {
-        return timeOffStarts;
+    public LocalTime getTimeOnStarts() {
+        return timeOnStarts;
     }
 
-    public void setTimeOffStarts(Date timeOffStarts) {
-        this.timeOffStarts = timeOffStarts;
+    public void setTimeOnStarts(LocalTime timeOnStarts) {
+        this.timeOnStarts = timeOnStarts;
     }
 
-    public Date getTimeOffEnds() {
-        return timeOffEnds;
+    public LocalTime getTimeOnEnds() {
+        return timeOnEnds;
     }
 
-    public void setTimeOffEnds(Date timeOffEnds) {
-        this.timeOffEnds = timeOffEnds;
+    public void setTimeOnEnds(LocalTime timeOnEnds) {
+        this.timeOnEnds = timeOnEnds;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof WashBoxTimeTable)) return false;
-
         WashBoxTimeTable that = (WashBoxTimeTable) o;
-
         if (getIdBox() != that.getIdBox()) return false;
         if (!getDateX().equals(that.getDateX())) return false;
-        if (!getTimeOffStarts().equals(that.getTimeOffStarts())) return false;
-        return getTimeOffEnds().equals(that.getTimeOffEnds());
+        if (!getTimeOnStarts().equals(that.getTimeOnStarts())) return false;
+        return getTimeOnEnds().equals(that.getTimeOnEnds());
     }
 
     @Override
     public int hashCode() {
-        int result = getIdBox();
-        result = 31 * result + getDateX().hashCode();
-        result = 31 * result + getTimeOffStarts().hashCode();
-        return result;
+        return Objects.hash(id, getDateX(), timeOnStarts);
     }
 }

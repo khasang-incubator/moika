@@ -33,7 +33,7 @@ public class Person extends ABaseMoikaEntity {
             joinColumns = @JoinColumn(name = "id_person"),
             inverseJoinColumns = @JoinColumn(name = "id_phone"),
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_phone"}))
-    @JsonManagedReference
+    @JsonManagedReference(value = "person-phones")
     protected Set<Phone> phones = new HashSet<>();
 
     @Email

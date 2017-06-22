@@ -22,7 +22,7 @@ public class WashFacilityCalendar extends ABaseMoikaEntity {
     @Column(name = "id_date_type", insertable=false, updatable=false)
     private int idDateType;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id_date_type")
+    @JoinColumn(name = "id_date_type", foreignKey = @ForeignKey(name = "fk_calendar_types") )
     private CalendarDateType dateType;
 
 

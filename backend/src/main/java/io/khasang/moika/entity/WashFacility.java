@@ -1,8 +1,6 @@
 package io.khasang.moika.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.*;
@@ -43,32 +41,45 @@ public class WashFacility  extends ABaseMoikaEntity  {
             joinColumns = @JoinColumn(name = "id_fclt"),
              inverseJoinColumns = @JoinColumn(name = "id_phone"),
               uniqueConstraints = @UniqueConstraint(columnNames = {"id_phone"}))
-    @JsonManagedReference
+    @JsonManagedReference(value = "fclt-phones")
     protected Set<Phone> phones = new HashSet<>(); //важно, что бы была EAGER инициализация и не дрался с другими ome to many у которых так же EAGER инициальзация
     //иначе будет ошибка:  org.hibernate.loader.MultipleBagFetchException: cannot simultaneously fetch multiple bags
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
-    @JsonManagedReference
-    private List<WashBox> washBoxes = new ArrayList<>();
+    @JsonManagedReference(value = "fclt-boxes")
+    private Set<WashBox> washBoxes = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = false)
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
-    @JsonBackReference //важно именно BackReference при lazy инициализации иначе будет драться с другими List<>
-    private List<Orders> orders = new ArrayList<>();
+    //@JsonManagedReference(value = "orders-fclt")
+    @JsonIgnore
+    private Set<Orders> orders = new HashSet<>();
 
-    @OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
+    @OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, orphanRemoval = true)
+    @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt", foreignKey = @ForeignKey(name = "fk_fclt_calendar_facility"))
    // @Fetch(value = FetchMode.SUBSELECT)
-    @JsonManagedReference
+  //  @JsonManagedReference
+    @JsonIgnore
     private Set<WashFacilityCalendar> oddOffDays = new HashSet<>();
 
-    @OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt",  foreignKey = @ForeignKey(name = "PERSON_ID_FK"))
-    // @Fetch(value = FetchMode.SUBSELECT)
-    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_facility_week_time_table_wash_fclt_id"))
+   // @JsonManagedReference
+    @JsonIgnore
+    private Set<WashFacilityTimeTable> fcltTimeTable = new HashSet<>();
+
+    @OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, orphanRemoval = true)
+    @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt",  foreignKey = @ForeignKey(name = "fk_fclt_time_table_facility"))
+   // @JsonManagedReference
+    @JsonIgnore
     private Set<WashFacilityWeekDay> weekOffDays = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_facility_week_time_table_wash_fclt_id"))
+    //@JsonManagedReference
+    @JsonIgnore
+    private Set<WashFacilityWeekTimeTable> fcltWeekTimeTable = new HashSet<>();
 
     public WashFacility() {
     }
@@ -121,17 +132,21 @@ public class WashFacility  extends ABaseMoikaEntity  {
         return phones;
     }
 
+
     public void setPhones(Set<Phone> phones) {
         this.phones = phones;
     }
 
+    @JsonIgnore
     public void setPhones(List<Phone> phones) {
         this.phones = new HashSet<>(phones);
     }
 
+    @JsonIgnore
     public void addPhone(Phone phone) {
         this.phones.add(phone);
     }
+
 
     public void addPhone(String phone) {
         this.phones.add(new Phone(phone));
@@ -145,18 +160,22 @@ public class WashFacility  extends ABaseMoikaEntity  {
         this.description = description;
     }
 
-    public List<WashBox> getWashBoxes() {
+    public Set<WashBox> getWashBoxes() {
         return washBoxes;
     }
 
-    public void setWashBoxes(List<WashBox> washBoXes) {
+    public void setWashBoxes(Set<WashBox> washBoXes) {
         this.washBoxes = washBoXes;
     }
 
-    public List<Orders> getOrders() {
-        return orders;
+    @JsonIgnore
+    public void setWashBoxes(List<WashBox> washBoXes) {
+        this.washBoxes = new HashSet<>(washBoXes);
     }
 
+    public Set<Orders> getOrders() {
+        return orders;
+    }
 
     public List<WashFacilityCalendar> getFcltOddOffDays() {
         return new ArrayList<>(oddOffDays);
@@ -181,6 +200,22 @@ public class WashFacility  extends ABaseMoikaEntity  {
         this.weekOffDays = new HashSet<>(weekOffDays);
     }
 
+    public Set<WashFacilityTimeTable> getFcltTimeTable() {
+        return fcltTimeTable;
+    }
+
+    public void setFcltTimeTable(Set<WashFacilityTimeTable> fcltTimeTable) {
+        this.fcltTimeTable = fcltTimeTable;
+    }
+
+    public Set<WashFacilityWeekTimeTable> getFcltWeekTimeTable() {
+        return fcltWeekTimeTable;
+    }
+
+    public void setFcltWeekTimeTable(Set<WashFacilityWeekTimeTable> fcltWeekTimeTable) {
+        this.fcltWeekTimeTable = fcltWeekTimeTable;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -201,10 +236,10 @@ public class WashFacility  extends ABaseMoikaEntity  {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (WashBox box : washBoxes) {
+        washBoxes.forEach(box -> {
             sb.append(box.toString());
             sb.append("\n");
-        }
+        });
         return "WashFacility{" +
                 "id=" + id +
                 ", idNet=" + idNet +

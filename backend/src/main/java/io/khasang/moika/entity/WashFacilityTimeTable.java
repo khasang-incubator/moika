@@ -1,10 +1,7 @@
 package io.khasang.moika.entity;
 
-import org.apache.commons.lang3.time.DateUtils;
-
 import javax.persistence.*;
 import java.time.LocalTime;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -22,23 +19,21 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
     @Column(name = "date_x")
     protected Date dateX;
     @Id
-    @Column(name = "time_off_starts")
-    @Temporal(TemporalType.TIME)
-    protected LocalTime timeOffStarts;
+    @Column(name = "time_on_starts")
+    protected LocalTime timeOnStarts;
 
-    @Column(name = "time_off_ends")
-    @Temporal(TemporalType.TIME)
-    private LocalTime timeOffEnds;
+    @Column(name = "time_on_ends")
+    private LocalTime timeOnEnds;
 
 
     public WashFacilityTimeTable() {
     }
 
-    public WashFacilityTimeTable(int idFacility, Date dateX, LocalTime timeOffStarts, LocalTime timeOffEnds) {
+    public WashFacilityTimeTable(int idFacility, Date dateX, LocalTime timeOnStarts, LocalTime timeOnEnds) {
         this.id = idFacility;
         this.dateX = dateX;
-        this.timeOffStarts = timeOffStarts;
-        this.timeOffEnds = timeOffEnds;
+        this.timeOnStarts = timeOnStarts;
+        this.timeOnEnds = timeOnEnds;
     }
 
 
@@ -58,20 +53,20 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
         this.dateX = dateX;
     }
 
-    public LocalTime getTimeOffStarts() {
-        return timeOffStarts;
+    public LocalTime getTimeOnStarts() {
+        return timeOnStarts;
     }
 
-    public void setTimeOffStarts(LocalTime timeOffStarts) {
-        this.timeOffStarts = timeOffStarts;
+    public void setTimeOnStarts(LocalTime timeOnStarts) {
+        this.timeOnStarts = timeOnStarts;
     }
 
-    public LocalTime getTimeOffEnds() {
-        return timeOffEnds;
+    public LocalTime getTimeOnEnds() {
+        return timeOnEnds;
     }
 
-    public void setTimeOffEnds(LocalTime timeOffEnds) {
-        this.timeOffEnds = timeOffEnds;
+    public void setTimeOnEnds(LocalTime timeOnEnds) {
+        this.timeOnEnds = timeOnEnds;
     }
 
     @Override
@@ -83,11 +78,11 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
 
         if (id != that.getIdFaciilty()) return false;
         if (!getDateX().equals(that.getDateX())) return false;
-        return getTimeOffStarts().equals(that.getTimeOffStarts());
+        return getTimeOnStarts().equals(that.getTimeOnStarts());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdFaciilty(), getDateX(), getTimeOffStarts() );
+        return Objects.hash(getIdFaciilty(), getDateX(), getTimeOnStarts() );
     }
 }

@@ -1,7 +1,6 @@
 package io.khasang.moika.controller;
 
 import io.khasang.moika.entity.City;
-import io.khasang.moika.entity.Coordinate;
 import io.khasang.moika.entity.WashAddr;
 import io.khasang.moika.entity.WashFacility;
 import io.khasang.moika.service.PskvorWashFacilityDaoService;
@@ -9,14 +8,8 @@ import io.khasang.moika.service.WashAddrDataAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,8 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/washFacility",
-        consumes = "application/json;charset=UTF-8",
-        produces = "application/json;charset=UTF-8")
+        produces = "application/json; charset=UTF-8")
 public class PsWashFacilityController {
 
     @Autowired

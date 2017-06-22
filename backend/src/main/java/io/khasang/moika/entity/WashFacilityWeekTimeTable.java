@@ -11,6 +11,7 @@ import java.util.Objects;
  * В бизнес логике должно проверяться что оно не выходить за пределы расписания автомойки
  */
 @Entity(name = "facility_week_time_table")
+@IdClass(WeekTimeTablePk.class)
 public class WashFacilityWeekTimeTable extends ABaseMoikaEntity {
 
     @Id
@@ -20,22 +21,20 @@ public class WashFacilityWeekTimeTable extends ABaseMoikaEntity {
     @Column(name = "day_of_week")
     protected DayOfWeek weekDay;
     @Id
-    @Column(name = "time_off_starts")
-    @Temporal(TemporalType.TIME)
-    protected LocalTime timeOffStarts;
+    @Column(name = "time_on_starts")
+    protected LocalTime timeOnStarts;
 
-    @Column(name = "time_off_ends")
-    @Temporal(TemporalType.TIME)
-    protected LocalTime timeOffEnds;
+    @Column(name = "time_on_ends")
+    protected LocalTime timeOnEnds;
 
     public WashFacilityWeekTimeTable() {
     }
 
-    public WashFacilityWeekTimeTable(int idFclt, DayOfWeek weekDay, LocalTime timeOffStarts, LocalTime timeOffEnds) {
+    public WashFacilityWeekTimeTable(int idFclt, DayOfWeek weekDay, LocalTime timeOnStarts, LocalTime timeOnEnds) {
         this.id = idFclt;
         this.weekDay = weekDay;
-        this.timeOffStarts = timeOffStarts;
-        this.timeOffEnds = timeOffEnds;
+        this.timeOnStarts = timeOnStarts;
+        this.timeOnEnds = timeOnEnds;
     }
 
     public int getIdFclt() {
@@ -54,20 +53,20 @@ public class WashFacilityWeekTimeTable extends ABaseMoikaEntity {
         this.weekDay = weekDay;
     }
 
-    public LocalTime getTimeOffStarts() {
-        return timeOffStarts;
+    public LocalTime getTimeOnStarts() {
+        return timeOnStarts;
     }
 
-    public void setTimeOffStarts(LocalTime timeOffStarts) {
-        this.timeOffStarts = timeOffStarts;
+    public void setTimeOnStarts(LocalTime timeOnStarts) {
+        this.timeOnStarts = timeOnStarts;
     }
 
-    public LocalTime getTimeOffEnds() {
-        return timeOffEnds;
+    public LocalTime getTimeOnEnds() {
+        return timeOnEnds;
     }
 
-    public void setTimeOffEnds(LocalTime timeOffEnds) {
-        this.timeOffEnds = timeOffEnds;
+    public void setTimeOnEnds(LocalTime timeOnEnds) {
+        this.timeOnEnds = timeOnEnds;
     }
 
     @Override
@@ -77,12 +76,12 @@ public class WashFacilityWeekTimeTable extends ABaseMoikaEntity {
         WashFacilityWeekTimeTable that = (WashFacilityWeekTimeTable) o;
         return id == that.id &&
                 getWeekDay() == that.getWeekDay() &&
-                getTimeOffStarts().equals(that.getTimeOffStarts()) &&
-                getTimeOffEnds().equals(that.getTimeOffEnds());
+                getTimeOnStarts().equals(that.getTimeOnStarts()) &&
+                getTimeOnEnds().equals(that.getTimeOnEnds());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, getWeekDay(), getTimeOffStarts());
+        return Objects.hash(id, getWeekDay(), getTimeOnStarts());
     }
 }

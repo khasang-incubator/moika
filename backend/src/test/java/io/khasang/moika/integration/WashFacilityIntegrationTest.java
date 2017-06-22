@@ -12,11 +12,20 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class WashFacilityIntegrationTest {
 
     private HttpHeaders headers;
+    final int id = 16;
+    final String fcltName = "Test2 REST мойка";
+    final String existingFasity = "Test2 REST мойка";
+    final String statusCode = "WORKING";
+    final String typeCode = "MEDIUM";
+    private final String requestMapping = "http://localhost:8080/api";
+
 
     @Ignore
     @Before
@@ -25,13 +34,6 @@ public class WashFacilityIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         System.out.println("Tests are beginning...");
     }
-
-    final int id = 16;
-    final String fcltName = "Test2 REST мойка";
-    final String existingFasity = "Test2 REST мойка";
-    final String statusCode = "WORKING";
-    final String typeCode = "MEDIUM";
-    private final String requestMapping = "http://localhost:8080/api";
 
     @Ignore
     @Test
@@ -107,7 +109,7 @@ public class WashFacilityIntegrationTest {
         boolean isBox = false;
          if (resFclt.getName().equalsIgnoreCase(fcltName)) {
             Assert.assertEquals("Facility  does not contain boxes", 4, resFclt.getWashBoxes().size());
-            List<WashBox> resBoxList = resFclt.getWashBoxes();
+            Set<WashBox> resBoxList = resFclt.getWashBoxes();
             for (WashBox box : resBoxList) {
                 isBox = true;
                 Assert.assertTrue("Facility box status not " + statusCode, box.getBoxStatusEntity().getStatusCode().equalsIgnoreCase(statusCode));
@@ -141,7 +143,7 @@ public class WashFacilityIntegrationTest {
         Assert.assertNotNull("Could not get any facility from list", resFclt);
 
         Assert.assertTrue("Facility does  not contain boxes", resFclt.getWashBoxes().size() > 0);
-        WashBox resBox = resFclt.getWashBoxes().get(0);
+        WashBox resBox = (new ArrayList<WashBox>(resFclt.getWashBoxes()).get(0));
         Assert.assertNotNull("Could not get any box", resBox);
         BoxStatus bs = resBox.getBoxStatusEntity();
         Assert.assertNotNull("Could not get any box status entity", bs);
@@ -151,6 +153,8 @@ public class WashFacilityIntegrationTest {
 
     @Test
     public void getFcltById() {
+        headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         HttpEntity<WashFacility> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -171,7 +175,7 @@ public class WashFacilityIntegrationTest {
         boolean isBox = false;
 
         Assert.assertTrue("Facility does  not contain boxes", resFclt.getWashBoxes().size() > 0);
-        List<WashBox> resBoxList = resFclt.getWashBoxes();
+        List<WashBox> resBoxList = new ArrayList<WashBox>(resFclt.getWashBoxes());
         Assert.assertEquals("Facility box list is not 4 item length", 4 , resBoxList.size());
         WashBox box = resBoxList.get(0);
         if (box != null) {
@@ -191,6 +195,7 @@ public class WashFacilityIntegrationTest {
         HttpEntity<WashFacility> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
 
+        // Получили существующую мойку
         ResponseEntity<WashFacility> fcltResponse = restTemplate.exchange(
                 requestMapping + "/washFacility/byId/{id}/",
                 HttpMethod.GET,
@@ -205,8 +210,13 @@ public class WashFacilityIntegrationTest {
         Assert.assertTrue("Facility does not exist " + existingFasity + "but "+ fclt.getName(), fclt.getName().equalsIgnoreCase(existingFasity));
         Assert.assertTrue("Facility does  not contain boxes", fclt.getWashBoxes().size() > 0);
 
+        //Изменили в ней данныеr_complex_services
         fclt.setDescription(newDescr);
+        if (fclt.getPhones() == null){
+            fclt.addPhone("444-111-22-33");
+        }
 
+        //отправлили запрос на обновление
         httpEntity = new HttpEntity<>(fclt, headers); //подготовили запрос га добавление Facility
         restTemplate = new RestTemplate();
         fcltResponse = restTemplate.exchange(    //отправли запрос через веб (т.е. снаружи приложения)

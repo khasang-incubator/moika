@@ -1,8 +1,12 @@
 package io.khasang.moika.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * WashBox - Сущность, представляющая моечный бокс, из которых состоят автомойки
@@ -23,7 +27,7 @@ public class WashBox  extends ABaseMoikaEntity {
     private int idFacility;
     @ManyToOne
     @JoinColumn(name = "id_fclt", insertable=false, updatable=false )
-    @JsonBackReference
+    @JsonBackReference(value = "fclt-boxes")
     private WashFacility washFacility;
 
     @Column(name = "name")
@@ -46,6 +50,17 @@ public class WashBox  extends ABaseMoikaEntity {
     @JoinColumn(name = "id_status")//, insertable=false, updatable=false )
     private BoxStatus boxStatusEntity;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_box", foreignKey = @ForeignKey(name = "fk_box_time_table_wash_boxes"))
+    //@JsonManagedReference
+    @JsonIgnore
+    private Set<WashBoxTimeTable> boxTimeTable = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_box", foreignKey = @ForeignKey(name = "box_week_days_wash_box_id_box_fk"))
+    @JsonManagedReference
+    @JsonIgnore
+    private Set<WashBoxWeekTimeTable> boxWeekTimeTable = new HashSet<>();
 
     public WashBox() {
     }
@@ -125,6 +140,22 @@ public class WashBox  extends ABaseMoikaEntity {
     public void setBoxStatusEntity(BoxStatus boxStatusEntity) {
         this.boxStatusEntity = boxStatusEntity;
         this.setIdStatus((short) boxStatusEntity.getId());
+    }
+
+    public Set<WashBoxTimeTable> getBoxTimeTable() {
+        return boxTimeTable;
+    }
+
+    public void setBoxTimeTable(Set<WashBoxTimeTable> boxTimeTable) {
+        this.boxTimeTable = boxTimeTable;
+    }
+
+    public Set<WashBoxWeekTimeTable> getBoxWeekTimeTable() {
+        return boxWeekTimeTable;
+    }
+
+    public void setBoxWeekTimeTable(Set<WashBoxWeekTimeTable> boxWeekTimeTable) {
+        this.boxWeekTimeTable = boxWeekTimeTable;
     }
 
     @Override

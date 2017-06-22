@@ -2,10 +2,13 @@ package io.khasang.moika.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -21,9 +24,8 @@ public class WashFacilityWeekDay extends ABaseMoikaEntity {
     @Column(name = "id_day_type", insertable=false, updatable=false)
     private int idDateType;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id_day_type")
+    @JoinColumn(name = "id_day_type", foreignKey = @ForeignKey(name = "facility_week_days_calendar_date_types_id_type_fk"))
     private CalendarDateType dateType;
-
 
     public WashFacilityWeekDay() {
     }

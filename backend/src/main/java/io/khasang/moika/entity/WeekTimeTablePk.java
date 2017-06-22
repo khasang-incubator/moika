@@ -4,6 +4,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.Objects;
@@ -12,20 +13,18 @@ import java.util.Objects;
  * Сужность составного первичного ключа для расписаний
  */
 @Embeddable
-public class TimeTablePk implements Serializable{
+public class WeekTimeTablePk implements Serializable{
 
     protected int id;
-    @Temporal(TemporalType.DATE)
-    protected Date dateX;
+    protected DayOfWeek weekDay;;
     protected LocalTime timeOnStarts;
 
-
-    public TimeTablePk() {
+    public WeekTimeTablePk() {
     }
 
-    public TimeTablePk(int id, Date dateX, LocalTime timeOnStarts) {
+    public WeekTimeTablePk(int id, DayOfWeek weekDay, LocalTime timeOnStarts) {
         this.id = id;
-        this.dateX = dateX;
+        this.weekDay = weekDay;
         this.timeOnStarts = timeOnStarts;
     }
 
@@ -37,19 +36,19 @@ public class TimeTablePk implements Serializable{
         this.id = id;
     }
 
-    public Date getDateX() {
-        return dateX;
+    public DayOfWeek getWeekDay() {
+        return weekDay;
     }
 
-    public void setdateX(Date dateX) {
-        this.dateX = dateX;
+    public void setWeekDay(DayOfWeek weekDay) {
+        this.weekDay = weekDay;
     }
 
     public LocalTime getTimeOnStarts() {
         return timeOnStarts;
     }
 
-    public void settimeOnStarts(LocalTime timeOnStarts) {
+    public void setTimeOnStarts(LocalTime timeOnStarts) {
         this.timeOnStarts = timeOnStarts;
     }
 
@@ -57,14 +56,14 @@ public class TimeTablePk implements Serializable{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TimeTablePk that = (TimeTablePk) o;
+        WeekTimeTablePk that = (WeekTimeTablePk) o;
         return id == that.id &&
-                Objects.equals(dateX, that.dateX) &&
+                Objects.equals(weekDay, that.weekDay) &&
                 Objects.equals(timeOnStarts, that.timeOnStarts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateX, timeOnStarts);
+        return Objects.hash(id, weekDay, timeOnStarts);
     }
 }

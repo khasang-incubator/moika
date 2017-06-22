@@ -4,9 +4,6 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity()
-@Table(name = "addr")
-
 /**
  * Сущность предоставляющая различные адреса (в первую очередь автомоек), используемы е программно
  * в том числе для гео-сервисов
@@ -14,6 +11,8 @@ import java.math.BigDecimal;
  *  - городами
  *  - координатами
  */
+@Entity()
+@Table(name = "addr")
 public class WashAddr extends ABaseMoikaEntity {
 
     @Id

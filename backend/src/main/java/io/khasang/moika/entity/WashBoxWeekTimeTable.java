@@ -1,12 +1,8 @@
 package io.khasang.moika.entity;
 
-import org.apache.commons.lang3.time.DateUtils;
-
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -15,6 +11,7 @@ import java.util.Objects;
  * В бизнес логике должно проверяться что оно не выходить за пределы расписания автомойки
  */
 @Entity(name = "box_week_time_table")
+@IdClass(WeekTimeTablePk.class)
 public class WashBoxWeekTimeTable extends ABaseMoikaEntity {
 
     @Id
@@ -24,22 +21,21 @@ public class WashBoxWeekTimeTable extends ABaseMoikaEntity {
     @Column(name = "day_of_week")
     protected DayOfWeek weekDay;
     @Id
-    @Column(name = "time_off_starts")
-    @Temporal(TemporalType.TIME)
-    protected LocalTime timeOffStarts;
+    @Column(name = "time_on_starts")
+    protected LocalTime timeOnStarts;
 
-    @Column(name = "time_off_ends")
-    @Temporal(TemporalType.TIME)
-    protected LocalTime timeOffEnds;
+    @Column(name = "time_on_ends")
+   // @Temporal(TemporalType.TIME)
+    protected LocalTime timeOnEnds;
 
     public WashBoxWeekTimeTable() {
     }
 
-    public WashBoxWeekTimeTable(int idBox, DayOfWeek weekDay, LocalTime timeOffStarts, LocalTime timeOffEnds) {
+    public WashBoxWeekTimeTable(int idBox, DayOfWeek weekDay, LocalTime timeOnStarts, LocalTime timeOnEnds) {
         this.id = idBox;
         this.weekDay = weekDay;
-        this.timeOffStarts = timeOffStarts;
-        this.timeOffEnds = timeOffEnds;
+        this.timeOnStarts = timeOnStarts;
+        this.timeOnEnds = timeOnEnds;
     }
 
     public int getIdBox() {
@@ -58,20 +54,20 @@ public class WashBoxWeekTimeTable extends ABaseMoikaEntity {
         this.weekDay = weekDay;
     }
 
-    public LocalTime getTimeOffStarts() {
-        return timeOffStarts;
+    public LocalTime getTimeOnStarts() {
+        return timeOnStarts;
     }
 
-    public void setTimeOffStarts(LocalTime timeOffStarts) {
-        this.timeOffStarts = timeOffStarts;
+    public void setTimeOnStarts(LocalTime timeOnStarts) {
+        this.timeOnStarts = timeOnStarts;
     }
 
-    public LocalTime getTimeOffEnds() {
-        return timeOffEnds;
+    public LocalTime getTimeOnEnds() {
+        return timeOnEnds;
     }
 
-    public void setTimeOffEnds(LocalTime timeOffEnds) {
-        this.timeOffEnds = timeOffEnds;
+    public void setTimeOnEnds(LocalTime timeOnEnds) {
+        this.timeOnEnds = timeOnEnds;
     }
 
     @Override
@@ -81,12 +77,12 @@ public class WashBoxWeekTimeTable extends ABaseMoikaEntity {
         WashBoxWeekTimeTable that = (WashBoxWeekTimeTable) o;
         return id == that.id &&
                 getWeekDay() == that.getWeekDay() &&
-                getTimeOffStarts().equals(that.getTimeOffStarts()) &&
-                getTimeOffEnds().equals(that.getTimeOffEnds());
+                getTimeOnStarts().equals(that.getTimeOnStarts()) &&
+                getTimeOnEnds().equals(that.getTimeOnEnds());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, getWeekDay(), getTimeOffStarts());
+        return Objects.hash(id, getWeekDay(), getTimeOnStarts());
     }
 }

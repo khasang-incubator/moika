@@ -1,6 +1,7 @@
 package io.khasang.moika.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -25,7 +26,21 @@ public class Phone extends ABaseMoikaEntity {
     @Pattern(regexp = PHONE_NUMBER_PATTERN, message = "{phone.not_10digits.message}")
     private String phoneNumber;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinTable(name = "r_facility_phones",
+            joinColumns = @JoinColumn(name = "id_phone"),
+            inverseJoinColumns = @JoinColumn(name = "id_fclt"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id_phone"}))
+    @JsonBackReference(value = "fclt-phones")
+    private WashFacility fclt;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinTable(name = "r_person_phones",
+            joinColumns = @JoinColumn(name = "id_phone"),
+            inverseJoinColumns = @JoinColumn(name = "id_person"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id_phone"}))
+    @JsonBackReference(value = "person-phones")
+    private Person person;
 
     public Phone() {
     }
