@@ -52,33 +52,33 @@ public class WashFacility  extends ABaseMoikaEntity  {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = false)
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
-    //@JsonManagedReference(value = "orders-fclt")
-    @JsonIgnore
+    @JsonManagedReference(value = "orders-fclt")
+    //@JsonIgnore
     private Set<Orders> orders = new HashSet<>();
 
     @OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, orphanRemoval = true)
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt", foreignKey = @ForeignKey(name = "fk_fclt_calendar_facility"))
    // @Fetch(value = FetchMode.SUBSELECT)
-  //  @JsonManagedReference
-    @JsonIgnore
+  //  @JsonManagedReference(value = "fclt-odd-days")
+   // @JsonIgnore
     private Set<WashFacilityCalendar> oddOffDays = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_facility_week_time_table_wash_fclt_id"))
-   // @JsonManagedReference
-    @JsonIgnore
+ //   @JsonManagedReference(value = "fclt-time-table")
+   // @JsonIgnore
     private Set<WashFacilityTimeTable> fcltTimeTable = new HashSet<>();
 
     @OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, orphanRemoval = true)
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt",  foreignKey = @ForeignKey(name = "fk_fclt_time_table_facility"))
-   // @JsonManagedReference
-    @JsonIgnore
+ //   @JsonManagedReference(value = "fclt-week-days")
+  //  @JsonIgnore
     private Set<WashFacilityWeekDay> weekOffDays = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_facility_week_time_table_wash_fclt_id"))
-    //@JsonManagedReference
-    @JsonIgnore
+ //   @JsonManagedReference(value = "fclt-week-time")
+   // @JsonIgnore
     private Set<WashFacilityWeekTimeTable> fcltWeekTimeTable = new HashSet<>();
 
     public WashFacility() {

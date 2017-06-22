@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@WebAppConfiguration
 public class WashFacilityIntegrationTest {
 
     private HttpHeaders headers;

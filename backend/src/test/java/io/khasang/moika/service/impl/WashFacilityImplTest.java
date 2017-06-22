@@ -22,7 +22,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -69,14 +71,7 @@ public class WashFacilityImplTest {
         int dur = 0;
         for (WashFacility item : fcltList) {
             if (item.getName().equalsIgnoreCase(testExistingFacilityName)) {
-                isWashFacility = true;
-                List<WashBox> boxList = item.getWashBoxes();
-                for (WashBox box : boxList) {
-                    if (box.getBoxName().equalsIgnoreCase("№ 1")) {
-                        isBox = true;
-                        break;
-                    }
-                }
+                isWashFacility= item.getWashBoxes().stream().anyMatch(washBox -> washBox.getBoxName().equalsIgnoreCase("№ 1") );
             }
         }
         Assert.assertTrue("Facility  list not contain " + testExistingFacilityName, isWashFacility);
@@ -96,7 +91,7 @@ public class WashFacilityImplTest {
 
         //     BoxStatus boxStatus = boxStatusDao.getEntityByCode(stausCode);
         //     BoxType boxType = boxTypeDao.getEntityByCode(typeCode);
-        List<WashBox> boxList = new ArrayList<>();
+        Set<WashBox> boxList = new HashSet<>();
         for (int i = 1; i < 5; i++) {
             WashBox box = new WashBox();
             box.setBoxName("Бокс № " + i);
@@ -121,7 +116,8 @@ public class WashFacilityImplTest {
         boolean isBox = false;
         if (resFclt.getName().equalsIgnoreCase(testNonExistFacilityName)) {
             Assert.assertEquals("Facility  does not contain boxes", 4, resFclt.getWashBoxes().size());
-            List<WashBox> resBoxList = resFclt.getWashBoxes();
+
+            List<WashBox> resBoxList = new ArrayList<WashBox>(resFclt.getWashBoxes());
             for (WashBox box : resBoxList) {
                 if (box.getBoxName().equalsIgnoreCase("Бокс № 1")) {
                     isBox = true;
@@ -153,7 +149,7 @@ public class WashFacilityImplTest {
             fcltList.get(0).getWashBoxes().add(box);
             // boxService.addWashBox(box);
             fcltService.updateWashFacility(fcltList.get(0));
-            List<WashBox> boxList = fcltList.get(0).getWashBoxes();
+            List<WashBox> boxList = new ArrayList<WashBox>(fcltList.get(0).getWashBoxes());
             Assert.assertTrue("Facility does not contain box", boxList.contains(box));
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
@@ -164,15 +160,15 @@ public class WashFacilityImplTest {
     @Transactional
     public void testDeleteBoxFromFacility() {
         try {
-            List<WashFacility> fcltList = fcltService.getAllWashFacilities(); // подготовили класс для тестирования
-            List<WashBox> boxList = fcltList.get(0).getWashBoxes();
-            int prevBoxCnt = boxList.size();
-            WashBox boxToDelete = boxList.get(0);
-            boxList.remove(boxToDelete);
-            fcltService.updateWashFacility(fcltList.get(0));
-            boxList = fcltList.get(0).getWashBoxes();
-            int postBoxCnt = boxList.size();
-            Assert.assertFalse("Facility still contain box", boxList.contains(boxToDelete));
+            WashFacility fclt = fcltService.getWashFacilityByID(id);
+            Set<WashBox> boxes = fclt.getWashBoxes(); // подготовили класс для тестирования
+            int prevBoxCnt = boxes.size();
+            WashBox boxToDelete= boxes.stream().findFirst().get();
+            boxes.remove(boxToDelete);
+            fclt =  fcltService.updateWashFacility(fclt);
+            boxes = fclt.getWashBoxes();
+            int postBoxCnt = boxes.size();
+            Assert.assertFalse("Facility still contain box", boxes.contains(boxToDelete));
             Assert.assertNotEquals("Facility box list still the same size", prevBoxCnt, postBoxCnt);
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
