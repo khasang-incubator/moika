@@ -49,7 +49,9 @@
 	<Logger name="org.hibernate.secure" level="INFO" />
 	<!-- Log everything (a lot of information, but very useful for troubleshooting) -->
 	<Logger name="org.hibernate" level="INFO" />
+	<Logger name="org.hibernate.loader.Loader" level="INFO" />
 
+	<Logger name="org.apache.http.wire" level="DEBUG" ref="STDOUT"/>
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />

@@ -57,6 +57,7 @@ public class WashBoxTimeTable extends ABaseMoikaEntity {
         this.dateX = dateX;
     }
 
+    /*
     public LocalTime getTimeOnStarts() {
         return timeOnStarts;
     }
@@ -72,6 +73,17 @@ public class WashBoxTimeTable extends ABaseMoikaEntity {
     public void setTimeOnEnds(LocalTime timeOnEnds) {
         this.timeOnEnds = timeOnEnds;
     }
+    */
+
+    public WorkHours getWorkHours(){
+        return new WorkHours(timeOnStarts,timeOnEnds);
+    }
+
+    public  void setWorkHours(WorkHours workHours){
+        this.timeOnEnds = workHours.timeOnStarts;
+        this.timeOnEnds = workHours.timeOnEnds;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -80,8 +92,8 @@ public class WashBoxTimeTable extends ABaseMoikaEntity {
         WashBoxTimeTable that = (WashBoxTimeTable) o;
         if (getIdBox() != that.getIdBox()) return false;
         if (!getDateX().equals(that.getDateX())) return false;
-        if (!getTimeOnStarts().equals(that.getTimeOnStarts())) return false;
-        return getTimeOnEnds().equals(that.getTimeOnEnds());
+        if (!this.timeOnStarts.equals(that.getWorkHours().getTimeOnStarts())) return false;
+        return this.timeOnEnds.equals(that.getWorkHours().getTimeOnEnds());
     }
 
     @Override

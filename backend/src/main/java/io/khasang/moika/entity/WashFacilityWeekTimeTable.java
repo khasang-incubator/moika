@@ -22,10 +22,10 @@ public class WashFacilityWeekTimeTable extends ABaseMoikaEntity {
     protected DayOfWeek weekDay;
     @Id
     @Column(name = "time_on_starts")
-    protected LocalTime timeOnStarts;
+    private LocalTime timeOnStarts;
 
     @Column(name = "time_on_ends")
-    protected LocalTime timeOnEnds;
+    private LocalTime timeOnEnds;
 
     public WashFacilityWeekTimeTable() {
     }
@@ -53,6 +53,7 @@ public class WashFacilityWeekTimeTable extends ABaseMoikaEntity {
         this.weekDay = weekDay;
     }
 
+    /*
     public LocalTime getTimeOnStarts() {
         return timeOnStarts;
     }
@@ -68,6 +69,17 @@ public class WashFacilityWeekTimeTable extends ABaseMoikaEntity {
     public void setTimeOnEnds(LocalTime timeOnEnds) {
         this.timeOnEnds = timeOnEnds;
     }
+    */
+
+    public WorkHours getWorkHours(){
+        return new WorkHours(timeOnStarts,timeOnEnds);
+    }
+
+    public  void setWorkHours(WorkHours workHours){
+       this.timeOnEnds = workHours.timeOnStarts;
+       this.timeOnEnds = workHours.timeOnEnds;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -76,12 +88,14 @@ public class WashFacilityWeekTimeTable extends ABaseMoikaEntity {
         WashFacilityWeekTimeTable that = (WashFacilityWeekTimeTable) o;
         return id == that.id &&
                 getWeekDay() == that.getWeekDay() &&
-                getTimeOnStarts().equals(that.getTimeOnStarts()) &&
-                getTimeOnEnds().equals(that.getTimeOnEnds());
+                this.timeOnStarts.equals(that.getWorkHours().getTimeOnStarts()) &&
+                this.timeOnEnds.equals(that.getWorkHours().getTimeOnEnds());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, getWeekDay(), getTimeOnStarts());
+        return Objects.hash(id, getWeekDay(), timeOnStarts);
     }
+
+
 }

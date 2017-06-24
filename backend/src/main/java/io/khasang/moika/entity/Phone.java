@@ -26,6 +26,7 @@ public class Phone extends ABaseMoikaEntity {
     @Pattern(regexp = PHONE_NUMBER_PATTERN, message = "{phone.not_10digits.message}")
     private String phoneNumber;
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinTable(name = "r_facility_phones",
             joinColumns = @JoinColumn(name = "id_phone"),
@@ -41,7 +42,7 @@ public class Phone extends ABaseMoikaEntity {
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_phone"}))
     @JsonBackReference(value = "person-phones")
     private Person person;
-
+*/
     public Phone() {
     }
     public Phone(String phoneNumber) {

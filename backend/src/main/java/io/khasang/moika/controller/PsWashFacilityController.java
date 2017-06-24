@@ -12,10 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * @author Pauls
- */
-
 @RestController
 @RequestMapping(value = "/api/washFacility") //, produces = "application/json; charset=UTF-8"
 public class PsWashFacilityController {

@@ -6,10 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  *  WashFacilityWeekDay - Сущность описывающая расписание работы(нерабочие недели)  автомойки
@@ -26,6 +23,13 @@ public class WashFacilityWeekDay extends ABaseMoikaEntity {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_day_type", foreignKey = @ForeignKey(name = "facility_week_days_calendar_date_types_id_type_fk"))
     private CalendarDateType dateType;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumns({
+            @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt"),
+            @JoinColumn(name = "day_of_week", referencedColumnName = "day_of_week")})
+    private Set<WashFacilityWeekTimeTable> fcltWeekTimeTable = new HashSet<>();
+
 
     public WashFacilityWeekDay() {
     }
@@ -67,6 +71,14 @@ public class WashFacilityWeekDay extends ABaseMoikaEntity {
 
     public void setDateType(CalendarDateType dateType) {
         this.dateType = dateType;
+    }
+
+    public Set<WashFacilityWeekTimeTable> getFcltWeekTimeTable() {
+        return fcltWeekTimeTable;
+    }
+
+    public void setFcltWeekTimeTable(Set<WashFacilityWeekTimeTable> fcltWeekTimeTable) {
+        this.fcltWeekTimeTable = fcltWeekTimeTable;
     }
 
     @Override

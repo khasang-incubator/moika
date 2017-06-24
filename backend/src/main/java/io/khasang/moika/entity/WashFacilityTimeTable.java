@@ -53,6 +53,7 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
         this.dateX = dateX;
     }
 
+    /*
     public LocalTime getTimeOnStarts() {
         return timeOnStarts;
     }
@@ -69,6 +70,16 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
         this.timeOnEnds = timeOnEnds;
     }
 
+    */
+    public WorkHours getWorkHours(){
+        return new WorkHours(timeOnStarts,timeOnEnds);
+    }
+
+    public  void setWorkHours(WorkHours workHours){
+        this.timeOnEnds = workHours.timeOnStarts;
+        this.timeOnEnds = workHours.timeOnEnds;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,11 +89,11 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
 
         if (id != that.getIdFaciilty()) return false;
         if (!getDateX().equals(that.getDateX())) return false;
-        return getTimeOnStarts().equals(that.getTimeOnStarts());
+        return this.timeOnStarts.equals(that.getWorkHours().getTimeOnStarts());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdFaciilty(), getDateX(), getTimeOnStarts() );
+        return Objects.hash(getIdFaciilty(), getDateX(), timeOnStarts );
     }
 }
