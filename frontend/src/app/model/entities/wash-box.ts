@@ -1,6 +1,7 @@
 import {BaseMoikaEntity} from "./base-moika-entity";
 import {SomeStatus} from "./some-status";
 import {SomeType} from "./some-type";
+import {WeekDay} from "./week-day";
 /*
  Wash Box FrontEnd REST entity
  */
@@ -13,5 +14,5 @@ export class WashBox extends BaseMoikaEntity {
    boxTypeEntity: SomeType;
    idStatus: number;
    boxStatusEntity: SomeStatus;
-
+   weekOffDays:  Array<WeekDay>;
 }
