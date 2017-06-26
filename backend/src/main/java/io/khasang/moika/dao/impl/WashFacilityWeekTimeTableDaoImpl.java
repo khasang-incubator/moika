@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @Transactional
 public class WashFacilityWeekTimeTableDaoImpl extends MoikaDaoCrudImpl<WashFacilityWeekTimeTable> implements WashFacilityWeekTimeTableDao {
-    private SessionFactory sessionFactory;
 
     public WashFacilityWeekTimeTableDaoImpl() {
     }

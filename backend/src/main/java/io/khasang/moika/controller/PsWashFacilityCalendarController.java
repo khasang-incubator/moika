@@ -8,6 +8,7 @@ import io.khasang.moika.entity.WashFacilityCalendar;
 import io.khasang.moika.service.BoxStatusDataAccessService;
 import io.khasang.moika.service.BoxTypesDataAccessService;
 import io.khasang.moika.service.PskvorWashBoxDataAccessService;
+import io.khasang.moika.service.WashFacilityCalendarDataAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ import static org.apache.commons.lang3.math.NumberUtils.isNumber;
 public class PsWashFacilityCalendarController {
 
     @Autowired
-    WashFacilityCalendarDao calendarDao;
+    WashFacilityCalendarDataAccessService calendarDAS;
 
 
     /**
@@ -41,7 +42,7 @@ public class PsWashFacilityCalendarController {
     @RequestMapping(value = "/{idFclt}", method = RequestMethod.GET )
     @ResponseStatus(HttpStatus.OK)
     public Object getWashBoxList(@PathVariable(value = "idFclt") int idFclt) {
-        List<WashFacilityCalendar> fcltCalendar = calendarDao.getFacilityWorkCalendar(idFclt);
+        List<WashFacilityCalendar> fcltCalendar = calendarDAS.getFacilityWorkCalendar(idFclt);
         if ((fcltCalendar == null) || (fcltCalendar.isEmpty()))
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         else

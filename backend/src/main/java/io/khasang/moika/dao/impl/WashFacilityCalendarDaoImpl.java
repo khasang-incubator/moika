@@ -12,7 +12,6 @@ import java.util.List;
 @Component
 @Transactional
 public class WashFacilityCalendarDaoImpl extends MoikaDaoCrudImpl<WashFacilityCalendar> implements WashFacilityCalendarDao {
-    private SessionFactory sessionFactory;
 
     public WashFacilityCalendarDaoImpl() {
     }

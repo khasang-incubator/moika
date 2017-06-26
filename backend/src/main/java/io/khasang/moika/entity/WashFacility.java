@@ -203,10 +203,10 @@ public class WashFacility extends ABaseMoikaEntity {
         } catch (ParseException e) {
             defDate = new Date();
         }
-        for (WashFacilityCalendar fcltCalendar : this.getFcltOddOffDays()) {
-            if (fcltCalendar.getCalendarDate().compareTo(defDate) == 0 ) {
-                if (fcltCalendar.getIdDateType() == 0) {
-                    resHours = fcltCalendar.getWorkHours();
+        for (WashFacilityCalendar fcltResc : this.getFcltOddOffDays()) {
+            if (fcltResc.getCalendarDate().compareTo(defDate) == 0 ) {
+                if (fcltResc.getIdDateType() == 0) {
+                    resHours = fcltResc.getWorkHours();
                     break;
                 }
             }

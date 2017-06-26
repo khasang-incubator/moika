@@ -26,12 +26,13 @@ import java.util.Set;
 public class WashFacilityIntegrationTest {
 
     private HttpHeaders headers;
+    private final String requestMapping = "http://localhost:8080/api";
     final int id = 16;
     final String fcltName = "Test2 REST мойка";
     final String existingFasity = "Test2 REST мойка";
     final String statusCode = "WORKING";
     final String typeCode = "MEDIUM";
-    private final String requestMapping = "http://localhost:8080/api";
+
 
 
     @Ignore
@@ -130,7 +131,7 @@ public class WashFacilityIntegrationTest {
 
 
     @Test
-    public void getFcltList() {
+    public void testGetFcltList() {
 
         HttpEntity<List<WashFacility>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -159,7 +160,7 @@ public class WashFacilityIntegrationTest {
     }
 
     @Test
-    public void getFcltById() {
+    public void testGetFcltById() {
         headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 

@@ -15,7 +15,6 @@ import java.util.List;
 @Component
 @Transactional
 public class WorkDaoImpl  extends MoikaDaoCrudImpl<Work> implements WorkDao{
-    private SessionFactory sessionFactory;
 
     public WorkDaoImpl() {
     }
