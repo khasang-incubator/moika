@@ -28,12 +28,14 @@ public class Person extends ABaseMoikaEntity {
     @Temporal(TemporalType.DATE)
     protected Date birthDate;
 
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "r_person_phones",
             joinColumns = @JoinColumn(name = "id_person"),
             inverseJoinColumns = @JoinColumn(name = "id_phone"),
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_phone"}))
-    @JsonManagedReference(value = "person-phones")
+//    @JsonManagedReference(value = "person-phones")
+    @JsonIgnore
     protected Set<Phone> phones = new HashSet<>();
 
     @Email

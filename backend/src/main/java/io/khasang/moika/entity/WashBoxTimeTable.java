@@ -22,6 +22,7 @@ public class WashBoxTimeTable extends ABaseMoikaEntity {
     protected int id;
     @Id
     @Column(name = "date_x")
+    @Temporal(value = TemporalType.DATE)
     protected Date dateX;
     @Id
     @Column(name = "time_on_starts")
@@ -57,7 +58,7 @@ public class WashBoxTimeTable extends ABaseMoikaEntity {
         this.dateX = dateX;
     }
 
-    /*
+
     public LocalTime getTimeOnStarts() {
         return timeOnStarts;
     }
@@ -73,7 +74,7 @@ public class WashBoxTimeTable extends ABaseMoikaEntity {
     public void setTimeOnEnds(LocalTime timeOnEnds) {
         this.timeOnEnds = timeOnEnds;
     }
-    */
+
 
     public WorkHours getWorkHours(){
         return new WorkHours(timeOnStarts,timeOnEnds);

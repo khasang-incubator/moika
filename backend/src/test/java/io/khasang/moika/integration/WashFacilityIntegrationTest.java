@@ -117,7 +117,7 @@ public class WashFacilityIntegrationTest {
         boolean isBox = false;
          if (resFclt.getName().equalsIgnoreCase(fcltName)) {
             Assert.assertEquals("Facility  does not contain boxes", 4, resFclt.getWashBoxes().size());
-            Set<WashBox> resBoxList = resFclt.getWashBoxes();
+            List<WashBox> resBoxList = resFclt.getWashBoxes();
             for (WashBox box : resBoxList) {
                 isBox = true;
                 Assert.assertTrue("Facility box status not " + statusCode, box.getBoxStatusEntity().getStatusCode().equalsIgnoreCase(statusCode));
@@ -220,9 +220,9 @@ public class WashFacilityIntegrationTest {
 
         //Изменили в ней данныеr_complex_services
         fclt.setDescription(newDescr);
-        if (fclt.getPhones() == null){
-            fclt.addPhone("444-111-22-33");
-        }
+   //     if (fclt.getPhones() == null){
+    //        fclt.addPhone("444-111-22-33");
+    //    }
 
         //отправлили запрос на обновление
         httpEntity = new HttpEntity<>(fclt, headers); //подготовили запрос га добавление Facility

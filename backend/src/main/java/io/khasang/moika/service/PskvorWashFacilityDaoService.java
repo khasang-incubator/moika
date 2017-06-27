@@ -15,8 +15,8 @@ public interface PskvorWashFacilityDaoService {
     WashFacility getWashFacilityByID(int id);
     List<WashFacility> getAllWashFacilities();
     List<WashFacility> getWashFacilitiesOnNet(int idNet);
-    Set<WashBox> getWashBoxesOnFacility(int idFacility);
-    Set<WashBox> getWashBoxesOnFacility(WashFacility washFacility);
+    List<WashBox> getWashBoxesOnFacility(int idFacility);
+    List<WashBox> getWashBoxesOnFacility(WashFacility washFacility);
     List<WashFacility> getWashFacilitiesInCity(City city);
     WashFacility getWashFacilityByAddres(WashAddr washAddr);
 }

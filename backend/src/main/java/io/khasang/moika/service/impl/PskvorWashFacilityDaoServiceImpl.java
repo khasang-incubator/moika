@@ -109,7 +109,7 @@ public class PskvorWashFacilityDaoServiceImpl implements PskvorWashFacilityDaoSe
     }
 
     @Override
-    public Set<WashBox> getWashBoxesOnFacility(WashFacility washFacility) {
+    public List<WashBox> getWashBoxesOnFacility(WashFacility washFacility) {
         try {
             // return washFacilityDao.getWashBoxesOnFacility(washFacility.getId());
             WashFacility fclt = washFacilityDao.get(washFacility.getId());
@@ -121,7 +121,7 @@ public class PskvorWashFacilityDaoServiceImpl implements PskvorWashFacilityDaoSe
     }
 
     @Override
-    public Set<WashBox> getWashBoxesOnFacility(int idFclt) {
+    public List<WashBox> getWashBoxesOnFacility(int idFclt) {
         try {
             WashFacility fclt = washFacilityDao.get(idFclt);
             return fclt.getWashBoxes(); //getWashBoxesOnFacility(idFclt);

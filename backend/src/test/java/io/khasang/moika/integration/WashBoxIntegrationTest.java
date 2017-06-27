@@ -45,7 +45,7 @@ public class WashBoxIntegrationTest {
     @Test
     @Transactional
     @Rollback
-    public void createWashBox() {
+    public void testCreateWashBox() {
         RestTemplate restTemplate = new RestTemplate();
 
         BoxStatus boxStatus = new BoxStatus();
@@ -95,7 +95,7 @@ public class WashBoxIntegrationTest {
     @Test
     @Transactional
     @Rollback
-    public void updateWashBox() {
+    public void testUpdateWashBox() {
         final String newDesc = "Some test description" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date());
 
         HttpEntity<WashBox> httpEntity = new HttpEntity<>(headers); //подготовили запрос
@@ -127,7 +127,7 @@ public class WashBoxIntegrationTest {
     }
 
     @Test
-    public void getBoxListOnFclt() {
+    public void testTetBoxListOnFclt() {
 
         HttpEntity<List<WashBox>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -155,7 +155,7 @@ public class WashBoxIntegrationTest {
     }
 
     @Test
-    public void getBoxById() {
+    public void testGetBoxById() {
 
         HttpEntity<WashBox> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -185,7 +185,7 @@ public class WashBoxIntegrationTest {
         }
     }
     @Test
-    public void getBoxListByType() {
+    public void testGetBoxListByType() {
 
         HttpEntity<List<WashBox>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();
@@ -219,7 +219,7 @@ public class WashBoxIntegrationTest {
     }
 
     @Test
-    public void getBoxListByStatus() {
+    public void testGetBoxListByStatus() {
 
         HttpEntity<List<WashBox>> httpEntity = new HttpEntity<>(headers); //подготовили запрос
         RestTemplate restTemplate = new RestTemplate();

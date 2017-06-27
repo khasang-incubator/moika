@@ -23,6 +23,7 @@ public class WashFacilityCalendar extends ABaseMoikaEntity {
     protected int idFclt;
     @Id
     @Column(name = "date_x")
+    @Temporal(value = TemporalType.DATE)
     protected Date dateX;
 
     @Column(name = "id_date_type", insertable = false, updatable = false)
@@ -56,10 +57,18 @@ public class WashFacilityCalendar extends ABaseMoikaEntity {
         this.idFclt = idFclt;
     }
 
+    @JsonBackReference
     public Date getCalendarDate() {
         return dateX;
     }
 
+    public Date getDateX() {
+        return dateX;
+    }
+
+    public void setDateX(Date dateX) {
+        this.dateX = dateX;
+    }
 
     public int getIdDateType() {
         return idDateType;

@@ -17,6 +17,7 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
     protected int id;
     @Id
     @Column(name = "date_x")
+    @Temporal(value = TemporalType.DATE)
     protected Date dateX;
     @Id
     @Column(name = "time_on_starts")

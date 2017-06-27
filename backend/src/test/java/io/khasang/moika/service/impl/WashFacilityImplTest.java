@@ -91,7 +91,7 @@ public class WashFacilityImplTest {
 
         //     BoxStatus boxStatus = boxStatusDao.getEntityByCode(stausCode);
         //     BoxType boxType = boxTypeDao.getEntityByCode(typeCode);
-        Set<WashBox> boxList = new HashSet<>();
+        List<WashBox> boxList = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
             WashBox box = new WashBox();
             box.setBoxName("Бокс № " + i);
@@ -161,7 +161,7 @@ public class WashFacilityImplTest {
     public void testDeleteBoxFromFacility() {
         try {
             WashFacility fclt = fcltService.getWashFacilityByID(id);
-            Set<WashBox> boxes = fclt.getWashBoxes(); // подготовили класс для тестирования
+            List<WashBox> boxes = fclt.getWashBoxes(); // подготовили класс для тестирования
             int prevBoxCnt = boxes.size();
             WashBox boxToDelete= boxes.stream().findFirst().get();
             boxes.remove(boxToDelete);

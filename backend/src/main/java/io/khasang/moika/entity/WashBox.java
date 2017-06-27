@@ -50,18 +50,19 @@ public class WashBox  extends ABaseMoikaEntity {
     @JoinColumn(name = "id_status")//, insertable=false, updatable=false )
     private BoxStatus boxStatusEntity;
 
+    /*
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_box", foreignKey = @ForeignKey(name = "fk_box_time_table_wash_boxes"))
-    //@JsonManagedReference
+ //   @JsonManagedReference
     @JsonIgnore
     private Set<WashBoxTimeTable> boxTimeTable = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_box", foreignKey = @ForeignKey(name = "box_week_days_wash_box_id_box_fk"))
-    @JsonManagedReference
+  //  @JsonManagedReference
     @JsonIgnore
     private Set<WashBoxWeekTimeTable> boxWeekTimeTable = new HashSet<>();
-
+*/
     public WashBox() {
     }
 
@@ -141,7 +142,7 @@ public class WashBox  extends ABaseMoikaEntity {
         this.boxStatusEntity = boxStatusEntity;
         this.setIdStatus((short) boxStatusEntity.getId());
     }
-
+/*
     public Set<WashBoxTimeTable> getBoxTimeTable() {
         return boxTimeTable;
     }
@@ -157,7 +158,7 @@ public class WashBox  extends ABaseMoikaEntity {
     public void setBoxWeekTimeTable(Set<WashBoxWeekTimeTable> boxWeekTimeTable) {
         this.boxWeekTimeTable = boxWeekTimeTable;
     }
-
+*/
     @Override
     public String toString() {
         return "WashBox{" +

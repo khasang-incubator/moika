@@ -63,8 +63,8 @@ public class WashFacilityCalendarIntegrationTest {
 
         List<WashFacilityCalendar> resCalendar = fcltResponse.getBody();
         Assert.assertNotNull("Request body does not contain List of WashFacilityCalendar", resCalendar);
-        Assert.assertTrue("List of WashFacilityCalendar is empty", resCalendar.isEmpty());
-        ;
+        Assert.assertFalse("List of WashFacilityCalendar is empty", resCalendar.isEmpty());
+
         List<WorkHours> resHours = null;
         for (WashFacilityCalendar fcltResc : resCalendar) {
             if (fcltResc.getCalendarDate().compareTo(defDate) == 0 ) {

@@ -1,5 +1,6 @@
 package io.khasang.moika.config.application;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import io.khasang.moika.annotation.AddMenuPathAnnotationBeanPostProcessor;
 import io.khasang.moika.util.MenuMapper;
@@ -83,12 +84,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/**").addResourceLocations("/WEB-INF/views/");
     }
 
-    @Bean
-    public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder() {
-        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-        builder.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        return builder;
-    }
 
     /**
      * DRS Это переопределение приведёт к тому, что бин mvcValidator, при помощи которого все MVC-контроллеры
