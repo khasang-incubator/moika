@@ -2,6 +2,7 @@ package io.khasang.moika.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.hql.internal.ast.ParseErrorHandler;
 
@@ -36,7 +37,8 @@ public class WashFacilityCalendar extends ABaseMoikaEntity {
     @JoinColumns(value = {
             @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt"),
             @JoinColumn(name = "date_x", referencedColumnName = "date_x")}, foreignKey = @ForeignKey(name = "fk_facility_time_table_facility_calendar"))
-    private Set<WashFacilityTimeTable> fcltTimeTable = new HashSet<>();
+    @JsonManagedReference
+    private List<WashFacilityTimeTable> fcltTimeTable = new ArrayList<>();
 
 
     public WashFacilityCalendar() {
@@ -90,7 +92,7 @@ public class WashFacilityCalendar extends ABaseMoikaEntity {
         return new ArrayList<>(fcltTimeTable);
     }
 
-    public void setFcltTimeTable(Set<WashFacilityTimeTable> fcltTimeTable) {
+    public void setFcltTimeTable(List<WashFacilityTimeTable> fcltTimeTable) {
         this.fcltTimeTable = fcltTimeTable;
     }
 

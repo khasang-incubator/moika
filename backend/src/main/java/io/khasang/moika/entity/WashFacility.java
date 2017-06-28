@@ -40,17 +40,18 @@ public class WashFacility extends ABaseMoikaEntity {
     @JoinColumn(name = "id_addr", insertable = false, updatable = false)
     private WashAddr facilityAddr;
 
- /*   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_phone")
     @JoinTable(name = "r_facility_phones",
             joinColumns = @JoinColumn(name = "id_fclt"),
             inverseJoinColumns = @JoinColumn(name = "id_phone"),
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_phone"}))
- //   @JsonManagedReference(value = "fclt-phones")
+    @JsonManagedReference(value = "fclt-phones")
    // @JsonBackReference
-    @JsonIgnore
-    protected Set<Phone> phones = new HashSet<>(); //важно, что бы была EAGER инициализация и не дрался с другими ome to many у которых так же EAGER инициальзация
+ //   @JsonIgnore
+    private Set<Phone> phones = new HashSet<>(); //важно, что бы была EAGER инициализация и не дрался с другими ome to many у которых так же EAGER инициальзация
     //иначе будет ошибка:  org.hibernate.loader.MultipleBagFetchException: cannot simultaneously fetch multiple bags
-*/
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
     @JsonManagedReference(value = "fclt-boxes")
@@ -62,22 +63,22 @@ public class WashFacility extends ABaseMoikaEntity {
     @JsonManagedReference(value = "orders-fclt")
     //@JsonIgnore
     private Set<Orders> orders = new HashSet<>();
-
-
+*/
+/*
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, orphanRemoval = true)
-    @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt", foreignKey = @ForeignKey(name = "fk_fclt_calendar_facility"))
+  //  @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt", foreignKey = @ForeignKey(name = "fk_fclt_calendar_facility"))
     // @Fetch(value = FetchMode.SUBSELECT)
-    //  @JsonManagedReference(value = "fclt-odd-days")
+    @JsonManagedReference(value = "fclt-odd-days")
     // @JsonIgnore
     private Set<WashFacilityCalendar> oddOffDays = new HashSet<>();
 
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, orphanRemoval = true)
-    @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt", foreignKey = @ForeignKey(name = "fk_fclt_time_table_facility"))
-    //   @JsonManagedReference(value = "fclt-week-days")
-    //  @JsonIgnore
-    private Set<WashFacilityWeekDay> weekOffDays = new HashSet<>();
 */
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, orphanRemoval = true)
+    @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt", foreignKey = @ForeignKey(name = "fk_fclt_time_table_facility"))
+    @JsonManagedReference(value = "fclt-week-days")
+    @JsonIgnore
+    private Set<WashFacilityWeekDay> weekOffDays = new HashSet<>();
+
 
     public WashFacility() {
     }
@@ -125,16 +126,15 @@ public class WashFacility extends ABaseMoikaEntity {
     public void setFacilityAddr(WashAddr facilityAddr) {
         this.facilityAddr = facilityAddr;
     }
-/*
-    public Set<Phone> getPhones() {
-        return phones;
+
+    public List<Phone> getPhones() {
+        return new ArrayList<>(phones);
     }
 
-    public void setPhones(Set<Phone> phones) {
-        this.phones = phones;
-    }
+  //  public void setPhones(Set<Phone> phones) {
+  //      this.phones = phones;
+ //  }
 
-    @JsonIgnore
     public void setPhones(List<Phone> phones) {
         this.phones = new HashSet<>(phones);
     }
@@ -147,7 +147,7 @@ public class WashFacility extends ABaseMoikaEntity {
     public void addPhone(String phone) {
         this.phones.add(new Phone(phone));
     }
-*/
+
     public String getDescription() {
         return description;
     }
@@ -168,7 +168,8 @@ public class WashFacility extends ABaseMoikaEntity {
  //   public void setWashBoxes(List<WashBox> washBoXes) {
  //       this.washBoxes = new HashSet<>(washBoXes);
  //   }
-/*
+
+    /*
     public Set<Orders> getOrders() {
         return orders;
     }
@@ -183,21 +184,21 @@ public class WashFacility extends ABaseMoikaEntity {
         this.oddOffDays = new HashSet<>(oddOffDays);
     }
 
-
+*/
     public List<WashFacilityWeekDay> getFcltWeekOffDays() {
         return new ArrayList<>(weekOffDays);
     }
 
-
+    @JsonIgnore
     public void setFcltWeekOffDays(Set<WashFacilityWeekDay> weekOffDays) {
         this.weekOffDays = weekOffDays;
     }
 
-    @JsonIgnore
+
     public void setFcltWeekOffDays(List<WashFacilityWeekDay> weekOffDays) {
         this.weekOffDays = new HashSet<>(weekOffDays);
     }
-
+/*
     @JsonIgnore
     public List<WorkHours> getDefaultWorkHours() {
         Date defDate;

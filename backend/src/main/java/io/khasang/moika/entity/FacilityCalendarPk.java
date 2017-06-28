@@ -2,6 +2,8 @@ package io.khasang.moika.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.Objects;
 /**
@@ -13,6 +15,7 @@ public class FacilityCalendarPk extends ABaseMoikaEntity{
     @Column(name = "id_fclt")
     protected int idFclt;
     @Column(name = "date_x")
+    @Temporal(value = TemporalType.DATE)
     protected Date dateX;
 
 

@@ -172,7 +172,7 @@ public class WashFacilityIntegrationTest {
                 HttpMethod.GET,
                 httpEntity,
                 new ParameterizedTypeReference<WashFacility>() {
-                }, id);
+                }, 16);
         Assert.assertNotNull("Request body is incorrect", fcltResponse);
         Assert.assertTrue("Request code not 202 " + fcltResponse.getStatusCode().toString(), fcltResponse.getStatusCode().is2xxSuccessful());
 
