@@ -27,23 +27,22 @@ public class Phone extends ABaseMoikaEntity {
     @Pattern(regexp = PHONE_NUMBER_PATTERN, message = "{phone.not_10digits.message}")
     private String phoneNumber;
 
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+ //   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
  //   @JoinTable(name = "r_facility_phones",
  //           joinColumns = @JoinColumn(name = "id_phone"),
  //           inverseJoinColumns = @JoinColumn(name = "id_fclt"),
  //           uniqueConstraints = @UniqueConstraint(columnNames = {"id_phone"}))
-    @JsonBackReference(value = "fclt-phones")
-    private WashFacility fclt;
-/*
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    @JoinTable(name = "r_person_phones",
-            joinColumns = @JoinColumn(name = "id_phone"),
-            inverseJoinColumns = @JoinColumn(name = "id_person"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"id_phone"}))
-    @JsonBackReference(value = "person-phones")
-    private Person person;
-*/
+ //   @JsonBackReference(value = "fclt-phones")
+ //   private WashFacility fclt;
+
+  //  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+  //  @JoinTable(name = "r_person_phones",
+  //           joinColumns = @JoinColumn(name = "id_phone"),
+  //           inverseJoinColumns = @JoinColumn(name = "id_person"),
+  //           uniqueConstraints = @UniqueConstraint(columnNames = {"id_phone"}))
+   // @JsonBackReference(value = "person-phones")
+   // private Person person;
+
     public Phone() {
     }
     public Phone(String phoneNumber) {

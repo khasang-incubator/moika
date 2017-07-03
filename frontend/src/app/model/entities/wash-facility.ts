@@ -17,7 +17,7 @@ export class WashFacility extends BaseMoikaEntity {
    idManager: number;
    manager: User;
    washBoxes: Array<WashBox>;
-   oddOffDays:  Array<WorkCalendar>;
-   weekOffDays:  Array<WeekDay>;
+   fcltOddDays:  Array<WorkCalendar>;
+   fcltWeekDays:  Array<WeekDay>;
 
 }

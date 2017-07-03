@@ -1,10 +1,10 @@
 package io.khasang.moika.entity;
 
-import org.apache.commons.lang3.time.DateUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalTime;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -19,6 +19,7 @@ public class WashBoxTimeTable extends ABaseMoikaEntity {
 
     @Id
     @Column(name = "id_box")
+    @JsonIgnore
     protected int id;
     @Id
     @Column(name = "date_x")
@@ -26,9 +27,13 @@ public class WashBoxTimeTable extends ABaseMoikaEntity {
     protected Date dateX;
     @Id
     @Column(name = "time_on_starts")
+    @JsonIgnore
+    @JsonFormat(pattern = "HH:mm")
     protected LocalTime timeOnStarts;
 
     @Column(name = "time_on_ends")
+    @JsonIgnore
+    @JsonFormat(pattern = "HH:mm")
     protected LocalTime timeOnEnds;
 
     public WashBoxTimeTable() {
@@ -41,11 +46,11 @@ public class WashBoxTimeTable extends ABaseMoikaEntity {
         this.timeOnEnds = timeClose;
 
     }
-
+    @JsonIgnore
     public int getIdBox() {
         return id;
     }
-
+    @JsonIgnore
     public void setIdBox(int idBox) {
         this.id = idBox;
     }
@@ -57,7 +62,6 @@ public class WashBoxTimeTable extends ABaseMoikaEntity {
     public void setDateX(Date dateX) {
         this.dateX = dateX;
     }
-
 
     public LocalTime getTimeOnStarts() {
         return timeOnStarts;

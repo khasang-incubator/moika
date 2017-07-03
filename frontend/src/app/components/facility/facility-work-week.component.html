@@ -1,0 +1,20 @@
+
+<ul class="fWorkWeek"> Время работы
+  <li *ngFor="let weekDay of fWorkWeek">
+    <div [ngSwitch]="weekDay[0]">
+      <h4 *ngSwitchCase="0"> "Воскресенье"</h4>
+      <h4 *ngSwitchCase="1"> "Понедельник"</h4>
+      <h4 *ngSwitchCase="2"> "Вторник"</h4>
+      <h4 *ngSwitchCase="3"> "Среда"</h4>
+      <h4 *ngSwitchCase="4"> "Четверг"</h4>
+      <h4 *ngSwitchCase="5"> "Пятница"</h4>
+      <h4 *ngSwitchCase="6"> "Суббота"</h4>
+    </div>
+    <ul class="fWorkTime">
+      <li *ngFor="let weekTime of weekDay[3]">
+        <p-calendar [(ngModel)]="weekTime[0]" [showTime]="true" hourFormat="24" showSeconds="false"></p-calendar>
+        <p-calendar [(ngModel)]="weekTime[1]" [showTime]="true" hourFormat="24" showSeconds="false"></p-calendar>
+      </li>
+    </ul>
+  </li>
+</ul>

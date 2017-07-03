@@ -1,5 +1,8 @@
 package io.khasang.moika.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -16,16 +19,22 @@ public class WashBoxWeekTimeTable extends ABaseMoikaEntity {
 
     @Id
     @Column(name = "id_box")
+    @JsonIgnore
     protected int id;
     @Id
     @Column(name = "day_of_week")
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
     protected DayOfWeek weekDay;
     @Id
+    @JsonIgnore
     @Column(name = "time_on_starts")
+    @JsonFormat(pattern = "HH:mm")
     protected LocalTime timeOnStarts;
 
     @Column(name = "time_on_ends")
+    @JsonFormat(pattern = "HH:mm")
    // @Temporal(TemporalType.TIME)
+    @JsonIgnore
     protected LocalTime timeOnEnds;
 
     public WashBoxWeekTimeTable() {
@@ -37,11 +46,11 @@ public class WashBoxWeekTimeTable extends ABaseMoikaEntity {
         this.timeOnStarts = timeOnStarts;
         this.timeOnEnds = timeOnEnds;
     }
-
+    @JsonIgnore
     public int getIdBox() {
         return id;
     }
-
+    @JsonIgnore
     public void setIdBox(int idBox) {
         this.id = idBox;
     }
@@ -54,20 +63,30 @@ public class WashBoxWeekTimeTable extends ABaseMoikaEntity {
         this.weekDay = weekDay;
     }
 
+    @JsonIgnore
     public LocalTime getTimeOnStarts() {
         return timeOnStarts;
     }
-
+    @JsonIgnore
     public void setTimeOnStarts(LocalTime timeOnStarts) {
         this.timeOnStarts = timeOnStarts;
     }
-
+    @JsonIgnore
     public LocalTime getTimeOnEnds() {
         return timeOnEnds;
     }
-
+    @JsonIgnore
     public void setTimeOnEnds(LocalTime timeOnEnds) {
         this.timeOnEnds = timeOnEnds;
+    }
+
+    public WorkHours getWorkHours(){
+        return new WorkHours(timeOnStarts,timeOnEnds);
+    }
+
+    public  void setWorkHours(WorkHours workHours){
+        this.timeOnEnds = workHours.timeOnStarts;
+        this.timeOnEnds = workHours.timeOnEnds;
     }
 
     @Override

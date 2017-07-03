@@ -3,6 +3,8 @@ package io.khasang.moika.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -50,19 +52,21 @@ public class WashBox  extends ABaseMoikaEntity {
     @JoinColumn(name = "id_status")//, insertable=false, updatable=false )
     private BoxStatus boxStatusEntity;
 
-    /*
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_box", foreignKey = @ForeignKey(name = "fk_box_time_table_wash_boxes"))
+    @Fetch(FetchMode.SELECT)
  //   @JsonManagedReference
-    @JsonIgnore
+ //   @JsonIgnore
     private Set<WashBoxTimeTable> boxTimeTable = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_box", foreignKey = @ForeignKey(name = "box_week_days_wash_box_id_box_fk"))
+    @Fetch(FetchMode.SELECT)
   //  @JsonManagedReference
-    @JsonIgnore
+  //  @JsonIgnore
     private Set<WashBoxWeekTimeTable> boxWeekTimeTable = new HashSet<>();
-*/
+
     public WashBox() {
     }
 
@@ -142,7 +146,7 @@ public class WashBox  extends ABaseMoikaEntity {
         this.boxStatusEntity = boxStatusEntity;
         this.setIdStatus((short) boxStatusEntity.getId());
     }
-/*
+
     public Set<WashBoxTimeTable> getBoxTimeTable() {
         return boxTimeTable;
     }
@@ -158,7 +162,7 @@ public class WashBox  extends ABaseMoikaEntity {
     public void setBoxWeekTimeTable(Set<WashBoxWeekTimeTable> boxWeekTimeTable) {
         this.boxWeekTimeTable = boxWeekTimeTable;
     }
-*/
+
     @Override
     public String toString() {
         return "WashBox{" +

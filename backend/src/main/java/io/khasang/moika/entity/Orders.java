@@ -1,6 +1,7 @@
 package io.khasang.moika.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -30,7 +31,7 @@ public class Orders extends ABaseMoikaEntity {
     private Long idFclt;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_fclt", insertable=false, updatable=false )
-    @JsonBackReference(value = "fclt-orders")
+    @JsonManagedReference(value = "fclt-orders")
     private WashFacility washFacility;
 
     @Column(name = "id_car")
@@ -44,7 +45,7 @@ public class Orders extends ABaseMoikaEntity {
     private Long idClient;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_car", insertable=false, updatable=false )
-    @JsonBackReference(value = "client-orders")
+    @JsonManagedReference(value = "client-orders")
     private Client client;
 
     @Column(name = "id_discount")

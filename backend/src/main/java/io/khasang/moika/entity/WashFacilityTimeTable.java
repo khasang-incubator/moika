@@ -1,5 +1,8 @@
 package io.khasang.moika.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Date;
@@ -14,16 +17,22 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
 
     @Id
     @Column(name = "id_fclt")
+    @JsonIgnore
     protected int id;
     @Id
     @Column(name = "date_x")
     @Temporal(value = TemporalType.DATE)
+    @JsonIgnore
     protected Date dateX;
     @Id
     @Column(name = "time_on_starts")
+    @JsonIgnore
+    @JsonFormat(pattern = "HH:mm")
     protected LocalTime timeOnStarts;
 
     @Column(name = "time_on_ends")
+    @JsonIgnore
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime timeOnEnds;
 
 
@@ -37,24 +46,24 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
         this.timeOnEnds = timeOnEnds;
     }
 
-
+    @JsonIgnore
     public int getIdFaciilty() {
         return id;
     }
-
+    @JsonIgnore
     public void setIdFacility(int idFclt) {
         this.id = idFclt;
     }
-
+    @JsonIgnore
     public Date getDateX() {
         return dateX;
     }
-
+    @JsonIgnore
     public void setdateX(Date dateX) {
         this.dateX = dateX;
     }
 
-    /*
+    @JsonIgnore
     public LocalTime getTimeOnStarts() {
         return timeOnStarts;
     }
@@ -63,6 +72,7 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
         this.timeOnStarts = timeOnStarts;
     }
 
+    @JsonIgnore
     public LocalTime getTimeOnEnds() {
         return timeOnEnds;
     }
@@ -71,7 +81,6 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
         this.timeOnEnds = timeOnEnds;
     }
 
-    */
     public WorkHours getWorkHours(){
         return new WorkHours(timeOnStarts,timeOnEnds);
     }

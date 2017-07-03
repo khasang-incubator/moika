@@ -1,6 +1,7 @@
 package io.khasang.moika.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -13,10 +14,18 @@ import java.util.*;
  *
  */
 @Entity(name = "facility_week_days")
+@IdClass(FacilityWeekdayPk.class)
 public class WashFacilityWeekDay extends ABaseMoikaEntity {
 
-    @EmbeddedId
-    private FacilityWeekdayPk facilityWeekdayPk;
+    @Id
+    @Column(name = "id_fclt")
+    @JsonIgnore
+    protected int idFclt;
+    @Id
+    @Column(name = "day_of_week")
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
+    protected DayOfWeek weekDay;
+
 
     @Column(name = "id_day_type", insertable=false, updatable=false)
     private int idDateType;
@@ -34,27 +43,32 @@ public class WashFacilityWeekDay extends ABaseMoikaEntity {
     public WashFacilityWeekDay() {
     }
 
-    public WashFacilityWeekDay(FacilityWeekdayPk facilityWeekdayPk, int idDateType, CalendarDateType dateType) {
-        this.facilityWeekdayPk = facilityWeekdayPk;
+    public WashFacilityWeekDay(int idFacility, DayOfWeek weekDay, int idDateType, CalendarDateType dateType) {
+        this.idFclt = idFacility;
+        this.weekDay = weekDay;
         this.idDateType = idDateType;
         this.dateType = dateType;
     }
 
 
     public void setIdFacility(int idFclt) {
-        this.facilityWeekdayPk.setIdFacility(idFclt);
+        this.idFclt = idFclt;
+    }
+
+    public int getIdFclt() {
+        return idFclt;
     }
 
     public DayOfWeek getWeekDay() {
-        return facilityWeekdayPk.getWeekDay();
+        return this.weekDay;
     }
 
     public void setWeekDay(DayOfWeek weekDay) {
-        this.facilityWeekdayPk.setWeekDay(weekDay);
+        this.weekDay = weekDay ;
     }
 
     public void setWeekDay(int weekDay) {
-        this.facilityWeekdayPk.setWeekDay(weekDay);
+        this.weekDay = DayOfWeek.of(weekDay);
     }
 
     public int getIdDateType() {
@@ -88,13 +102,14 @@ public class WashFacilityWeekDay extends ABaseMoikaEntity {
 
         WashFacilityWeekDay that = (WashFacilityWeekDay) o;
 
-        if (getIdDateType() != that.getIdDateType()) return false;
-        if (!facilityWeekdayPk.equals(that.facilityWeekdayPk)) return false;
+        if (this.getIdDateType() != that.getIdDateType()) return false;
+        if (this.idFclt != that.getIdFclt())  return false;
+        if (this.weekDay != that.getWeekDay())  return false;
         return dateType.equals(that.getDateType());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(facilityWeekdayPk, dateType);
+        return Objects.hash(this.idFclt, this.weekDay, dateType);
     }
 }

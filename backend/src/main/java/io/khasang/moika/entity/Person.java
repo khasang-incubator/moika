@@ -3,6 +3,8 @@ package io.khasang.moika.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -34,8 +36,8 @@ public class Person extends ABaseMoikaEntity {
             joinColumns = @JoinColumn(name = "id_person"),
             inverseJoinColumns = @JoinColumn(name = "id_phone"),
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_phone"}))
-//    @JsonManagedReference(value = "person-phones")
-    @JsonIgnore
+    //@JsonManagedReference(value = "person-phones")
+    @Fetch(FetchMode.SELECT)
     protected Set<Phone> phones = new HashSet<>();
 
     @Email

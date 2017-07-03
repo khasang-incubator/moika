@@ -1,12 +1,12 @@
 package io.khasang.moika.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Id;
-import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
@@ -19,9 +19,11 @@ public class WorkHours {
     private static final Logger logger = LoggerFactory.getLogger(WorkHours.class);
     @Id
     @Column(name = "time_on_starts")
+    @JsonFormat(pattern = "HH:mm")
     protected LocalTime timeOnStarts = LocalTime.of(0, 0);
 
     @Column(name = "time_on_ends")
+    @JsonFormat(pattern = "HH:mm")
     protected LocalTime timeOnEnds = LocalTime.of(0, 0);
 
     public WorkHours() {

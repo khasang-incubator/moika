@@ -1,5 +1,9 @@
 package io.khasang.moika.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -16,15 +20,19 @@ public class WashFacilityWeekTimeTable extends ABaseMoikaEntity {
 
     @Id
     @Column(name = "id_fclt")
+    @JsonIgnore
     protected int id;
     @Id
     @Column(name = "day_of_week")
+    @JsonIgnore
     protected DayOfWeek weekDay;
     @Id
     @Column(name = "time_on_starts")
+    @JsonIgnore
     private LocalTime timeOnStarts;
 
     @Column(name = "time_on_ends")
+    @JsonIgnore
     private LocalTime timeOnEnds;
 
     public WashFacilityWeekTimeTable() {
@@ -36,40 +44,41 @@ public class WashFacilityWeekTimeTable extends ABaseMoikaEntity {
         this.timeOnStarts = timeOnStarts;
         this.timeOnEnds = timeOnEnds;
     }
-
+    @JsonIgnore
     public int getIdFclt() {
         return id;
     }
-
+    @JsonIgnore
     public void setIdFclt(int idFclt) {
         this.id = idFclt;
     }
-
+    @JsonIgnore
     public DayOfWeek getWeekDay() {
         return weekDay;
     }
-
+    @JsonIgnore
     public void setWeekDay(DayOfWeek weekDay) {
         this.weekDay = weekDay;
     }
 
-    /*
+    @JsonIgnore
     public LocalTime getTimeOnStarts() {
         return timeOnStarts;
     }
-
+    @JsonIgnore
     public void setTimeOnStarts(LocalTime timeOnStarts) {
         this.timeOnStarts = timeOnStarts;
     }
 
+    @JsonIgnore
     public LocalTime getTimeOnEnds() {
         return timeOnEnds;
     }
-
+    @JsonIgnore
     public void setTimeOnEnds(LocalTime timeOnEnds) {
         this.timeOnEnds = timeOnEnds;
     }
-    */
+
 
     public WorkHours getWorkHours(){
         return new WorkHours(timeOnStarts,timeOnEnds);

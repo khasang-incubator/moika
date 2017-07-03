@@ -21,7 +21,13 @@ public class WashFacilityCalendar extends ABaseMoikaEntity {
 
     @Id
     @Column(name = "id_fclt")
+    @JsonIgnore
     protected int idFclt;
+  /*  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_fclt", insertable = false, updatable = false)
+    @JsonBackReference(value = "fclt-odd-days")
+    private WashFacility washFacility; */
+
     @Id
     @Column(name = "date_x")
     @Temporal(value = TemporalType.DATE)

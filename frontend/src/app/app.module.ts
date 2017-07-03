@@ -8,7 +8,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {
   DataTableModule, DropdownModule, InputTextareaModule, PanelModule, DialogModule, SharedModule,
   ButtonModule, MenuModule, TieredMenuModule, FieldsetModule, CarouselModule, PasswordModule, AccordionModule,
-  PanelMenuModule
+  PanelMenuModule, CalendarModule
 } from 'primeng/primeng';
 
 import { BsDropdownModule} from "ngx-bootstrap";
@@ -54,6 +54,8 @@ import {UserOutletComponent} from "./components/user-outlet.component";
 import {AdminOutletComponent} from "./components/admin-outlet.component";
 import {FcltOwnerOutletComponent} from "./components/fclt-owner-outlet.component";
 import {AutoOwnerOutletComponent} from "app/components/auto-owner-outlet.component";
+import { FacilityCalendarComponent } from './components/facility/facility-calendar.component';
+import { FacilityWorkWeekComponent } from './components/facility/facility-work-week.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +91,8 @@ import {AutoOwnerOutletComponent} from "app/components/auto-owner-outlet.compone
     AdminOutletComponent,
     FcltOwnerOutletComponent,
     AutoOwnerOutletComponent,
+    FacilityCalendarComponent,
+    FacilityWorkWeekComponent,
   ],
   imports: [
     BsDropdownModule.forRoot(),
@@ -99,7 +103,7 @@ import {AutoOwnerOutletComponent} from "app/components/auto-owner-outlet.compone
     DataTableModule, DialogModule, SharedModule,  DataTableModule, InputTextareaModule,
     FormsModule, PanelModule, DropdownModule, ButtonModule, MenuModule, TieredMenuModule,
     NoopAnimationsModule, FieldsetModule, CarouselModule, PasswordModule, AccordionModule,
-    PanelMenuModule,
+    PanelMenuModule, CalendarModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDX_0DCgqImKoRTUPQ3QRjdOwLEVKwm3uE'
     }),

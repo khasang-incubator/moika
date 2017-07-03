@@ -8,4 +8,5 @@ export class WeekDay extends BaseMoikaEntity {
     weekDay: DayOfWeek;
     dayType: SomeType;
     workHours:  Array<WorkHours>;
+
 }
