@@ -37,7 +37,7 @@ public class WashFacilityWeekDay extends ABaseMoikaEntity {
     @JoinColumns({
             @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt"),
             @JoinColumn(name = "day_of_week", referencedColumnName = "day_of_week")})
-    private Set<WashFacilityWeekTimeTable> fcltWeekTimeTable = new HashSet<>();
+    private Set<WashFacilityWeekTimeTable> weekTimeTable = new HashSet<>();
 
 
     public WashFacilityWeekDay() {
@@ -87,12 +87,12 @@ public class WashFacilityWeekDay extends ABaseMoikaEntity {
         this.dateType = dateType;
     }
 
-    public Set<WashFacilityWeekTimeTable> getFcltWeekTimeTable() {
-        return fcltWeekTimeTable;
+    public Set<WashFacilityWeekTimeTable> getWeekTimeTable() {
+        return weekTimeTable;
     }
 
-    public void setFcltWeekTimeTable(Set<WashFacilityWeekTimeTable> fcltWeekTimeTable) {
-        this.fcltWeekTimeTable = fcltWeekTimeTable;
+    public void setWeekTimeTable(Set<WashFacilityWeekTimeTable> weekTimeTable) {
+        this.weekTimeTable = weekTimeTable;
     }
 
     @Override

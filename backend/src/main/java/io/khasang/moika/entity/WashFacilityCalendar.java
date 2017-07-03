@@ -44,7 +44,7 @@ public class WashFacilityCalendar extends ABaseMoikaEntity {
             @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt"),
             @JoinColumn(name = "date_x", referencedColumnName = "date_x")}, foreignKey = @ForeignKey(name = "fk_facility_time_table_facility_calendar"))
     @JsonManagedReference
-    private List<WashFacilityTimeTable> fcltTimeTable = new ArrayList<>();
+    private List<WashFacilityTimeTable> timeTable = new ArrayList<>();
 
 
     public WashFacilityCalendar() {
@@ -94,18 +94,18 @@ public class WashFacilityCalendar extends ABaseMoikaEntity {
         this.dateType = dateType;
     }
 
-    public List<WashFacilityTimeTable> getFcltTimeTable() {
-        return new ArrayList<>(fcltTimeTable);
+    public List<WashFacilityTimeTable> getTimeTable() {
+        return new ArrayList<>(timeTable);
     }
 
-    public void setFcltTimeTable(List<WashFacilityTimeTable> fcltTimeTable) {
-        this.fcltTimeTable = fcltTimeTable;
+    public void setFcltTimeTable(List<WashFacilityTimeTable> timeTable) {
+        this.timeTable = timeTable;
     }
 
     @JsonIgnore
     public List<WorkHours> getWorkHours(){
         List<WorkHours> wh = new ArrayList<>();
-        fcltTimeTable.forEach(tt -> wh.add(tt.getWorkHours()));
+        timeTable.forEach(tt -> wh.add(tt.getWorkHours()));
         return wh;
     }
 

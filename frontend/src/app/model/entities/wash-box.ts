@@ -15,6 +15,6 @@ export class WashBox extends BaseMoikaEntity {
    boxTypeEntity: SomeType;
    idStatus: number;
    boxStatusEntity: SomeStatus;
-   oddOffDays:  Array<WorkCalendar>;
-   weekOffDays:  Array<WeekDay>;
+   oddDates:  Array<WorkCalendar>;
+   weekDays:  Array<WeekDay>;
 }

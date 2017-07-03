@@ -13,9 +13,9 @@ export class LocalTime extends BaseMoikaEntity {
     sec = (sec) ? sec : 0;
     nano = (nano) ? nano : 0;
 
-    this._hour = (((hour <= 24) || ( hour >= 0  )) ? Math.ceil(hour) : 0);
-    this._minute = ((min <= 60) || (min >= 0 ) ? Math.ceil(min) : 0);
-    this._second = ((sec <= 60) || (sec >= 0 ) ? Math.ceil(sec) : 0);
+    this._hour = (((hour < 24) || ( hour >= 0  )) ? Math.ceil(hour) : 0);
+    this._minute = ((min < 60) || (min >= 0 ) ? Math.ceil(min) : 0);
+    this._second = ((sec < 60) || (sec >= 0 ) ? Math.ceil(sec) : 0);
     this._nano = Math.abs(Math.ceil(nano));
   }
 
@@ -57,7 +57,10 @@ export class LocalTime extends BaseMoikaEntity {
 
   public toDate(): Date {
     let _d = new Date();
-    _d.setTime(Date.parse(this.toString()));
+    _d.setHours(this._hour);
+    _d.setMinutes(this._minute);
+    _d.setSeconds(this._second);
+    _d.setMilliseconds(this._second);
     return _d;
   }
 

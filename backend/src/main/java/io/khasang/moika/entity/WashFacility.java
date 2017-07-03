@@ -75,7 +75,8 @@ public class WashFacility extends ABaseMoikaEntity {
     // @Fetch(value = FetchMode.SUBSELECT)
     //@JsonManagedReference(value = "fclt-odd-days")
     // @JsonIgnore
-    private Set<WashFacilityCalendar> oddDays = new HashSet<>();
+    @JsonProperty("oddDates")   //с каким именем поле будет выгружено в JSON
+    private Set<WashFacilityCalendar> oddDates = new HashSet<>();
 
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, orphanRemoval = true)
@@ -83,7 +84,8 @@ public class WashFacility extends ABaseMoikaEntity {
     @Fetch(FetchMode.SELECT)
     //  @JsonManagedReference(value = "fclt-week-days")
     //  @JsonIgnore
-    private Set<WashFacilityWeekDay> weekDays = new HashSet<>();
+    @JsonProperty("weekDays")   //с каким именем поле будет выгружено в JSON
+    private Set<WashFacilityWeekDay> weekOddDays = new HashSet<>();
 
 
     public WashFacility() {
@@ -181,27 +183,24 @@ public class WashFacility extends ABaseMoikaEntity {
         return orders;
     }
 
-    public Set<WashFacilityCalendar> getFcltOddDays() {
-        return oddDays;
+    public void setOrders(Set<Orders> orders) {
+        this.orders = orders;
     }
 
-    public void setFcltOddDays(Set<WashFacilityCalendar> oddDays) {
-        this.oddDays = oddDays;
+    public Set<WashFacilityCalendar> getOddDates() {
+        return oddDates;
     }
 
-
-    public List<WashFacilityWeekDay> getFcltWeekDays() {
-        return new ArrayList<>(weekDays);
+    public void setOddDates(Set<WashFacilityCalendar> oddDates) {
+        this.oddDates = oddDates;
     }
 
-  /*  @JsonIgnore
-    public void setFcltWeekOffDays(Set<WashFacilityWeekDay> weekDays) {
-        this.weekDays = weekDays;
+    public Set<WashFacilityWeekDay> getWeekOddDays() {
+        return weekOddDays;
     }
 
-  */
-    public void setFcltWeekDays(List<WashFacilityWeekDay> weekDays) {
-        this.weekDays = new HashSet<>(weekDays);
+    public void setWeekOddDays(Set<WashFacilityWeekDay> weekDays) {
+        this.weekOddDays = weekDays;
     }
 
     @JsonIgnore
@@ -213,7 +212,7 @@ public class WashFacility extends ABaseMoikaEntity {
         } catch (ParseException e) {
             defDate = new Date();
         }
-        for (WashFacilityCalendar fcltResc : this.getFcltOddDays()) {
+        for (WashFacilityCalendar fcltResc : this.getOddDates()) {
             if (fcltResc.getCalendarDate().compareTo(defDate) == 0 ) {
                 if (fcltResc.getIdDateType() == 0) {
                     resHours = fcltResc.getWorkHours();

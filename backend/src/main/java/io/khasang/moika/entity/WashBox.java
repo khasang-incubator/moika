@@ -58,14 +58,14 @@ public class WashBox  extends ABaseMoikaEntity {
     @Fetch(FetchMode.SELECT)
  //   @JsonManagedReference
  //   @JsonIgnore
-    private Set<WashBoxTimeTable> boxTimeTable = new HashSet<>();
+    private Set<WashBoxTimeTable> timeTable = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_box", foreignKey = @ForeignKey(name = "box_week_days_wash_box_id_box_fk"))
     @Fetch(FetchMode.SELECT)
   //  @JsonManagedReference
   //  @JsonIgnore
-    private Set<WashBoxWeekTimeTable> boxWeekTimeTable = new HashSet<>();
+    private Set<WashBoxWeekTimeTable> weekTimeTable = new HashSet<>();
 
     public WashBox() {
     }
@@ -147,20 +147,20 @@ public class WashBox  extends ABaseMoikaEntity {
         this.setIdStatus((short) boxStatusEntity.getId());
     }
 
-    public Set<WashBoxTimeTable> getBoxTimeTable() {
-        return boxTimeTable;
+    public Set<WashBoxTimeTable> getTmeTable() {
+        return timeTable;
     }
 
-    public void setBoxTimeTable(Set<WashBoxTimeTable> boxTimeTable) {
-        this.boxTimeTable = boxTimeTable;
+    public void setTimeTable(Set<WashBoxTimeTable> timeTable) {
+        this.timeTable = timeTable;
     }
 
-    public Set<WashBoxWeekTimeTable> getBoxWeekTimeTable() {
-        return boxWeekTimeTable;
+    public Set<WashBoxWeekTimeTable> getWeekTimeTable() {
+        return weekTimeTable;
     }
 
-    public void setBoxWeekTimeTable(Set<WashBoxWeekTimeTable> boxWeekTimeTable) {
-        this.boxWeekTimeTable = boxWeekTimeTable;
+    public void setWeekTimeTable(Set<WashBoxWeekTimeTable> weekTimeTable) {
+        this.weekTimeTable = weekTimeTable;
     }
 
     @Override
