@@ -21,8 +21,8 @@ export class WorkHours extends BaseMoikaEntity {
     _al = (te.length >= 4) ? 4 : te.length;
     for (var i = 0; i < _al; i++) _teA[i] = te[i];
 
-    let _ts = new LocalTime(ts[0], ts[1], ts[2], ts[3]);
-    let _te = new LocalTime(te[0], te[1], te[2], te[3]);
+    let _ts = LocalTime.from(ts[0], ts[1], ts[2], ts[3]);
+    let _te = LocalTime.from(te[0], te[1], te[2], te[3]);
     return new WorkHours(_ts, _te);
   }
 

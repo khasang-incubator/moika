@@ -1,22 +1,41 @@
 import {BaseMoikaEntity} from "./base-moika-entity";
 
-export class LocalTime extends BaseMoikaEntity {
+interface ILocalTime{
+  hour: number;
+  minute: number;
+  second: number;
+  nano: number;
+}
+
+export class LocalTime extends BaseMoikaEntity implements ILocalTime{
   private _hour: number = 0;
   private _minute: number = 0;
   private _second: number = 0;
   private _nano: number = 0;
 
-  constructor(hour: number, min: number, sec: number, nano: number) {
+
+  constructor( ) {
     super();
+  }
+
+  /**
+   * Время из чисел
+   * @param
+   * @returns {LocalTime}
+   */
+
+  public static from(hour: number, min: number, sec: number, nano: number): LocalTime {
+    let retTime = new LocalTime();
     hour = (hour) ? hour : 0;
     min = (min) ? min : 0;
     sec = (sec) ? sec : 0;
     nano = (nano) ? nano : 0;
 
-    this._hour = (((hour < 24) || ( hour >= 0  )) ? Math.ceil(hour) : 0);
-    this._minute = ((min < 60) || (min >= 0 ) ? Math.ceil(min) : 0);
-    this._second = ((sec < 60) || (sec >= 0 ) ? Math.ceil(sec) : 0);
-    this._nano = Math.abs(Math.ceil(nano));
+    retTime.hour = (((hour < 24) || ( hour >= 0  )) ? Math.ceil(hour) : 0);
+    retTime.minute = ((min < 60) || (min >= 0 ) ? Math.ceil(min) : 0);
+    retTime.second = ((sec < 60) || (sec >= 0 ) ? Math.ceil(sec) : 0);
+    retTime.nano = Math.abs(Math.ceil(nano));
+    return retTime;
   }
 
   /**
@@ -25,16 +44,22 @@ export class LocalTime extends BaseMoikaEntity {
    * @returns {LocalTime}
    */
   public static of(timeStamp: Date): LocalTime {
-    return new LocalTime(timeStamp.getHours(), timeStamp.getMinutes(), timeStamp.getSeconds(), timeStamp.getMilliseconds());
+    let retTime = new LocalTime();
+    retTime.hour = timeStamp.getHours();
+    retTime.minute = timeStamp.getMinutes();
+    retTime.second = timeStamp.getSeconds();
+    retTime.nano = timeStamp.getMilliseconds();
+    return retTime;
   }
 
-  /**
+    /**
    * Время из строки
    * @param time в формате "hh:mm:ss.nnn"
    * @returns {LocalTime}
    */
   public static parse(time: string): LocalTime {
     const timeStrArr: string[] = time.split(":");
+    let retTime = new LocalTime();
     let h, m, s, n: number = 0;
 
     if (time) {
@@ -50,7 +75,11 @@ export class LocalTime extends BaseMoikaEntity {
             }
           }
         }
-        return new LocalTime(h, m, s, n);
+        retTime.hour = h;
+        retTime.minute = m;
+        retTime.second = s;
+        retTime.nano = n;
+        return retTime;
       }
     }
   }
