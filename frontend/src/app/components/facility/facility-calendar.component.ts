@@ -56,8 +56,8 @@ export class FacilityCalendarComponent implements OnInit {
   ngOnChanges(): void {
     if (this.washFacility){
       this.selectedDate = this.today;
-      console.log(JSON.stringify(this.washFacility.oddDates));
-      console.log(JSON.stringify(this.washFacility.weekDays));
+      //console.log(JSON.stringify(this.washFacility.oddDates));
+      //console.log(JSON.stringify(this.washFacility.weekDays));
       this.oddDates.length=0;
       this.oddDays.length=0;
       this.washFacility.oddDates.forEach(oddDate=>{
@@ -66,8 +66,8 @@ export class FacilityCalendarComponent implements OnInit {
         }
       });
       this.washFacility.weekDays.forEach(oddDay=>this.oddDays.push(oddDay.weekDay.valueOf()));
-      console.log(JSON.stringify(this.oddDates));
-      console.log(JSON.stringify(this.oddDays));
+     // console.log(JSON.stringify(this.oddDates));
+     // console.log(JSON.stringify(this.oddDays));
     }
   }
 }

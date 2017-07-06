@@ -14,8 +14,18 @@ export class LocalTime extends BaseMoikaEntity implements ILocalTime{
   private _nano: number = 0;
 
 
-  constructor( ) {
+
+  constructor(hour: number, min: number, sec?: number, nano?: number) {
     super();
+    hour = (hour) ? hour : 0;
+    min = (min) ? min : 0;
+    sec = (sec) ? sec : 0;
+    nano = (nano) ? nano : 0;
+
+    this._hour = (((hour <= 24) || ( hour >= 0  )) ? Math.ceil(hour) : 0);
+    this._minute = ((min <= 60) || (min >= 0 ) ? Math.ceil(min) : 0);
+    this._second = ((sec <= 60) || (sec >= 0 ) ? Math.ceil(sec) : 0);
+    this._nano = Math.abs(Math.ceil(nano));
   }
 
   /**
@@ -24,18 +34,18 @@ export class LocalTime extends BaseMoikaEntity implements ILocalTime{
    * @returns {LocalTime}
    */
 
-  public static from(hour: number, min: number, sec: number, nano: number): LocalTime {
-    let retTime = new LocalTime();
+  public static from(hour: number, min: number, sec?: number, nano?: number): LocalTime {
+    //let retTime = new LocalTime();
     hour = (hour) ? hour : 0;
     min = (min) ? min : 0;
     sec = (sec) ? sec : 0;
     nano = (nano) ? nano : 0;
 
-    retTime.hour = (((hour < 24) || ( hour >= 0  )) ? Math.ceil(hour) : 0);
-    retTime.minute = ((min < 60) || (min >= 0 ) ? Math.ceil(min) : 0);
-    retTime.second = ((sec < 60) || (sec >= 0 ) ? Math.ceil(sec) : 0);
-    retTime.nano = Math.abs(Math.ceil(nano));
-    return retTime;
+    //retTime.hour = (((hour < 24) || ( hour >= 0  )) ? Math.ceil(hour) : 0);
+    //retTime.minute = ((min < 60) || (min >= 0 ) ? Math.ceil(min) : 0);
+    //retTime.second = ((sec < 60) || (sec >= 0 ) ? Math.ceil(sec) : 0);
+    //retTime.nano = Math.abs(Math.ceil(nano));
+    return new LocalTime(hour, min, sec, nano);
   }
 
   /**
@@ -44,12 +54,13 @@ export class LocalTime extends BaseMoikaEntity implements ILocalTime{
    * @returns {LocalTime}
    */
   public static of(timeStamp: Date): LocalTime {
-    let retTime = new LocalTime();
+  /*  let retTime = new LocalTime();
     retTime.hour = timeStamp.getHours();
     retTime.minute = timeStamp.getMinutes();
     retTime.second = timeStamp.getSeconds();
     retTime.nano = timeStamp.getMilliseconds();
-    return retTime;
+    return retTime; */
+   return new LocalTime(timeStamp.getHours(), timeStamp.getMinutes(), timeStamp.getSeconds(), timeStamp.getMilliseconds());
   }
 
     /**
@@ -59,7 +70,7 @@ export class LocalTime extends BaseMoikaEntity implements ILocalTime{
    */
   public static parse(time: string): LocalTime {
     const timeStrArr: string[] = time.split(":");
-    let retTime = new LocalTime();
+   // let retTime = new LocalTime();
     let h, m, s, n: number = 0;
 
     if (time) {
@@ -75,11 +86,11 @@ export class LocalTime extends BaseMoikaEntity implements ILocalTime{
             }
           }
         }
-        retTime.hour = h;
+     /*   retTime.hour = h;
         retTime.minute = m;
         retTime.second = s;
-        retTime.nano = n;
-        return retTime;
+        retTime.nano = n; */
+        return new LocalTime(h, m, s, n);
       }
     }
   }

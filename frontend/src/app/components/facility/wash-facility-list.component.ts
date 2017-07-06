@@ -31,6 +31,7 @@ export class WashFacilityListComponent implements OnInit {
 
   onSelect(washFacility: WashFacility): void {
     this.selectedFclt = washFacility;
+    console.log( this.selectedFclt);
   }
 
   private handleError(error: any): Promise<any> {

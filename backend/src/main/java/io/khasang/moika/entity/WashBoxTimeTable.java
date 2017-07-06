@@ -28,12 +28,12 @@ public class WashBoxTimeTable extends ABaseMoikaEntity {
     @Id
     @Column(name = "time_on_starts")
     @JsonIgnore
-    @JsonFormat(pattern = "HH:mm")
+  //  @JsonFormat(pattern = "HH:mm")
     protected LocalTime timeOnStarts;
 
     @Column(name = "time_on_ends")
     @JsonIgnore
-    @JsonFormat(pattern = "HH:mm")
+  //  @JsonFormat(pattern = "HH:mm")
     protected LocalTime timeOnEnds;
 
     public WashBoxTimeTable() {
@@ -78,7 +78,6 @@ public class WashBoxTimeTable extends ABaseMoikaEntity {
     public void setTimeOnEnds(LocalTime timeOnEnds) {
         this.timeOnEnds = timeOnEnds;
     }
-
 
     public WorkHours getWorkHours(){
         return new WorkHours(timeOnStarts,timeOnEnds);

@@ -28,10 +28,10 @@ public class WashFacilityWeekDay extends ABaseMoikaEntity {
 
 
     @Column(name = "id_day_type", insertable=false, updatable=false)
-    private int idDateType;
+    private int idDayType;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_day_type", foreignKey = @ForeignKey(name = "facility_week_days_calendar_date_types_id_type_fk"))
-    private CalendarDateType dateType;
+    private CalendarDateType dayType;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumns({
@@ -46,8 +46,8 @@ public class WashFacilityWeekDay extends ABaseMoikaEntity {
     public WashFacilityWeekDay(int idFacility, DayOfWeek weekDay, int idDateType, CalendarDateType dateType) {
         this.idFclt = idFacility;
         this.weekDay = weekDay;
-        this.idDateType = idDateType;
-        this.dateType = dateType;
+        this.idDayType = idDateType;
+        this.dayType = dateType;
     }
 
 
@@ -71,20 +71,20 @@ public class WashFacilityWeekDay extends ABaseMoikaEntity {
         this.weekDay = DayOfWeek.of(weekDay);
     }
 
-    public int getIdDateType() {
-        return idDateType;
+    public int getIdDayType() {
+        return idDayType;
     }
 
-    public void setIdDateType(int idDateType) {
-        this.idDateType = idDateType;
+    public void setIdDayType(int idDateType) {
+        this.idDayType = idDateType;
     }
 
-    public CalendarDateType getDateType() {
-        return dateType;
+    public CalendarDateType getDayType() {
+        return dayType;
     }
 
-    public void setDateType(CalendarDateType dateType) {
-        this.dateType = dateType;
+    public void setDayType(CalendarDateType dayType) {
+        this.dayType = dayType;
     }
 
     public Set<WashFacilityWeekTimeTable> getWeekTimeTable() {
@@ -102,14 +102,14 @@ public class WashFacilityWeekDay extends ABaseMoikaEntity {
 
         WashFacilityWeekDay that = (WashFacilityWeekDay) o;
 
-        if (this.getIdDateType() != that.getIdDateType()) return false;
+        if (this.getIdDayType() != that.getIdDayType()) return false;
         if (this.idFclt != that.getIdFclt())  return false;
         if (this.weekDay != that.getWeekDay())  return false;
-        return dateType.equals(that.getDateType());
+        return dayType.equals(that.getDayType());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.idFclt, this.weekDay, dateType);
+        return Objects.hash(this.idFclt, this.weekDay, dayType);
     }
 }

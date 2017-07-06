@@ -8,3 +8,4 @@
 *.txt
 /node.xxx/
 *.log.*
+*.crt

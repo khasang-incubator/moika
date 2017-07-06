@@ -12,7 +12,7 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
   private _baseUrl: string = 'http://localhost:8080';
   private _workUrl: string;
 
-  constructor(private http: Http) {
+  constructor(public http: Http) {
   }
 
   get baseUrl(): string {
@@ -109,7 +109,7 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
    * Error handler
    * @returns {Headers}
    */
-  private handleError(error: Response | any): Promise<any> {
+  public handleError(error: Response | any): Promise<any> {
     // TODO we might use a remote logging infrastructure
     let errMsg: string;
     if (error instanceof Response) {
@@ -128,7 +128,7 @@ export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> 
    * Make HTTP header object
    * @returns {Headers}
    */
-  private getHeaders() {
+  public getHeaders() {
     const headers = new Headers();
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'application/json');

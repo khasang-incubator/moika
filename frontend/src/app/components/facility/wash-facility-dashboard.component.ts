@@ -18,7 +18,7 @@ export class WashFacilityDashboardComponent implements OnInit {
 
   constructor(private activateRoute: ActivatedRoute,
     private washFacilityService: WashFacilityService) {
-    this.washFacilityService = washFacilityService;
+
   }
 
   getShortFacilityList(cnt: number): void {

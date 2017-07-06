@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {WashFacility} from '../entities/wash-facility';
-import {Http} from '@angular/http';
+import {Http, Response} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import {CrudService} from "./crud.service";
-// import {WashFacilityList} from "./mock-wash-facility";
+
 
 @Injectable()
 export class WashFacilityService extends CrudService<WashFacility> {
@@ -13,6 +13,27 @@ export class WashFacilityService extends CrudService<WashFacility> {
   constructor(http: Http) {
     super(http);
     this.workUrl = 'http://localhost:8080/api/washFacility';
+  }
+
+  getEntity(id: number): Promise<WashFacility> {
+    //TODO change Promise to Observable
+    const url = this.workUrl ? this.workUrl : this.baseUrl;
+    const entity = this.http.get(`${url}/${id}`, {headers: this.getHeaders()})
+      .toPromise()
+      .then(response => {
+     //   console.log(response.json().data as WashFacility);
+        return Promise.resolve(this.parseTo(response.json().data as WashFacility));
+      })
+      .catch(this.handleError);
+    return entity;
+
+  }
+
+  private parseTo(jsonObj : any) :WashFacility{
+    let entity : WashFacility = new WashFacility();
+    let jsonEntity  =  jsonObj as WashFacility;
+    entity.fromJsonObj(jsonEntity);
+    return entity ;
   }
 
   /*
@@ -27,17 +48,32 @@ export class WashFacilityService extends CrudService<WashFacility> {
 
    return washFacility;
    }
-
+*/
    getAll(): Promise<WashFacility[]> {
-   let  washFcltArr = this.http.get(`${this.baseUrl}/list`, {headers: this.getHeaders()})
-   .toPromise()
-   .then(response => response.json().data as WashFacility[])
-   .catch(this.handleError);
+   const url = this.workUrl ? this.workUrl : this.baseUrl;
+    let  washFcltArr = this.http.get(`${url}/list`, {headers: this.getHeaders()})
+     .map((res: Response) => res.json())
+     .toPromise()
+      .then(response  => {
+        if (response) {
+       //   console.log("Response data");
+       //   console.log(response);
+          return Promise.resolve(this.parseArr(response as any[]))
+        }
+     })
+     .catch(this.handleError);
    console.log(washFcltArr.toString());
-   //let washFcltArr =  Promise.resolve(WashFacilityList);
    return washFcltArr;
    }
-   */
+
+   private parseArr(jsonObjArr : any[]): WashFacility[]{
+     let entity : WashFacility[] = new Array<WashFacility>();
+      jsonObjArr.forEach(item => {
+        console.log(item);
+        entity.push(this.parseTo(item))
+      });
+     return entity;
+   }
 
   /*
   getAll(): Promise<WashFacility[]> {

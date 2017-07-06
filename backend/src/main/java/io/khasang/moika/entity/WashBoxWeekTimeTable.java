@@ -26,15 +26,14 @@ public class WashBoxWeekTimeTable extends ABaseMoikaEntity {
     @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
     protected DayOfWeek weekDay;
     @Id
-    @JsonIgnore
     @Column(name = "time_on_starts")
-    @JsonFormat(pattern = "HH:mm")
+    @JsonIgnore
+  //  @JsonFormat(pattern = "HH:mm")
     protected LocalTime timeOnStarts;
 
     @Column(name = "time_on_ends")
-    @JsonFormat(pattern = "HH:mm")
-   // @Temporal(TemporalType.TIME)
     @JsonIgnore
+  //  @JsonFormat(pattern = "HH:mm")
     protected LocalTime timeOnEnds;
 
     public WashBoxWeekTimeTable() {

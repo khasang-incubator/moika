@@ -19,11 +19,11 @@ public class WorkHours {
     private static final Logger logger = LoggerFactory.getLogger(WorkHours.class);
     @Id
     @Column(name = "time_on_starts")
-    @JsonFormat(pattern = "HH:mm")
+    @JsonFormat(shape=JsonFormat.Shape.ARRAY)
     protected LocalTime timeOnStarts = LocalTime.of(0, 0);
 
     @Column(name = "time_on_ends")
-    @JsonFormat(pattern = "HH:mm")
+    @JsonFormat(shape=JsonFormat.Shape.ARRAY)
     protected LocalTime timeOnEnds = LocalTime.of(0, 0);
 
     public WorkHours() {

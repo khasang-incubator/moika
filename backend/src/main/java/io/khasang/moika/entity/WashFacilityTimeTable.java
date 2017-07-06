@@ -27,12 +27,12 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
     @Id
     @Column(name = "time_on_starts")
     @JsonIgnore
-    @JsonFormat(pattern = "HH:mm")
+ //  @JsonFormat(pattern = "HH:mm")
     protected LocalTime timeOnStarts;
 
     @Column(name = "time_on_ends")
     @JsonIgnore
-    @JsonFormat(pattern = "HH:mm")
+  //  @JsonFormat(pattern = "HH:mm")
     private LocalTime timeOnEnds;
 
 
@@ -67,7 +67,7 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
     public LocalTime getTimeOnStarts() {
         return timeOnStarts;
     }
-
+    @JsonIgnore
     public void setTimeOnStarts(LocalTime timeOnStarts) {
         this.timeOnStarts = timeOnStarts;
     }
@@ -76,7 +76,7 @@ public class WashFacilityTimeTable extends ABaseMoikaEntity {
     public LocalTime getTimeOnEnds() {
         return timeOnEnds;
     }
-
+    @JsonIgnore
     public void setTimeOnEnds(LocalTime timeOnEnds) {
         this.timeOnEnds = timeOnEnds;
     }

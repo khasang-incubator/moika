@@ -147,7 +147,7 @@ public class WashBox  extends ABaseMoikaEntity {
         this.setIdStatus((short) boxStatusEntity.getId());
     }
 
-    public Set<WashBoxTimeTable> getTmeTable() {
+    public Set<WashBoxTimeTable> getTimeTable() {
         return timeTable;
     }
 
