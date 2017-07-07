@@ -5,11 +5,12 @@ import {ICrudService} from './icrud.service';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import {AppSettings} from "../collections/app-settings";
 
 @Injectable()
 export class CrudService<T extends BaseMoikaEntity>  implements ICrudService<T> {
 
-  private _baseUrl: string = 'http://localhost:8080';
+  private _baseUrl: string = AppSettings.backSiteUrl;
   private _workUrl: string;
 
   constructor(public http: Http) {

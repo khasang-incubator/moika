@@ -1,18 +1,23 @@
-<div class="row">
-  <h2>Мойки</h2>
-  <div class="row">
-    <div class="span4">
-      <ul class="washFacilityList">
-        <li *ngFor="let washFclt of washFacilityList"
-            [class.selected]="washFclt === selectedFclt"
-            (click)="onSelect(washFclt)">
-          <span class="badge">{{washFclt.id}}</span> {{washFclt.name}}
-        </li>
-      </ul>
-    </div>
-    <div class="span4">
-      <div *ngIf="selectedFclt">
-        <facility-detail [washFacility]="selectedFclt"></facility-detail>
+<div class="row-fluid">
+  <app-city-dropdown [selectedCity]="selectedCity"></app-city-dropdown>
+</div>
+<div *ngIf="selectedCity">
+  <div class="row-fluid">
+    <h2>Мойки</h2>
+    <div class="row">
+      <div class="span4">
+        <ul class="washFacilityList">
+          <li *ngFor="let washFclt of washFacilityList"
+              [class.selected]="washFclt === selectedFclt"
+              (click)="onSelect(washFclt)">
+            <span class="badge">{{washFclt.id}}</span> {{washFclt.name}}
+          </li>
+        </ul>
+      </div>
+      <div class="span4">
+        <div *ngIf="selectedFclt">
+          <facility-detail [washFacility]="selectedFclt"></facility-detail>
+        </div>
       </div>
     </div>
   </div>

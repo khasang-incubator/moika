@@ -4,6 +4,7 @@ import {Http, Response} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import {CrudService} from "./crud.service";
+import {AppSettings} from "../collections/app-settings";
 
 
 @Injectable()
@@ -12,7 +13,7 @@ export class WashFacilityService extends CrudService<WashFacility> {
 
   constructor(http: Http) {
     super(http);
-    this.workUrl = 'http://localhost:8080/api/washFacility';
+    this.workUrl = AppSettings.backSiteUrl+'/washFacility';
   }
 
   getEntity(id: number): Promise<WashFacility> {

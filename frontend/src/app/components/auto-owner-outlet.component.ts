@@ -5,9 +5,9 @@ import {Component} from '@angular/core';
   template: `
     <nav>
       <a routerLink="about" routerLinkActive="active"></a>
-      <a routerLink="facilitiesDash" routerLinkActive="active"></a>
-      <a routerLink="facilitiesTable" routerLinkActive="active"></a>
-      <a routerLink="washFacilitiesList" routerLinkActive="active"></a>
+      <a routerLink="fclt/facilitiesDash" routerLinkActive="active"></a>
+      <a routerLink="fclt/facilitiesTable" routerLinkActive="active"></a>
+      <a routerLink="fclt/washFacilitiesList" routerLinkActive="active"></a>
     </nav>
     <router-outlet></router-outlet>`
 })

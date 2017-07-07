@@ -14,35 +14,35 @@ export class MockMoikaObjects {
       name: 'Типы клиентов',
       descr: 'Типы клиентов автомоек',
       type: 1,
-      url: 'api/client/type'
+      url: '/client/type'
     });
     this.objectList.push({
       code: "serviceType",
       name: 'Типы услуг',
       descr: 'Типы услуг автомоек',
       type: 1,
-      url: 'api/service/type'
+      url: '/api/service/type'
     });
     this.objectList.push({
       code: "carType",
       name: 'Типы машин',
       descr: 'Типы машин клиентов',
       type: 1,
-      url: 'api/car/type'
+      url: '/car/type'
     });
     this.objectList.push({
       code: "boxType",
       name: 'Типы боксов',
       descr: 'Типы моечных боксов',
       type: 1,
-      url: 'api/washBox/type'
+      url: '/washBox/type'
     });
     this.objectList.push({
       code: "dirtType",
       name: 'Типы загрязнений',
       descr: 'Типы загрязнений салона',
       type: 1,
-      url: 'api/service/dirt/type'
+      url: '/service/dirt/type'
     });
 
 // Статусы
@@ -51,28 +51,28 @@ export class MockMoikaObjects {
       name: 'Статусы клиентов',
       descr: 'Статусы клиентов автомоек',
       type: 2,
-      url: 'api/client/status'
+      url: '/client/status'
     });
     this.objectList.push({
       code: "serviceStatus",
       name: 'Статусы услуг',
       descr: 'Статусы услуг автомоек',
       type: 2,
-      url: 'api/service/status'
+      url: '/service/status'
     });
     this.objectList.push({
       code: "carStatus",
       name: 'Статусы машин',
       descr: 'Статусы машин клиентов',
       type: 2,
-      url: 'api/car/status'
+      url: '/car/status'
     });
     this.objectList.push({
       code: "boxStatus",
       name: 'Статусы боксов',
       descr: 'Статусы моечных боксов',
       type: 2,
-      url: 'api/washBox/status'
+      url: '/washBox/status'
     });
   }
 

@@ -72,19 +72,19 @@ export class AdminMenuItems {
           label: 'Carousel',
           icon: 'fa-th-large',
           command: (click) => {
-            this.router.navigate(['/facilitiesDash']);
+            this.router.navigate(['/fclt/facilitiesDash']);
           }
         }, {
           label: 'Table',
           icon: 'fa-table',
           command: (click) => {
-            this.router.navigate(['/facilitiesTable']);
+            this.router.navigate(['/fclt/facilitiesTable']);
           }
         }, {
           label: 'List',
           icon: ' fa-list-ol ',
           command: (click) => {
-            this.router.navigate(['/washFacilitiesList']);
+            this.router.navigate(['/fclt/washFacilitiesList']);
           }
         }]
       },

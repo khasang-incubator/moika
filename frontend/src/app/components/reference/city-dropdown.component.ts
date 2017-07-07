@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {City} from "../../model/entities/city";
 import {SelectItem} from "primeng/primeng";
 import {CrudService} from "../../model/services/crud.service";
+import {AppSettings} from "../../model/collections/app-settings";
 
 @Component({
   selector: 'app-city-dropdown',
@@ -10,12 +11,13 @@ import {CrudService} from "../../model/services/crud.service";
 })
 export class CityDropdownComponent implements OnInit {
   @Input() curCity: string;
-  @Input() selectedCity: City;
+  @Output() @Input()  selectedCity: City;
+
 
   private cityItemList: SelectItem[];
   private cityList : City[];
 
-  private cityListUrl = 'http://localhost:8080/api/washAddr/city/' ;
+  private cityListUrl = AppSettings.backSiteUrl+'/washAddr/city/' ;
 
   constructor(private dbService: CrudService<City>){
     this.dbService.workUrl = this.cityListUrl ;

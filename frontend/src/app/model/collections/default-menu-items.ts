@@ -1,7 +1,6 @@
 import {MenuItem} from "primeng/primeng";
 import {Router} from "@angular/router";
 import {MockMoikaObjectService} from "app/model/services/mock-moika-objects.service";
-import {Injectable} from "@angular/core";
 
 export class DefaultMenuItems {
   private _items: MenuItem[];
@@ -30,7 +29,7 @@ export class DefaultMenuItems {
         label: 'Записаться',
         icon: 'fa-car',
         command: (click) => {
-          this.router.navigate(['/facilitiesDash']);}
+          this.router.navigate(['/fclt/facilitiesDash']);}
       },
       {
         label: 'О программе',

@@ -4,6 +4,7 @@ import {WashBox} from '../entities/wash-box';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import {CrudService} from "./crud.service";
+import {AppSettings} from "../collections/app-settings";
 //import {WashBoxList} from "./mock-wash-box";
 
 @Injectable()
@@ -11,7 +12,7 @@ export class WashBoxService extends CrudService<WashBox> {
 
   constructor(http: Http) {
     super(http);
-    this.workUrl = 'http://localhost:8080/api/washBox';
+    this.workUrl = AppSettings.backSiteUrl+'/washBox';
   }
 
 

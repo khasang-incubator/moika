@@ -13,7 +13,6 @@ import {
 
 import { BsDropdownModule} from "ngx-bootstrap";
 import {AgmCoreModule} from "angular2-google-maps/core";
-
 import { AppComponent } from './app.component';
 import { WashBoxComponent} from './components/facility/wash-box-list.component';
 import { WashBoxService} from './model/services/wash-box.service';

@@ -1,94 +1,102 @@
 <div class="row-fluid">
-  <p-dataTable [value]="washFcltList" [(selection)]="selectedFclt" selectionMode="single"
-               (onRowDblclick)="onRowDblclick($event)" [paginator]="true" rows="10" [responsive]="true">
-    <p-header>
-      <div class="ui-datatable-header">Список моек
-        <button type="button" pButton icon="fa-refresh" style="float:right" (click)="refresh()"></button>
-      </div>
-    </p-header>
-
-    <p-column field="id" header="ID" [sortable]="true"></p-column>
-    <p-column field="name" header="Наименование" [sortable]="true"></p-column>
-    <p-column field="description" header="Доп. информация"></p-column>
-    <p-column field="facilityAddr.city.name" header="Город" [sortable]="true"></p-column>
-    <p-column field="facilityAddr.street" header="Улица" [sortable]="false"></p-column>
-    <p-column field="facilityAddr.building" header="Дом/строение" [sortable]="false"></p-column>
-    <p-column field="facilityManager.person.fullname" header="Менеджер" [sortable]="false"></p-column>
-    <p-footer>
-      <div class="ui-helper-clearfix" style="width:100%">
-        <button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()"
-                label="Добавить"></button>
-        <button type="button" pButton icon="fa-trash" style="float:left" (click)="showConfirmDialog()"
-                label="Удалить"></button>
-        {{actionMsg}}
-      </div>
-    </p-footer>
-  </p-dataTable>
-
-  <!-- диалог редактирования записи мойки-->
-  <p-dialog header="Параметры мойки" [(visible)]="displayAddDialog" [responsive]="true" showEffect="fade" [modal]="true"
-            [resizable]="true" width="600">
-    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="fcltRec">
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-4"><label for="name">Наименование</label></div>
-        <div class="ui-grid-col-8"><input pInputText id="name" [(ngModel)]="fcltRec.name"/></div>
-      </div>
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-4"><label for="description">Доп. информация</label></div>
-        <div class="ui-grid-col-8"><input pInputText id="description" [(ngModel)]="fcltRec.description"/></div>
-      </div>
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-4"><label>Город</label></div>
-        <div class="ui-grid-col-8">
-          <app-city-dropdown>[(selectedCity)] ="fcltRec.facilityAddr.city" </app-city-dropdown>
-        </div>
-      </div>
-      <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="fcltAddr">
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4"><label for="street">Улица</label></div>
-          <div class="ui-grid-col-8"><input pInputText id="street" [(ngModel)]="fcltAddr.street"/></div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4"><label for="bldg">Здание</label></div>
-          <div class="ui-grid-col-8"><input pInputText id="bldg" [(ngModel)]="fcltAddr.building"/></div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-4"><label for="lett">Литер</label></div>
-          <div class="ui-grid-col-8"><input pInputText id="lett" [(ngModel)]="fcltAddr.letter"/></div>
-        </div>
-      </div>
-    </div>
-    <p-footer>
-      <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-        <button type="button" pButton icon="fa-close" (click)="displayAddDialog=false" label="Отменить"></button>
-        <button type="button" pButton icon="fa-floppy-o" (click)="save()" label="Сохранть"></button>
-      </div>
-    </p-footer>
-  </p-dialog>
-
-  <!-- диалог-запрос на удаление-->
-  <p-dialog header="Внимание!" [(visible)]="displayConfirmDialog" modal="modal" icon="fa fa-question-circle">
-    <p>Вы уверены, что хотите удалить мойку?</p>
-    <p-footer>
-      <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-        <button type="button" pButton icon="fa-close" (click)="displayConfirmDialog=false" label="No"></button>
-        <button type="button" pButton icon="fa-check" (click)="delete()" label="Yes"></button>
-      </div>
-    </p-footer>
-  </p-dialog>
+  <app-city-dropdown [selectedCity]="selectedCity"></app-city-dropdown>
 </div>
+<div *ngIf="selectedCity">
 
-<div class="row-fluid">
-  <p></p>
-</div>
-<!-- Таблица моечных боксов-->
-<div class="row-fluid">
-  <div *ngIf="selectedFclt">
-    <app-wash-box-table [washBoxList]="selectedFclt.washBoxes"></app-wash-box-table>
+  <div class="row-fluid">
+
+    <p-dataTable [value]="washFcltList" [(selection)]="selectedFclt" selectionMode="single"
+                 (onRowDblclick)="onRowDblclick($event)" [paginator]="true" rows="10" [responsive]="true">
+      <p-header>
+        <div class="ui-datatable-header">Список моек
+          <button type="button" pButton icon="fa-refresh" style="float:right" (click)="refresh()"></button>
+        </div>
+      </p-header>
+
+      <p-column field="id" header="ID" [sortable]="true"></p-column>
+      <p-column field="name" header="Наименование" [sortable]="true"></p-column>
+      <p-column field="description" header="Доп. информация"></p-column>
+      <p-column field="facilityAddr.city.name" header="Город" [sortable]="true"></p-column>
+      <p-column field="facilityAddr.street" header="Улица" [sortable]="false"></p-column>
+      <p-column field="facilityAddr.building" header="Дом/строение" [sortable]="false"></p-column>
+      <p-column field="facilityManager.person.fullname" header="Менеджер" [sortable]="false"></p-column>
+      <p-footer>
+        <div class="ui-helper-clearfix" style="width:100%">
+          <button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()"
+                  label="Добавить"></button>
+          <button type="button" pButton icon="fa-trash" style="float:left" (click)="showConfirmDialog()"
+                  label="Удалить"></button>
+          {{actionMsg}}
+        </div>
+      </p-footer>
+    </p-dataTable>
+
+    <!-- диалог редактирования записи мойки-->
+    <p-dialog header="Параметры мойки" [(visible)]="displayAddDialog" [responsive]="true" showEffect="fade"
+              [modal]="true"
+              [resizable]="true" width="600">
+      <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="fcltRec">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4"><label for="name">Наименование</label></div>
+          <div class="ui-grid-col-8"><input pInputText id="name" [(ngModel)]="fcltRec.name"/></div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4"><label for="description">Доп. информация</label></div>
+          <div class="ui-grid-col-8"><input pInputText id="description" [(ngModel)]="fcltRec.description"/></div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4"><label>Город</label></div>
+          <div class="ui-grid-col-8">
+            <app-city-dropdown>[(selectedCity)] ="fcltRec.facilityAddr.city"</app-city-dropdown>
+          </div>
+        </div>
+        <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="fcltAddr">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="street">Улица</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="street" [(ngModel)]="fcltAddr.street"/></div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="bldg">Здание</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="bldg" [(ngModel)]="fcltAddr.building"/></div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="lett">Литер</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="lett" [(ngModel)]="fcltAddr.letter"/></div>
+          </div>
+        </div>
+      </div>
+      <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+          <button type="button" pButton icon="fa-close" (click)="displayAddDialog=false" label="Отменить"></button>
+          <button type="button" pButton icon="fa-floppy-o" (click)="save()" label="Сохранть"></button>
+        </div>
+      </p-footer>
+    </p-dialog>
+
+    <!-- диалог-запрос на удаление-->
+    <p-dialog header="Внимание!" [(visible)]="displayConfirmDialog" modal="modal" icon="fa fa-question-circle">
+      <p>Вы уверены, что хотите удалить мойку?</p>
+      <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+          <button type="button" pButton icon="fa-close" (click)="displayConfirmDialog=false" label="No"></button>
+          <button type="button" pButton icon="fa-check" (click)="delete()" label="Yes"></button>
+        </div>
+      </p-footer>
+    </p-dialog>
   </div>
-</div>
 
-<!-- карта моек-->
-<div class="row-fluid">
-  <app-facility-map [washFcltList] = "washFcltList"></app-facility-map>
+  <div class="row-fluid">
+    <p></p>
+  </div>
+  <!-- Таблица моечных боксов-->
+  <div class="row-fluid">
+    <div *ngIf="selectedFclt">
+      <app-wash-box-table [washBoxList]="selectedFclt.washBoxes"></app-wash-box-table>
+    </div>
+  </div>
+
+  <!-- карта моек-->
+  <div class="row-fluid">
+    <app-facility-map [washFcltList]="washFcltList"></app-facility-map>
+  </div>
 </div>

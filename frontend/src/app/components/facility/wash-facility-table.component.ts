@@ -14,7 +14,7 @@ import {City} from "../../model/entities/city";
 })
 export class WashFacilityTableComponent implements OnInit {
 
-  @Input() selCity: City;
+  @Input() selectedCity: City;
 
   actionMsg: string = "...";
   washFcltList: WashFacility[];
