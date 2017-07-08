@@ -2,6 +2,9 @@ package io.khasang.moika.entity;
 
 import javax.persistence.*;
 
+/**
+ * !!! На удаление ???
+ */
 @Entity(name = "products_sales")
 public class ProductSale {
     @Id

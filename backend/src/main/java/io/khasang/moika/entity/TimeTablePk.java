@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Сужность составного первичного ключа для расписаний
+ */
 @Embeddable
 public class TimeTablePk implements Serializable{
 

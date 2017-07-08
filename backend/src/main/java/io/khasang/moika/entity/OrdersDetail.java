@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+/**
+ * !!! На удаление ???
+ */
 @Entity(name = "order_details")
 public class OrdersDetail extends ABaseMoikaEntity {
     @Id

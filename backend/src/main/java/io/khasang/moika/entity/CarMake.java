@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Марка автомобиля
+ *  * !!! На удаление ???
  */
 @Entity
 public class CarMake extends ABaseMoikaEntity {

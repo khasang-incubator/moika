@@ -7,6 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.math.BigDecimal;
 
+/**
+ * Сущность, описывающая географические координаты, используется для Гео сервисов поиска моек
+ */
 @Embeddable
 public class Coordinate {
     private static final Logger logger = LoggerFactory.getLogger(Coordinate.class);

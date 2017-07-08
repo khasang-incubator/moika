@@ -2,6 +2,9 @@ package io.khasang.moika.entity;
 
 import javax.persistence.*;
 
+/**
+ * Статусы моечных боксов - работает, закрыт на перерыв, на ремонт и т.п.
+ */
 @Entity (name = "box_status")
 public class BoxStatus extends ABaseMoikaStatusReference{
 

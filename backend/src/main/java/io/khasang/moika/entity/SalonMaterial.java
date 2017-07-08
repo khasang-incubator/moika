@@ -2,6 +2,10 @@ package io.khasang.moika.entity;
 
 import javax.persistence.Entity;
 
+/**
+ * Сущность описывающая выда материалов салона, от которых зависит стоимость услуг
+ */
+
 @Entity(name = "salon_materials")
 public class SalonMaterial extends ABaseMoikaTypeReference {
 

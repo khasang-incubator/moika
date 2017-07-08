@@ -3,7 +3,7 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 
 /**
- * Базовый класс-entity для услуг
+ * Базовый абстрактный класс-entity для услуг
  */
 
 @MappedSuperclass

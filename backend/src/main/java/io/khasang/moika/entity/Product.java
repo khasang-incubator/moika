@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * !!! На удаление ???
+ */
 @Entity(name = "products")
 public class Product {
     @Id
