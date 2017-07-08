@@ -30,7 +30,7 @@ export class AutoOwnerMenuItems {
         label: 'Записаться',
         icon: 'fa-car',
         command: (click) => {
-          this.router.navigate(['/facilitiesDash']);}
+          this.router.navigate(['/auto-owner/reserve-order']);}
       },
       {
         label: 'О программе',

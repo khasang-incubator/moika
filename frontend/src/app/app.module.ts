@@ -54,6 +54,7 @@ import {UserOutletComponent} from "./components/user-outlet.component";
 import {AdminOutletComponent} from "./components/admin-outlet.component";
 import {FcltOwnerOutletComponent} from "./components/fclt-owner-outlet.component";
 import {AutoOwnerOutletComponent} from "app/components/auto-owner-outlet.component";
+import { ReserveOrderComponent } from './components/reserve-order/reserve-order.component';
 
 
 @NgModule({
@@ -90,6 +91,7 @@ import {AutoOwnerOutletComponent} from "app/components/auto-owner-outlet.compone
     AdminOutletComponent,
     FcltOwnerOutletComponent,
     AutoOwnerOutletComponent,
+    ReserveOrderComponent,
   ],
   imports: [
     BsDropdownModule.forRoot(),

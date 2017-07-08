@@ -9,11 +9,13 @@ import {CommonTypeSelectorComponent} from "./components/reference/common-type-se
 import {NotFoundComponent} from "./components/shared/common/not-found.component";
 import {CommonStatusSelectorComponent} from "./components/reference/common-status-selector.component";
 import {WashFacilityTableComponent} from "./components/facility/wash-facility-table.component";
+import { ReserveOrderComponent } from './components/reserve-order/reserve-order.component';
 
 // определение маршрутов
 const appRoutes: Routes =[
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: '#', redirectTo: '/home', pathMatch: 'full'},
+  { path: 'auto-owner/reserve-order', component: ReserveOrderComponent},
   { path: 'about', component: AppAboutComponent},
   { path: 'clients', component: ClientListComponent},
   { path: 'home', component: HomePageComponent},
