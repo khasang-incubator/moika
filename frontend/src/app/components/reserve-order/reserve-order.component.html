@@ -1,3 +1,16 @@
 <p>
   reserve-order works!
 </p>
+
+
+<h3 class="first">Single</h3>
+<p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City"></p-dropdown>
+<p>Selected City: {{selectedCity ? selectedCity.name : 'none'}}</p>
+
+<div>
+  <p-growl [(value)]="msgs"></p-growl> 
+  <p-messages [(value)]="msgs"></p-messages>
+  <button type="button" pButton (click)="showSuccess()" label="Success" class="ui-button-success">
+  </button>
+  
+</div>

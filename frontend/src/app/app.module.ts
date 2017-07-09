@@ -8,7 +8,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {
   DataTableModule, DropdownModule, InputTextareaModule, PanelModule, DialogModule, SharedModule,
   ButtonModule, MenuModule, TieredMenuModule, FieldsetModule, CarouselModule, PasswordModule, AccordionModule,
-  PanelMenuModule
+  PanelMenuModule,MessagesModule,GrowlModule
 } from 'primeng/primeng';
 
 import { BsDropdownModule} from "ngx-bootstrap";
@@ -102,7 +102,7 @@ import { ReserveOrderComponent } from './components/reserve-order/reserve-order.
     DataTableModule, DialogModule, SharedModule,  DataTableModule, InputTextareaModule,
     FormsModule, PanelModule, DropdownModule, ButtonModule, MenuModule, TieredMenuModule,
     NoopAnimationsModule, FieldsetModule, CarouselModule, PasswordModule, AccordionModule,
-    PanelMenuModule,
+    PanelMenuModule,MessagesModule,GrowlModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDX_0DCgqImKoRTUPQ3QRjdOwLEVKwm3uE'
     }),
