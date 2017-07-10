@@ -55,6 +55,7 @@ import {FcltOwnerOutletComponent} from "./components/fclt-owner-outlet.component
 import {AutoOwnerOutletComponent} from "app/components/auto-owner-outlet.component";
 import { FacilityCalendarComponent } from './components/facility/facility-calendar.component';
 import { FacilityWorkWeekComponent } from './components/facility/facility-work-week.component';
+import { FacilityMainComponent } from './components/facility/facility-main.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { FacilityWorkWeekComponent } from './components/facility/facility-work-w
     AutoOwnerOutletComponent,
     FacilityCalendarComponent,
     FacilityWorkWeekComponent,
+    FacilityMainComponent,
   ],
   imports: [
     BsDropdownModule.forRoot(),

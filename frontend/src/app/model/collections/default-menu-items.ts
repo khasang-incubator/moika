@@ -29,7 +29,7 @@ export class DefaultMenuItems {
         label: 'Записаться',
         icon: 'fa-car',
         command: (click) => {
-          this.router.navigate(['/fclt/facilitiesDash']);}
+          this.router.navigate(['facilitiesDash']);}
       },
       {
         label: 'О программе',

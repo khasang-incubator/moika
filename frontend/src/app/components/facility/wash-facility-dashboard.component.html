@@ -2,6 +2,7 @@
   <app-city-dropdown [selectedCity]="selectedCity"></app-city-dropdown>
 </div>
 <div *ngIf="selectedCity">
+  <p>{{selectedCity.name}}</p>
   <div *ngIf="washFacilities">
     <p-carousel id="fcltCarousel" headerText="Наши Мойки" [value]="washFacilities" circular="true">
       <ng-template let-facility pTemplate="item">
@@ -11,24 +12,7 @@
       </ng-template>
     </p-carousel>
   </div>
-  <!--
-  <div class="row">
-    <div class="grid grid-pad">
-      <div *ngFor="let facility of washFacilities" class="col-1-4">
-        <div class="module facility" (click)="onSelect(facility)">
-          <h4>{{facility.name}}</h4>
-        </div>
-      </div>
-    </div>
-  </div>
-  -->
-  <!--
-  <div class="row">
-    <div *ngIf="selectedFclt">
-      <washbox-list [washBoxList]="selectedFclt.washBoxes"></washbox-list>
-    </div>
-  </div>
-  -->
+
   <!-- Описание-->
   <div class="row-fluid">
     <div *ngIf="selectedFclt">

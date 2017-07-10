@@ -10,6 +10,7 @@ import {WashFacilityDashboardComponent} from "./components/facility/wash-facilit
 import {WashFacilityTableComponent} from "./components/facility/wash-facility-table.component";
 import {WashFacilityListComponent} from "./components/facility/wash-facility-list.component";
 import {fcltRoutes} from "./components/facility/facility-routes";
+import {FacilityMainComponent} from "./components/facility/facility-main.component";
 
 //  { path: 'facilitiesDash', component: WashFacilityDashboardComponent},
 // { path: 'facilitiesTable', component: WashFacilityTableComponent},
@@ -22,7 +23,10 @@ const appRoutes: Routes =[
   { path: '#', redirectTo: '/home', pathMatch: 'full'},
   { path: 'about', component: AppAboutComponent},
   { path: 'clients', component: ClientListComponent},
-  { path: 'fclt', children: fcltRoutes},
+ // { path: 'fclt', component:FacilityMainComponent, children: fcltRoutes},
+  { path: 'facilitiesDash', component: WashFacilityDashboardComponent},
+  { path: 'facilitiesTable', component: WashFacilityTableComponent},
+  { path: 'washFacilitiesList', component: WashFacilityListComponent},
   { path: 'home', component: HomePageComponent},
   { path: 'typeRefs', component: CommonTypeSelectorComponent},
   { path: 'statusRefs', component: CommonStatusSelectorComponent},

@@ -30,7 +30,7 @@ export class FcltOwnerMenuItems {
         label: 'Мойки',
         icon: 'fa-car',
         command: (click) => {
-          this.router.navigate(['/fclt/facilitiesDash']);}
+          this.router.navigate(['facilitiesDash']);}
       },
       {
         label: 'Услуги',
