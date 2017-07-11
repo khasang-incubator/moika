@@ -1,6 +1,7 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -9,6 +10,7 @@ import javax.persistence.Id;
  * например, мойка и чиска салона, мойка, чиска салона и полировка корпуса
  */
 @Entity(name = "complex_services")
+@DiscriminatorValue(value = "COMPLEX")
 public class ComplexService extends MoikaService {
 
     @Id

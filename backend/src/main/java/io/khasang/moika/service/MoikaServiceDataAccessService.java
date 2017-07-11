@@ -19,4 +19,7 @@ public interface MoikaServiceDataAccessService<T extends MoikaService> {
     List<T> getAllervicesByStatus(String status) throws MoikaDaoException;
     List<T> getServicesByType(String typeCode) throws MoikaDaoException;
     List<T> getActualServices() throws MoikaDaoException;
+    List<T> getServicesByCarType(String carTypeCode) throws MoikaDaoException;
+    List<T> getServicesOnFacility(int idFclt) throws MoikaDaoException;
+    List<T> getActualServicesOnFacility(int idFclt) throws MoikaDaoException;
 }
