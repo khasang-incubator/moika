@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {City} from "../../model/entities/city";
 import {SelectItem} from "primeng/primeng";
 import {CrudService} from "../../model/services/crud.service";
@@ -11,11 +11,12 @@ import {AppSettings} from "../../model/collections/app-settings";
 })
 export class CityDropdownComponent implements OnInit {
   @Input() curCity: string;
-  @Output() @Input()  selectedCity: City;
-
+  @Input() selectedCity: City;
+  @Output() selectionEvent : EventEmitter<City> = new EventEmitter<City>();
 
   private cityItemList: SelectItem[];
   private cityList : City[];
+  private prevSelectedCity: City;
 
   private cityListUrl = AppSettings.backSiteUrl+'/washAddr/city/' ;
 
@@ -44,6 +45,22 @@ export class CityDropdownComponent implements OnInit {
   ngOnInit(): void {
     this.getAll();
   }
+
+  selectCity(){
+    if ( this.prevSelectedCity !== this.selectedCity ) {
+      this.prevSelectedCity = this.cloneCityRec(this.selectedCity);
+      this.selectionEvent.emit(this.selectedCity);
+    }
+  }
+
+  cloneCityRec(aCity: City): City {
+    let t = new City();
+    for (let prop in aCity) {
+      t[prop] = aCity[prop];
+    }
+    return t;
+  }
+
 
   private handleError(error: any): String {
     console.error('Не могу получить список из БД. Error code: %s, URL: %s ', error.status, error.url); // for demo purposes only

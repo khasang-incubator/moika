@@ -11,7 +11,7 @@ import {City} from "../../model/entities/city";
 })
 export class WashFacilityDashboardComponent implements OnInit {
 
-  @Input() selCity: City;
+  selectedCity: City;
   washFacilities: WashFacility[];
   selectedFclt: WashFacility;
   actionMsg: string;
@@ -42,6 +42,11 @@ export class WashFacilityDashboardComponent implements OnInit {
 
   onSelect(washFacility: WashFacility): void {
     this.selectedFclt = washFacility;
+  }
+
+  onCitySelect(aCity: City){
+    console.log("Selected city "+ aCity.name);
+    this.selectedCity = aCity;
   }
 
   private handleError(error: any): Promise<any> {

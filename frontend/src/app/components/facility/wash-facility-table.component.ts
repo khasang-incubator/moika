@@ -130,6 +130,11 @@ export class WashFacilityTableComponent implements OnInit {
     this.displayAddDialog = true;
   }
 
+  onCitySelect(aCity: City){
+    console.log("Selected city "+ aCity.name);
+    this.selectedCity = aCity;
+  }
+
   cloneFcltRec(aFclt: WashFacility): WashFacility {
     let t = new WashFacility();
     for (let prop in aFclt) {
