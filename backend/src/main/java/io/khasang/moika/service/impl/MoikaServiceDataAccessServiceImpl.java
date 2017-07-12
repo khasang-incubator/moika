@@ -77,4 +77,18 @@ public  class MoikaServiceDataAccessServiceImpl<T extends MoikaService> implemen
         return moikaServiceDao.getActualServices();
     }
 
+    @Override
+    public List<T> getServicesByCarType(String carTypeCode) throws MoikaDaoException{
+         return moikaServiceDao.getServicesByCarType(carTypeCode);
+    }
+
+    @Override
+    public List<T> getServicesOnFacility(int idFclt) throws MoikaDaoException {
+        return moikaServiceDao.getServicesOnFacility(idFclt);
+    }
+
+    @Override
+    public List<T> getActualServicesOnFacility(int idFclt) throws MoikaDaoException {
+        return moikaServiceDao.getActualServicesOnFacility(idFclt);
+    }
 }

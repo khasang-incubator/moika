@@ -5,6 +5,8 @@ import io.khasang.moika.entity.*;
 import io.khasang.moika.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,8 @@ import java.util.List;
  * @author Pauls
  */
 
-@Controller
-@RequestMapping(value =  "/MoikaService/service",
+@RestController
+@RequestMapping(value = "/api/moikaService/",
         consumes = "application/json;charset=UTF-8",
         produces = "application/json;charset=UTF-8")
 public class PsServicesController {
@@ -48,156 +50,151 @@ public class PsServicesController {
 
     /**
      * Запрос всех услуг автомойки
-     * @param model
-     * @return
+     *
+     * @return - list of services or error
      */
     @RequestMapping(value = "/allServiceList", method = RequestMethod.GET)
-    public String getBaseServiceList(Model model) {
-        List<MoikaService> serviceList = new ArrayList<>();
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        try {
-            serviceList = allService.getAllServices();
-        } catch (MoikaDaoException e) {
-            e.printStackTrace();
-        }
-        model.addAttribute("servicelist", serviceList);
-        model.addAttribute("nrows", serviceList.size() + " rows affected");
-        return "ps-dao-services";
+    @ResponseStatus(HttpStatus.OK)
+    public Object getBaseServiceList() {
+        List<MoikaService> serviceList = allService.getAllServices();
+        if (serviceList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return serviceList;
     }
 
     /**
      * Добавление новой услуги
+     *
      * @param moikaService
      * @return
      */
-    @RequestMapping(value = "/add", method = RequestMethod.POST )
-    @ResponseBody
-    public MoikaService addMoikaService(@RequestBody MoikaService moikaService) {
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public Object addMoikaService(@RequestBody MoikaService moikaService) {
         moikaService = allService.addService(moikaService);
-        return moikaService; //"ps-dao-carwashfacilities";
+        if (moikaService == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return moikaService;
     }
 
     /**
      * Обновление услуги
+     *
      * @param moikaService
      * @return
      */
-    @RequestMapping(value = "/update", method = RequestMethod.POST )
-    @ResponseBody
-    public MoikaService updateWashService(@RequestBody MoikaService moikaService) {
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Object updateWashService(@RequestBody MoikaService moikaService) {
         moikaService = allService.addService(moikaService);
-        return moikaService; //"ps-dao-carwashfacilities";
+        if (moikaService == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_MODIFIED);
+        else
+            return moikaService;
     }
 
     /**
      * Удаление услуги
+     *
      * @param id - услуги
      * @return
      */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST )
-    @ResponseBody
-    public MoikaService deleteWashService(@PathVariable(value = "id") int id) {
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Object deleteWashService(@PathVariable(value = "id") int id) {
         MoikaService moikaService = allService.getServiceById(id);
-        moikaService = allService.addService(moikaService);
-        return moikaService; //"ps-dao-carwashfacilities";
+        if (moikaService != null) {
+            allService.deleteService(moikaService);
+            return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
-     *  Услуги конкретного вида услуг c подробностями в
-     * @param model
+     * Услуги конкретного вида услуг c подробностями в
+     *
+     * @param typeCode
      * @return
      */
-    @RequestMapping(value = "/serviceList/{code}", method = RequestMethod.GET )
-    @ResponseBody
-    public Object getWashServiceList(@PathVariable(value = "code") String typeCode, Model model) {
-        List<MoikaService> servicesList = new ArrayList<>();
-        try {
-            servicesList = allService.getServicesByType(typeCode);
-        } catch (MoikaDaoException e) {
-            e.printStackTrace();
-        }
-        model.addAttribute("servicelist", servicesList);
-        model.addAttribute("nrows", servicesList.size() + " rows affected");
-        return servicesList; //"ps-dao-wash-services";
+    @RequestMapping(value = "/byType/{code}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public Object getServiceListByType(@PathVariable(value = "code") String typeCode) {
+        List<MoikaService> servicesList = allService.getServicesByType(typeCode);
+        if (servicesList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return servicesList;
     }
 
+    /**
+     * Услуги по типу авто
+     */
+    @RequestMapping(value = "/byCarType/{type}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public Object getServiceListByCarType(@PathVariable(value = "type") String carType) {
+        List<MoikaService> servicesList = allService.getServicesByCarType(carType);
+        if (servicesList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return servicesList;
+    }
 
     /**
      * Услуги конкретного вида услуг с ценой и длительностью подробностями в виде строки
-     * @param model
+     *
+     * @param status
      * @return
      */
-    @RequestMapping(value = "/serviceListByStatus/{status}", method = RequestMethod.GET )
-    @ResponseBody
-    public Object getWashServiceListByStatus(@PathVariable(value = "status") String status, Model model) {
-        List<MoikaService> servicesList = new ArrayList<>();
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        try {
-            servicesList = allService.getAllervicesByStatus(status);
-        } catch (MoikaDaoException e) {
-            e.printStackTrace();
-        }
-        model.addAttribute("servicelist", servicesList);
-        model.addAttribute("nrows", servicesList.size() + " rows affected");
-        return servicesList; //"ps-dao-wash-services";
+    @RequestMapping(value = "/byStatus/{status}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public Object getServiceListByStatus(@PathVariable(value = "status") String status) {
+
+        List<MoikaService> servicesList = allService.getAllervicesByStatus(status);
+        if (servicesList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return servicesList;
+    }
+
+
+    @RequestMapping(value = "/onFclt/{idFclt}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public Object getServiceListonFclt(@PathVariable(value = "idFclt") int idFclt) {
+
+        List<MoikaService> servicesList = allService.getServicesOnFacility(idFclt);
+        if (servicesList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return servicesList;
+    }
+
+    @RequestMapping(value = "/onFclt/actual/{idFclt}", method = RequestMethod.GET)
+    public Object getActualServiceListByFclt(@PathVariable(value = "idFclt") int idFclt) {
+
+        List<MoikaService> servicesList = allService.getServicesOnFacility(idFclt);
+        if (servicesList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return servicesList;
     }
 
     /**
      * Все действующие услуги
-     * @param model
+     *
      * @return
      */
-    @RequestMapping(value = "/actualServiceList", method = RequestMethod.GET )
-    @ResponseBody
-    public Object getActualServiceListByStatus( Model model) {
-        List<MoikaService> servicesList = new ArrayList<>();
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        try {
-            servicesList = allService.getActualServices();
-        } catch (MoikaDaoException e) {
-            e.printStackTrace();
-        }
-        model.addAttribute("servicelist", servicesList);
-        model.addAttribute("nrows", servicesList.size() + " rows affected");
-        return servicesList; //"ps-dao-wash-services";
+    @RequestMapping(value = "/actual", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public Object getActualServiceListByStatus() {
+        List<MoikaService> servicesList = allService.getActualServices();
+        if (servicesList == null)
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        else
+            return servicesList;
     }
 
-    /**
-     * Список типов услуг
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/ServiceTypesList", method = RequestMethod.GET)
-    public String getServiceTypeList(Model model) { //List<MoikaAllService>
-        List<ServiceType> allServicesTypes = new ArrayList<>();
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        try {
-            allServicesTypes = moikaServiceTypes.getAllTypes();
-        } catch (MoikaDaoException e) {
-            e.printStackTrace();
-        }
-        model.addAttribute("serviceTypesList", allServicesTypes);
-        model.addAttribute("nrows", allServicesTypes.size() + " rows affected");
-        return "ps-dao-service-types";
-    }
-
-    /**
-     * Список статусов услуг
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/ServiceStatusList", method = RequestMethod.GET)
-    public String getServiceStatusList(Model model) { //List<MoikaAllService>
-        List<ServiceStatus> serviceStatus = new ArrayList<>();
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        try {
-            serviceStatus = moikaServiceStatus.getAllStatuses();
-        } catch (MoikaDaoException e) {
-            e.printStackTrace();
-        }
-        model.addAttribute("serviceStatusList", serviceStatus);
-        model.addAttribute("nrows", serviceStatus.size() + " rows affected");
-        return "ps-dao-service-status";
-    }
 
 }

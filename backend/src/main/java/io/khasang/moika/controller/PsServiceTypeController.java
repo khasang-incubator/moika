@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Контроллер для типов услу моесного сервиса
+ * Контроллер для типов услуг моечного сервиса
  * @author Pauls
  */
 @RestController

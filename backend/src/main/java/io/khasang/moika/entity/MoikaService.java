@@ -1,5 +1,6 @@
 package io.khasang.moika.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.khasang.moika.util.Interval;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -51,6 +52,14 @@ public class MoikaService extends ABaseMoikaEntity{
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_status", foreignKey = @ForeignKey(name = "fk_service_status"), insertable = false, updatable = false)
     protected ServiceStatus serviceStatusEntity;
+
+    @Column(name = "id_car_type", insertable = false, updatable = false)
+    private int idCarType;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "id_car_type",  referencedColumnName = "id_type") //foreignKey = @ForeignKey(name = "fk_car_type"),
+    @JsonBackReference
+    private CarType carTypeEntity;
+
 
     @Column(name = "cost")
     protected BigDecimal serviceCost = new BigDecimal("0.00");
@@ -202,6 +211,24 @@ public class MoikaService extends ABaseMoikaEntity{
     public ServiceSubType getServiceSubType() {
         return serviceSubTypeEntity;
     }
+
+    public int getIdCarType() {
+        return idCarType;
+    }
+
+    public void setIdCarType(int idCarType) {
+        this.idCarType = idCarType;
+    }
+
+    public CarType getCarTypeEntity() {
+        return carTypeEntity;
+    }
+
+    public void setCarTypeEntity(CarType carTypeEntity) {
+        this.carTypeEntity = carTypeEntity;
+        this.setIdCarType(carTypeEntity.getId());
+    }
+
 
     public BigDecimal getServiceCost() {
         return serviceCost;
