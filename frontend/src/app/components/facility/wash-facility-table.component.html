@@ -1,12 +1,9 @@
 <div class="row-fluid">
   <app-city-dropdown (selectionEvent)="onCitySelect($event)"></app-city-dropdown>
 </div>
-<h2>{{selectedCity}}</h2>
 <div *ngIf="selectedCity">
-
   <div class="row-fluid">
-
-    <p-dataTable [value]="washFcltList" [(selection)]="selectedFclt" selectionMode="single"
+    <p-dataTable [value]="washFacilityList" [(selection)]="selectedFclt" selectionMode="single"
                  (onRowDblclick)="onRowDblclick($event)" [paginator]="true" rows="10" [responsive]="true">
       <p-header>
         <div class="ui-datatable-header">Список моек
@@ -97,7 +94,13 @@
   </div>
 
   <!-- карта моек-->
-  <div class="row-fluid">
-    <app-facility-map [washFcltList]="washFcltList"></app-facility-map>
+  <div class="row">
+    <div *ngIf="!selectedFclt">
+      <app-facility-map [washFcltList]="washFacilityList"></app-facility-map>
+    </div>
+    <div *ngIf="selectedFclt">
+      <app-facility-map [washFcltList]="washFacilityList" [initLon]="selectedFclt.facilityAddr.coordinate.lon"
+                        [initLat]="selectedFclt.facilityAddr.coordinate.lat"></app-facility-map>
+    </div>
   </div>
 </div>

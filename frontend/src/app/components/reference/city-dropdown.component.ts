@@ -47,6 +47,8 @@ export class CityDropdownComponent implements OnInit {
   }
 
   selectCity(){
+    console.log(this.cityItemList);
+    console.log(this.selectedCity);
     if ( this.prevSelectedCity !== this.selectedCity ) {
       this.prevSelectedCity = this.cloneCityRec(this.selectedCity);
       this.selectionEvent.emit(this.selectedCity);

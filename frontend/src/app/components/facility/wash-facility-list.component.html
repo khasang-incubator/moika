@@ -1,5 +1,5 @@
 <div class="row-fluid">
-  <app-city-dropdown [selectedCity]="selectedCity"></app-city-dropdown>
+  <app-city-dropdown (selectionEvent)="onCitySelect($event)"></app-city-dropdown>
 </div>
 <div *ngIf="selectedCity">
   <div class="row-fluid">

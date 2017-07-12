@@ -23,29 +23,5 @@ public class MoikaServiceDaoImpl extends AMoikaServiceDaoImpl<MoikaService>  imp
         this.sessionFactory = sessionFactory;
     }
 
-    @Override
-    public List<MoikaService> getServicesByCarType(String carTypeCode) throws MoikaDaoException {
-        Session session  = sessionFactory.getCurrentSession();
-        Query query  = session.createQuery("from services s inner join car_types c on  s.idCarType = c.id " +
-                " where c.code = ?");
-        query.setParameter(0, carTypeCode);
-        return query.list();
-    }
 
-    @Override
-    public List<MoikaService> getServicesOnFacility(int idFclt) throws MoikaDaoException {
-        Session session  = sessionFactory.getCurrentSession();
-        Query query  = session.createQuery("from services s  where s.idFacility = ?");
-        query.setParameter(0, idFclt);
-        return query.list();
-    }
-
-    @Override
-    public List<MoikaService> getActualServicesOnFacility(int idFclt) throws MoikaDaoException {
-        Session session  = sessionFactory.getCurrentSession();
-        Query query  = session.createQuery("from services s  inner join service_status ss on s.idStatus = ss.id "+
-                "where ss.code = 'ON' and s.idFacility = ?");
-        query.setParameter(0, idFclt);
-        return query.list();
-    }
 }

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {WashFacilityService} from "../../model/services/wash-facility.service";
 import {WashFacility} from "../../model/entities/wash-facility";
 import {ActivatedRoute} from "@angular/router";
@@ -12,7 +12,7 @@ import {City} from "../../model/entities/city";
 export class WashFacilityDashboardComponent implements OnInit {
 
   selectedCity: City;
-  washFacilities: WashFacility[];
+  washFacilityList:WashFacility[];
   selectedFclt: WashFacility;
   actionMsg: string;
 
@@ -22,31 +22,45 @@ export class WashFacilityDashboardComponent implements OnInit {
   }
 
   getShortFacilityList(cnt: number): void {
-    this.washFacilityService.getAll().then(washFacilityList => this.washFacilities = washFacilityList.slice(0,cnt)).catch(this.handleError);
+    this.washFacilityService.getAll().then(washFacilityList => this.washFacilityList= washFacilityList.slice(0,cnt)).catch(this.handleError);
   }
 
   getAll(): void {
     this.actionMsg = 'Обработка данных. Ждите...';
     this.washFacilityService.getAll()
-      .then(washFcltList => {
-        this.washFacilities = washFcltList;
+      .then(washFacilityList => {
+        this.washFacilityList = washFacilityList;
         this.actionMsg = '';
       })
       .catch(this.handleError);
   }
 
+  getByCity(): void {
+    this.actionMsg = 'Обработка данных. Ждите...';
+    if (this.selectedCity) {
+      this.washFacilityService.getByCity(this.selectedCity.id)
+        .then(washFacilityList => {
+          this.washFacilityList = washFacilityList;
+          this.actionMsg = '';
+          this.selectedFclt = this.washFacilityList[0];
+        }).catch(this.handleError);
+    }
+
+  }
+
   ngOnInit(): void {
     console.log("Current route "+this.activateRoute.snapshot.url.toString());
-    this.getAll();
+    this.getByCity();
   }
 
   onSelect(washFacility: WashFacility): void {
     this.selectedFclt = washFacility;
   }
 
-  onCitySelect(aCity: City){
-    console.log("Selected city "+ aCity.name);
+  onCitySelect(aCity: City): void{
+   // console.log("Selected city "+ aCity.name);
     this.selectedCity = aCity;
+    this.getByCity();
   }
 
   private handleError(error: any): Promise<any> {

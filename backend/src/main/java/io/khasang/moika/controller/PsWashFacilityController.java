@@ -5,6 +5,8 @@ import io.khasang.moika.entity.WashAddr;
 import io.khasang.moika.entity.WashFacility;
 import io.khasang.moika.service.PskvorWashFacilityDaoService;
 import io.khasang.moika.service.WashAddrDataAccessService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import java.util.List;
         consumes = "application/json;charset=UTF-8",
         produces = "application/json;charset=UTF-8")
 public class PsWashFacilityController {
+
+    private static final Logger logger = LoggerFactory.getLogger(PsWashFacilityController.class);
 
     @Autowired
     PskvorWashFacilityDaoService pskvorWashFacilityDaoService;
@@ -129,6 +133,7 @@ public class PsWashFacilityController {
     @RequestMapping(value = "/inCity/{cityId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public Object getFacilitiesInCity(@PathVariable(value = "cityId") int cityId) {
+        logger.info("Requesting /inCity/" + cityId);
         City city = washAddrDAS.getCityById(cityId);
         if (city != null) {
             List<WashFacility> washFacilityList = pskvorWashFacilityDaoService.getWashFacilitiesInCity(city);

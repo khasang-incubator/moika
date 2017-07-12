@@ -14,10 +14,9 @@ import {City} from "../../model/entities/city";
 })
 export class WashFacilityTableComponent implements OnInit {
 
-  @Input() selectedCity: City;
-
+  selectedCity: City;
   actionMsg: string = "...";
-  washFcltList: WashFacility[];
+  washFacilityList: WashFacility[];
   fcltAddr: Address;
   wasBoxes: WashBox[];
   manager: Person;
@@ -33,27 +32,49 @@ export class WashFacilityTableComponent implements OnInit {
 
 
   constructor(private activateRoute: ActivatedRoute,
-    private fcltService: WashFacilityService) {
+    private washFacilityService: WashFacilityService) {
   }
 
   getAll(): void {
     this.actionMsg = 'Обработка данных. Ждите...';
-    this.fcltService.getAll()
+    this.washFacilityService.getAll()
       .then(washFcltList => {
-        this.washFcltList = washFcltList;
-        this.actionMsg = 'Двойной клик для редактирования';
+        this.washFacilityList = washFcltList;
+        this.actionMsg = 'Двойной клик для редактирования '+this.washFacilityList.length;
+        this.selectedFclt = this.washFacilityList[0];
       })
       .catch(this.handleError);
+  }
+
+  getByCity(): void {
+    this.actionMsg = 'Обработка данных. Ждите...';
+    if (this.selectedCity) {
+      this.washFacilityService.getByCity(this.selectedCity.id)
+        .then(washFcltList => {
+          this.actionMsg = 'Двойной клик для редактирования';
+          this.washFacilityList = washFcltList;
+          this.selectedFclt = this.washFacilityList[0];
+        })
+        .catch(this.handleError);
+    }
+    else this.getAll();
+    this.selectedFclt = this.washFacilityList[0];
   }
 
   ngOnInit(): void {
     console.log("Current route "+this.activateRoute.snapshot.url.toString());
     this.fcltRec = new WashFacility();
-    this.getAll();
+    this.getByCity();
   }
 
 
-  showDialogToAdd() {
+  onCitySelect(aCity: City){
+    // console.log("Selected city "+ aCity.name);
+    this.selectedCity = aCity;
+    this.getByCity();
+  }
+
+    showDialogToAdd() {
     this.isNewRec = true;
     this.fcltRec = new WashFacility();
     this.displayAddDialog = true;
@@ -64,10 +85,10 @@ export class WashFacilityTableComponent implements OnInit {
   }
 
   save() {
-    let tmpList = [...this.washFcltList];
+    let tmpList = [...this.washFacilityList];
     this.actionMsg = 'Обработка данных. Ждите...';
     if (this.isNewRec) {
-      this.fcltService.createEntity(this.fcltRec)
+      this.washFacilityService.createEntity(this.fcltRec)
         .then(
           resRec => {
             //  console.log("Length before %d", tmpList.length);
@@ -81,7 +102,7 @@ export class WashFacilityTableComponent implements OnInit {
           error => this.handleError(<any>error));
     } else {
       // tmpList[this.findSelectedTypeIdx()] = this.typeRec;
-      this.fcltService.updateEntity(this.fcltRec)
+      this.washFacilityService.updateEntity(this.fcltRec)
         .then(
           resRec => {
             tmpList[this.findSelectedFcltIdx()] = resRec;
@@ -96,7 +117,7 @@ export class WashFacilityTableComponent implements OnInit {
 
   updateList(newFcltList: WashFacility[]) {
     //   console.log("Length someTypeList before %d", this.someTypeList.length);
-    this.washFcltList = newFcltList;
+    this.washFacilityList = newFcltList;
     //  console.log("Length  someTypeList after %d", this.someTypeList.length);
     this.fcltRec = null;
   }
@@ -106,19 +127,20 @@ export class WashFacilityTableComponent implements OnInit {
     let id = this.selectedFclt.id;
     this.displayConfirmDialog = false;
     console.log("About to delete ID: %d", id);
-    if (this.fcltService.deleteEntity(id) ) { //удалили из БД
-      this.washFcltList = this.washFcltList.filter((val, i) => i != index); //Удалили из view
+    if (this.washFacilityService.deleteEntity(id) ) { //удалили из БД
+      this.washFacilityList = this.washFacilityList.filter((val, i) => i != index); //Удалили из view
       this.fcltRec = null;
     }
     else{
       let error = new Error();
-      error.message = "Удаление невозможно"
+      error.message = "Удаление невозможно";
       this.handleError(error);
     }
   }
 
   refresh(){
-    this.getAll();
+    //this.getAll();
+   this.getByCity();
   }
 
   onRowDblclick(event) {
@@ -130,11 +152,6 @@ export class WashFacilityTableComponent implements OnInit {
     this.displayAddDialog = true;
   }
 
-  onCitySelect(aCity: City){
-    console.log("Selected city "+ aCity.name);
-    this.selectedCity = aCity;
-  }
-
   cloneFcltRec(aFclt: WashFacility): WashFacility {
     let t = new WashFacility();
     for (let prop in aFclt) {
@@ -144,7 +161,7 @@ export class WashFacilityTableComponent implements OnInit {
   }
 
   findSelectedFcltIdx(): number {
-    return this.washFcltList.indexOf(this.selectedFclt);
+    return this.washFacilityList.indexOf(this.selectedFclt);
   }
 
   private handleError(error: any): String {

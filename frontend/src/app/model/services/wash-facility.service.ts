@@ -57,15 +57,30 @@ export class WashFacilityService extends CrudService<WashFacility> {
      .toPromise()
       .then(response  => {
         if (response) {
-       //   console.log("Response data");
-       //   console.log(response);
           return Promise.resolve(this.parseArr(response as any[]))
         }
      })
      .catch(this.handleError);
-   console.log(washFcltArr.toString());
+   //console.log(washFcltArr.toString());
    return washFcltArr;
    }
+
+  getByCity(cityId: number): Promise<WashFacility[]> {
+    const url = this.workUrl ? this.workUrl : this.baseUrl;
+    console.log(`Requesting ${url}/inCity/${cityId}`);
+    let  washFcltArr = this.http.get(`${url}/inCity/${cityId}`, {headers: this.getHeaders()})
+      .map((res: Response) => res.json())
+      .toPromise()
+      .then(response  => {
+        if (response) {
+          console.log(response);
+          return Promise.resolve(this.parseArr(response as any[]))
+        }
+      })
+      .catch(this.handleError);
+    //console.log(washFcltArr.toString());
+    return washFcltArr;
+  }
 
    private parseArr(jsonObjArr : any[]): WashFacility[]{
      let entity : WashFacility[] = new Array<WashFacility>();

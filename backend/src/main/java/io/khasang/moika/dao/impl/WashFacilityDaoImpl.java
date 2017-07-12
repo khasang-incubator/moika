@@ -12,6 +12,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -28,16 +29,17 @@ public class WashFacilityDaoImpl extends MoikaDaoCrudImpl<WashFacility> implemen
     @Override
     public List<WashFacility> getWashFacilitiesInCity(City city) throws MoikaDaoException {
         Session session  = sessionFactory.getCurrentSession();
-        Query query  = session.createQuery("from wash_facilities f inner join WashAddr a on  f.idAddr = a.id " +
-                " inner join cities c on a.city.id = c.id where c.name = ?");
-        query.setParameter(0, city.getName());
-        return query.list();
+        Query query  = session.createQuery("select f from wash_facilities f inner join WashAddr a on  f.idAddr = a.id where a.idCity = ?", WashFacility.class);
+        query.setParameter(0, city.getId());
+        List<WashFacility> res = new ArrayList<>();
+        res =  query.getResultList();
+        return res;
     }
 
     @Override
     public WashFacility getWashFacilityByAddress(WashAddr washAddr) throws MoikaDaoException {
         Session session  = sessionFactory.getCurrentSession();
-        Query query  = session.createQuery("from wash_facilities f where f.facilityAddr = ?");
+        Query query  = session.createQuery("from wash_facilities f where f.facilityAddr = ?").setCacheable( true );
         query.setParameter(0,washAddr);
         return (WashFacility)query.getSingleResult();
     }

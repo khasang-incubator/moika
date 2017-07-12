@@ -2,6 +2,7 @@ package io.khasang.moika.entity;
 
 
 import io.khasang.moika.config.application.WebConfig;
+import io.khasang.moika.dao.CityDao;
 import io.khasang.moika.dao.MoikaDaoException;
 import io.khasang.moika.dao.WashFacilityDao;
 import org.junit.Assert;
@@ -30,6 +31,9 @@ public class WashFacilityEntityTest {
     @Autowired
     WashFacilityDao facilityDao;
 
+    @Autowired
+    CityDao cityDao;
+
     final int id = 16;
     final String fcltName = "Test2 REST мойка";
     final String existingFasity = "Test2 REST мойка";
@@ -47,15 +51,16 @@ public class WashFacilityEntityTest {
     @Test
     @Transactional
     public void testWashFacilityList() {
-        List<WashFacility> resList = null;
+        List<WashFacility> resFcltList = null;
         try {
-            resList = facilityDao.getAll();
+            resFcltList = facilityDao.getAll();
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
-        Assert.assertFalse("Request body does not contain WashFacilities", resList.isEmpty());
+        Assert.assertNotNull("Request body does not contain WashFacilities List", resFcltList);
+        Assert.assertFalse("WashFacilities List is empty", resFcltList.isEmpty());
 
-        WashFacility resFclt = resList.get(0);
+        WashFacility resFclt = resFcltList.get(0);
         Assert.assertNotNull("Could not get any facility from list", resFclt);
 
         Assert.assertTrue("Facility does  not contain boxes", resFclt.getWashBoxes().size() > 0);
@@ -69,7 +74,7 @@ public class WashFacilityEntityTest {
 
     @Test
     @Transactional
-    public void getFcltById() {
+    public void testGetFcltById() {
         WashFacility resFclt = null;
         try {
             resFclt = facilityDao.get(id);
@@ -92,9 +97,37 @@ public class WashFacilityEntityTest {
         else Assert.assertTrue("Facility does not contain box", isBox);
     }
 
+
     @Test
     @Transactional
-    public void getFcltCalendar() {
+    public void testGetFcltByCityId() {
+        City aCity = cityDao.get(1);
+        Assert.assertNotNull("Cann`t continue testGetFcltByCityId. City is Null", aCity);
+        List<WashFacility> resFcltList = null;
+        try {
+            resFcltList = facilityDao.getWashFacilitiesInCity(aCity);
+        } catch (MoikaDaoException e) {
+            Assert.fail(e.getMessage());
+        }
+        Assert.assertNotNull("Request body does not contain WashFacilities List", resFcltList);
+        Assert.assertFalse("WashFacilities List is empty", resFcltList.isEmpty());
+
+        WashFacility resFclt = resFcltList.get(0);
+        Assert.assertNotNull("Could not get any facility from list", resFclt);
+
+        Assert.assertTrue("Facility does  not contain boxes", resFclt.getWashBoxes().size() > 0);
+        WashBox resBox = (new ArrayList<WashBox>(resFclt.getWashBoxes()).get(0));
+        Assert.assertNotNull("Could not get any box", resBox);
+        BoxStatus bs = resBox.getBoxStatusEntity();
+        Assert.assertNotNull("Could not get any box status entity", bs);
+        BoxType bt = resBox.getBoxTypeEntity();
+        Assert.assertNotNull("Could not get any box type entity", bt);
+    }
+
+
+    @Test
+    @Transactional
+    public void testGetFcltCalendar() {
         WashFacility resFclt = null;
         try {
             resFclt = facilityDao.get(id);
