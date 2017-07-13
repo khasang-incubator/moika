@@ -1,16 +1,41 @@
-<p>
-  reserve-order works!
-</p>
+<h3>Резервирование места на мойке и оформление заказа</h3>
 
+<div class="ui-g">
+  <div class="ui-g-3"><h3>Выбор города</h3></div>
+  <div class="ui-g-3"><h3> Дата с</h3> </div>
+  <div class="ui-g-3"> <h3> Дата по</h3></div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-3">
+    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Выбор города" (onChange)="onChangeCity($event)">
+    </p-dropdown>
+  </div>
 
-<h3 class="first">Single</h3>
-<p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City"></p-dropdown>
-<p>Selected City: {{selectedCity ? selectedCity.name : 'none'}}</p>
+  <div class="ui-g-3">
+    <p-calendar [(ngModel)]="date1" [showIcon]="true" dateFormat="dd.mm.yy" [styleClass]="ui-calendar">
+    </p-calendar>
+  </div>
+
+  <div class="ui-g-3">
+    <p-calendar [(ngModel)]="date2" [showIcon]="true" dateFormat="dd.mm.yy" [styleClass]="ui-calendar">
+    </p-calendar>
+  </div>
+
+  <div class="ui-g-3">
+    <button pButton type="button" (click)="count()" icon="fa-check" 
+      iconPos="right" label="Свободные">
+  </button>
+  </div>
+</div>
+
+<div class="ui-g">
+  <div class="ui-g-8">
+    <p-dropdown [options]="carwashs" [(ngModel)]="selectedCarwash" placeholder="Выбор мойки" 
+      (onChange)="onChangeCarWash($event)">
+    </p-dropdown>
+  </div>
+</div>
 
 <div>
-  <p-growl [(value)]="msgs"></p-growl> 
-  <p-messages [(value)]="msgs"></p-messages>
-  <button type="button" pButton (click)="showSuccess()" label="Success" class="ui-button-success">
-  </button>
-  
+  <p-growl [(value)]="msgs"></p-growl>
 </div>
