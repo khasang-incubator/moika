@@ -9,17 +9,16 @@ import javax.persistence.*;
  * - типом загрязнений, от которого зависит цена услуги
  */
 @Entity(name = "clean_Services")
-@DiscriminatorValue(value = "CLEAN")
 public class CleanService extends MoikaService {
 
     @Column(name = "id_dirt_type")
     private int idDirtType;
     @ManyToOne
-    @JoinColumn(name = "id_dirt_type", foreignKey = @ForeignKey(name = "fk_dirt_type"), insertable = false, updatable = false)
+    @JoinColumn(name = "id_dirt_type", foreignKey = @ForeignKey(name = "fk_clean_dirt_type"), insertable = false, updatable = false)
     private DirtType dirtTypeEntity;
 
     public CleanService() {
-        super("CLEAN");
+
     }
 
     public int getIdDirtType() {

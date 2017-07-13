@@ -7,10 +7,12 @@ import javax.persistence.*;
  * Наследуется от общей сущности услуг автомойки
  */
 @Entity(name = "polish_services")
-@DiscriminatorValue(value = "POLISH")
 public class PolishService extends MoikaService {
 
+    @Column(name = "id_polish_type", insertable = false, updatable = false)
+    private int idPolishType;
+
     public PolishService() {
-        super("POLISH");
     }
+
 }

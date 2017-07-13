@@ -8,6 +8,7 @@ import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * MoikaService - базовая сущность представляющая услуги, оказываемые автомойками
@@ -20,12 +21,11 @@ import java.util.Date;
 
 @Entity(name = "services")
 @TypeDef(name="interval", typeClass = Interval.class)
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type_code")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class MoikaService extends ABaseMoikaEntity{
 
     @Id
-    @Column(name = "id_service", columnDefinition = "serial")
+    @Column(name = "id_service", columnDefinition = "serial", updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO) //не IDENTITY, а тот что в таблицах
     protected long id;
 
@@ -35,30 +35,18 @@ public class MoikaService extends ABaseMoikaEntity{
     @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_service_id_fclt"), insertable = false, updatable = false)
     protected WashFacility washFacility;
 
-    @Column(name = "type_code", insertable = false, updatable = false)
-    protected String serviceTypeCode;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "type_code", foreignKey = @ForeignKey(name = "fk_service_type_code"), insertable = false, updatable = false)
-    protected ServiceType serviceTypeEntity;
 
-    @Column(name = "id_subtype", insertable = false, updatable = false)
-    protected int idSubType;
+    @Column(name = "id_group", insertable = false, updatable = false)
+    protected int idGroup;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id_subtype", insertable = false, updatable = false)
-    protected ServiceSubType serviceSubTypeEntity;
+    @JoinColumn(name = "id_group",  foreignKey = @ForeignKey(name ="fk_service_group"), insertable = false, updatable = false)
+    protected ServiceGroup serviceGroupEntity;
 
     @Column(name = "id_status",insertable = false, updatable = false)
     protected int idStatus;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_status", foreignKey = @ForeignKey(name = "fk_service_status"), insertable = false, updatable = false)
     protected ServiceStatus serviceStatusEntity;
-
-    @Column(name = "id_car_type", insertable = false, updatable = false)
-    private int idCarType;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "id_car_type",  referencedColumnName = "id_type") //foreignKey = @ForeignKey(name = "fk_car_type"),
-    @JsonBackReference
-    private CarType carTypeEntity;
 
 
     @Column(name = "cost")
@@ -83,6 +71,14 @@ public class MoikaService extends ABaseMoikaEntity{
     @Temporal(TemporalType.TIMESTAMP)
     protected Date timeEdit;
 
+    @Column(name = "time_start")
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date timeStart;
+
+    @Column(name = "time_stop")
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date timeStop;
+
     @Column(name = "id_user_create",insertable = false, updatable = false)
     protected int idUserCreate;
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
@@ -99,27 +95,12 @@ public class MoikaService extends ABaseMoikaEntity{
     public MoikaService() {
     }
 
-    protected MoikaService(String serviceTypeCode) {
-        this.serviceTypeCode=serviceTypeCode;
-    }
 
 
     public long getId() {
         return this.id;
     }
 
-
-    public String getServiceType() {
-        return serviceTypeCode;
-    }
-
-
-    public void setServiceType(String code) {
-        ServiceType sse = new ServiceType();
-        sse.getTypeCode();
-        this.serviceTypeEntity = sse;
-        this.serviceTypeCode = serviceTypeEntity.getTypeCode();
-    }
 
     public int getServiceStatus() {
         return idStatus;
@@ -167,12 +148,33 @@ public class MoikaService extends ABaseMoikaEntity{
         this.washFacility = washFacility;
     }
 
-    public ServiceType getServiceTypeEntity() {
-        return serviceTypeEntity;
+    public int getIdGroup() {
+        return idGroup;
     }
 
-    public void setServiceTypeEntity(ServiceType serviceTypeEntity) {
-        this.serviceTypeEntity = serviceTypeEntity;
+    public void setIdGroup(int idGroup) {
+        this.idGroup = idGroup;
+    }
+
+    public ServiceGroup getServiceGroupEntity() {
+        return serviceGroupEntity;
+    }
+
+    public void setServiceGroupEntity(ServiceGroup serviceGroupEntity) {
+        this.serviceGroupEntity = serviceGroupEntity;
+    }
+
+    public void setIdStatus(int idStatus) {
+        this.idStatus = idStatus;
+    }
+
+
+    public void setIdUserCreate(int idUserCreate) {
+        this.idUserCreate = idUserCreate;
+    }
+
+    public void setIdUserEdit(int idUserEdit) {
+        this.idUserEdit = idUserEdit;
     }
 
     public ServiceStatus getServiceStatusEntity() {
@@ -181,10 +183,6 @@ public class MoikaService extends ABaseMoikaEntity{
 
     public void setServiceStatusEntity(ServiceStatus serviceStatusEntity) {
         this.serviceStatusEntity = serviceStatusEntity;
-    }
-
-    public String getServiceTypeCode() {
-        return serviceTypeCode;
     }
 
     public int getIdStatus() {
@@ -204,29 +202,8 @@ public class MoikaService extends ABaseMoikaEntity{
     }
 
 
-    public int getIdSubType() {
-        return idSubType;
-    }
-
-    public ServiceSubType getServiceSubType() {
-        return serviceSubTypeEntity;
-    }
-
-    public int getIdCarType() {
-        return idCarType;
-    }
-
-    public void setIdCarType(int idCarType) {
-        this.idCarType = idCarType;
-    }
-
-    public CarType getCarTypeEntity() {
-        return carTypeEntity;
-    }
-
-    public void setCarTypeEntity(CarType carTypeEntity) {
-        this.carTypeEntity = carTypeEntity;
-        this.setIdCarType(carTypeEntity.getId());
+    public ServiceGroup getServiceSubType() {
+        return serviceGroupEntity;
     }
 
 
@@ -244,6 +221,26 @@ public class MoikaService extends ABaseMoikaEntity{
 
     public Date getTimeEdit() {
         return timeEdit;
+    }
+
+    public void setTimeCreate(Date timeCreate) {
+        this.timeCreate = timeCreate;
+    }
+
+    public Date getTimeStart() {
+        return timeStart;
+    }
+
+    public void setTimeStart(Date timeStart) {
+        this.timeStart = timeStart;
+    }
+
+    public Date getTimeStop() {
+        return timeStop;
+    }
+
+    public void setTimeStop(Date timeStop) {
+        this.timeStop = timeStop;
     }
 
     public int getIdUserCreate() {
@@ -291,8 +288,8 @@ public class MoikaService extends ABaseMoikaEntity{
 
         if (getId() != that.getId()) return false;
         if (getIdFacility() != that.getIdFacility()) return false;
-        if (!serviceTypeCode.equals(that.getServiceTypeCode())) return false;
         if (idStatus != that.getIdStatus()) return false;
+        if (idGroup != that.getIdGroup()) return false;
         if (!timeCreate.equals(that.getTimeCreate())) return false;
         if (!timeEdit.equals(that.getTimeEdit())) return false;
         if (!userCreate.equals(that.getUserCreate())) return false;
@@ -302,16 +299,7 @@ public class MoikaService extends ABaseMoikaEntity{
 
     @Override
     public int hashCode() {
-        int result = (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + (int) (getIdFacility() ^ (getIdFacility() >>> 32));
-        result = 31 * result + getServiceTypeCode().hashCode();
-        result = 31 * result + getIdSubType();
-        result = 31 * result + getIdStatus();
-        result = 31 * result + getServiceCost().hashCode();
-        result = 31 * result + (getServiceDuration() != null ? getServiceDuration().hashCode() : 0);
-        result = 31 * result + (getTimeCreate() != null ? getTimeCreate().hashCode() : 0);
-        result = 31 * result + (getTimeEdit() != null ? getTimeEdit().hashCode() : 0);
-        return result;
+        return Objects.hash(id, idFacility, idGroup, idStatus, serviceCost, timeCreate, timeEdit, idUserCreate);
     }
 
     @Override
@@ -320,7 +308,7 @@ public class MoikaService extends ABaseMoikaEntity{
                 "id=" + id +
                 ", idFacility=" + idFacility +
                 ", washFacility=" + washFacility +
-                ", serviceTypeCode=" + serviceTypeCode +
+                ", serviceGroup=" + idGroup +
                 ", idStatus=" + idStatus +
                 ", serviceStatusEntity=" + serviceStatusEntity.code +
                 ", cost='" + serviceCost.toString() + '\'' +

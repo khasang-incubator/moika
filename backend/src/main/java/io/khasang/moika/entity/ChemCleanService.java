@@ -9,23 +9,22 @@ import javax.persistence.*;
  * - типом загрязнений, от которого зависит цена услуги
  */
 @Entity(name= "chem_clean_services")
-@DiscriminatorValue(value = "CHEM_CLEAN")
 public class ChemCleanService extends MoikaService  {
 
     @Column(name = "id_dirt_type")
     private int idDirtType;
     @ManyToOne
-    @JoinColumn(name = "id_dirt_type", foreignKey = @ForeignKey(name = "fk_dirt_type"), insertable=false, updatable=false )
+    @JoinColumn(name = "id_dirt_type", foreignKey = @ForeignKey(name = "fk_chem_dirt_type"), insertable=false, updatable=false )
     private DirtType dirtTypeEntity;
 
-    @Column(name = "id_salon_material")
+    @Column(name = "id_material")
     private int idMaterial;
     @ManyToOne
-    @JoinColumn(name = "id_salon_material", foreignKey = @ForeignKey(name = "fk_salon_materials"), insertable=false, updatable=false )
+    @JoinColumn(name = "id_material", foreignKey = @ForeignKey(name = "fk_chem_salon_material"), insertable=false, updatable=false )
     private SalonMaterial salonMaterial;
 
     public ChemCleanService() {
-        super("CHEM_LEAN");
+
     }
 
     public int getIdDirtType() {

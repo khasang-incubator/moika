@@ -10,7 +10,6 @@ import javax.persistence.Id;
  * например, мойка и чиска салона, мойка, чиска салона и полировка корпуса
  */
 @Entity(name = "complex_services")
-@DiscriminatorValue(value = "COMPLEX")
 public class ComplexService extends MoikaService {
 
     @Id
@@ -29,7 +28,7 @@ public class ComplexService extends MoikaService {
     private String addInfo;
 
     public ComplexService() {
-        super("COMPLEX");
+
     }
 
     public String getAddInfo() {

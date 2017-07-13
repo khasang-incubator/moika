@@ -6,9 +6,7 @@ import javax.persistence.*;
  * Наследуется от общей сущности услуг автомойки
  */
 @Entity(name = "other_services")
-@DiscriminatorValue(value = "OTHER")
 public class OtherService extends MoikaService{
-    public OtherService() {
-        super("OTHER");
+    public OtherService(){
     }
 }

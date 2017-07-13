@@ -1,6 +1,6 @@
 package io.khasang.moika.dao;
 
-import io.khasang.moika.entity.ServiceSubType;
+import io.khasang.moika.entity.ServiceGroup;
 import io.khasang.moika.entity.ServiceType;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface ServiceSubTypeDao extends BaseMoikaTypeDao<ServiceType> {
 
-    List<ServiceSubType> getServiceSubTypeBybaseType(String typeCode) throws MoikaDaoException;;
+    List<ServiceGroup> getServiceSubTypeBybaseType(String typeCode) throws MoikaDaoException;;
     List getServiceSubTypeBybaseType(int idType) throws MoikaDaoException;;
 
 }

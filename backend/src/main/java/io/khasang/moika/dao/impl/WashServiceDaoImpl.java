@@ -1,5 +1,6 @@
 package io.khasang.moika.dao.impl;
 
+import io.khasang.moika.dao.MoikaDaoException;
 import io.khasang.moika.dao.WashServiceDao;
 import io.khasang.moika.entity.WashService;
 import io.khasang.moika.util.DataAccessUtil;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
+import java.util.List;
 
 @Transactional
 @Repository("washServiceDao")
@@ -42,5 +44,15 @@ public class WashServiceDaoImpl extends AMoikaServiceDaoImpl<WashService> implem
         query.setParameter("carTypeCode", carTypeCode);
         WashService washService = (WashService) query.getSingleResult();
         return washService;
+    }
+
+    @Override
+    public List<WashService> getServicesByCarType(int idFclt, String carTypeCode) throws MoikaDaoException {
+        final Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from services where idFacility = :idFacility and car_types.code = :carTypeCode", WashService.class);
+        query.setParameter("idFacility", idFclt);
+        query.setParameter("carTypeCode", carTypeCode);
+        List<WashService> services = query.getResultList();
+        return services;
     }
 }
