@@ -43,7 +43,7 @@ public class WashFacility extends ABaseMoikaEntity {
     private WashAddr facilityAddr;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @Fetch(FetchMode.SELECT)
+    @Fetch(FetchMode.SELECT) // заставляет Hibernate выбирать коллекцию отдельным запросом, а не строить выбоку в один "мега" запрос. (Однако при этом возникает проблемв n+1)
     @JoinColumn(name = "id_phone")
     @JoinTable(name = "r_facility_phones",
             joinColumns = @JoinColumn(name = "id_fclt"),
