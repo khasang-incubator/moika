@@ -1,19 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
-import { FreeboxDays } from "../entities/freebox-days";
-
 
 @Injectable()
-export class FreeboxDaysService {
-  d: Date;
-  constructor(private http: Http) {}
-  getData(){
+export class FreeboxHoursService {
+  time: string[]=["6:00","6:20","6:40","7:00","7:00","12:00","23:00"]; // Время в течении дня когда бокс свободен
 
-    return this.http.get('assets/data/freebox-days.json')
-      .toPromise()
-      .then(res => <FreeboxDays[]> res.json().data)
-      .then(data => { return data; });
+  constructor(private http: Http) {}
+
+  getFreeTime(){
+    return this.time;
   }
 }
 

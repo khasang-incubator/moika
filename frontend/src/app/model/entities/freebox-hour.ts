@@ -1,5 +1,4 @@
 
-export class FreeboxHour {
-    time: Date;
-    status: string;   // свободено, занят
-}
+export class FreeboxHours {
+    time: string;
+  }

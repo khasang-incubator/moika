@@ -42,8 +42,13 @@
       <p-column field="date" header="Дата"></p-column>
       <p-column field="status" header="Состояние"></p-column>
     </p-dataTable>
+
   </div>
-</div>
-<div>
-  <p-growl [(value)]="msgs"></p-growl>
-</div>
+  <div class="ui-g-5">
+    <p-dataTable [value]="freeTime" (onRowClick)="onTimeSelected($event)">
+      <p-column field="time" header="Время"></p-column>
+    </p-dataTable>
+  </div>
+  <div>
+    <p-growl [(value)]="msgs"></p-growl>
+  </div>

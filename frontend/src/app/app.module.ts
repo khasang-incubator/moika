@@ -57,6 +57,7 @@ import {AutoOwnerOutletComponent} from "app/components/auto-owner-outlet.compone
 import { ReserveOrderComponent } from './components/reserve-order/reserve-order.component';
 import {FreeboxDays} from 'app/model/entities/freebox-days';
 import {FreeboxDaysService}from 'app/model/services/freebox-days-service';
+import {FreeboxHoursService}from 'app/model/services/freebox-hours-service';
 
 @NgModule({
   declarations: [
@@ -108,7 +109,7 @@ import {FreeboxDaysService}from 'app/model/services/freebox-days-service';
       apiKey: 'AIzaSyDX_0DCgqImKoRTUPQ3QRjdOwLEVKwm3uE'
     }),
   ],
-  providers: [FreeboxDaysService, WashBoxService, WashFacilityService, ClientService, CrudService, MockMoikaObjectService, MockMoikaObjects,
+  providers: [FreeboxDaysService,FreeboxHoursService, WashBoxService, WashFacilityService, ClientService, CrudService, MockMoikaObjectService, MockMoikaObjects,
     InterfaceSwitchingService, MenuToggleService],
   bootstrap: [AppComponent]
 })

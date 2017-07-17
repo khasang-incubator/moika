@@ -6,9 +6,12 @@ import {Message} from 'primeng/primeng';
 import {MessagesModule} from 'primeng/primeng';
 import {CalendarModule} from 'primeng/primeng';
 import {FreeboxDays} from 'app/model/entities/freebox-days';
+import {FreeboxHours} from 'app/model/entities/freebox-hour';
 import {FreeboxDaysService}from 'app/model/services/freebox-days-service';
+import {FreeboxHoursService} from "../../model/services/freebox-hours-service";
 import { Response} from '@angular/http';
 import {DataTableModule,SharedModule} from 'primeng/primeng';
+
 
 @Component({
   selector: 'app-reserve-order',
@@ -24,9 +27,11 @@ export class ReserveOrderComponent implements OnInit {
   date1: Date = new Date();
   date2: Date = new Date();
   freeBoxDay:FreeboxDays[];
+  freeTime: FreeboxHours[]=[{time: '6:00'},{time: '12:00'},{time: '23:00'}];
 
 
-  constructor(private freeboxDaysService:FreeboxDaysService) {
+  constructor(private freeboxDaysService:FreeboxDaysService,
+              private freeboxHoursService:FreeboxHoursService) {
     this.cities = [];
     this.cities.push({ label: 'Длинный New York', value: { id: 1, name: 'New York', code: 'NY' } });
     this.cities.push({ label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } });
@@ -60,5 +65,7 @@ onChangeCarWash(event){
     }
   onDaySelected(event){
     console.log(event.data);
+    let aa=this.freeboxHoursService.getFreeTime();
+    console.log(this.freeTime);
   }
 }
