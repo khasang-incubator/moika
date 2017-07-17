@@ -27,7 +27,7 @@ export class ReserveOrderComponent implements OnInit {
   date1: Date = new Date();
   date2: Date = new Date();
   freeBoxDay:FreeboxDays[];
-  freeTime: FreeboxHours[]=[{time: '6:00'},{time: '12:00'},{time: '23:00'}];
+  freeTime: FreeboxHours[];
 
 
   constructor(private freeboxDaysService:FreeboxDaysService,
@@ -65,7 +65,7 @@ onChangeCarWash(event){
     }
   onDaySelected(event){
     console.log(event.data);
-    let aa=this.freeboxHoursService.getFreeTime();
+    this.freeTime = this.freeboxHoursService.getFreeTime();
     console.log(this.freeTime);
   }
 }
