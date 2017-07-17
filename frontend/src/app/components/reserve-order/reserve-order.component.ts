@@ -5,6 +5,10 @@ import { GrowlModule } from 'primeng/primeng';
 import {Message} from 'primeng/primeng';
 import {MessagesModule} from 'primeng/primeng';
 import {CalendarModule} from 'primeng/primeng';
+import {FreeboxDays} from 'app/model/entities/freebox-days';
+import {FreeboxDaysService}from 'app/model/services/freebox-days-service';
+import { Response} from '@angular/http';
+import {DataTableModule,SharedModule} from 'primeng/primeng';
 
 @Component({
   selector: 'app-reserve-order',
@@ -19,9 +23,10 @@ export class ReserveOrderComponent implements OnInit {
   msgs: Message[] = [];
   date1: Date = new Date();
   date2: Date = new Date();
+  freeBoxDay:FreeboxDays[];
 
 
-  constructor() {
+  constructor(private freeboxDaysService:FreeboxDaysService) {
     this.cities = [];
     this.cities.push({ label: 'Длинный New York', value: { id: 1, name: 'New York', code: 'NY' } });
     this.cities.push({ label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } });
@@ -30,7 +35,7 @@ export class ReserveOrderComponent implements OnInit {
     this.cities.push({ label: 'Paris', value: { id: 5, name: 'Paris', code: 'PRS' } });
     this.carwashs = [];
     this.carwashs.push({ label: 'Мойка 1', value: { id: 1, name: 'Мойка 1', code: '1' } });
-    this.carwashs.push({ label: 'Длинная предлинная Мойка 2 и еще с длинным прицепом', 
+    this.carwashs.push({ label: 'Длинная предлинная Мойка 2 и еще с длинным прицепом',
     value: { id: 2, name: 'Длинная предлинная Мойка 2 и еще с длинным прицепом', code: '3' } });
     this.carwashs.push({ label: 'Мойка 3', value: { id: 3, name: 'Мойка 3', code: '3' } });
 
@@ -50,5 +55,10 @@ onChangeCarWash(event){
     this.msgs = [];
     this.msgs.push({ severity: 'success', summary: 'Выбранa мойка', detail: this.selectedCarwash.name });
   }
-  
+  findFreeBoxDay(event){
+    this.freeboxDaysService.getData().then(fb => this.freeBoxDay = fb);
+    }
+  onDaySelected(event){
+    console.log(event.data);
+  }
 }

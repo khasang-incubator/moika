@@ -2,12 +2,13 @@
 
 <div class="ui-g">
   <div class="ui-g-3"><h3>Выбор города</h3></div>
-  <div class="ui-g-3"><h3> Дата с</h3> </div>
-  <div class="ui-g-3"> <h3> Дата по</h3></div>
+  <div class="ui-g-3"><h3> Дата с</h3></div>
+  <div class="ui-g-3"><h3> Дата по</h3></div>
 </div>
 <div class="ui-g">
   <div class="ui-g-3">
-    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Выбор города" (onChange)="onChangeCity($event)">
+    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Выбор города"
+                (onChange)="onChangeCity($event)">
     </p-dropdown>
   </div>
 
@@ -22,20 +23,27 @@
   </div>
 
   <div class="ui-g-3">
-    <button pButton type="button" (click)="count()" icon="fa-check" 
-      iconPos="right" label="Свободные">
-  </button>
+    <button pButton type="button" (click)="findFreeBoxDay($event)" icon="fa-check"
+            iconPos="right" label="Свободные">
+    </button>
   </div>
 </div>
 
 <div class="ui-g">
   <div class="ui-g-8">
-    <p-dropdown [options]="carwashs" [(ngModel)]="selectedCarwash" placeholder="Выбор мойки" 
-      (onChange)="onChangeCarWash($event)">
+    <p-dropdown [options]="carwashs" [(ngModel)]="selectedCarwash" placeholder="Выбор мойки"
+                (onChange)="onChangeCarWash($event)">
     </p-dropdown>
   </div>
 </div>
-
+<div class="ui-g">
+  <div class="ui-g-5">
+    <p-dataTable [value]="freeBoxDay" (onRowClick)="onDaySelected($event)">
+      <p-column field="date" header="Дата"></p-column>
+      <p-column field="status" header="Состояние"></p-column>
+    </p-dataTable>
+  </div>
+</div>
 <div>
   <p-growl [(value)]="msgs"></p-growl>
 </div>

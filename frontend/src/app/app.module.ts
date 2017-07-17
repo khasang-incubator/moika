@@ -55,7 +55,8 @@ import {AdminOutletComponent} from "./components/admin-outlet.component";
 import {FcltOwnerOutletComponent} from "./components/fclt-owner-outlet.component";
 import {AutoOwnerOutletComponent} from "app/components/auto-owner-outlet.component";
 import { ReserveOrderComponent } from './components/reserve-order/reserve-order.component';
-
+import {FreeboxDays} from 'app/model/entities/freebox-days';
+import {FreeboxDaysService}from 'app/model/services/freebox-days-service';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,7 @@ import { ReserveOrderComponent } from './components/reserve-order/reserve-order.
     FcltOwnerOutletComponent,
     AutoOwnerOutletComponent,
     ReserveOrderComponent,
-  ],
+   ],
   imports: [
     BsDropdownModule.forRoot(),
     AppRoutingModule,
@@ -107,7 +108,7 @@ import { ReserveOrderComponent } from './components/reserve-order/reserve-order.
       apiKey: 'AIzaSyDX_0DCgqImKoRTUPQ3QRjdOwLEVKwm3uE'
     }),
   ],
-  providers: [WashBoxService, WashFacilityService, ClientService, CrudService, MockMoikaObjectService, MockMoikaObjects,
+  providers: [FreeboxDaysService, WashBoxService, WashFacilityService, ClientService, CrudService, MockMoikaObjectService, MockMoikaObjects,
     InterfaceSwitchingService, MenuToggleService],
   bootstrap: [AppComponent]
 })
