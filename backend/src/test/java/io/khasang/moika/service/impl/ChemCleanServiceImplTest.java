@@ -25,13 +25,17 @@ public class ChemCleanServiceImplTest {
     @Autowired
     ChemCleanServiceDataAccessService chemCleanServiceDAS;
 
+    final String serviceName = "Химчиска силой мысли";
+    final String testDescr = "к нам на полставки устроился Люк Сковородкин";
+    final int idFclt = 3;
+
 
     @Test
     @Transactional
     public void testChemCleanServiceList() {
         List<ChemCleanService> serviceList = null;
         try {
-            serviceList = chemCleanServiceDAS.getServicesByType("CHEM_CLEAN");
+            serviceList = chemCleanServiceDAS.getServicesByType(idFclt,"CHEM_CLEAN");
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
@@ -41,7 +45,7 @@ public class ChemCleanServiceImplTest {
         BigDecimal cost = null;
         int dur = 0;
         for (ChemCleanService item : serviceList) {
-            if (item.getServiceName().equalsIgnoreCase("Химчиска салона")) {
+            if (item.getName().equalsIgnoreCase(serviceName)) {
                 isCode = true;
                 if (item.getDirtTypeEntity().getTypeCode().equals("NORM")) {
                     if (item.getSalonMaterial().getTypeCode().equals("VELUR")) {

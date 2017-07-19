@@ -80,7 +80,7 @@ public class WashServiceIntegrationTest {
                 ServiceStatus.class,serviceStatusCode).getBody();
         Assert.assertNotNull("Could not get service status "+serviceStatusCode+"!",serviceStatus);
         moikaService.setIdStatus((short)serviceStatus.getId());
-        moikaService.setServiceStatusEntity(serviceStatus);
+        moikaService.setServiceStatus(serviceStatus);
 
         ServiceType serviceType = new  ServiceType();
         httpEntity = new HttpEntity<>(serviceType, headers); //подготовили запрос для BoxType
@@ -90,7 +90,7 @@ public class WashServiceIntegrationTest {
                 httpEntity,
                 ServiceType.class,serviceTypeCode).getBody();
         Assert.assertNotNull("Could not get service type "+serviceTypeCode,serviceType);
-        moikaService.setServiceTypeEntity(serviceType);
+        moikaService.setServiceType(serviceType);
 
 
         List<MoikaService> serviceList = new ArrayList<>();
@@ -115,7 +115,7 @@ public class WashServiceIntegrationTest {
                 httpEntity,
                 CarType.class,carTypeCode2).getBody();
         Assert.assertNotNull("Could not get car type "+carTypeCode2,serviceType);
-        washService.setServiceStatusEntity(serviceStatus);
+        washService.setServiceStatus(serviceStatus);
         washService.setCarTypeEntity(carType);
         washService.setServiceCost(new BigDecimal("5500.00"));
         washService.setServiceDuration(20);
@@ -131,7 +131,7 @@ public class WashServiceIntegrationTest {
 
 
         Assert.assertTrue("Service types  not  \"Мойка силой мысли\"", testService.getName().equalsIgnoreCase(serviceName));
-        Assert.assertTrue("Service types  not  \"WASH\"", testService.getServiceTypeCode().equalsIgnoreCase("WASH"));
+        Assert.assertTrue("Service types  not  \"WASH\"", testService.getServiceType().getTypeCode().equalsIgnoreCase("WASH"));
         Assert.assertEquals("Service name \"Мойка силой мысли\" not cost", new BigDecimal("5500.00").setScale(2),testService.getServiceCost().setScale(2));
         Assert.assertEquals("Service name \"Мойка силой мысли\" not last", 20L, testService.getServiceDuration().longValue());
     }
@@ -164,7 +164,7 @@ public class WashServiceIntegrationTest {
         TestResult testResult = new TestResult();
         for (MoikaService item : serviceList) {
             if (item.getId() == serviceId) {
-                testResult.serviceCode = item.getServiceTypeCode();
+                testResult.serviceCode = item.getServiceType().getTypeCode();
                 testResult.cost = item.getServiceCost();
                 testResult.duration = item.getServiceDuration();
             }

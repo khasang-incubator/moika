@@ -6,6 +6,7 @@ import javax.persistence.*;
  * Наследуется от общей сущности услуг автомойки
  */
 @Entity(name = "other_services")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class OtherService extends MoikaService{
     public OtherService(){
     }

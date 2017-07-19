@@ -25,67 +25,36 @@ public class WorkAccessServiceImpl implements WorkAccessService {
     }
 
     @Override
-    public Work create(Work entity) throws MoikaDaoException {
-        return workDao.create(entity);
+    public Work createWork(Work work) throws MoikaDaoException {
+        return workDao.create(work);
     }
 
     @Override
-    public Work get(long id) throws MoikaDaoException {
+    public Work getWork(long id) throws MoikaDaoException {
         return workDao.get(id);
     }
 
     @Override
-    public Work get(int id) throws MoikaDaoException {
-        return workDao.get(id);
+    public Work updateWork(Work work) throws MoikaDaoException {
+        return workDao.update(work);
     }
 
     @Override
-    public Work update(Work entity) throws MoikaDaoException {
-        return workDao.update(entity);
+    public boolean deleteWork(Work work) throws MoikaDaoException {
+        Work workToDelete = getWork(work.getIdWork());
+        if (workToDelete != null) {
+            try {
+                workDao.delete(workToDelete);
+                return true;
+            } catch (MoikaDaoException e) {
+                return false;
+            }
+        } else
+            return false;
     }
 
     @Override
-    public Work update(long id, Map<String, Object> fieldValueMap) throws MoikaDaoException {
-        return workDao.update(id, fieldValueMap);
-    }
-
-    @Override
-    public Work delete(Work entity) throws MoikaDaoException {
-        return workDao.delete(entity);
-    }
-
-    @Override
-    public List<Work> getAll() throws MoikaDaoException {
-        return workDao.getAll();
-    }
-
-    @Override
-    public Session getCurrentSession() {
-        return workDao.getCurrentSession();
-    }
-
-    @Override
-    public List<Work> getWorksByIdOrder(long idOrder) {
-        return workDao.getWorksByIdOrder(idOrder);
-    }
-
-    @Override
-    public Work getWorkInBox(long idWashBox) {
-        return workDao.getWorkInBox(idWashBox);
-    }
-
-    @Override
-    public Work getWorkInBox(long idWashBox, Date workDateAndTime) {
-        return workDao.getWorkInBox( idWashBox,  workDateAndTime);
-    }
-
-    @Override
-    public List<Work> getWorksInFacility(int idFclt) {
+    public List<Work> getAllWorks(int idFclt) {
         return workDao.getWorksInFacility( idFclt);
-    }
-
-    @Override
-    public List<Work> getWorksInFacility(int idFclt, Date workDateAndTime) {
-        return workDao.getWorksInFacility( idFclt,  workDateAndTime);
     }
 }

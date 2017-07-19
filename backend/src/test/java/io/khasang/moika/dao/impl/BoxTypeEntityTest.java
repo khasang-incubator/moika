@@ -1,9 +1,12 @@
-package io.khasang.moika.entity;
+package io.khasang.moika.dao.impl;
 
 
+import io.khasang.moika.config.AppConfig;
+import io.khasang.moika.config.HibernateConfig;
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.BoxTypeDao;
 import io.khasang.moika.dao.MoikaDaoException;
+import io.khasang.moika.entity.BoxType;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +20,7 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = {AppConfig.class, WebConfig.class, HibernateConfig.class})
 public class BoxTypeEntityTest {
 
     @Autowired

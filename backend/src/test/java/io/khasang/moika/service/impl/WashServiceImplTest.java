@@ -44,13 +44,14 @@ public class WashServiceImplTest {
 
     final String serviceName = "Мойка силой мысли";
     final String testDescr = "к нам на полставки устроился Йода";
+    final int idFclt = 3;
 
     @Test
     @Transactional
     public void testWashServiceListFromService() {
         List<WashService> serviceList = null;
         try {
-            serviceList = washerviceDAS.getServicesByType("WASH");
+            serviceList = washerviceDAS.getServicesByType(idFclt,"WASH");
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
@@ -79,7 +80,7 @@ public class WashServiceImplTest {
     public void testWashServiceList() {
         List<WashService> serviceList = null;
         try {
-            serviceList = washServiceDAS.getServicesByType("WASH");
+            serviceList = washServiceDAS.getServicesByType(idFclt,"WASH");
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
@@ -89,7 +90,7 @@ public class WashServiceImplTest {
         int dur = 0;
         for (WashService item : serviceList) {
             Assert.assertTrue("Service types list not contain name \"Ручная мойка машины\"",
-                    item.getServiceTypeEntity().getTypeCode().equalsIgnoreCase("WASH"));
+                    item.getServiceType().getTypeCode().equalsIgnoreCase("WASH"));
             if (item.getCarTypeEntity().getTypeCode().equals("CAR")) {
                 cost = item.getServiceCost();
                 dur = item.getServiceDuration();
@@ -106,12 +107,12 @@ public class WashServiceImplTest {
         WashService washService = new WashService(); // подготовили объект для тестирования
 
         washService.setName(serviceName);
-        washService.setIdFacility(3);
+        washService.setIdFacility(idFclt);
         washService.setDescription(testDescr);
         ServiceType stEntity = serviceTypeDao.getEntityByCode("WASH");
-        washService.setServiceTypeEntity(stEntity);
+        washService.setServiceType(stEntity);
         ServiceStatus stsEntity = serviceStatusDao.getEntityByCode("PLAN");
-        washService.setServiceStatusEntity(stsEntity);
+        washService.setServiceStatus(stsEntity);
 
         CarType carType = carTypeDao.getEntityByCode("CAR");
         washService.setCarTypeEntity(carType);

@@ -21,43 +21,37 @@ public class OrdersAccessServiceImpl implements OrdersAccessService {
     OrdersDao ordersDao;
 
     @Override
-    public Orders create(Orders entity) throws MoikaDaoException {
-        return ordersDao.create(entity);
+    public Orders createOrder(Orders order) throws MoikaDaoException {
+        return ordersDao.create(order);
     }
 
     @Override
-    public Orders get(long id) throws MoikaDaoException {
+    public Orders getOrder(long id) throws MoikaDaoException {
         return ordersDao.get(id);
     }
 
     @Override
-    public Orders get(int id) throws MoikaDaoException {
-        return ordersDao.get(id);
-    }
-
-
-    @Override
-    public Orders update(Orders entity) throws MoikaDaoException {
-        return ordersDao.update(entity);
+    public Orders updateOrder(Orders order) throws MoikaDaoException {
+        return ordersDao.update(order);
     }
 
     @Override
-    public Orders update(long id, Map<String, Object> fieldValueMap) throws MoikaDaoException {
-        return null;
+    public boolean deleteOrder(Orders order) throws MoikaDaoException {
+        Orders orderToDelete = getOrder(order.getId());
+        if (orderToDelete != null) {
+            try {
+                ordersDao.delete(orderToDelete);
+                return true;
+            } catch (MoikaDaoException e) {
+                return false;
+            }
+        } else
+            return false;
     }
 
     @Override
-    public Orders delete(Orders entity) throws MoikaDaoException {
-        return ordersDao.delete(entity);
+    public List<Orders> getAllOrders(int idFclt) throws MoikaDaoException {
+        return ordersDao.getAllOrders(idFclt);
     }
 
-    @Override
-    public List<Orders> getAll() throws MoikaDaoException {
-        return ordersDao.getAll();
-    }
-
-    @Override
-    public Session getCurrentSession() {
-        return null;
-    }
 }

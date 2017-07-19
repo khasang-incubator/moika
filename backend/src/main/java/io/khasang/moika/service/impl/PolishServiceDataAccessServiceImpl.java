@@ -14,8 +14,6 @@ public class PolishServiceDataAccessServiceImpl extends MoikaServiceDataAccessSe
     @Autowired
     PolishServiceDao polishServiceDao;
 
-    public PolishServiceDataAccessServiceImpl() {
-    }
 
     @Autowired
     public PolishServiceDataAccessServiceImpl(@Qualifier("polishServiceDao") PolishServiceDao polishService) {

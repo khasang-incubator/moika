@@ -1,7 +1,5 @@
 package io.khasang.moika.service;
 
-import io.khasang.moika.model.PskvorDataAccess;
-
 import java.util.List;
 
 

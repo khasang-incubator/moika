@@ -11,6 +11,7 @@ import javax.persistence.*;
  * - типом авто, от которого зависит цена услуги
  */
 @Entity(name = "wash_services")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class WashService extends MoikaService {
 
     @Column(name = "id_car_type", insertable = false, updatable = false)

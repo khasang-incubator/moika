@@ -1,9 +1,12 @@
-package io.khasang.moika.entity;
+package io.khasang.moika.dao.impl;
 
 
+import io.khasang.moika.config.AppConfig;
+import io.khasang.moika.config.HibernateConfig;
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.MoikaDaoException;
 import io.khasang.moika.dao.WashServiceDao;
+import io.khasang.moika.entity.WashService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,19 +21,21 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = {AppConfig.class, WebConfig.class, HibernateConfig.class})
 public class WashServiceEntityTest {
 
     @Autowired
     WashServiceDao serviceDao;
 
+    final int existedDur = 300;
+    final BigDecimal existedCost = new BigDecimal("300.00").setScale(2);
 
     @Test
     @Transactional
     public void testWashServiceList() {
         List<WashService> serviceList = null;
         try {
-            serviceList = serviceDao.getAll();
+            serviceList = serviceDao.getServices(3);
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
@@ -48,7 +53,7 @@ public class WashServiceEntityTest {
             }
         }
         Assert.assertTrue("Service types list not contain name \"Ручная мойка машины\"", isWashCode);
-        Assert.assertEquals("Service types list  name \"Ручная мойка машины\" not cost", new BigDecimal("350.00").setScale(2), cost);
-        Assert.assertEquals("Service types list  name \"Ручная мойка машины\" not last", 300, dur);
+        Assert.assertEquals("Service types list  name \"Ручная мойка машины\" not cost", existedCost, cost);
+        Assert.assertEquals("Service types list  name \"Ручная мойка машины\" not last", existedDur, dur);
     }
 }

@@ -26,7 +26,6 @@ public abstract class MoikaDaoCrudImpl<T extends ABaseMoikaEntity> implements IM
 
     protected Class<? extends T> daoType;
 
-
     /**
      * By defining this class as abstract, we prevent Spring from creating
      * instance of this class If not defined as abstract,
@@ -44,10 +43,6 @@ public abstract class MoikaDaoCrudImpl<T extends ABaseMoikaEntity> implements IM
         this.sessionFactory = sessionFactory;
     }
 
-    public Class<? extends T> getDaoType() {
-        return daoType;
-    }
-
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
@@ -55,6 +50,11 @@ public abstract class MoikaDaoCrudImpl<T extends ABaseMoikaEntity> implements IM
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public Class<? extends T> getDaoType() {
+        return daoType;
     }
 
     @Override

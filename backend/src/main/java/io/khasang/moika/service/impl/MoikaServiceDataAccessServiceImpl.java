@@ -3,6 +3,8 @@ package io.khasang.moika.service.impl;
 
 import io.khasang.moika.dao.MoikaDaoException;
 import io.khasang.moika.dao.MoikaServiceDao;
+import io.khasang.moika.entity.EServiceGroup;
+import io.khasang.moika.entity.EServiceType;
 import io.khasang.moika.entity.MoikaService;
 import io.khasang.moika.service.MoikaServiceDataAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,23 +12,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 
 
 @Service(value = "moikaServiceDataAccessService")
 @Transactional
 public  class MoikaServiceDataAccessServiceImpl<T extends MoikaService> implements MoikaServiceDataAccessService<T> {
+
+    final MoikaServiceDao moikaServiceDao;
+
+    protected Class<? extends T> daoType;
+
     @Autowired
-    MoikaServiceDao moikaServiceDao;
-
-
     public MoikaServiceDataAccessServiceImpl(MoikaServiceDao moikaServiceDao) {
         this.moikaServiceDao = moikaServiceDao;
+        daoType = this.moikaServiceDao.getDaoType();
     }
-
-    public MoikaServiceDataAccessServiceImpl() {
-    }
-
 
     @Override
     public T addService(T service) throws MoikaDaoException {
@@ -52,43 +55,43 @@ public  class MoikaServiceDataAccessServiceImpl<T extends MoikaService> implemen
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public List<T> getAllServices() throws MoikaDaoException {
-        return moikaServiceDao.getAll();
+    public List<T> getServices(int idFclt) throws MoikaDaoException {
+        return moikaServiceDao.getServices(idFclt);
     }
 
 
     @Override
-    public List<T> getAllervicesByStatus(int idStatus) throws MoikaDaoException {
-            return moikaServiceDao.getServicesByStatus(idStatus);
+    public List<T> getServicesByStatus(int idFclt, int idStatus) throws MoikaDaoException {
+        return moikaServiceDao.getServicesByStatus(idFclt, idStatus);
     }
 
     @Override
-    public List<T> getAllervicesByStatus(String status) throws MoikaDaoException {
-        return moikaServiceDao.getServicesByStatus(status);
+    public List<T> getervicesByStatus(int idFclt, String status) throws MoikaDaoException {
+        return moikaServiceDao.getServicesByStatus(idFclt, status);
     }
 
     @Override
-    public List<T> getServicesByType(String typeCode) throws MoikaDaoException {
-        return moikaServiceDao.getServicesByType(typeCode);
+    public List<T> getServicesByType(int idFclt, String typeCode) throws MoikaDaoException {
+        return moikaServiceDao.getServicesByType(idFclt, typeCode);
     }
 
     @Override
-    public List<T> getActualServices() throws MoikaDaoException {
-        return moikaServiceDao.getActualServices();
+    public List<T> getServicesByType(int idFclt, EServiceType serviceType) throws MoikaDaoException {
+        return moikaServiceDao.getServicesByType(idFclt, serviceType);
     }
 
     @Override
-    public List<T> getServicesByCarType(String carTypeCode) throws MoikaDaoException{
-         return moikaServiceDao.getServicesByCarType(carTypeCode);
+    public List<T> getActualServices(int idFclt) throws MoikaDaoException {
+        return moikaServiceDao.getActualServices(idFclt);
     }
 
     @Override
-    public List<T> getServicesOnFacility(int idFclt) throws MoikaDaoException {
-        return moikaServiceDao.getServicesOnFacility(idFclt);
+    public List<T> getServicesByGroup(int idFclt, EServiceGroup serviceGroup) throws MoikaDaoException {
+        return moikaServiceDao.getServicesByGroup(idFclt, serviceGroup);
     }
 
     @Override
-    public List<T> getActualServicesOnFacility(int idFclt) throws MoikaDaoException {
-        return moikaServiceDao.getActualServicesOnFacility(idFclt);
+    public List<T> getServicesByGroup(int idFclt, String groupCode) throws MoikaDaoException {
+        return moikaServiceDao.getServicesByGroup(idFclt, groupCode);
     }
 }

@@ -35,18 +35,24 @@ public class MoikaService extends ABaseMoikaEntity{
     @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_service_id_fclt"), insertable = false, updatable = false)
     protected WashFacility washFacility;
 
+    @Column(name = "id_type", insertable = false, updatable = false)
+    @Enumerated(EnumType.ORDINAL)
+    protected EServiceType idType;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_type",  foreignKey = @ForeignKey(name ="fk_service_type"), insertable = false, updatable = false)
+    protected ServiceType serviceType;
 
     @Column(name = "id_group", insertable = false, updatable = false)
     protected int idGroup;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_group",  foreignKey = @ForeignKey(name ="fk_service_group"), insertable = false, updatable = false)
-    protected ServiceGroup serviceGroupEntity;
+    protected ServiceGroup serviceGroup;
 
     @Column(name = "id_status",insertable = false, updatable = false)
     protected int idStatus;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_status", foreignKey = @ForeignKey(name = "fk_service_status"), insertable = false, updatable = false)
-    protected ServiceStatus serviceStatusEntity;
+    protected ServiceStatus serviceStatus;
 
 
     @Column(name = "cost")
@@ -71,13 +77,13 @@ public class MoikaService extends ABaseMoikaEntity{
     @Temporal(TemporalType.TIMESTAMP)
     protected Date timeEdit;
 
-    @Column(name = "time_start")
+    @Column(name = "date_start")
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date timeStart;
+    protected Date dateStart;
 
-    @Column(name = "time_stop")
+    @Column(name = "date_stop")
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date timeStop;
+    protected Date dateStop;
 
     @Column(name = "id_user_create",insertable = false, updatable = false)
     protected int idUserCreate;
@@ -96,14 +102,8 @@ public class MoikaService extends ABaseMoikaEntity{
     }
 
 
-
     public long getId() {
         return this.id;
-    }
-
-
-    public int getServiceStatus() {
-        return idStatus;
     }
 
     public void setServiceStatus(short status) {
@@ -113,16 +113,9 @@ public class MoikaService extends ABaseMoikaEntity{
     public void setServiceStatus(String code) {
         ServiceStatus st = new ServiceStatus();
         st.setStatusCode(code);
-        this.serviceStatusEntity = st;
+        this.serviceStatus = st;
     }
 
-    public String getServiceName() {
-        return name;
-    }
-
-    public void setServiceName(String serviceName) {
-        this.name = name;
-    }
 
     public String getDescription() {
         return description;
@@ -148,6 +141,22 @@ public class MoikaService extends ABaseMoikaEntity{
         this.washFacility = washFacility;
     }
 
+    public EServiceType getIdType() {
+        return idType;
+    }
+
+    public void setIdType(EServiceType idType) {
+        this.idType = idType;
+    }
+
+    public ServiceType getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(ServiceType serviceType) {
+        this.serviceType = serviceType;
+    }
+
     public int getIdGroup() {
         return idGroup;
     }
@@ -156,12 +165,12 @@ public class MoikaService extends ABaseMoikaEntity{
         this.idGroup = idGroup;
     }
 
-    public ServiceGroup getServiceGroupEntity() {
-        return serviceGroupEntity;
+    public ServiceGroup getServiceGroup() {
+        return serviceGroup;
     }
 
-    public void setServiceGroupEntity(ServiceGroup serviceGroupEntity) {
-        this.serviceGroupEntity = serviceGroupEntity;
+    public void setServiceGroup(ServiceGroup serviceGroup) {
+        this.serviceGroup = serviceGroup;
     }
 
     public void setIdStatus(int idStatus) {
@@ -177,12 +186,12 @@ public class MoikaService extends ABaseMoikaEntity{
         this.idUserEdit = idUserEdit;
     }
 
-    public ServiceStatus getServiceStatusEntity() {
-        return serviceStatusEntity;
+    public ServiceStatus getServiceStatus() {
+        return serviceStatus;
     }
 
-    public void setServiceStatusEntity(ServiceStatus serviceStatusEntity) {
-        this.serviceStatusEntity = serviceStatusEntity;
+    public void setServiceStatus(ServiceStatus serviceStatusEntity) {
+        this.serviceStatus = serviceStatusEntity;
     }
 
     public int getIdStatus() {
@@ -201,18 +210,20 @@ public class MoikaService extends ABaseMoikaEntity{
         this.name = name;
     }
 
-
-    public ServiceGroup getServiceSubType() {
-        return serviceGroupEntity;
-    }
-
-
     public BigDecimal getServiceCost() {
         return serviceCost;
     }
 
+    public void setServiceCost(BigDecimal serviceCost) {
+        this.serviceCost = serviceCost;
+    }
+
     public Integer getServiceDuration() {
         return serviceDuration;
+    }
+
+    public void setServiceDuration(Integer serviceDuration) {
+        this.serviceDuration = serviceDuration;
     }
 
     public Date getTimeCreate() {
@@ -227,20 +238,20 @@ public class MoikaService extends ABaseMoikaEntity{
         this.timeCreate = timeCreate;
     }
 
-    public Date getTimeStart() {
-        return timeStart;
+    public Date getDateStart() {
+        return dateStart;
     }
 
-    public void setTimeStart(Date timeStart) {
-        this.timeStart = timeStart;
+    public void setDateStart(Date dateStart) {
+        this.dateStart = dateStart;
     }
 
-    public Date getTimeStop() {
-        return timeStop;
+    public Date getDateStop() {
+        return dateStop;
     }
 
-    public void setTimeStop(Date timeStop) {
-        this.timeStop = timeStop;
+    public void setDateStop(Date dateStop) {
+        this.dateStop = dateStop;
     }
 
     public int getIdUserCreate() {
@@ -257,14 +268,6 @@ public class MoikaService extends ABaseMoikaEntity{
 
     public User getUserEdit() {
         return userEdit;
-    }
-
-    public void setServiceCost(BigDecimal serviceCost) {
-        this.serviceCost = serviceCost;
-    }
-
-    public void setServiceDuration(Integer serviceDuration) {
-        this.serviceDuration = serviceDuration;
     }
 
     public void setTimeEdit(Date timeEdit) {
@@ -294,7 +297,7 @@ public class MoikaService extends ABaseMoikaEntity{
         if (!timeEdit.equals(that.getTimeEdit())) return false;
         if (!userCreate.equals(that.getUserCreate())) return false;
         if (!userEdit.equals(that.getUserEdit())) return false;
-        return getServiceName() != null ? getServiceName().equals(that.getServiceName()) : that.getServiceName() == null;
+        return getName() != null ? getName().equals(that.getName()) : that.getName() == null;
     }
 
     @Override
@@ -310,7 +313,7 @@ public class MoikaService extends ABaseMoikaEntity{
                 ", washFacility=" + washFacility +
                 ", serviceGroup=" + idGroup +
                 ", idStatus=" + idStatus +
-                ", serviceStatusEntity=" + serviceStatusEntity.code +
+                ", serviceStatusEntity=" + serviceStatus.code +
                 ", cost='" + serviceCost.toString() + '\'' +
                 ", duration='" + serviceDuration.toString() + '\'' +
                 ", serviceName='" + name + '\'' +

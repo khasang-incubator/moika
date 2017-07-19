@@ -25,13 +25,16 @@ public class CleanServiceImplTest {
     @Autowired
     CleanServiceDataAccessService cleanServiceDAS;
 
+    final String serviceName = "Чиска силой мысли";
+    final String testDescr = "к нам на полставки устроился Йода";
+    final int idFclt = 3;
 
     @Test
     @Transactional
     public void testCleanServiceList() {
         List<CleanService> serviceList = null;
         try {
-            serviceList = cleanServiceDAS.getServicesByType("CLEAN");
+            serviceList = cleanServiceDAS.getServicesByType(idFclt,"CLEAN");
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
@@ -41,7 +44,7 @@ public class CleanServiceImplTest {
         BigDecimal cost = null;
         int dur = 0;
         for (CleanService item : serviceList) {
-            if (item.getServiceName().equalsIgnoreCase("Чиска салона")) {
+            if (item.getName().equalsIgnoreCase("Чиска салона")) {
                 isCode = true;
                 if (item.getDirtTypeEntity().getTypeCode().equals("NORM")) {
                     cost = item.getServiceCost();

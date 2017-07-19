@@ -9,6 +9,7 @@ import javax.persistence.*;
  * - типом загрязнений, от которого зависит цена услуги
  */
 @Entity(name= "chem_clean_services")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class ChemCleanService extends MoikaService  {
 
     @Column(name = "id_dirt_type")

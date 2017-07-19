@@ -15,9 +15,6 @@ public class OtherServiceDataAccessServiceImpl extends MoikaServiceDataAccessSer
     @Autowired
     OtherServiceDao serviceDao;
 
-    public OtherServiceDataAccessServiceImpl() {
-    }
-
     @Autowired
     public OtherServiceDataAccessServiceImpl(@Qualifier("otherServiceDao") OtherServiceDao otherServiceDao) {
         super(otherServiceDao);

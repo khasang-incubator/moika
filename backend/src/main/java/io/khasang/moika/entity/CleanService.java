@@ -1,5 +1,7 @@
 package io.khasang.moika.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 /**
@@ -9,13 +11,16 @@ import javax.persistence.*;
  * - типом загрязнений, от которого зависит цена услуги
  */
 @Entity(name = "clean_Services")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class CleanService extends MoikaService {
 
-    @Column(name = "id_dirt_type")
+    @Column(name = "id_dirt_type", insertable = false, updatable = false)
     private int idDirtType;
-    @ManyToOne
-    @JoinColumn(name = "id_dirt_type", foreignKey = @ForeignKey(name = "fk_clean_dirt_type"), insertable = false, updatable = false)
-    private DirtType dirtTypeEntity;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "id_dirt_type", foreignKey = @ForeignKey(name = "fk_clean_dirt_type"))
+    @JsonBackReference
+    protected DirtType dirtTypeEntity;
+
 
     public CleanService() {
 

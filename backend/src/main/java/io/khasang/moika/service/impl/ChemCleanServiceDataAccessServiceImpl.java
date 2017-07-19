@@ -14,9 +14,6 @@ public class ChemCleanServiceDataAccessServiceImpl extends MoikaServiceDataAcces
     @Autowired
     ChemCleanServiceDao chemCleanServiceDao;
 
-    public ChemCleanServiceDataAccessServiceImpl() {
-    }
-
     @Autowired
     public ChemCleanServiceDataAccessServiceImpl(@Qualifier("chemCleanServiceDao") ChemCleanServiceDao chemCleanServiceDao) {
         super(chemCleanServiceDao);

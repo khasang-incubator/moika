@@ -27,14 +27,14 @@ public class AllServiceImplTest {
     @Qualifier("moikaServiceDataAccessService")
     @Autowired
     MoikaServiceDataAccessService moikaServiceDAS;
-
+    final int idFclt = 3;
 
     @Test
     @Transactional
     public void testAllServiceList() {
         List<MoikaService> serviceList = null;
         try {
-            serviceList = moikaServiceDAS.getAllServices();
+            serviceList = moikaServiceDAS.getActualServices(idFclt);
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
@@ -44,7 +44,7 @@ public class AllServiceImplTest {
         BigDecimal cost = null;
         int dur = 0;
         for (MoikaService item : serviceList) {
-            if (item.getServiceName().equalsIgnoreCase("Ручная мойка машины")) {
+            if (item.getName().equalsIgnoreCase("Ручная мойка машины")) {
                 isWashCode = true;
                 if (((WashService) item).getCarTypeEntity().getTypeCode().equals("CAR")) {
                     cost = item.getServiceCost();

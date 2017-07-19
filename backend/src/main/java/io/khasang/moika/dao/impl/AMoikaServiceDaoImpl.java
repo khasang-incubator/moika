@@ -2,6 +2,8 @@ package io.khasang.moika.dao.impl;
 
 import io.khasang.moika.dao.MoikaDaoException;
 import io.khasang.moika.dao.MoikaServiceDao;
+import io.khasang.moika.entity.EServiceGroup;
+import io.khasang.moika.entity.EServiceType;
 import io.khasang.moika.entity.MoikaService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,7 +28,7 @@ public abstract class AMoikaServiceDaoImpl<T extends MoikaService> extends Moika
     @Override
     public List<T> getServicesByStatus(int idFclt, int idStatus) throws MoikaDaoException {
         final Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("from services where idFacility = :idFacility and idStatus= :idStatus");
+        Query query = session.createQuery("from services where idFacility = :idFacility and idStatus= :idStatus",getDaoType());
         query.setParameter("idFacility", idFclt);
         query.setParameter("idStatus", idStatus);
         List<T> services = query.getResultList();
@@ -38,9 +40,19 @@ public abstract class AMoikaServiceDaoImpl<T extends MoikaService> extends Moika
         final Session session = sessionFactory.getCurrentSession();
 
         Query query = session.createQuery("from services s join service_status t on s.idStatus = t.id "+
-                " where s.idFacility = :idFacility and t.code= :statusCode");
+                " where s.idFacility = :idFacility and t.code= :statusCode",getDaoType());
         query.setParameter("idFacility", idFclt);
         query.setParameter("statusCode", statusCode);
+        List<T> services = query.getResultList();
+        return services;
+    }
+
+    @Override
+    public List<T> getServicesByType(int idFclt,  EServiceType serviceType) throws MoikaDaoException {
+        final Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from services s where s.idFacility = :idFacility and s.idType = :serviceType", getDaoType());
+        query.setParameter("idFacility", idFclt);
+        query.setParameter("serviceType", serviceType.ordinal());
         List<T> services = query.getResultList();
         return services;
     }
@@ -50,18 +62,17 @@ public abstract class AMoikaServiceDaoImpl<T extends MoikaService> extends Moika
         final Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from services s inner join  service_group g on s.idGroup = g.id "+
                 " inner join  service_types t on s.idGroup = g.id "+
-                " where s.idFacility = :idFacility and t.code = :typeCode", MoikaService.class);
+                " where s.idFacility = :idFacility and t.code = :typeCode", getDaoType());
         query.setParameter("idFacility", idFclt);
         query.setParameter("typeCode", typeCode);
         List<T> services = query.getResultList();
         return services;
     }
-
     @Override
     public List<T> getActualServices(int idFclt) throws MoikaDaoException {
         Session session  = sessionFactory.getCurrentSession();
         Query query  = session.createQuery("select s from services s inner join service_status ss on s.idStatus = ss.id "+
-                "where ss.code = 'ON' and s.idFacility = ?", MoikaService.class);
+                "where ss.code = 'ON' and s.idFacility = ?", getDaoType());
         query.setParameter(0, idFclt);
         List<T> services = query.getResultList();
         return services;
@@ -70,7 +81,7 @@ public abstract class AMoikaServiceDaoImpl<T extends MoikaService> extends Moika
     @Override
     public List<T> getServicesByGroup(int idFclt, String groupCode) throws MoikaDaoException{
         final Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("from services where idFacility = :idFacility and serviceGroupEntity.code = :groupCode");
+        Query query = session.createQuery("from services where idFacility = :idFacility and serviceGroupEntity.code = :groupCode", getDaoType());
         query.setParameter("idFacility", idFclt);
         query.setParameter("groupCode", groupCode);
         List<T> services = query.getResultList();
@@ -78,11 +89,23 @@ public abstract class AMoikaServiceDaoImpl<T extends MoikaService> extends Moika
     }
 
     @Override
+    public List<T> getServicesByGroup(int idFclt, EServiceGroup serviceGroup) throws MoikaDaoException {
+        final Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from services where idFacility = :idFacility and idGroup = :idGroup", getDaoType());
+        query.setParameter("idFacility", idFclt);
+        query.setParameter("idGroup", serviceGroup.ordinal());
+        List<T> services = query.getResultList();
+        return services;
+    }
+
+
+    @Override
     public List<T> getServices(int idFclt) throws MoikaDaoException {
         Session session  = sessionFactory.getCurrentSession();
-        org.hibernate.query.Query query  = session.createQuery("from services s  where s.idFacility = ?");
+        org.hibernate.query.Query query  = session.createQuery("from services s  where s.idFacility = ?", getDaoType());
         query.setParameter(0, idFclt);
-        return query.list();
+        List<T> services = query.getResultList();
+        return services;
     }
 
 

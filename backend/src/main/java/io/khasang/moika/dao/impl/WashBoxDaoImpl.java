@@ -18,31 +18,23 @@ public class WashBoxDaoImpl extends MoikaDaoCrudImpl<WashBox> implements WashBox
 
     @Override
     public WashBox getWashBoxByName(int idFacility, String name) {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().
-                createCriteria(WashBox.class);
-        criteria.add(Restrictions.eq("washFacility", idFacility));
-        criteria.add(Restrictions.eq("boxName", name));
-        return (WashBox) criteria.uniqueResult();
+        Query query  = sessionFactory.getCurrentSession().createQuery("from wash_boxes where idFacility = :idFacility and  boxName = :boxName", WashBox.class);
+        query.setParameter("idFacility", idFacility);
+        query.setParameter("boxName", name);
+        WashBox res = (WashBox) query.getSingleResult();
+        return res;
     }
 
     @Override
     public List<WashBox> getWashBoxesOnFacility(int idFacility) {
-       // Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from wash_box where id_fclt = ?;")
-      //          .create(WashBox.class);
         Query query  = sessionFactory.getCurrentSession().createQuery("from wash_boxes where idFacility = ?");
         query.setParameter(0, idFacility);
-     //   query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return query.list();
     }
 
     @Override
     public List<WashBox> getWashBoxesByTypeId(int boxType) {
-     //   Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from wash_box where id_type = ?;")
-     //           .create(WashBox.class);
         Query query  = sessionFactory.getCurrentSession().createQuery("from wash_boxes where idType = ?");
-        query.setParameter(0, boxType);
-      //  query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return query.list();
     }
 
@@ -55,11 +47,8 @@ public class WashBoxDaoImpl extends MoikaDaoCrudImpl<WashBox> implements WashBox
 
     @Override
     public List<WashBox> getWashBoxesByTypeCode(String boxType) {
-        //   Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from wash_box where id_type = ?;")
-        //           .create(WashBox.class);
         Query query  = sessionFactory.getCurrentSession().createQuery("from wash_boxes where boxTypeEntity.code = ?");
         query.setParameter(0, boxType);
-        //  query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return query.list();
     }
 

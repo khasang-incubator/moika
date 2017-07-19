@@ -41,7 +41,7 @@ public class PsWashFacilityCalendarController {
      */
     @RequestMapping(value = "/{idFclt}", method = RequestMethod.GET )
     @ResponseStatus(HttpStatus.OK)
-    public Object getWashBoxList(@PathVariable(value = "idFclt") int idFclt) {
+    public Object getWashFacilityCalendar(@PathVariable(value = "idFclt") int idFclt) {
         List<WashFacilityCalendar> fcltCalendar = calendarDAS.getFacilityWorkCalendar(idFclt);
         if ((fcltCalendar == null) || (fcltCalendar.isEmpty()))
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);

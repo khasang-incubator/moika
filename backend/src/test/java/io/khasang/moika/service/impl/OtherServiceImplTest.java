@@ -25,13 +25,16 @@ public class OtherServiceImplTest {
     @Autowired
     OtherServiceDataAccessService otherServiceDAS;
 
+    final String serviceName = "Прочий сервис силой мысли";
+    final String testDescr = "к нам на полставки устроился Люк Сковородкин";
+    final int idFclt = 3;
 
     @Test
     @Transactional
     public void testCleanServiceList() {
         List<OtherService> serviceList = null;
         try {
-            serviceList = otherServiceDAS.getServicesByType("OTHER");
+            serviceList = otherServiceDAS.getServicesByType(idFclt,"OTHER");
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
@@ -41,7 +44,7 @@ public class OtherServiceImplTest {
         BigDecimal cost = null;
         int dur = 0;
         for (OtherService item : serviceList) {
-            if (item.getServiceTypeCode().equalsIgnoreCase("OTHER")) {
+            if (item.getServiceType().getTypeCode().equalsIgnoreCase("OTHER")) {
                 isCode = true;
                 cost = item.getServiceCost();
                 dur = item.getServiceDuration();

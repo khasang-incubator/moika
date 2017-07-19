@@ -9,8 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service(value = "moikaServiceTypesServiceImpl")
 @Transactional
 public class MoikaServiceTypesServiceImpl extends  ATypeDataAccessServiceImpl implements MoikaServiceTypesService {
-    final
-    ServiceTypeDao serviceTypeDao;
+    final ServiceTypeDao serviceTypeDao;
 
     @Autowired()
     public MoikaServiceTypesServiceImpl(ServiceTypeDao serviceTypeDao) {

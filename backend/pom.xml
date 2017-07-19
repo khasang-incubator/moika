@@ -118,6 +118,7 @@
 			<artifactId>hibernate-jpamodelgen</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
+
 		<!--JSP -->
 		<dependency>
 			<groupId>jstl</groupId>
@@ -142,8 +143,15 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
+			<scope>test</scope>
 		</dependency>
-		<!--dependency> <groupId>org.springframework</groupId> <artifactId>spring-context</artifactId> 
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-testing -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-testing</artifactId>
+			<version>${hibernate.version}</version>
+			<scope>test</scope>
+		</dependency>		<!--dependency> <groupId>org.springframework</groupId> <artifactId>spring-context</artifactId>
 			<version>4.3.4.RELEASE</version> </dependency -->
 		<!--Jackson -->
 		<dependency>

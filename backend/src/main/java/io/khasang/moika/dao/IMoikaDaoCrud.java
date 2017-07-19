@@ -14,6 +14,12 @@ import java.util.Map;
  */
 public interface IMoikaDaoCrud<T extends ABaseMoikaEntity> {
     /**
+     * Возвращает действительный клвсс сущности
+     * @return
+     */
+    Class<? extends T> getDaoType();
+
+    /**
      * Создаёт сущность в БД
      *
      * @param entity создаваемая сущность

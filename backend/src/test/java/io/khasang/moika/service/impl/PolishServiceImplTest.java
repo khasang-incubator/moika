@@ -25,13 +25,17 @@ public class PolishServiceImplTest {
     @Autowired
     PolishServiceDataAccessService polisServiceDAS;
 
+    final String serviceName = "Полировка силой мысли";
+    final String testDescr = "к нам на полставки устроился Люк Сковородкин";
+    final int idFclt = 3;
+
 
     @Test
     @Transactional
     public void testCleanServiceList() {
         List<PolishService> serviceList = null;
         try {
-            serviceList = polisServiceDAS.getServicesByType("POLISH");
+            serviceList = polisServiceDAS.getServicesByType(idFclt,"POLISH");
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
@@ -41,7 +45,7 @@ public class PolishServiceImplTest {
         BigDecimal cost = null;
         int dur = 0;
         for (PolishService item : serviceList) {
-            if (item.getServiceTypeCode().equalsIgnoreCase("POLISH")) {
+            if (item.getServiceType().getTypeCode().equalsIgnoreCase("POLISH")) {
                 isCode = true;
                 cost = item.getServiceCost();
                 dur = item.getServiceDuration();

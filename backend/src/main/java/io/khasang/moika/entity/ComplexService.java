@@ -1,15 +1,13 @@
 package io.khasang.moika.entity;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Сущность описывающая комплексные услуги (т.е. набор услуг),
  * например, мойка и чиска салона, мойка, чиска салона и полировка корпуса
  */
 @Entity(name = "complex_services")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class ComplexService extends MoikaService {
 
     @Id
