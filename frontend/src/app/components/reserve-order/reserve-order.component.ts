@@ -66,6 +66,10 @@ onChangeCarWash(event){
   onDaySelected(event){
     console.log(event.data);
     this.freeTime = this.freeboxHoursService.getFreeTime();
-    console.log(this.freeTime);
+  }
+  onTimeSelected(event){
+    console.log(event.data);
+    this.msgs = [];
+    this.msgs.push({ severity: 'success', summary: 'Предложение сделать заказ на ', detail: event.data.time });
   }
 }

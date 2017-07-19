@@ -14,12 +14,9 @@ export class AutoOwnerMenuItems {
   mapItems(element): MenuItem {
     return {label: element.name};
   }
-
-
   get items(): MenuItem[] {
     return this._items;
   }
-
 
   /**
    * Готовим полный список пунктов пменю
@@ -27,11 +24,17 @@ export class AutoOwnerMenuItems {
   private prepareMainItems(): void {
       this._items = [
       {
-        label: 'Записаться',
-        icon: 'fa-car',
-        command: (click) => {
-          this.router.navigate(['/auto-owner/reserve-order']);}
-      },
+          label: 'Записаться',
+          icon: 'fa-car',
+          command: (click) => {
+            this.router.navigate(['/auto-owner/reserve-order']);}
+        },
+        {
+          label: 'Для проб',
+          icon: 'fa-car',
+          command: (click) => {
+            this.router.navigate(['auto-owner/for-samples']);}
+        },
       {
         label: 'О программе',
         icon: 'fa-commenting-o ',

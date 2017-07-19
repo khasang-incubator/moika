@@ -58,7 +58,7 @@ import { ReserveOrderComponent } from './components/reserve-order/reserve-order.
 import {FreeboxDays} from 'app/model/entities/freebox-days';
 import {FreeboxDaysService}from 'app/model/services/freebox-days-service';
 import {FreeboxHoursService}from 'app/model/services/freebox-hours-service';
-
+import {ForSampleComponent } from 'app/components/temp/for-sample.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -94,7 +94,8 @@ import {FreeboxHoursService}from 'app/model/services/freebox-hours-service';
     FcltOwnerOutletComponent,
     AutoOwnerOutletComponent,
     ReserveOrderComponent,
-   ],
+    ForSampleComponent
+  ],
   imports: [
     BsDropdownModule.forRoot(),
     AppRoutingModule,

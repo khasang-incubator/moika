@@ -33,3 +33,6 @@
 .main-menu .nav a{
   font-size: 18px;
 }
+.ui-g {
+  border: 1px solid red;
+}
