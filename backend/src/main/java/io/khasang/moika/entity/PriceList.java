@@ -11,7 +11,8 @@ import java.util.List;
  * Сущность, описывающая price-list
  */
 
-@Entity(name = "service_types")
+@Entity
+
 public class PriceList  {
 
  /*   //@OneToMany(mappedBy="serviceTypeEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -23,30 +24,45 @@ public class PriceList  {
  */
 
     @Id
-    @Column(name = "id_type", columnDefinition = "serial")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected int id;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "type_code", unique = true, nullable = false)
     @NaturalId
     protected EServiceType serviceType;
-    @Column(name = "type_name")
+
     protected String name;
-    @Column(name = "descr")
+
     protected String description;
 
-    @Where( clause = "id_type = 1")
-    @OneToMany(mappedBy = "serviceType")
-    private List<WashService> washServices = new ArrayList<>( );
+ //   @Where( clause = "id_type = 1")
+ //   @OneToMany(mappedBy = "serviceType")
+    @ElementCollection(targetClass=WashService.class)
+    protected List<WashService> washServices = new ArrayList<>( );
 
-    @Where( clause = "id_type = 2")
-    @OneToMany(mappedBy = "serviceType")
-    private List<CleanService> cleanServices = new ArrayList<>( );
+  //  @Where( clause = "id_type = 2")
+  //  @OneToMany(mappedBy = "serviceType")
+   @ElementCollection(targetClass=CleanService.class)
+    protected List<CleanService> cleanServices = new ArrayList<>( );
 
-    @Where( clause = "id_type = 3")
-    @OneToMany(mappedBy = "serviceType")
-    private List<ChemCleanService> chemCleanServices = new ArrayList<>( );
+  //  @Where( clause = "id_type = 3")
+  //  @OneToMany(mappedBy = "serviceType")
+    @ElementCollection(targetClass=ChemCleanService.class)
+    protected List<ChemCleanService> chemCleanServices = new ArrayList<>( );
+
+  //  @Where( clause = "id_type = 4")
+   // @OneToMany(mappedBy = "serviceType")
+    @ElementCollection(targetClass=PolishService.class)
+    protected List<PolishService> polishServices = new ArrayList<>( );
+
+ //   @Where( clause = "id_type = 5")
+ //   @OneToMany(mappedBy = "serviceType")
+    @ElementCollection(targetClass=OtherService.class)
+    protected List<OtherService> otherServices = new ArrayList<>( );
+
+ //   @Where( clause = "id_type = 6")
+//    @OneToMany(mappedBy = "serviceType")
+    @ElementCollection(targetClass=ComplexService.class)
+    protected List<ComplexService> complexServices = new ArrayList<>( );
 
     public PriceList() {
     }
@@ -107,5 +123,27 @@ public class PriceList  {
         this.chemCleanServices = chemCleanServices;
     }
 
+    public List<PolishService> getPolishServices() {
+        return polishServices;
+    }
 
+    public void setPolishServices(List<PolishService> polishServices) {
+        this.polishServices = polishServices;
+    }
+
+    public List<OtherService> getOtherServices() {
+        return otherServices;
+    }
+
+    public void setOtherServices(List<OtherService> otherServices) {
+        this.otherServices = otherServices;
+    }
+
+    public List<ComplexService> getComplexServices() {
+        return complexServices;
+    }
+
+    public void setComplexServices(List<ComplexService> complexServices) {
+        this.complexServices = complexServices;
+    }
 }

@@ -9,7 +9,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "service_group")
+@Entity(name = "service_groups")
 public class ServiceGroup extends ABaseMoikaTypeReference {
 
   /*  @JoinTable(name = "r_service_type_group",
@@ -19,10 +19,11 @@ public class ServiceGroup extends ABaseMoikaTypeReference {
     //@JsonManagedReference(value = "person-phones")
     @Fetch(FetchMode.SELECT) */
 
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.REFRESH})
     @JoinTable(name = "r_service_type_group",
-            joinColumns = @JoinColumn(name = "id_type"),
-            inverseJoinColumns = @JoinColumn(name = "id_group"))
+            joinColumns = @JoinColumn(name = "id_group"),
+            inverseJoinColumns = @JoinColumn(name = "id_type"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id_type", "id_group"}))
     @JsonBackReference
     private ServiceType serviceType;
 

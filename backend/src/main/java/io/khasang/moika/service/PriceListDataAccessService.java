@@ -1,6 +1,7 @@
 package io.khasang.moika.service;
 
 import io.khasang.moika.dao.MoikaDaoException;
+import io.khasang.moika.entity.EServiceType;
 import io.khasang.moika.entity.PriceList;
 
 import java.util.List;
@@ -11,5 +12,6 @@ import java.util.List;
 public interface PriceListDataAccessService {
 
     PriceList getPriceListByServiceType(int idFclt, int serviceType) throws MoikaDaoException;
+    PriceList getPriceListByServiceType(int idFclt, EServiceType serviceType) throws MoikaDaoException;
     List<PriceList> getFullPriceList(int idFclt) throws MoikaDaoException;
 }

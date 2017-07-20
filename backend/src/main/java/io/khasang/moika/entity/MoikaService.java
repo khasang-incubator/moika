@@ -25,7 +25,7 @@ import java.util.Objects;
 public class MoikaService extends ABaseMoikaEntity{
 
     @Id
-    @Column(name = "id_service", columnDefinition = "serial", updatable = false, nullable = false)
+    @Column(name = "id_service", columnDefinition = "bigserial", updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO) //не IDENTITY, а тот что в таблицах
     protected long id;
 
@@ -36,10 +36,9 @@ public class MoikaService extends ABaseMoikaEntity{
     protected WashFacility washFacility;
 
     @Column(name = "id_type", insertable = false, updatable = false)
-    @Enumerated(EnumType.ORDINAL)
-    protected EServiceType idType;
+    protected int idType;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id_type",  foreignKey = @ForeignKey(name ="fk_service_type"), insertable = false, updatable = false)
+    @JoinColumn(name = "id_type",  foreignKey = @ForeignKey(name ="fk_service_type"))
     protected ServiceType serviceType;
 
     @Column(name = "id_group", insertable = false, updatable = false)
@@ -86,13 +85,13 @@ public class MoikaService extends ABaseMoikaEntity{
     protected Date dateStop;
 
     @Column(name = "id_user_create",insertable = false, updatable = false)
-    protected int idUserCreate;
+    protected long idUserCreate;
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user_create", referencedColumnName = "id_user", foreignKey = @ForeignKey(name = "fk_user_create"), insertable = false, updatable = false)
     protected User userCreate;
 
     @Column(name = "id_user_edit",insertable = false, updatable = false)
-    protected int idUserEdit;
+    protected long idUserEdit;
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user_edit",  referencedColumnName = "id_user", foreignKey = @ForeignKey(name = "fk_user_edit"), insertable = false, updatable = false)
     protected User userEdit;
@@ -141,11 +140,15 @@ public class MoikaService extends ABaseMoikaEntity{
         this.washFacility = washFacility;
     }
 
-    public EServiceType getIdType() {
+    public int getIdType() {
         return idType;
     }
 
     public void setIdType(EServiceType idType) {
+        this.idType = idType.ordinal();
+    }
+
+    public void setIdType(int idType) {
         this.idType = idType;
     }
 
@@ -254,7 +257,7 @@ public class MoikaService extends ABaseMoikaEntity{
         this.dateStop = dateStop;
     }
 
-    public int getIdUserCreate() {
+    public long getIdUserCreate() {
         return idUserCreate;
     }
 
@@ -262,7 +265,7 @@ public class MoikaService extends ABaseMoikaEntity{
         return userCreate;
     }
 
-    public int getIdUserEdit() {
+    public long getIdUserEdit() {
         return idUserEdit;
     }
 

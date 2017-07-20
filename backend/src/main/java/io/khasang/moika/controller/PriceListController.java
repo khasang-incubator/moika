@@ -1,6 +1,7 @@
 package io.khasang.moika.controller;
 
 import io.khasang.moika.dao.MoikaDaoException;
+import io.khasang.moika.entity.EServiceType;
 import io.khasang.moika.entity.PriceList;
 import io.khasang.moika.service.MoikaServiceDataAccessService;
 import io.khasang.moika.service.MoikaServiceTypesService;
